@@ -745,17 +745,17 @@
         
         // Sheet names - ตามชีทจริงของคุณ
         const SHEETS = {
-            'Data โครงการ': 'Data โครงการ',      // สมัครโครงการทั้งหมด
-            'Data การตรวจ': 'Data การตรวจ',      // ตรวจแล้ว
-            'Data การตรวจผ่านแล้ว': 'Data การตรวจ' // ข้อมูลการตรวจผ่านแล้ว (กรองจาก Data การตรวจ)
+            'Dataโครงการ': 'Dataโครงการ',      // สมัครโครงการทั้งหมด
+            'Dataการตรวจ': 'Dataการตรวจ',      // ตรวจแล้ว
+            'Dataการตรวจผ่านแล้ว': 'Dataการตรวจ' // ข้อมูลการตรวจผ่านแล้ว (กรองจาก Data การตรวจ)
         };
         
         // Current state
-        let currentSheet = 'Data โครงการ';
+        let currentSheet = 'Dataโครงการ';
         let allData = {
-            'Data โครงการ': [],
-            'Data การตรวจ': [],
-            'Data การตรวจผ่านแล้ว': []
+            'Dataโครงการ': [],
+            'Dataการตรวจ': [],
+            'Dataการตรวจผ่านแล้ว': []
         };
         let filteredData = [];
         let isSetupComplete = false;
@@ -809,9 +809,9 @@
                     
                     // Update table title
                     const titleMap = {
-                        'Data โครงการ': 'สมัครโครงการทั้งหมด',
-                        'Data การตรวจ': 'ตรวจแล้ว',
-                        'Data การตรวจผ่านแล้ว': 'ผ่านการตรวจแล้ว'
+                        'Dataโครงการ': 'สมัครโครงการทั้งหมด',
+                        'Dataการตรวจ': 'ตรวจแล้ว',
+                        'Dataการตรวจผ่านแล้ว': 'ผ่านการตรวจแล้ว'
                     };
                     document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
                     document.getElementById('modal-title').textContent = `รายละเอียด - ${titleMap[currentSheet] || currentSheet}`;
@@ -1008,7 +1008,7 @@
             const rowCount = 15;
             
             for (let i = 1; i <= rowCount; i++) {
-                if (sheetName === 'Data โครงการ') {
+                if (sheetName === 'Dataโครงการ') {
                     const projectTypes = ['พัฒนาระบบ', 'วิจัย', 'อบรม', 'จัดกิจกรรม', 'พัฒนาสื่อ'];
                     const statuses = ['รอตรวจสอบ', 'อนุมัติแล้ว', 'ไม่อนุมัติ', 'กำลังดำเนินการ', 'เสร็จสิ้น'];
                     const randomType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
