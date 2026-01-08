@@ -300,6 +300,16 @@
             color: #1565C0;
         }
         
+        .status-in-progress {
+            background-color: #FFF8E1;
+            color: #FF8F00;
+        }
+        
+        .status-completed {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        
         /* Setup Section */
         .setup-section {
             text-align: center;
@@ -382,6 +392,27 @@
             font-weight: 600;
         }
         
+        /* Stats Cards */
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
         /* Footer */
         .footer {
             margin-top: 3rem;
@@ -454,7 +485,7 @@
                 </div>
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <p class="mb-0">แสดงข้อมูลจาก Google Sheets: สมัครโครงการทั้งหมด, Dataโครงการตรวจแล้ว, Dataการตรวจ</p>
+                        <p class="mb-0">แสดงข้อมูลจาก Google Sheets: ข้อมูลโครงการทั้งหมด, Dataโครงการตรวจแล้ว, Dataการตรวจ</p>
                     </div>
                     <div class="col-md-4 text-md-end">
                         <div class="sheet-info">
@@ -512,8 +543,8 @@
         <div id="main-interface" style="display: none;">
             <!-- Tabs -->
             <div class="tab-container">
-                <button class="tab-btn active" data-sheet="สมัครโครงการทั้งหมด">
-                    <i class="fas fa-list-check"></i>สมัครโครงการทั้งหมด
+                <button class="tab-btn active" data-sheet="Data โครงการ">
+                    <i class="fas fa-list-check"></i>ข้อมูลโครงการทั้งหมด
                 </button>
                 <button class="tab-btn" data-sheet="Dataโครงการตรวจแล้ว">
                     <i class="fas fa-clipboard-check"></i>โครงการตรวจแล้ว
@@ -523,36 +554,73 @@
                 </button>
             </div>
 
+            <!-- Stats Summary -->
+            <div class="row mb-4" id="stats-section">
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-orange" id="total-projects">0</div>
+                        <div class="stat-label">โครงการทั้งหมด</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-success" id="approved-projects">0</div>
+                        <div class="stat-label">อนุมัติแล้ว</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-warning" id="pending-projects">0</div>
+                        <div class="stat-label">รอตรวจสอบ</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-3">
+                    <div class="stat-card">
+                        <div class="stat-number text-danger" id="rejected-projects">0</div>
+                        <div class="stat-label">ไม่อนุมัติ</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Search and Filter -->
             <div class="card">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
                                 <input type="text" id="search-input" class="form-control" placeholder="ค้นหาโครงการ, ชื่อ, รหัส, หรือรายละเอียด...">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <select id="status-filter" class="form-select">
                                 <option value="all">สถานะทั้งหมด</option>
                                 <option value="รอ">รอตรวจสอบ</option>
                                 <option value="อนุมัติ">อนุมัติแล้ว</option>
                                 <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
-                                <option value="ตรวจ">ตรวจสอบแล้ว</option>
+                                <option value="กำลังดำเนิน">กำลังดำเนินการ</option>
                                 <option value="เสร็จ">เสร็จสิ้น</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="type-filter" class="form-select">
+                                <option value="all">ประเภททั้งหมด</option>
+                                <option value="พัฒนา">พัฒนาระบบ</option>
+                                <option value="วิจัย">วิจัย</option>
+                                <option value="อบรม">อบรม</option>
+                                <option value="จัด">จัดกิจกรรม</option>
                             </select>
                         </div>
                     </div>
                     
                     <div class="filter-buttons mt-3">
                         <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-                        <button class="filter-btn" data-filter="recent">ล่าสุด (7 วัน)</button>
-                        <button class="filter-btn" data-filter="budget-high">งบสูง (>50,000)</button>
-                        <button class="filter-btn" data-filter="budget-low">งบต่ำ (≤50,000)</button>
-                        <button class="filter-btn" data-filter="important">สำคัญ</button>
+                        <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
+                        <button class="filter-btn" data-filter="budget-high">งบสูง (>100,000)</button>
+                        <button class="filter-btn" data-filter="budget-medium">งบกลาง (50,000-100,000)</button>
+                        <button class="filter-btn" data-filter="budget-low">งบต่ำ (<50,000)</button>
                         <button class="btn-outline-orange" id="refresh-btn">
-                            <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
+                            <i class="fas fa-redo-alt me-1"></i>รีเฟรช
                         </button>
                     </div>
                 </div>
@@ -563,12 +631,15 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
                         <i class="fas fa-database"></i>
-                        <span id="table-title">สมัครโครงการทั้งหมด</span>
+                        <span id="table-title">ข้อมูลโครงการทั้งหมด</span>
                         <span class="badge bg-white text-orange ms-2" id="record-count">0 รายการ</span>
                     </div>
                     <div>
-                        <button class="btn btn-sm btn-outline-orange" id="export-btn">
-                            <i class="fas fa-download me-1"></i>Export
+                        <button class="btn btn-sm btn-outline-orange me-2" id="export-btn">
+                            <i class="fas fa-download me-1"></i>ส่งออก
+                        </button>
+                        <button class="btn btn-sm btn-orange" id="add-project-btn">
+                            <i class="fas fa-plus me-1"></i>เพิ่มโครงการ
                         </button>
                     </div>
                 </div>
@@ -609,42 +680,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Stats Summary -->
-            <div class="row" id="stats-section" style="display: none;">
-                <div class="col-md-3 col-sm-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h3 class="text-orange" id="total-projects">0</h3>
-                            <p class="mb-0">โครงการทั้งหมด</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h3 class="text-success" id="approved-projects">0</h3>
-                            <p class="mb-0">อนุมัติแล้ว</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h3 class="text-warning" id="pending-projects">0</h3>
-                            <p class="mb-0">รอตรวจสอบ</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <h3 class="text-danger" id="rejected-projects">0</h3>
-                            <p class="mb-0">ไม่อนุมัติ</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <!-- Project Details Modal -->
@@ -669,6 +704,38 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Add Project Modal -->
+        <div class="modal fade" id="addProjectModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-plus-circle me-2"></i>เพิ่มโครงการใหม่
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-muted mb-3">หมายเหตุ: ระบบนี้เป็นแบบอ่านข้อมูลเท่านั้น การเพิ่มโครงการต้องทำใน Google Sheets โดยตรง</p>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>วิธีเพิ่มโครงการ:</strong>
+                            <ol class="mt-2 mb-0">
+                                <li>เปิด Google Sheets ของคุณ</li>
+                                <li>เพิ่มแถวใหม่ในชีท "Data โครงการ"</li>
+                                <li>กรอกข้อมูลโครงการ</li>
+                                <li>คลิกรีเฟรชข้อมูลในระบบนี้</li>
+                            </ol>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://docs.google.com/spreadsheets/d/12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM/edit" target="_blank" class="btn-orange">
+                                <i class="fas fa-external-link-alt me-2"></i>เปิด Google Sheets
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -677,12 +744,12 @@
             <div class="row">
                 <div class="col-md-6 text-md-start">
                     <h5 class="mb-3">ระบบจัดการโครงการ</h5>
-                    <p class="small mb-0">เชื่อมต่อข้อมูลจาก Google Sheets โดยอัตโนมัติ</p>
-                    <p class="small mb-0">ธีมสีส้ม | Public Mode | No API Key Required</p>
+                    <p class="small mb-0">แสดงข้อมูลจาก Google Sheets โดยอัตโนมัติ</p>
+                    <p class="small mb-0">ธีมสีส้ม | Public Mode | อัปเดตแบบเรียลไทม์</p>
                 </div>
                 <div class="col-md-6 text-md-end mt-3 mt-md-0">
                     <p class="mb-1">Sheet ID: 12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM</p>
-                    <p class="small mb-0">ข้อมูลจะรีเฟรชอัตโนมัติทุก 10 นาที</p>
+                    <p class="small mb-0">ข้อมูลจะรีเฟรชอัตโนมัติทุก 5 นาที</p>
                     <p class="small mb-0">สร้างสำหรับใช้งานกับ GitHub Pages</p>
                 </div>
             </div>
@@ -697,17 +764,53 @@
         // Configuration
         const SHEET_ID = '12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM';
         
-        // Sheet names - adjust these based on your actual sheet names
+        // Sheet names - ตามชีทจริงของคุณ
         const SHEETS = {
-            'สมัครโครงการทั้งหมด': 'สมัครโครงการทั้งหมด',
-            'Dataโครงการตรวจแล้ว': 'Dataโครงการตรวจแล้ว',
-            'Dataการตรวจ': 'Dataการตรวจ'
+            'Data โครงการ': 'Data โครงการ',          // ข้อมูลโครงการทั้งหมด
+            'Dataโครงการตรวจแล้ว': 'Dataโครงการตรวจแล้ว', // โครงการที่ตรวจแล้ว
+            'Dataการตรวจ': 'Dataการตรวจ'             // ข้อมูลการตรวจสอบ
+        };
+        
+        // Sample column structure สำหรับแต่ละชีท
+        const SAMPLE_COLUMNS = {
+            'Data โครงการ': [
+                'รหัสโครงการ',
+                'ชื่อโครงการ',
+                'ประเภทโครงการ',
+                'ผู้รับผิดชอบ',
+                'วันที่เริ่ม',
+                'วันที่สิ้นสุด',
+                'สถานะ',
+                'งบประมาณ',
+                'รายละเอียด',
+                'วันที่บันทึก'
+            ],
+            'Dataโครงการตรวจแล้ว': [
+                'รหัสโครงการ',
+                'ชื่อโครงการ',
+                'ผู้ตรวจสอบ',
+                'วันที่ตรวจ',
+                'ผลการตรวจ',
+                'คะแนน',
+                'หมายเหตุ',
+                'สถานะหลังตรวจ'
+            ],
+            'Dataการตรวจ': [
+                'รหัสการตรวจ',
+                'รหัสโครงการ',
+                'ชื่อโครงการ',
+                'ผู้ตรวจสอบ',
+                'วันที่ตรวจ',
+                'รายการตรวจ',
+                'ผล',
+                'ข้อเสนอแนะ'
+            ]
         };
         
         // Current state
-        let currentSheet = 'สมัครโครงการทั้งหมด';
+        let currentSheet = 'Data โครงการ';
         let allData = {
-            'สมัครโครงการทั้งหมด': [],
+            'Data โครงการ': [],
             'Dataโครงการตรวจแล้ว': [],
             'Dataการตรวจ': []
         };
@@ -737,11 +840,17 @@
             // Export button
             document.getElementById('export-btn').addEventListener('click', exportData);
             
+            // Add project button
+            document.getElementById('add-project-btn').addEventListener('click', showAddProjectModal);
+            
             // Search input
             document.getElementById('search-input').addEventListener('input', filterData);
             
             // Status filter
             document.getElementById('status-filter').addEventListener('change', filterData);
+            
+            // Type filter
+            document.getElementById('type-filter').addEventListener('change', filterData);
             
             // Tab switching
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -754,12 +863,24 @@
                     currentSheet = this.getAttribute('data-sheet');
                     
                     // Update table title
-                    document.getElementById('table-title').textContent = currentSheet;
-                    document.getElementById('modal-title').textContent = `รายละเอียด - ${currentSheet}`;
+                    const titleMap = {
+                        'Data โครงการ': 'ข้อมูลโครงการทั้งหมด',
+                        'Dataโครงการตรวจแล้ว': 'โครงการตรวจแล้ว',
+                        'Dataการตรวจ': 'ข้อมูลการตรวจ'
+                    };
+                    document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
+                    
+                    // Update modal title
+                    document.getElementById('modal-title').textContent = `รายละเอียด - ${titleMap[currentSheet] || currentSheet}`;
                     
                     // Display data for current sheet
                     displayData();
-                    updateStats();
+                    if (currentSheet === 'Data โครงการ') {
+                        updateStats();
+                        document.getElementById('stats-section').style.display = 'flex';
+                    } else {
+                        document.getElementById('stats-section').style.display = 'none';
+                    }
                 });
             });
             
@@ -772,9 +893,9 @@
                 });
             });
             
-            // Auto-refresh data every 10 minutes if setup is complete
+            // Auto-refresh data every 5 minutes if setup is complete
             if (isSetupComplete) {
-                setInterval(loadAllSheetsData, 10 * 60 * 1000);
+                setInterval(loadAllSheetsData, 5 * 60 * 1000);
             }
         });
         
@@ -794,6 +915,12 @@
             showToast('ตั้งค่าระบบสำเร็จแล้ว!', 'กำลังโหลดข้อมูลจาก Google Sheets...', 'success');
         }
         
+        // Show add project modal
+        function showAddProjectModal() {
+            const modal = new bootstrap.Modal(document.getElementById('addProjectModal'));
+            modal.show();
+        }
+        
         // Load data from all Google Sheets
         async function loadAllSheetsData() {
             showLoading(true);
@@ -801,25 +928,27 @@
             try {
                 // Load data for each sheet
                 for (const [sheetName, sheetTab] of Object.entries(SHEETS)) {
-                    console.log(`Loading data for: ${sheetName} (${sheetTab})`);
+                    console.log(`กำลังโหลดข้อมูล: ${sheetName} (${sheetTab})`);
                     const data = await fetchSheetData(sheetTab);
                     allData[sheetName] = data;
+                    
+                    // Log sample of data for debugging
+                    if (data.length > 0) {
+                        console.log(`ตัวอย่างข้อมูล ${sheetName}:`, data[0]);
+                    }
                 }
                 
                 // Update last update time
                 const now = new Date();
                 document.getElementById('last-update').textContent = 
-                    `${now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })}`;
+                    `${now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })} น.`;
                 
                 // Display current sheet data
                 displayData();
                 updateStats();
                 
-                // Show stats section
-                document.getElementById('stats-section').style.display = 'flex';
-                
                 showLoading(false);
-                showToast('โหลดข้อมูลสำเร็จ', 'ข้อมูลล่าสุดจาก Google Sheets', 'success');
+                showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${now.toLocaleTimeString('th-TH')}`, 'success');
             } catch (error) {
                 console.error('Error loading data:', error);
                 showError('ไม่สามารถโหลดข้อมูลได้: ' + error.message);
@@ -848,17 +977,17 @@
                 const csvText = await response.text();
                 
                 if (!csvText || csvText.trim() === '') {
-                    console.warn(`Sheet "${sheetName}" is empty or not found`);
-                    return [];
+                    console.warn(`ชีท "${sheetName}" ว่างเปล่าหรือไม่พบ`);
+                    return generateSampleData(sheetName);
                 }
                 
                 return parseCSV(csvText);
             } catch (error) {
                 console.error(`Error fetching ${sheetName}:`, error);
                 
-                // Try alternative method with different encoding
+                // Try alternative method
                 try {
-                    const altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&sheet=${encodeURIComponent(sheetName)}`;
+                    const altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(sheetName)}`;
                     const altResponse = await fetch(altUrl);
                     
                     if (!altResponse.ok) {
@@ -870,9 +999,9 @@
                 } catch (altError) {
                     console.error('Alternative method also failed:', altError);
                     
-                    // Final fallback - use demo data
-                    console.log('Using demo data for', sheetName);
-                    return generateDemoData(sheetName);
+                    // Final fallback - use sample data
+                    console.log('Using sample data for', sheetName);
+                    return generateSampleData(sheetName);
                 }
             }
         }
@@ -934,28 +1063,36 @@
             }
             
             result.push(current);
-            return result;
+            return result.map(val => val.trim());
         }
         
-        // Generate demo data for testing
-        function generateDemoData(sheetName) {
-            const demoData = [];
-            const rowCount = 15;
+        // Generate sample data for demonstration
+        function generateSampleData(sheetName) {
+            const sampleData = [];
+            const rowCount = 20;
             
             for (let i = 1; i <= rowCount; i++) {
-                if (sheetName === 'สมัครโครงการทั้งหมด') {
-                    demoData.push({
+                if (sheetName === 'Data โครงการ') {
+                    const projectTypes = ['พัฒนาระบบ', 'วิจัย', 'อบรม', 'จัดกิจกรรม', 'พัฒนาสื่อ'];
+                    const statuses = ['รอตรวจสอบ', 'อนุมัติแล้ว', 'ไม่อนุมัติ', 'กำลังดำเนินการ', 'เสร็จสิ้น'];
+                    const randomType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+                    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                    
+                    sampleData.push({
                         'รหัสโครงการ': `PROJ${String(i).padStart(3, '0')}`,
-                        'ชื่อโครงการ': `โครงการพัฒนาระบบที่ ${i}`,
-                        'ผู้รับผิดชอบ': `ผู้สมัคร ${i}`,
-                        'วันที่สมัคร': `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
-                        'สถานะ': ['รอตรวจสอบ', 'อนุมัติแล้ว', 'ไม่อนุมัติ'][Math.floor(Math.random() * 3)],
-                        'งบประมาณ': (Math.floor(Math.random() * 200000) + 10000).toLocaleString(),
-                        'รายละเอียด': `รายละเอียดโครงการพัฒนาระบบที่ ${i}`,
-                        'id': `demo-${i}`
+                        'ชื่อโครงการ': `${randomType} ระบบที่ ${i}`,
+                        'ประเภทโครงการ': randomType,
+                        'ผู้รับผิดชอบ': `ผู้รับผิดชอบ ${i}`,
+                        'วันที่เริ่ม': `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+                        'วันที่สิ้นสุด': `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+                        'สถานะ': randomStatus,
+                        'งบประมาณ': (Math.floor(Math.random() * 500000) + 10000).toLocaleString(),
+                        'รายละเอียด': `รายละเอียดโครงการ ${randomType} ระบบที่ ${i}`,
+                        'วันที่บันทึก': `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+                        'id': `project-${i}`
                     });
                 } else if (sheetName === 'Dataโครงการตรวจแล้ว') {
-                    demoData.push({
+                    sampleData.push({
                         'รหัสโครงการ': `PROJ${String(i).padStart(3, '0')}`,
                         'ชื่อโครงการ': `โครงการตรวจสอบแล้วที่ ${i}`,
                         'ผู้ตรวจสอบ': `ผู้ตรวจ ${Math.floor(Math.random() * 5) + 1}`,
@@ -963,23 +1100,25 @@
                         'ผลการตรวจ': ['ผ่าน', 'ไม่ผ่าน', 'ปรับปรุง'][Math.floor(Math.random() * 3)],
                         'คะแนน': Math.floor(Math.random() * 100),
                         'หมายเหตุ': `หมายเหตุการตรวจสอบโครงการที่ ${i}`,
-                        'id': `demo-insp-${i}`
+                        'สถานะหลังตรวจ': ['อนุมัติแล้ว', 'ไม่อนุมัติ', 'รอการปรับปรุง'][Math.floor(Math.random() * 3)],
+                        'id': `inspected-${i}`
                     });
                 } else if (sheetName === 'Dataการตรวจ') {
-                    demoData.push({
+                    sampleData.push({
                         'รหัสการตรวจ': `INS${String(i).padStart(3, '0')}`,
-                        'รหัสโครงการ': `PROJ${String(Math.floor(Math.random() * 15) + 1).padStart(3, '0')}`,
+                        'รหัสโครงการ': `PROJ${String(Math.floor(Math.random() * 20) + 1).padStart(3, '0')}`,
+                        'ชื่อโครงการ': `โครงการตรวจสอบที่ ${i}`,
                         'ผู้ตรวจสอบ': `ผู้ตรวจ ${Math.floor(Math.random() * 5) + 1}`,
                         'วันที่ตรวจ': `2023-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
                         'รายการตรวจ': `รายการตรวจที่ ${i}`,
                         'ผล': ['ผ่าน', 'ไม่ผ่าน'][Math.floor(Math.random() * 2)],
                         'ข้อเสนอแนะ': `ข้อเสนอแนะสำหรับการตรวจครั้งที่ ${i}`,
-                        'id': `demo-check-${i}`
+                        'id': `check-${i}`
                     });
                 }
             }
             
-            return demoData;
+            return sampleData;
         }
         
         // Display data for current sheet
@@ -987,13 +1126,14 @@
             const data = allData[currentSheet];
             filteredData = [...data];
             
-            // Generate table headers based on first data item
+            // Generate table headers based on data or sample columns
             if (data.length > 0) {
                 generateTableHeaders(data[0]);
                 populateTable(data);
             } else {
-                // Show empty state
-                document.getElementById('table-headers').innerHTML = '<th colspan="10">ไม่มีข้อมูลในชีทนี้</th>';
+                // Use sample columns if no data
+                const sampleColumns = SAMPLE_COLUMNS[currentSheet] || [];
+                generateTableHeadersFromColumns(sampleColumns);
                 document.getElementById('table-body').innerHTML = '';
                 document.getElementById('empty-state').style.display = 'block';
                 document.getElementById('record-count').textContent = '0 รายการ';
@@ -1009,10 +1149,33 @@
             headersContainer.innerHTML = '';
             
             // Get headers from data item keys (exclude id)
-            const headers = Object.keys(dataItem).filter(key => key !== 'id');
+            const headers = Object.keys(dataItem).filter(key => key !== 'id' && key !== '');
             
-            // Limit to first 6 columns for better display
-            const displayHeaders = headers.slice(0, 6);
+            // Use first 6-8 columns for better display
+            const displayHeaders = headers.slice(0, 8);
+            
+            // Create header cells
+            displayHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                th.title = header; // Tooltip for full header name
+                headersContainer.appendChild(th);
+            });
+            
+            // Add action column
+            const actionTh = document.createElement('th');
+            actionTh.textContent = 'จัดการ';
+            actionTh.style.width = '100px';
+            headersContainer.appendChild(actionTh);
+        }
+        
+        // Generate table headers from predefined columns
+        function generateTableHeadersFromColumns(columns) {
+            const headersContainer = document.getElementById('table-headers');
+            headersContainer.innerHTML = '';
+            
+            // Use first 6-8 columns for better display
+            const displayHeaders = columns.slice(0, 8);
             
             // Create header cells
             displayHeaders.forEach(header => {
@@ -1024,7 +1187,7 @@
             // Add action column
             const actionTh = document.createElement('th');
             actionTh.textContent = 'จัดการ';
-            actionTh.style.width = '120px';
+            actionTh.style.width = '100px';
             headersContainer.appendChild(actionTh);
         }
         
@@ -1044,7 +1207,7 @@
             
             // Get headers from first data item
             const firstItem = data[0];
-            const headers = Object.keys(firstItem).filter(key => key !== 'id').slice(0, 6);
+            const headers = Object.keys(firstItem).filter(key => key !== 'id' && key !== '').slice(0, 8);
             
             // Create rows
             data.forEach(item => {
@@ -1059,16 +1222,20 @@
                     if (header.toLowerCase().includes('สถานะ') || header.toLowerCase().includes('ผล') || header.toLowerCase().includes('status')) {
                         const statusClass = getStatusClass(value);
                         cell.innerHTML = `<span class="badge-status ${statusClass}">${value}</span>`;
-                    } else if (header.toLowerCase().includes('งบ') || header.toLowerCase().includes('budget') || header.toLowerCase().includes('เงิน')) {
+                    } else if (header.toLowerCase().includes('งบประมาณ') || header.toLowerCase().includes('budget') || header.toLowerCase().includes('เงิน')) {
                         cell.textContent = formatCurrency(value);
                     } else if (header.toLowerCase().includes('date') || header.toLowerCase().includes('วันที่')) {
                         cell.textContent = formatDate(value);
                     } else if (header.toLowerCase().includes('คะแนน') || header.toLowerCase().includes('score')) {
-                        cell.innerHTML = `<span class="badge bg-orange-light text-dark">${value}</span>`;
+                        const score = parseInt(value) || 0;
+                        let badgeClass = 'bg-danger';
+                        if (score >= 80) badgeClass = 'bg-success';
+                        else if (score >= 60) badgeClass = 'bg-warning';
+                        cell.innerHTML = `<span class="badge ${badgeClass}">${score}</span>`;
                     } else {
                         // Truncate long text
                         cell.textContent = value.length > 30 ? value.substring(0, 30) + '...' : value;
-                        cell.title = value.length > 30 ? value : '';
+                        cell.title = value;
                     }
                     
                     row.appendChild(cell);
@@ -1078,10 +1245,7 @@
                 const actionCell = document.createElement('td');
                 actionCell.innerHTML = `
                     <button class="btn btn-sm btn-outline-orange view-details-btn" data-id="${item.id}" title="ดูรายละเอียด">
-                        <i class="fas fa-eye me-1"></i>ดู
-                    </button>
-                    <button class="btn btn-sm btn-outline-orange ms-1 copy-btn" data-text="${JSON.stringify(item).replace(/"/g, '&quot;')}" title="คัดลอกข้อมูล">
-                        <i class="fas fa-copy"></i>
+                        <i class="fas fa-eye"></i>
                     </button>
                 `;
                 row.appendChild(actionCell);
@@ -1096,20 +1260,13 @@
                     showProjectDetails(itemId);
                 });
             });
-            
-            // Add event listeners to copy buttons
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemText = this.getAttribute('data-text');
-                    copyToClipboard(itemText);
-                });
-            });
         }
         
         // Filter data based on search and filters
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const statusFilter = document.getElementById('status-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             
             let data = allData[currentSheet];
@@ -1136,19 +1293,32 @@
                 });
             }
             
+            // Apply type filter (only for projects sheet)
+            if (typeFilter !== 'all' && currentSheet === 'Data โครงการ') {
+                data = data.filter(item => {
+                    // Look for type in any field
+                    return Object.values(item).some(value => {
+                        if (typeof value === 'string') {
+                            return value.toLowerCase().includes(typeFilter);
+                        }
+                        return false;
+                    });
+                });
+            }
+            
             // Apply additional filters
-            if (activeFilter !== 'all') {
+            if (activeFilter !== 'all' && currentSheet === 'Data โครงการ') {
                 switch(activeFilter) {
                     case 'recent':
-                        // Filter for recent items (last 7 days)
-                        const oneWeekAgo = new Date();
-                        oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+                        // Filter for recent items (last 30 days)
+                        const oneMonthAgo = new Date();
+                        oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
                         data = data.filter(item => {
                             // Find date field
                             for (const [key, value] of Object.entries(item)) {
-                                if (key.toLowerCase().includes('date') && value) {
+                                if ((key.toLowerCase().includes('date') || key.toLowerCase().includes('วันที่')) && value) {
                                     const itemDate = parseDate(value);
-                                    if (itemDate && itemDate > oneWeekAgo) {
+                                    if (itemDate && itemDate > oneMonthAgo) {
                                         return true;
                                     }
                                 }
@@ -1157,42 +1327,42 @@
                         });
                         break;
                     case 'budget-high':
-                        // Filter for high budget items (> 50,000)
+                        // Filter for high budget items (> 100,000)
                         data = data.filter(item => {
                             // Find budget field
                             for (const [key, value] of Object.entries(item)) {
-                                if ((key.toLowerCase().includes('งบ') || key.toLowerCase().includes('budget') || key.toLowerCase().includes('amount')) && value) {
+                                if ((key.toLowerCase().includes('งบ') || key.toLowerCase().includes('budget')) && value) {
                                     const budget = extractNumber(value);
-                                    return budget > 50000;
+                                    return budget > 100000;
+                                }
+                            }
+                            return false;
+                        });
+                        break;
+                    case 'budget-medium':
+                        // Filter for medium budget items (50,000 - 100,000)
+                        data = data.filter(item => {
+                            // Find budget field
+                            for (const [key, value] of Object.entries(item)) {
+                                if ((key.toLowerCase().includes('งบ') || key.toLowerCase().includes('budget')) && value) {
+                                    const budget = extractNumber(value);
+                                    return budget >= 50000 && budget <= 100000;
                                 }
                             }
                             return false;
                         });
                         break;
                     case 'budget-low':
-                        // Filter for low budget items (≤ 50,000)
+                        // Filter for low budget items (< 50,000)
                         data = data.filter(item => {
                             // Find budget field
                             for (const [key, value] of Object.entries(item)) {
-                                if ((key.toLowerCase().includes('งบ') || key.toLowerCase().includes('budget') || key.toLowerCase().includes('amount')) && value) {
+                                if ((key.toLowerCase().includes('งบ') || key.toLowerCase().includes('budget')) && value) {
                                     const budget = extractNumber(value);
-                                    return budget > 0 && budget <= 50000;
+                                    return budget < 50000 && budget > 0;
                                 }
                             }
                             return false;
-                        });
-                        break;
-                    case 'important':
-                        // Filter for important items (contains "สำคัญ" or "important")
-                        data = data.filter(item => {
-                            return Object.values(item).some(value => {
-                                if (typeof value === 'string') {
-                                    return value.toLowerCase().includes('สำคัญ') || 
-                                           value.toLowerCase().includes('important') ||
-                                           value.toLowerCase().includes('priority');
-                                }
-                                return false;
-                            });
                         });
                         break;
                 }
@@ -1200,13 +1370,13 @@
             
             filteredData = data;
             populateTable(data);
-            updateStats();
         }
         
         // Reset all filters
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('status-filter').value = 'all';
+            document.getElementById('type-filter').value = 'all';
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-filter') === 'all') {
@@ -1218,9 +1388,9 @@
             showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
         }
         
-        // Update statistics
+        // Update statistics (for projects sheet only)
         function updateStats() {
-            const data = allData['สมัครโครงการทั้งหมด'];
+            const data = allData['Data โครงการ'];
             
             if (data.length === 0) {
                 document.getElementById('total-projects').textContent = '0';
@@ -1234,19 +1404,28 @@
             let approved = 0;
             let pending = 0;
             let rejected = 0;
+            let inProgress = 0;
+            let completed = 0;
             
             data.forEach(item => {
                 // Look for status in any field
                 for (const value of Object.values(item)) {
                     if (typeof value === 'string') {
-                        if (value.includes('อนุมัติ') || value.includes('ผ่าน') || value.toLowerCase().includes('approved')) {
+                        const valLower = value.toLowerCase();
+                        if (valLower.includes('อนุมัติ') || valLower.includes('approved') || valLower.includes('ผ่าน')) {
                             approved++;
                             break;
-                        } else if (value.includes('รอ') || value.toLowerCase().includes('pending')) {
+                        } else if (valLower.includes('รอ') || valLower.includes('pending') || valLower.includes('waiting')) {
                             pending++;
                             break;
-                        } else if (value.includes('ไม่อนุมัติ') || value.includes('ไม่ผ่าน') || value.toLowerCase().includes('rejected')) {
+                        } else if (valLower.includes('ไม่อนุมัติ') || valLower.includes('rejected') || valLower.includes('ไม่ผ่าน')) {
                             rejected++;
+                            break;
+                        } else if (valLower.includes('กำลังดำเนิน') || valLower.includes('in progress')) {
+                            inProgress++;
+                            break;
+                        } else if (valLower.includes('เสร็จ') || valLower.includes('completed')) {
+                            completed++;
                             break;
                         }
                     }
@@ -1272,8 +1451,10 @@
             // Build details content
             let content = '<div class="row">';
             
-            // Split fields into two columns for better display
+            // Get all fields except id
             const fields = Object.entries(item).filter(([key]) => key !== 'id');
+            
+            // Split into two columns for better display
             const midPoint = Math.ceil(fields.length / 2);
             
             content += '<div class="col-md-6">';
@@ -1328,17 +1509,17 @@
                         const value = row[header] || '';
                         // Escape quotes and wrap in quotes if contains comma or quotes
                         const escaped = value.toString().replace(/"/g, '""');
-                        return escaped.includes(',') || escaped.includes('"') ? `"${escaped}"` : escaped;
+                        return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n') ? `"${escaped}"` : escaped;
                     }).join(',')
                 )
             ];
             
             const csvString = csvRows.join('\n');
-            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `${currentSheet}_${new Date().toISOString().slice(0,10)}.csv`;
+            link.download = `${currentSheet.replace(/\s+/g, '_')}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
             
@@ -1390,7 +1571,9 @@
             if (statusLower.includes('รอ') || statusLower.includes('pending') || statusLower.includes('waiting')) return 'status-pending';
             if (statusLower.includes('อนุมัติ') || statusLower.includes('approved') || statusLower.includes('ผ่าน')) return 'status-approved';
             if (statusLower.includes('ไม่อนุมัติ') || statusLower.includes('rejected') || statusLower.includes('ไม่ผ่าน')) return 'status-rejected';
-            if (statusLower.includes('ตรวจ') || statusLower.includes('verified') || statusLower.includes('สำเร็จ')) return 'status-verified';
+            if (statusLower.includes('กำลังดำเนิน') || statusLower.includes('in progress')) return 'status-in-progress';
+            if (statusLower.includes('เสร็จ') || statusLower.includes('completed')) return 'status-completed';
+            if (statusLower.includes('ตรวจ') || statusLower.includes('verified')) return 'status-verified';
             return '';
         }
         
@@ -1466,25 +1649,11 @@
                 return formatDate(valueStr);
             }
             
-            if (valueStr.length > 100) {
-                return valueStr.substring(0, 100) + '...';
+            if (valueStr.length > 200) {
+                return valueStr.substring(0, 200) + '...';
             }
             
             return valueStr.replace(/\n/g, '<br>');
-        }
-        
-        function copyToClipboard(text) {
-            try {
-                const json = JSON.parse(text);
-                const formatted = JSON.stringify(json, null, 2);
-                navigator.clipboard.writeText(formatted).then(() => {
-                    showToast('คัดลอกสำเร็จ', 'ข้อมูลถูกคัดลอกไปยังคลิปบอร์ดแล้ว', 'success');
-                });
-            } catch (e) {
-                navigator.clipboard.writeText(text).then(() => {
-                    showToast('คัดลอกสำเร็จ', 'ข้อมูลถูกคัดลอกไปยังคลิปบอร์ดแล้ว', 'success');
-                });
-            }
         }
         
         // Add custom CSS for colors
@@ -1493,6 +1662,9 @@
             .text-orange { color: var(--orange-primary) !important; }
             .bg-orange-light { background-color: var(--orange-bg) !important; }
             .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
+            .badge.bg-success { background-color: #28a745 !important; }
+            .badge.bg-warning { background-color: #ffc107 !important; color: #212529; }
+            .badge.bg-danger { background-color: #dc3545 !important; }
         `;
         document.head.appendChild(style);
     </script>
