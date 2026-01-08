@@ -975,10 +975,20 @@
             }
         }
         
-        // Fetch data from Google Sheets (Public Method)
+        // Fetch data from Google Sheets (Public Method) with specific columns
         async function fetchSheetData(sheetName) {
             // URL for public Google Sheets (published to web)
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+            let url;
+            
+            if (sheetName === 'Dataโครงการ') {
+                // ดึงเฉพาะคอลัม A-P สำหรับ Dataโครงการ
+                url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&range=A:P`;
+            } else if (sheetName === 'Dataการตรวจ') {
+                // ดึงคอลัมทั้งหมดสำหรับ Dataการตรวจ
+                url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+            } else {
+                url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
+            }
             
             try {
                 const response = await fetch(url);
@@ -994,13 +1004,20 @@
                     return generateSampleData(sheetName);
                 }
                 
-                return parseCSV(csvText);
+                return parseCSV(csvText, sheetName);
             } catch (error) {
                 console.error(`Error fetching ${sheetName}:`, error);
                 
                 // Try alternative method
                 try {
-                    const altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(sheetName)}`;
+                    let altUrl;
+                    if (sheetName === 'Dataโครงการ') {
+                        // ดึงเฉพาะคอลัม A-P สำหรับ Dataโครงการ (alternative method)
+                        altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(sheetName)}&range=A:P`;
+                    } else {
+                        altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(sheetName)}`;
+                    }
+                    
                     const altResponse = await fetch(altUrl);
                     
                     if (!altResponse.ok) {
@@ -1008,7 +1025,7 @@
                     }
                     
                     const csvText = await altResponse.text();
-                    return parseCSV(csvText);
+                    return parseCSV(csvText, sheetName);
                 } catch (altError) {
                     console.error('Alternative method also failed:', altError);
                     
@@ -1019,8 +1036,8 @@
             }
         }
         
-        // Parse CSV data
-        function parseCSV(csvText) {
+        // Parse CSV data with specific handling for each sheet
+        function parseCSV(csvText, sheetName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             
             if (lines.length === 0) {
@@ -1037,9 +1054,34 @@
                 const values = parseCSVLine(lines[i]);
                 const item = {};
                 
+                // สำหรับ Dataโครงการ: ดึงเฉพาะคอลัม A-P (16 คอลัมแรก)
+                // สำหรับ Dataการตรวจ: ดึงทั้งหมด และกำหนดคอลัม R เป็น "เงื่อนไขโครงการ"
                 headers.forEach((header, index) => {
-                    item[header] = values[index] || '';
+                    // สำหรับ Dataโครงการ: ข้ามคอลัมหลัง P (index > 15)
+                    if (sheetName === 'Dataโครงการ' && index >= 16) {
+                        return;
+                    }
+                    
+                    const value = values[index] || '';
+                    item[header] = value;
+                    
+                    // สำหรับ Dataการตรวจ: คอลัมที่ 18 (index 17) คือคอลัม R "เงื่อนไขโครงการ"
+                    if (sheetName === 'Dataการตรวจ' && index === 17) {
+                        // ตั้งชื่อคอลัม R ว่า "เงื่อนไขโครงการ"
+                        item['เงื่อนไขโครงการ'] = value;
+                        // สร้างคอลัม "ผลการตรวจ" จากคอลัม R
+                        item['ผลการตรวจ'] = value === 'ผ่าน' ? 'ผ่าน' : 
+                                           value === 'ไม่ผ่าน' ? 'ไม่ผ่าน' : 'รอผลตรวจ';
+                    }
                 });
+                
+                // สำหรับ Dataการตรวจ: ถ้ายังไม่มีคอลัม "ผลการตรวจ" ให้เพิ่มจากคอลัม "เงื่อนไขโครงการ"
+                if (sheetName === 'Dataการตรวจ' && !item['ผลการตรวจ']) {
+                    // ตรวจสอบว่ามีคอลัม "เงื่อนไขโครงการ" หรือไม่
+                    const conditionValue = item['เงื่อนไขโครงการ'] || item['เงื่อนไข'] || '';
+                    item['ผลการตรวจ'] = conditionValue === 'ผ่าน' ? 'ผ่าน' : 
+                                       conditionValue === 'ไม่ผ่าน' ? 'ไม่ผ่าน' : 'รอผลตรวจ';
+                }
                 
                 // Add unique ID
                 item.id = `row-${i}-${Date.now()}`;
@@ -1091,7 +1133,8 @@
                     const randomType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
                     const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
                     
-                    sampleData.push({
+                    // สร้างข้อมูลตัวอย่างตามคอลัม A-P (16 คอลัม)
+                    const projectData = {
                         'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
                         'ชื่อโครงการ': `โครงการ${randomType}ที่ ${i}`,
                         'ประเภทโครงการ': randomType,
@@ -1102,26 +1145,40 @@
                         'สถานะ': randomStatus,
                         'งบประมาณสนับสนุน': (Math.floor(Math.random() * 200000) + 10000).toLocaleString(),
                         'หมายเหตุ': `หมายเหตุโครงการ ${randomType}ที่ ${i}`,
+                        // คอลัม K-P ตัวอย่างเพิ่มเติม
+                        'พืชที่ปลูก': randomType.includes('ปลูก') ? randomType.replace('ปลูก', '') : '-',
+                        'พันธุ์พืช/สัตว์': `พันธุ์ ${Math.floor(Math.random() * 5) + 1}`,
+                        'แหล่งน้ำ': ['บ่อน้ำ', 'น้ำประปา', 'น้ำฝน'][Math.floor(Math.random() * 3)],
+                        'ระยะเวลาดำเนินการ': `${Math.floor(Math.random() * 12) + 1} เดือน`,
+                        'ผู้รับผิดชอบ': `เจ้าหน้าที่ ${Math.floor(Math.random() * 10) + 1}`,
+                        'ติดต่อ': `08${Math.floor(Math.random() * 90000000) + 10000000}`,
                         'id': `project-${i}`
-                    });
+                    };
+                    
+                    sampleData.push(projectData);
                 } else if (sheetName === 'Dataการตรวจ') {
                     const inspectionResults = ['ผ่าน', 'ไม่ผ่าน', 'รอผลตรวจ'];
                     const randomResult = inspectionResults[Math.floor(Math.random() * inspectionResults.length)];
                     
-                    sampleData.push({
+                    const inspectionData = {
                         'รหัสการตรวจ': `INS${String(i).padStart(3, '0')}`,
                         'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
                         'ชื่อโครงการ': `โครงการตรวจแปลงที่ ${i}`,
                         'ชื่อเกษตรกร': `เกษตรกร ${i}`,
                         'วันที่ตรวจ': `${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2566`,
                         'ผู้ตรวจ': `ผู้ตรวจ ${Math.floor(Math.random() * 5) + 1}`,
-                        'ผลการตรวจ': randomResult,
+                        // คอลัม R (คอลัมที่ 18) จะเป็น "เงื่อนไขโครงการ"
+                        'เงื่อนไขโครงการ': randomResult,
                         'คะแนนการตรวจ': Math.floor(Math.random() * 100),
                         'ข้อสังเกต': `พื้นที่ปลูกมีความเหมาะสม ${randomResult === 'ผ่าน' ? 'ดี' : 'ต้องปรับปรุง'}`,
                         'คำแนะนำ': randomResult === 'ผ่าน' ? 'ดำเนินการตามแผนได้' : 'ควรปรับปรุงพื้นที่ก่อนดำเนินการต่อ',
-                        'สถานะหลังตรวจ': randomResult === 'ผ่าน' ? 'อนุมัติแล้ว' : 'รอการปรับปรุง',
+                        'สถานะหลังตรวจ': randomResult === 'ผ่าน' ? 'อนุมัติแล้ว' : 'รอการปรับปรุง`,
+                        // เพิ่มคอลัม "ผลการตรวจ" จากคอลัม R
+                        'ผลการตรวจ': randomResult,
                         'id': `inspection-${i}`
-                    });
+                    };
+                    
+                    sampleData.push(inspectionData);
                 }
             }
             
@@ -1147,6 +1204,11 @@
             
             // Apply any existing filters
             filterData();
+            
+            // สำหรับ Dataการตรวจ: จัดการคอลัม "เงื่อนไขโครงการ" ให้แสดงใน modal
+            if (currentSheet === 'Dataการตรวจ') {
+                updateInspectionStats();
+            }
         }
         
         // Generate table headers based on data keys
@@ -1337,9 +1399,10 @@
                 const resultFilter = document.getElementById('result-filter').value;
                 if (resultFilter !== 'all') {
                     data = data.filter(item => {
-                        // Look for result in any field
-                        return Object.values(item).some(value => {
-                            if (typeof value === 'string') {
+                        // Look for result in any field (ค้นหาจาก "ผลการตรวจ" หรือ "เงื่อนไขโครงการ")
+                        return Object.entries(item).some(([key, value]) => {
+                            if (typeof value === 'string' && 
+                                (key === 'ผลการตรวจ' || key === 'เงื่อนไขโครงการ')) {
                                 return value.toLowerCase().includes(resultFilter);
                             }
                             return false;
@@ -1434,27 +1497,23 @@
                 return;
             }
             
-            // Count by result
+            // Count by result (นับจากคอลัม "ผลการตรวจ" หรือ "เงื่อนไขโครงการ")
             let passed = 0;
             let waiting = 0;
             let failed = 0;
             
             data.forEach(item => {
-                // Look for result in any field
-                for (const value of Object.values(item)) {
-                    if (typeof value === 'string') {
-                        const valLower = value.toLowerCase();
-                        if (valLower.includes('ผ่าน') || valLower.includes('pass') || valLower.includes('approved')) {
-                            passed++;
-                            break;
-                        } else if (valLower.includes('รอ') || valLower.includes('waiting') || valLower.includes('pending')) {
-                            waiting++;
-                            break;
-                        } else if (valLower.includes('ไม่ผ่าน') || valLower.includes('fail') || valLower.includes('rejected')) {
-                            failed++;
-                            break;
-                        }
-                    }
+                const result = item['ผลการตรวจ'] || item['เงื่อนไขโครงการ'] || '';
+                const resultLower = result.toLowerCase();
+                
+                if (resultLower.includes('ผ่าน') || resultLower === 'pass' || resultLower === 'approved') {
+                    passed++;
+                } else if (resultLower.includes('รอ') || resultLower.includes('waiting') || resultLower.includes('pending')) {
+                    waiting++;
+                } else if (resultLower.includes('ไม่ผ่าน') || resultLower.includes('fail') || resultLower.includes('rejected')) {
+                    failed++;
+                } else {
+                    waiting++; // ค่าเริ่มต้นถ้าไม่พบข้อมูล
                 }
             });
             
@@ -1530,15 +1589,16 @@
             // Build details content with emphasis on result
             let content = '<div class="row">';
             
-            // Show result prominently at top
-            const result = item['ผลการตรวจ'] || 'ไม่ระบุ';
+            // Show result prominently at top (ใช้ข้อมูลจาก "ผลการตรวจ" หรือ "เงื่อนไขโครงการ")
+            const result = item['ผลการตรวจ'] || item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
             const resultClass = getResultClass(result);
             
             content += `
                 <div class="col-12 mb-4">
                     <div class="text-center">
                         <div class="result-badge ${resultClass}" style="font-size: 1.2rem; padding: 12px 24px; display: inline-block;">
-                            ผลการตรวจ: ${result}
+                            ผลการตรวจ: ${result} 
+                            ${item['เงื่อนไขโครงการ'] && item['เงื่อนไขโครงการ'] !== result ? `<br><small>(จากเงื่อนไขโครงการ: ${item['เงื่อนไขโครงการ']})</small>` : ''}
                         </div>
                     </div>
                 </div>
@@ -1547,7 +1607,7 @@
             // Get all fields except id, organize by importance
             const importantFields = ['รหัสโครงการ', 'ชื่อโครงการ', 'ชื่อเกษตรกร', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ', 'ข้อสังเกต', 'คำแนะนำ', 'สถานะหลังตรวจ'];
             const otherFields = Object.entries(item)
-                .filter(([key]) => key !== 'id' && key !== 'ผลการตรวจ' && !importantFields.includes(key))
+                .filter(([key]) => key !== 'id' && key !== 'ผลการตรวจ' && key !== 'เงื่อนไขโครงการ' && !importantFields.includes(key))
                 .map(([key]) => key);
             
             const allFields = [...importantFields, ...otherFields];
@@ -1583,6 +1643,19 @@
                     `;
                 }
             }
+            
+            // แสดงคอลัม "เงื่อนไขโครงการ" หากมี (แต่ยังไม่แสดงด้านบน)
+            if (item['เงื่อนไขโครงการ'] && !allFields.includes('เงื่อนไขโครงการ')) {
+                content += `
+                    <div class="mb-3">
+                        <strong class="d-block text-green">เงื่อนไขโครงการ (คอลัม R)</strong>
+                        <div class="p-2 bg-light rounded">
+                            <span class="result-badge ${resultClass}">${item['เงื่อนไขโครงการ']}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
             content += '</div>';
             
             content += '</div>';
@@ -1684,8 +1757,8 @@
             if (!result) return 'result-waiting';
             
             const resultLower = result.toLowerCase();
-            if (resultLower.includes('ผ่าน') || resultLower.includes('pass') || resultLower.includes('approved')) return 'result-passed';
-            if (resultLower.includes('ไม่ผ่าน') || resultLower.includes('fail') || resultLower.includes('rejected')) return 'result-failed';
+            if (resultLower === 'ผ่าน' || resultLower.includes('ผ่าน')) return 'result-passed';
+            if (resultLower === 'ไม่ผ่าน' || resultLower.includes('ไม่ผ่าน')) return 'result-failed';
             return 'result-waiting';
         }
         
@@ -1782,7 +1855,8 @@
             const keyLower = key.toLowerCase();
             const valueStr = value.toString();
             
-            if (keyLower.includes('ผลการตรวจ')) {
+            // กำหนดให้คอลัม "เงื่อนไขโครงการ" และ "ผลการตรวจ" แสดงผลเป็น badge
+            if (keyLower.includes('ผลการตรวจ') || keyLower.includes('เงื่อนไขโครงการ')) {
                 const resultClass = getResultClass(valueStr);
                 return `<span class="result-badge ${resultClass}">${valueStr}</span>`;
             }
