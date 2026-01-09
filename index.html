@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -362,6 +362,12 @@
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
+        }
+        
+        .condition-pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
         }
         
         .condition-other {
@@ -766,26 +772,18 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-9">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
                                 <input type="text" id="search-input" class="form-control" placeholder="ค้นหาโครงการ, ชื่อเกษตรกร, ที่อยู่แปลง...">
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <select id="status-filter" class="form-select">
-                                <option value="all">สถานะทั้งหมด</option>
-                                <option value="รอ">รอตรวจสอบ</option>
-                                <option value="อนุมัติ">อนุมัติแล้ว</option>
-                                <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
-                                <option value="กำลังดำเนิน">กำลังดำเนินการ</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
                             <select id="condition-filter" class="form-select">
                                 <option value="all">เงื่อนไขทั้งหมด</option>
                                 <option value="ผ่าน">ผ่าน</option>
                                 <option value="ไม่ผ่าน">ไม่ผ่าน</option>
+                                <option value="รอตรวจแปลง">รอตรวจแปลง</option>
                             </select>
                         </div>
                     </div>
@@ -795,6 +793,9 @@
                         <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
                         <button class="btn-outline-green" id="refresh-btn">
                             <i class="fas fa-redo-alt me-1"></i>รีเฟรช
+                        </button>
+                        <button class="btn-outline-green" id="reset-filters">
+                            <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
                         </button>
                     </div>
                 </div>
@@ -857,7 +858,7 @@
                         </div>
                         <h4 class="mb-2">ไม่พบข้อมูล</h4>
                         <p class="text-muted mb-3">ลองเปลี่ยนคำค้นหาหรือตัวกรองดู</p>
-                        <button class="btn-outline-green" id="reset-filters">
+                        <button class="btn-outline-green" id="reset-filters-btn">
                             <i class="fas fa-filter me-1"></i>ล้างตัวกรองทั้งหมด
                         </button>
                     </div>
@@ -924,7 +925,7 @@
         // Field mapping for project sheet (คอลัมน์ A-P) - ตาม Google Sheets จริง
         const PROJECT_FIELDS_A_P = [
             'เลขแปลงintech',           // A
-            'เลขโควต้า',                // B
+            'เลขโควต้า',               // B
             'ชื่อชาวไร่',              // C
             'รหัสนักเกษตร',            // D
             'ชื่อนักเกษตร',            // E
@@ -937,7 +938,7 @@
             'พิกัด',                   // L
             'ตรวจแปลง',                // M
             'สถานะโครงการ',            // N
-            'เงื่อนไขโครงการ'          // O
+            'เงื่อนไขโครงการ'          // O (จากชีท Dataการตรวจ)
         ];
         
         // Current state
@@ -971,6 +972,7 @@
             
             // Reset filters button
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
+            document.getElementById('reset-filters-btn').addEventListener('click', resetFilters);
             
             // Export button
             document.getElementById('export-btn').addEventListener('click', exportData);
@@ -982,9 +984,6 @@
             
             // Search input
             document.getElementById('search-input').addEventListener('input', filterData);
-            
-            // Status filter
-            document.getElementById('status-filter').addEventListener('change', filterData);
             
             // Condition filter
             document.getElementById('condition-filter').addEventListener('change', filterData);
@@ -1142,6 +1141,13 @@
             
             // Convert map back to array
             const mergedProjects = Array.from(projectMap.values());
+            
+            // Set "รอตรวจแปลง" for projects without condition
+            mergedProjects.forEach(project => {
+                if (!project['เงื่อนไขโครงการ'] || project['เงื่อนไขโครงการ'].trim() === '') {
+                    project['เงื่อนไขโครงการ'] = 'รอตรวจแปลง';
+                }
+            });
             
             // Filter for planting sugarcane in field (ปลูกอ้อยในนา)
             allData['planting-sugarcane-field'] = mergedProjects.filter(item => {
@@ -1598,7 +1604,6 @@
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             const conditionFilter = document.getElementById('condition-filter').value;
-            const statusFilter = document.getElementById('status-filter').value;
             
             let data = allData[currentSheet];
             
@@ -1608,14 +1613,6 @@
                     return Object.values(item).some(value => 
                         value && value.toString().toLowerCase().includes(searchTerm)
                     );
-                });
-            }
-            
-            // Apply status filter
-            if (statusFilter !== 'all') {
-                data = data.filter(item => {
-                    const status = item['สถานะโครงการ'] || '';
-                    return status.toLowerCase().includes(statusFilter.toLowerCase());
                 });
             }
             
@@ -1629,6 +1626,8 @@
                         return conditionLower === 'ผ่าน';
                     } else if (conditionFilter === 'ไม่ผ่าน') {
                         return conditionLower === 'ไม่ผ่าน';
+                    } else if (conditionFilter === 'รอตรวจแปลง') {
+                        return conditionLower === 'รอตรวจแปลง';
                     }
                     return true;
                 });
@@ -1673,7 +1672,6 @@
         // Reset all filters
         function resetFilters() {
             document.getElementById('search-input').value = '';
-            document.getElementById('status-filter').value = 'all';
             document.getElementById('condition-filter').value = 'all';
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
@@ -1915,6 +1913,7 @@
             const conditionLower = condition.toLowerCase().trim();
             if (conditionLower === 'ผ่าน') return 'condition-passed';
             if (conditionLower === 'ไม่ผ่าน') return 'condition-failed';
+            if (conditionLower === 'รอตรวจแปลง') return 'condition-pending';
             return 'condition-other';
         }
         
