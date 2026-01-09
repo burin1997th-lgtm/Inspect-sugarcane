@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -320,7 +320,7 @@
             border: 1px solid #A5D6A7;
         }
         
-        /* Inspection Result Badges */
+        /* Inspection Result Badges - แก้ไข: ปรับสีให้ชัดเจนและเพิ่มประเภทอื่น */
         .result-badge {
             padding: 8px 16px;
             border-radius: 20px;
@@ -331,18 +331,28 @@
             min-width: 100px;
         }
         
+        /* สีเขียวชัดเจนสำหรับ "ผ่าน" */
         .result-passed {
-            background-color: var(--pastel-green);
-            color: var(--green-dark);
-            border: 2px solid var(--pastel-green-dark);
-            box-shadow: 0 2px 5px rgba(129, 199, 132, 0.2);
+            background-color: #d4edda !important;
+            color: #155724 !important;
+            border: 2px solid #c3e6cb !important;
+            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
         }
         
+        /* สีแดงชัดเจนสำหรับ "ไม่ผ่าน" */
         .result-failed {
-            background-color: var(--pastel-pink);
-            color: #C62828;
-            border: 2px solid #EF9A9A;
-            box-shadow: 0 2px 5px rgba(239, 154, 154, 0.2);
+            background-color: #f8d7da !important;
+            color: #721c24 !important;
+            border: 2px solid #f5c6cb !important;
+            box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
+        }
+        
+        /* สีเทาสำหรับค่าอื่นที่ไม่ใช่ "ผ่าน" หรือ "ไม่ผ่าน" */
+        .result-other {
+            background-color: #e9ecef !important;
+            color: #495057 !important;
+            border: 2px solid #dee2e6 !important;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         /* Anomaly Detection Styles */
@@ -1382,6 +1392,7 @@
         }
         
         // Detect anomalies in condition data (เฉพาะเงื่อนไขโครงการ)
+        // แก้ไข: ปรับตรวจจับความผิดปกติให้ถูกต้องตามเงื่อนไขใหม่
         function detectConditionAnomalies() {
             anomalies = [];
             const data = allData['Dataการตรวจ'];
@@ -1396,34 +1407,27 @@
                 
                 // 1. Check for empty or missing condition (คอลัมน์ R)
                 const condition = item['เงื่อนไขโครงการ'] || '';
-                if (!condition || condition.trim() === '') {
+                const conditionTrimmed = condition.trim();
+                
+                if (!condition || conditionTrimmed === '') {
                     rowAnomalies.push({
                         type: 'missing_condition',
                         message: `เงื่อนไขโครงการ (คอลัมน์ R) ว่างเปล่า`,
                         field: 'เงื่อนไขโครงการ',
                         value: condition
                     });
-                }
-                
-                // 2. Check for unusual condition values (not "ผ่าน" or "ไม่ผ่าน")
-                const normalizedCondition = condition.toLowerCase().trim();
-                const validConditions = ['ผ่าน', 'ไม่ผ่าน'];
-                let isValidCondition = false;
-                
-                for (const valid of validConditions) {
-                    if (normalizedCondition === valid.toLowerCase()) {
-                        isValidCondition = true;
-                        break;
+                } 
+                // 2. Check for invalid condition values (not "ผ่าน" or "ไม่ผ่าน")
+                else {
+                    const normalizedCondition = conditionTrimmed.toLowerCase();
+                    if (normalizedCondition !== 'ผ่าน' && normalizedCondition !== 'ไม่ผ่าน') {
+                        rowAnomalies.push({
+                            type: 'invalid_condition',
+                            message: `เงื่อนไขโครงการ "${conditionTrimmed}" ไม่ถูกต้อง (ควรเป็น "ผ่าน" หรือ "ไม่ผ่าน")`,
+                            field: 'เงื่อนไขโครงการ',
+                            value: conditionTrimmed
+                        });
                     }
-                }
-                
-                if (!isValidCondition && condition.trim() !== '') {
-                    rowAnomalies.push({
-                        type: 'unusual_condition',
-                        message: `เงื่อนไขโครงการ "${condition}" ไม่ใช่ "ผ่าน" หรือ "ไม่ผ่าน"`,
-                        field: 'เงื่อนไขโครงการ',
-                        value: condition
-                    });
                 }
                 
                 // 3. Check for condition with multiple values (contains comma)
@@ -1484,7 +1488,7 @@
             Object.entries(anomalyTypes).forEach(([type, count]) => {
                 const typeNames = {
                     'missing_condition': 'เงื่อนไขโครงการว่างเปล่า',
-                    'unusual_condition': 'เงื่อนไขโครงการไม่ถูกต้อง',
+                    'invalid_condition': 'เงื่อนไขโครงการไม่ถูกต้อง',
                     'multiple_conditions': 'เงื่อนไขโครงการมีหลายค่า'
                 };
                 
@@ -1665,9 +1669,10 @@
                     const value = item[header] || '';
                     
                     // Format special fields
+                    // แก้ไข: ใช้ฟังก์ชัน getConditionClass ใหม่สำหรับเงื่อนไขโครงการ
                     if (header === 'เงื่อนไขโครงการ' || header.toLowerCase().includes('เงื่อนไข')) {
-                        const resultClass = getConditionClass(value);
-                        cell.innerHTML = `<span class="result-badge ${resultClass}">${value || 'ไม่ระบุ'}</span>`;
+                        const conditionClass = getConditionClass(value);
+                        cell.innerHTML = `<span class="result-badge ${conditionClass}">${value || 'ไม่ระบุ'}</span>`;
                         if (currentSheet === 'Dataการตรวจ') {
                             const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
                             if (rowAnomaly && (header === 'เงื่อนไขโครงการ' || header.toLowerCase().includes('เงื่อนไข'))) {
@@ -1855,6 +1860,7 @@
         }
         
         // Filter data based on search and filters
+        // แก้ไข: ปรับการกรองข้อมูลสำหรับเงื่อนไขโครงการให้ถูกต้อง
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
@@ -1884,9 +1890,15 @@
                 const resultFilter = document.getElementById('result-filter').value;
                 if (resultFilter !== 'all') {
                     data = data.filter(item => {
-                        // Look for condition in any field
                         const condition = item['เงื่อนไขโครงการ'] || '';
-                        return condition.toLowerCase().includes(resultFilter.toLowerCase());
+                        const conditionLower = condition.toLowerCase().trim();
+                        
+                        if (resultFilter === 'ผ่าน') {
+                            return conditionLower === 'ผ่าน';
+                        } else if (resultFilter === 'ไม่ผ่าน') {
+                            return conditionLower === 'ไม่ผ่าน';
+                        }
+                        return false;
                     });
                 }
                 
@@ -1928,7 +1940,7 @@
                         // Filter for passed conditions only
                         data = data.filter(item => {
                             const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition.toLowerCase().includes('ผ่าน');
+                            return condition.toLowerCase().trim() === 'ผ่าน';
                         });
                         break;
                 }
@@ -1971,8 +1983,9 @@
         }
         
         // Update inspection statistics
+        // แก้ไข: ปรับการนับสถิติให้ถูกต้องตามเงื่อนไขใหม่
         function updateInspectionStats() {
-            const data = allData['Dataการตรวจ'];
+            const data = filteredData.length > 0 ? filteredData : allData['Dataการตรวจ'];
             
             if (data.length === 0) {
                 document.getElementById('total-inspections').textContent = '0';
@@ -1981,17 +1994,17 @@
                 return;
             }
             
-            // Count by condition
+            // Count by condition - นับเฉพาะ "ผ่าน" และ "ไม่ผ่าน" เท่านั้น
             let passed = 0;
             let failed = 0;
             
             data.forEach(item => {
                 const condition = item['เงื่อนไขโครงการ'] || '';
-                const conditionLower = condition.toLowerCase();
+                const conditionLower = condition.toLowerCase().trim();
                 
-                if (conditionLower.includes('ผ่าน')) {
+                if (conditionLower === 'ผ่าน') {
                     passed++;
-                } else if (conditionLower.includes('ไม่ผ่าน')) {
+                } else if (conditionLower === 'ไม่ผ่าน') {
                     failed++;
                 }
                 // ไม่นับกรณีอื่น ๆ (ว่างเปล่าหรือค่าอื่น)
@@ -2389,13 +2402,14 @@
             return '';
         }
         
+        // แก้ไข: ปรับฟังก์ชัน getConditionClass ให้คืนค่า class ที่ถูกต้อง
         function getConditionClass(condition) {
-            if (!condition) return '';
+            if (!condition) return 'result-other';
             
-            const conditionLower = condition.toLowerCase();
-            if (conditionLower.includes('ผ่าน')) return 'result-passed';
-            if (conditionLower.includes('ไม่ผ่าน')) return 'result-failed';
-            return '';
+            const conditionLower = condition.toLowerCase().trim();
+            if (conditionLower === 'ผ่าน') return 'result-passed';
+            if (conditionLower === 'ไม่ผ่าน') return 'result-failed';
+            return 'result-other';
         }
         
         // Format date to Thai date (พ.ศ.)
@@ -2485,16 +2499,18 @@
             return match ? parseFloat(match.join('')) : 0;
         }
         
+        // แก้ไข: ปรับฟังก์ชัน formatFieldValue ให้แสดงสีถูกต้องสำหรับเงื่อนไขโครงการ
         function formatFieldValue(key, value) {
             if (!value || value.toString().trim() === '') return '-';
             
             const keyLower = key.toLowerCase();
             const valueStr = value.toString().trim();
             
+            // สำหรับคอลัมน์ "เงื่อนไขโครงการ" หรือคอลัมน์ที่เกี่ยวข้อง
             if (keyLower.includes('เงื่อนไขโครงการ') || 
                 (keyLower.includes('เงื่อนไข') && !keyLower.includes('อื่น'))) {
                 const conditionClass = getConditionClass(valueStr);
-                return `<span class="result-badge ${conditionClass}">${valueStr}</span>`;
+                return `<span class="result-badge ${conditionClass}">${valueStr || 'ไม่ระบุ'}</span>`;
             }
             
             if (keyLower.includes('สถานะ')) {
