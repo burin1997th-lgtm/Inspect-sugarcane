@@ -64,7 +64,7 @@
         }
         
         .logo-img {
-            max-width: 120px; /* ขนาดใหญ่ขึ้นสำหรับโลโก้ KBS */
+            max-width: 120px;
             max-height: 70px;
             margin-right: 20px;
             border-radius: 8px;
@@ -367,6 +367,12 @@
             border: 1px solid #FFCC80;
         }
         
+        .condition-checked {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border: 1px solid #90CAF9;
+        }
+        
         /* Setup Section */
         .setup-section {
             text-align: center;
@@ -479,6 +485,12 @@
             text-align: center;
             border: 1px solid #eee;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .stat-value {
@@ -513,7 +525,7 @@
         }
         
         .footer-logo {
-            max-width: 80px; /* ขนาดใหญ่ขึ้นสำหรับ footer */
+            max-width: 80px;
             margin-bottom: 15px;
             filter: brightness(0) invert(1);
         }
@@ -556,6 +568,14 @@
                 max-height: 60px;
                 margin-right: 15px;
             }
+            
+            .project-stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                min-width: calc(50% - 10px);
+            }
         }
         
         @media (max-width: 576px) {
@@ -574,7 +594,7 @@
             }
             
             .stat-item {
-                min-width: 120px;
+                min-width: calc(50% - 10px);
                 padding: 10px;
             }
             
@@ -595,6 +615,10 @@
             
             .footer-logo {
                 max-width: 60px;
+            }
+            
+            .filter-section .row > div {
+                margin-bottom: 10px;
             }
         }
         
@@ -681,6 +705,41 @@
             margin: 0 auto 1.5rem;
             display: block;
         }
+        
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+        
+        .filter-section-title {
+            color: var(--primary-green);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        
+        /* Advanced Filter Styles */
+        .advanced-filter {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        /* Checked Projects Highlight */
+        .checked-highlight {
+            background-color: #f0f7ff !important;
+            border-left: 4px solid #2196F3 !important;
+        }
+        
+        .stat-item-checked {
+            border-top: 4px solid #2196F3 !important;
+        }
     </style>
 </head>
 <body>
@@ -689,7 +748,6 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-container">
-                    <!-- เปลี่ยนลิงก์โลโก้เป็นลิงก์ใหม่จาก Wikimedia -->
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
                          alt="KBS Group Logo" 
                          class="logo-img kbs-logo">
@@ -720,7 +778,6 @@
                 <i class="fas fa-cog"></i>ตั้งค่าเริ่มต้นระบบ
             </div>
             <div class="card-body setup-section">
-                <!-- เพิ่มโลโก้ KBS ในหน้า setup -->
                 <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
                      alt="KBS Group Logo" 
                      class="setup-kbs-logo kbs-logo">
@@ -771,7 +828,7 @@
                 </button>
             </div>
 
-            <!-- Project Stats -->
+            <!-- Project Stats - เพิ่มสถิติตรวจแล้ว -->
             <div class="project-stats" id="project-stats">
                 <div class="stat-item">
                     <div class="stat-value text-success" id="total-projects">0</div>
@@ -780,6 +837,14 @@
                 <div class="stat-item">
                     <div class="stat-value" id="total-area">0</div>
                     <div class="stat-title">พื้นที่รวม (ไร่)</div>
+                </div>
+                <div class="stat-item stat-item-checked">
+                    <div class="stat-value text-primary" id="checked-projects">0</div>
+                    <div class="stat-title">โครงการที่ตรวจแล้ว</div>
+                </div>
+                <div class="stat-item stat-item-checked">
+                    <div class="stat-value text-primary" id="checked-area">0</div>
+                    <div class="stat-title">พื้นที่ตรวจแล้ว (ไร่)</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-value" id="passed-projects">0</div>
@@ -796,39 +861,105 @@
                 <button class="btn btn-sm btn-outline-green active" data-view="table">
                     <i class="fas fa-table me-1"></i>มุมมองตาราง
                 </button>
+                <button class="btn btn-sm btn-outline-green ms-2" data-view="card">
+                    <i class="fas fa-th-large me-1"></i>มุมมองการ์ด
+                </button>
             </div>
 
-            <!-- Search and Filter -->
-            <div class="card">
-                <div class="card-body">
+            <!-- Search and Filter Section - ปรับปรุงใหม่ -->
+            <div class="filter-section">
+                <h5 class="filter-section-title">
+                    <i class="fas fa-filter me-2"></i>ค้นหาและกรองข้อมูล
+                </h5>
+                
+                <!-- Search Box -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-8">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" class="form-control" placeholder="ค้นหาชื่อเกษตรกร, เลขแปลง, ที่อยู่แปลง, รหัสนักเกษตร...">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="condition-filter" class="form-select">
+                            <option value="all">เงื่อนไขทั้งหมด</option>
+                            <option value="ผ่าน">ผ่านเงื่อนไข</option>
+                            <option value="ไม่ผ่าน">ไม่ผ่านเงื่อนไข</option>
+                            <option value="รอตรวจแปลง">รอตรวจแปลง</option>
+                            <option value="ตรวจแล้ว">ตรวจแล้วทั้งหมด</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Advanced Filters -->
+                <div class="advanced-filter">
                     <div class="row g-3">
-                        <div class="col-md-8">
-                            <div class="search-box">
-                                <i class="fas fa-search"></i>
-                                <input type="text" id="search-input" class="form-control" placeholder="ค้นหาชื่อเกษตรกร, เลขแปลง, ที่อยู่แปลง...">
-                            </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-muted">เขต</label>
+                            <select id="zone-filter" class="form-select">
+                                <option value="all">ทุกเขต</option>
+                                <!-- ตัวเลือกเขตจะถูกเพิ่มโดย JavaScript -->
+                            </select>
                         </div>
                         <div class="col-md-4">
-                            <select id="condition-filter" class="form-select">
-                                <option value="all">แสดงทั้งหมด</option>
-                                <option value="ผ่าน">ผ่านเงื่อนไข</option>
-                                <option value="ไม่ผ่าน">ไม่ผ่านเงื่อนไข</option>
-                                <option value="รอตรวจแปลง">รอตรวจแปลง</option>
+                            <label class="form-label small fw-bold text-muted">ชื่อนักเกษตร</label>
+                            <select id="farmer-officer-filter" class="form-select">
+                                <option value="all">นักเกษตรทั้งหมด</option>
+                                <!-- ตัวเลือกนักเกษตรจะถูกเพิ่มโดย JavaScript -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small fw-bold text-muted">ประเภทโครงการ</label>
+                            <select id="project-type-filter" class="form-select">
+                                <option value="all">ประเภททั้งหมด</option>
+                                <option value="ปลูกอ้อยในนา">ปลูกอ้อยในนา</option>
+                                <option value="เปลี่ยนพืชอื่นมาปลูกอ้อย">เปลี่ยนพืชอื่นมาปลูกอ้อย</option>
                             </select>
                         </div>
                     </div>
                     
-                    <div class="filter-buttons mt-3">
-                        <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-                        <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
-                        <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
-                        <button class="btn-outline-green" id="refresh-btn">
-                            <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
-                        </button>
-                        <button class="btn-outline-green" id="reset-filters">
-                            <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
-                        </button>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">ช่วงพื้นที่ (ไร่)</label>
+                            <div class="d-flex align-items-center">
+                                <input type="number" id="area-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
+                                <span class="mx-2">ถึง</span>
+                                <input type="number" id="area-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
+                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-area-filter">
+                                    <i class="fas fa-check me-1"></i>ตกลง
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-muted">% การงอก</label>
+                            <div class="d-flex align-items-center">
+                                <input type="number" id="germination-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
+                                <span class="mx-2">ถึง</span>
+                                <input type="number" id="germination-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
+                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-germination-filter">
+                                    <i class="fas fa-check me-1"></i>ตกลง
+                                </button>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Filter Buttons -->
+                <div class="filter-buttons mt-3">
+                    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                    <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
+                    <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
+                    <button class="filter-btn" data-filter="checked">ตรวจแล้ว</button>
+                    <button class="filter-btn" data-filter="high-germination">% การงอกสูง (&gt;80%)</button>
+                    <button class="btn-outline-green" id="refresh-btn">
+                        <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
+                    </button>
+                    <button class="btn-outline-green" id="reset-filters">
+                        <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
+                    </button>
+                    <button class="btn-kbs btn-sm" id="advanced-filter-toggle">
+                        <i class="fas fa-sliders-h me-1"></i>กรองละเอียด
+                    </button>
                 </div>
             </div>
 
@@ -924,7 +1055,6 @@
     <!-- Footer -->
     <div class="footer">
         <div class="container">
-            <!-- เปลี่ยนลิงก์โลโก้ใน footer เป็นลิงก์ใหม่จาก Wikimedia -->
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
                  alt="KBS Group Logo" 
                  class="footer-logo kbs-logo">
@@ -939,7 +1069,7 @@
                     <p class="mb-1">ข้อมูลระบบ:</p>
                     <p class="small mb-0">แสดงข้อมูลจาก Google Sheets (Public Mode)</p>
                     <p class="small mb-0">อัปเดตอัตโนมัติทุก 5 นาที</p>
-                    <p class="small mb-0">รุ่น: 1.0.0 | KBS Group Internal</p>
+                    <p class="small mb-0">รุ่น: 2.0.0 | KBS Group Internal</p>
                 </div>
             </div>
             <hr class="my-3" style="border-color: rgba(255,255,255,0.1);">
@@ -992,6 +1122,8 @@
         };
         let filteredData = [];
         let isSetupComplete = false;
+        let uniqueZones = new Set();
+        let uniqueFarmerOfficers = new Set();
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
@@ -1030,6 +1162,19 @@
             
             // Condition filter
             document.getElementById('condition-filter').addEventListener('change', filterData);
+            
+            // Zone filter
+            document.getElementById('zone-filter').addEventListener('change', filterData);
+            
+            // Farmer officer filter
+            document.getElementById('farmer-officer-filter').addEventListener('change', filterData);
+            
+            // Project type filter
+            document.getElementById('project-type-filter').addEventListener('change', filterData);
+            
+            // Area filter buttons
+            document.getElementById('apply-area-filter').addEventListener('click', filterData);
+            document.getElementById('apply-germination-filter').addEventListener('click', filterData);
             
             // Tab switching
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1075,6 +1220,18 @@
                     showView(currentView);
                     filterData(); // Re-apply filters with new view
                 });
+            });
+            
+            // Advanced filter toggle
+            document.getElementById('advanced-filter-toggle').addEventListener('click', function() {
+                const advancedFilter = document.querySelector('.advanced-filter');
+                if (advancedFilter.style.display === 'none') {
+                    advancedFilter.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-times me-1"></i>ปิดกรองละเอียด';
+                } else {
+                    advancedFilter.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-sliders-h me-1"></i>กรองละเอียด';
+                }
             });
             
             // Auto-refresh data every 5 minutes if setup is complete
@@ -1176,6 +1333,9 @@
                 // Update stats
                 updateProjectStats();
                 
+                // Update filter options
+                updateFilterOptions();
+                
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
             } catch (error) {
@@ -1218,6 +1378,16 @@
                     if (condition) {
                         project['เงื่อนไขโครงการ'] = condition;
                     }
+                    
+                    // Add inspection date if available
+                    if (inspection['วันที่ตรวจ']) {
+                        project['วันที่ตรวจ'] = inspection['วันที่ตรวจ'];
+                    }
+                    
+                    // Add inspector if available
+                    if (inspection['ผู้ตรวจ']) {
+                        project['ผู้ตรวจ'] = inspection['ผู้ตรวจ'];
+                    }
                 }
             });
             
@@ -1250,6 +1420,50 @@
             
             console.log(`ปลูกอ้อยในนา: ${allData['planting-sugarcane-field'].length} รายการ`);
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
+        }
+        
+        // Update filter dropdown options
+        function updateFilterOptions() {
+            const data = allData[currentSheet];
+            
+            // Clear existing options
+            uniqueZones.clear();
+            uniqueFarmerOfficers.clear();
+            
+            // Collect unique values
+            data.forEach(item => {
+                const zone = item['เขต'] || '';
+                if (zone && zone.trim() !== '') {
+                    uniqueZones.add(zone.trim());
+                }
+                
+                const farmerOfficer = item['ชื่อนักเกษตร'] || '';
+                if (farmerOfficer && farmerOfficer.trim() !== '') {
+                    uniqueFarmerOfficers.add(farmerOfficer.trim());
+                }
+            });
+            
+            // Update zone filter dropdown
+            const zoneFilter = document.getElementById('zone-filter');
+            zoneFilter.innerHTML = '<option value="all">ทุกเขต</option>';
+            
+            Array.from(uniqueZones).sort().forEach(zone => {
+                const option = document.createElement('option');
+                option.value = zone;
+                option.textContent = zone;
+                zoneFilter.appendChild(option);
+            });
+            
+            // Update farmer officer filter dropdown
+            const farmerOfficerFilter = document.getElementById('farmer-officer-filter');
+            farmerOfficerFilter.innerHTML = '<option value="all">นักเกษตรทั้งหมด</option>';
+            
+            Array.from(uniqueFarmerOfficers).sort().forEach(officer => {
+                const option = document.createElement('option');
+                option.value = officer;
+                option.textContent = officer;
+                farmerOfficerFilter.appendChild(option);
+            });
         }
         
         // Fetch data from Google Sheets (Public Method)
@@ -1356,13 +1570,15 @@
             return result.map(val => val.trim());
         }
         
-        // Update project statistics
+        // Update project statistics - เพิ่มสถิติตรวจแล้ว
         function updateProjectStats() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
             if (data.length === 0) {
                 document.getElementById('total-projects').textContent = '0';
                 document.getElementById('total-area').textContent = '0';
+                document.getElementById('checked-projects').textContent = '0';
+                document.getElementById('checked-area').textContent = '0';
                 document.getElementById('passed-projects').textContent = '0';
                 document.getElementById('pending-projects').textContent = '0';
                 return;
@@ -1370,6 +1586,8 @@
             
             // Calculate statistics
             let totalArea = 0;
+            let checkedCount = 0;
+            let checkedArea = 0;
             let passedCount = 0;
             let pendingCount = 0;
             
@@ -1378,8 +1596,14 @@
                 const area = parseFloat(item['พื้นที่']) || 0;
                 totalArea += area;
                 
-                // Count conditions
+                // Count checked projects (ผ่าน or ไม่ผ่าน)
                 const condition = item['เงื่อนไขโครงการ'] || '';
+                if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
+                    checkedCount++;
+                    checkedArea += area;
+                }
+                
+                // Count conditions
                 if (condition === 'ผ่าน') {
                     passedCount++;
                 } else if (condition === 'รอตรวจแปลง') {
@@ -1389,6 +1613,8 @@
             
             document.getElementById('total-projects').textContent = data.length;
             document.getElementById('total-area').textContent = totalArea.toFixed(2);
+            document.getElementById('checked-projects').textContent = checkedCount;
+            document.getElementById('checked-area').textContent = checkedArea.toFixed(2);
             document.getElementById('passed-projects').textContent = passedCount;
             document.getElementById('pending-projects').textContent = pendingCount;
         }
@@ -1445,6 +1671,7 @@
                 'เลขแปลงintech',
                 'ชื่อชาวไร่',
                 'เขต',
+                'ชื่อนักเกษตร',
                 'พื้นที่',
                 'วันที่ปลูก',
                 'เปอร์เซ็นการงอก',
@@ -1469,6 +1696,12 @@
             data.forEach((item) => {
                 const row = document.createElement('tr');
                 
+                // Add checked class for projects that have been inspected
+                const condition = item['เงื่อนไขโครงการ'] || '';
+                if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
+                    row.classList.add('checked-highlight');
+                }
+                
                 // Add data cells
                 tableColumns.forEach(column => {
                     const cell = document.createElement('td');
@@ -1485,7 +1718,10 @@
                         const germinationMatch = value.toString().match(/(\d+(\.\d+)?)/);
                         if (germinationMatch) {
                             const germination = parseFloat(germinationMatch[1]);
-                            cell.textContent = `${germination}%`;
+                            let badgeClass = 'bg-secondary';
+                            if (germination >= 80) badgeClass = 'bg-success';
+                            else if (germination >= 60) badgeClass = 'bg-warning';
+                            cell.innerHTML = `<span class="badge ${badgeClass}">${germination}%</span>`;
                         } else {
                             cell.textContent = value || '-';
                         }
@@ -1537,21 +1773,37 @@
             data.forEach((item) => {
                 const projectCode = item['เลขแปลงintech'] || 'ไม่ระบุ';
                 const farmerName = item['ชื่อชาวไร่'] || 'ไม่ระบุ';
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const farmerOfficer = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
                 const area = parseFloat(item['พื้นที่']) || 0;
                 const plantingDate = item['วันที่ปลูก'] || 'ไม่ระบุ';
                 const condition = item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
                 const conditionClass = getConditionClass(condition);
                 const germination = item['เปอร์เซ็นการงอก'] || 'ไม่ระบุ';
                 
+                // Check if project has been inspected
+                const isChecked = condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
+                const checkedClass = isChecked ? 'checked-highlight' : '';
+                
                 const cardHtml = `
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100">
+                        <div class="card h-100 ${checkedClass}">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <strong>${projectCode}</strong>
                                 <span class="condition-badge ${conditionClass}">${condition}</span>
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title mb-3">${farmerName}</h6>
+                                <div class="row small mb-2">
+                                    <div class="col-6">
+                                        <div class="text-muted">เขต</div>
+                                        <div class="fw-bold">${zone}</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-muted">นักเกษตร</div>
+                                        <div class="fw-bold">${farmerOfficer}</div>
+                                    </div>
+                                </div>
                                 <div class="row small mb-3">
                                     <div class="col-6">
                                         <div class="text-muted">พื้นที่</div>
@@ -1595,6 +1847,13 @@
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             const conditionFilter = document.getElementById('condition-filter').value;
+            const zoneFilter = document.getElementById('zone-filter').value;
+            const farmerOfficerFilter = document.getElementById('farmer-officer-filter').value;
+            const projectTypeFilter = document.getElementById('project-type-filter').value;
+            const areaMin = parseFloat(document.getElementById('area-min').value) || 0;
+            const areaMax = parseFloat(document.getElementById('area-max').value) || Infinity;
+            const germinationMin = parseFloat(document.getElementById('germination-min').value) || 0;
+            const germinationMax = parseFloat(document.getElementById('germination-max').value) || 100;
             
             let data = allData[currentSheet];
             
@@ -1619,8 +1878,55 @@
                         return conditionLower === 'ไม่ผ่าน';
                     } else if (conditionFilter === 'รอตรวจแปลง') {
                         return conditionLower === 'รอตรวจแปลง';
+                    } else if (conditionFilter === 'ตรวจแล้ว') {
+                        return conditionLower === 'ผ่าน' || conditionLower === 'ไม่ผ่าน';
                     }
                     return true;
+                });
+            }
+            
+            // Apply zone filter
+            if (zoneFilter !== 'all') {
+                data = data.filter(item => {
+                    const zone = item['เขต'] || '';
+                    return zone === zoneFilter;
+                });
+            }
+            
+            // Apply farmer officer filter
+            if (farmerOfficerFilter !== 'all') {
+                data = data.filter(item => {
+                    const farmerOfficer = item['ชื่อนักเกษตร'] || '';
+                    return farmerOfficer === farmerOfficerFilter;
+                });
+            }
+            
+            // Apply project type filter
+            if (projectTypeFilter !== 'all') {
+                data = data.filter(item => {
+                    const projectStatus = item['สถานะโครงการ'] || '';
+                    return projectStatus.includes(projectTypeFilter);
+                });
+            }
+            
+            // Apply area filter
+            if (areaMin > 0 || areaMax < Infinity) {
+                data = data.filter(item => {
+                    const area = parseFloat(item['พื้นที่']) || 0;
+                    return area >= areaMin && area <= areaMax;
+                });
+            }
+            
+            // Apply germination filter
+            if (germinationMin > 0 || germinationMax < 100) {
+                data = data.filter(item => {
+                    const germinationStr = item['เปอร์เซ็นการงอก'] || '0';
+                    const germinationMatch = germinationStr.toString().match(/(\d+(\.\d+)?)/);
+                    if (germinationMatch) {
+                        const germination = parseFloat(germinationMatch[1]);
+                        return germination >= germinationMin && germination <= germinationMax;
+                    }
+                    return false;
                 });
             }
             
@@ -1647,6 +1953,25 @@
                             return area > 10;
                         });
                         break;
+                    case 'checked':
+                        // Filter for checked projects
+                        data = data.filter(item => {
+                            const condition = item['เงื่อนไขโครงการ'] || '';
+                            return condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
+                        });
+                        break;
+                    case 'high-germination':
+                        // Filter for high germination rate (>80%)
+                        data = data.filter(item => {
+                            const germinationStr = item['เปอร์เซ็นการงอก'] || '0';
+                            const germinationMatch = germinationStr.toString().match(/(\d+(\.\d+)?)/);
+                            if (germinationMatch) {
+                                const germination = parseFloat(germinationMatch[1]);
+                                return germination > 80;
+                            }
+                            return false;
+                        });
+                        break;
                 }
             }
             
@@ -1667,6 +1992,14 @@
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('condition-filter').value = 'all';
+            document.getElementById('zone-filter').value = 'all';
+            document.getElementById('farmer-officer-filter').value = 'all';
+            document.getElementById('project-type-filter').value = 'all';
+            document.getElementById('area-min').value = '';
+            document.getElementById('area-max').value = '';
+            document.getElementById('germination-min').value = '';
+            document.getElementById('germination-max').value = '';
+            
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-filter') === 'all') {
@@ -1701,6 +2034,11 @@
             const projectStatus = item['สถานะโครงการ'] || 'ไม่ระบุ';
             const measureDate = item['วันที่วัดแปลง'] || 'ไม่ระบุ';
             const quota = item['เลขโควต้า'] || 'ไม่ระบุ';
+            const farmerOfficer = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
+            const farmerOfficerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
+            const caneType = item['ชื่อประเภทอ้อย'] || 'ไม่ระบุ';
+            const inspectionDate = item['วันที่ตรวจ'] || 'ไม่ระบุ';
+            const inspector = item['ผู้ตรวจ'] || 'ไม่ระบุ';
             
             const content = `
                 <div class="row">
@@ -1722,12 +2060,12 @@
                                         <td class="fw-bold">${farmerName}</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-muted">เขต:</td>
-                                        <td>${zone}</td>
+                                        <td class="text-muted">รหัสนักเกษตร:</td>
+                                        <td>${farmerOfficerCode}</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-muted">สถานะโครงการ:</td>
-                                        <td>${projectStatus}</td>
+                                        <td class="text-muted">ชื่อนักเกษตร:</td>
+                                        <td>${farmerOfficer}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -1739,20 +2077,20 @@
                             <div class="table-responsive">
                                 <table class="table table-sm">
                                     <tr>
-                                        <td class="text-muted" style="width: 40%">พื้นที่:</td>
+                                        <td class="text-muted" style="width: 40%">เขต:</td>
+                                        <td>${zone}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">สถานะโครงการ:</td>
+                                        <td>${projectStatus}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">ชื่อประเภทอ้อย:</td>
+                                        <td>${caneType}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">พื้นที่:</td>
                                         <td class="fw-bold">${area > 0 ? area.toFixed(2) + ' ไร่' : '-'}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">วันที่วัดแปลง:</td>
-                                        <td>${measureDate}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">วันที่ปลูก:</td>
-                                        <td>${plantingDate}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">% การงอก:</td>
-                                        <td>${germination}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-muted">พิกัด:</td>
@@ -1765,15 +2103,68 @@
                 </div>
                 
                 <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <h6><i class="fas fa-calendar-alt me-2"></i>วันสำคัญ</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td class="text-muted" style="width: 40%">วันที่วัดแปลง:</td>
+                                        <td>${measureDate}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-muted">วันที่ปลูก:</td>
+                                        <td>${plantingDate}</td>
+                                    </tr>
+                                    ${inspectionDate ? `
+                                    <tr>
+                                        <td class="text-muted">วันที่ตรวจ:</td>
+                                        <td>${inspectionDate}</td>
+                                    </tr>
+                                    ` : ''}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-4">
+                            <h6><i class="fas fa-chart-line me-2"></i>ผลผลิต</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td class="text-muted" style="width: 40%">% การงอก:</td>
+                                        <td>
+                                            ${germination && germination.match(/(\d+(\.\d+)?)/) ? 
+                                                `<span class="badge ${parseFloat(germination.match(/(\d+(\.\d+)?)/)[1]) >= 80 ? 'bg-success' : parseFloat(germination.match(/(\d+(\.\d+)?)/)[1]) >= 60 ? 'bg-warning' : 'bg-secondary'}">${germination}</span>` : 
+                                                germination}
+                                        </td>
+                                    </tr>
+                                    ${inspector ? `
+                                    <tr>
+                                        <td class="text-muted">ผู้ตรวจ:</td>
+                                        <td>${inspector}</td>
+                                    </tr>
+                                    ` : ''}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
                     <div class="col-12">
-                        <div class="alert ${conditionClass === 'condition-passed' ? 'alert-success' : conditionClass === 'condition-failed' ? 'alert-danger' : 'alert-warning'}">
+                        <div class="alert ${conditionClass === 'condition-passed' ? 'alert-success' : conditionClass === 'condition-failed' ? 'alert-danger' : conditionClass === 'condition-pending' ? 'alert-warning' : 'alert-info'}">
                             <h6><i class="fas fa-clipboard-check me-2"></i>ผลการตรวจแปลง</h6>
                             <div class="d-flex align-items-center">
                                 <span class="condition-badge ${conditionClass} me-3">${condition}</span>
-                                <div>
-                                    ${condition === 'ผ่าน' ? 'โครงการนี้ผ่านเงื่อนไขการตรวจแปลงแล้ว' : 
-                                      condition === 'ไม่ผ่าน' ? 'โครงการนี้ไม่ผ่านเงื่อนไขการตรวจแปลง' : 
-                                      'โครงการนี้รอการตรวจแปลงจากเจ้าหน้าที่'}
+                                <div class="flex-grow-1">
+                                    ${condition === 'ผ่าน' ? 
+                                        '<i class="fas fa-check-circle text-success me-2"></i>โครงการนี้ผ่านเงื่อนไขการตรวจแปลงแล้ว' : 
+                                      condition === 'ไม่ผ่าน' ? 
+                                        '<i class="fas fa-times-circle text-danger me-2"></i>โครงการนี้ไม่ผ่านเงื่อนไขการตรวจแปลง' : 
+                                      condition === 'รอตรวจแปลง' ?
+                                        '<i class="fas fa-clock text-warning me-2"></i>โครงการนี้รอการตรวจแปลงจากเจ้าหน้าที่' :
+                                        '<i class="fas fa-info-circle text-info me-2"></i>' + condition}
                                 </div>
                             </div>
                         </div>
@@ -1901,7 +2292,7 @@
             showToast('ข้อผิดพลาด', message, 'error');
         }
         
-        // Get condition class for badge
+        // Get condition class for badge - เพิ่ม condition-checked
         function getConditionClass(condition) {
             if (!condition) return 'condition-other';
             
@@ -1909,6 +2300,7 @@
             if (conditionLower === 'ผ่าน') return 'condition-passed';
             if (conditionLower === 'ไม่ผ่าน') return 'condition-failed';
             if (conditionLower === 'รอตรวจแปลง') return 'condition-pending';
+            if (conditionLower === 'ผ่าน' || conditionLower === 'ไม่ผ่าน') return 'condition-checked';
             return 'condition-other';
         }
         
