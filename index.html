@@ -320,7 +320,28 @@
             border: 1px solid #A5D6A7;
         }
         
-        /* Inspection Result Badges - แก้ไข: ปรับสีให้ชัดเจนและเพิ่มประเภทอื่น */
+        /* Project Type Badges */
+        .project-type-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .type-sugarcane-field {
+            background-color: #B3E5FC;
+            color: #1565C0;
+            border: 1px solid #81D4FA;
+        }
+        
+        .type-crop-change {
+            background-color: #DCEDC1;
+            color: #33691E;
+            border: 1px solid #AED581;
+        }
+        
+        /* Inspection Result Badges */
         .result-badge {
             padding: 8px 16px;
             border-radius: 20px;
@@ -503,6 +524,14 @@
         .stat-title {
             font-size: 0.9rem;
             color: var(--text-light);
+        }
+        
+        /* Project Type Stats */
+        .project-type-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
         }
         
         /* Modal Styles */
@@ -762,15 +791,37 @@
             <!-- Tabs -->
             <div class="tab-container">
                 <button class="tab-btn active" data-sheet="Dataโครงการ">
-                    <i class="fas fa-list-check"></i>ข้อมูลโครงการ
+                    <i class="fas fa-list-check"></i>ข้อมูลโครงการทั้งหมด
+                </button>
+                <button class="tab-btn" data-sheet="planting-sugarcane-field">
+                    <i class="fas fa-tractor"></i>ปลูกอ้อยในนา ปี69/70
+                </button>
+                <button class="tab-btn" data-sheet="crop-change-sugarcane">
+                    <i class="fas fa-exchange-alt"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70
                 </button>
                 <button class="tab-btn" data-sheet="Dataการตรวจ">
                     <i class="fas fa-clipboard-check"></i>ผลการตรวจแปลง
                 </button>
             </div>
 
-            <!-- View Toggle (Only for Dataโครงการ) -->
-            <div class="view-toggle-simple" id="view-toggle" style="display: none;">
+            <!-- Project Type Stats (Only for project type tabs) -->
+            <div class="project-type-stats" id="project-type-stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-value text-success" id="total-projects">0</div>
+                    <div class="stat-title">ทั้งหมด</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-area">0</div>
+                    <div class="stat-title">พื้นที่รวม (ไร่)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="average-germination">0%</div>
+                    <div class="stat-title">การงอกเฉลี่ย</div>
+                </div>
+            </div>
+
+            <!-- View Toggle (Only for Dataโครงการ and project type tabs) -->
+            <div class="view-toggle-simple" id="view-toggle" style="display: flex;">
                 <button class="btn btn-sm btn-outline-green active" data-view="table">
                     <i class="fas fa-table me-1"></i>ตารางสรุป
                 </button>
@@ -1059,7 +1110,9 @@
         let currentView = 'table'; // table, full
         let allData = {
             'Dataโครงการ': [],
-            'Dataการตรวจ': []
+            'Dataการตรวจ': [],
+            'planting-sugarcane-field': [], // ปลูกอ้อยในนา
+            'crop-change-sugarcane': []     // เปลี่ยนพืชอื่นมาปลูกอ้อย
         };
         let filteredData = [];
         let isSetupComplete = false;
@@ -1118,34 +1171,45 @@
                     
                     // Update table title
                     const titleMap = {
-                        'Dataโครงการ': 'ข้อมูลโครงการทั้งหมด (คอลัมน์ A-P)',
-                        'Dataการตรวจ': 'เงื่อนไขโครงการ'
+                        'Dataโครงการ': 'ข้อมูลโครงการทั้งหมด',
+                        'planting-sugarcane-field': 'โครงการปลูกอ้อยในนา ปี69/70',
+                        'crop-change-sugarcane': 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70',
+                        'Dataการตรวจ': 'ผลการตรวจแปลง'
                     };
                     document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
                     document.getElementById('modal-title').textContent = `รายละเอียด - ${titleMap[currentSheet] || currentSheet}`;
-                    document.getElementById('inspection-modal-title').textContent = `รายละเอียดเงื่อนไขโครงการ`;
+                    document.getElementById('inspection-modal-title').textContent = `รายละเอียดผลการตรวจแปลง`;
                     
-                    // Show/hide filters based on sheet
+                    // Show/hide filters and components based on sheet
                     if (currentSheet === 'Dataการตรวจ') {
+                        // สำหรับผลการตรวจแปลง
                         document.getElementById('result-filter').style.display = 'block';
                         document.getElementById('status-filter').style.display = 'none';
                         document.getElementById('anomaly-filter').style.display = 'block';
                         document.getElementById('inspection-stats').style.display = 'flex';
+                        document.getElementById('project-type-stats').style.display = 'none';
                         document.getElementById('anomaly-report-section').style.display = 'block';
                         document.getElementById('view-toggle').style.display = 'none';
                         document.getElementById('table-view').style.display = 'block';
                         document.getElementById('full-view').style.display = 'none';
                         updateInspectionStats();
-                    } else {
+                    } else if (currentSheet === 'Dataโครงการ' || 
+                               currentSheet === 'planting-sugarcane-field' || 
+                               currentSheet === 'crop-change-sugarcane') {
+                        // สำหรับข้อมูลโครงการ
                         document.getElementById('result-filter').style.display = 'none';
                         document.getElementById('status-filter').style.display = 'block';
                         document.getElementById('anomaly-filter').style.display = 'none';
                         document.getElementById('inspection-stats').style.display = 'none';
+                        document.getElementById('project-type-stats').style.display = 'flex';
                         document.getElementById('anomaly-report-section').style.display = 'none';
                         document.getElementById('view-toggle').style.display = 'flex';
                         
                         // Show current view
                         showView(currentView);
+                        
+                        // Update project type stats
+                        updateProjectTypeStats();
                     }
                     
                     // Display data for current sheet
@@ -1212,6 +1276,9 @@
                     }
                 }
                 
+                // Process project data to create filtered datasets
+                processProjectData();
+                
                 // Run anomaly detection for inspection data (เงื่อนไขโครงการ)
                 if (allData['Dataการตรวจ'].length > 0) {
                     detectConditionAnomalies();
@@ -1231,6 +1298,10 @@
                 // Update stats if on inspection sheet
                 if (currentSheet === 'Dataการตรวจ') {
                     updateInspectionStats();
+                } else if (currentSheet === 'Dataโครงการ' || 
+                           currentSheet === 'planting-sugarcane-field' || 
+                           currentSheet === 'crop-change-sugarcane') {
+                    updateProjectTypeStats();
                 }
                 
                 showLoading(false);
@@ -1246,6 +1317,28 @@
                 isSetupComplete = false;
                 localStorage.removeItem('sheetsSetupComplete');
             }
+        }
+        
+        // Process project data to create filtered datasets
+        function processProjectData() {
+            const allProjects = allData['Dataโครงการ'];
+            
+            // Filter for planting sugarcane in field (ปลูกอ้อยในนา)
+            allData['planting-sugarcane-field'] = allProjects.filter(item => {
+                const projectStatus = item['สถานะโครงการ'] || '';
+                return projectStatus.toLowerCase().includes('ปลูกอ้อยในนา') || 
+                       projectStatus.toLowerCase().includes('อ้อยในนา');
+            });
+            
+            // Filter for crop change to sugarcane (เปลี่ยนพืชอื่นมาปลูกอ้อย)
+            allData['crop-change-sugarcane'] = allProjects.filter(item => {
+                const projectStatus = item['สถานะโครงการ'] || '';
+                return projectStatus.toLowerCase().includes('เปลี่ยนพืชอื่น') || 
+                       projectStatus.toLowerCase().includes('เปลี่ยนพืช');
+            });
+            
+            console.log(`ปลูกอ้อยในนา: ${allData['planting-sugarcane-field'].length} รายการ`);
+            console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
         }
         
         // Fetch data from Google Sheets (Public Method) - ดึงข้อมูลจริง
@@ -1392,7 +1485,6 @@
         }
         
         // Detect anomalies in condition data (เฉพาะเงื่อนไขโครงการ)
-        // แก้ไข: ปรับตรวจจับความผิดปกติให้ถูกต้องตามเงื่อนไขใหม่
         function detectConditionAnomalies() {
             anomalies = [];
             const data = allData['Dataการตรวจ'];
@@ -1507,6 +1599,46 @@
             document.getElementById('view-full-anomaly-report')?.addEventListener('click', showFullAnomalyReport);
         }
         
+        // Update project type statistics
+        function updateProjectTypeStats() {
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+            
+            if (data.length === 0) {
+                document.getElementById('total-projects').textContent = '0';
+                document.getElementById('total-area').textContent = '0';
+                document.getElementById('average-germination').textContent = '0%';
+                return;
+            }
+            
+            // Calculate statistics
+            let totalArea = 0;
+            let totalGermination = 0;
+            let germinationCount = 0;
+            
+            data.forEach(item => {
+                // Calculate total area
+                const area = parseFloat(item['พื้นที่']) || 0;
+                totalArea += area;
+                
+                // Calculate germination percentage
+                const germinationStr = item['เปอร์เซ็นการงอก'] || '0';
+                const germinationMatch = germinationStr.toString().match(/(\d+(\.\d+)?)/);
+                if (germinationMatch) {
+                    const germination = parseFloat(germinationMatch[1]);
+                    if (!isNaN(germination)) {
+                        totalGermination += germination;
+                        germinationCount++;
+                    }
+                }
+            });
+            
+            const averageGermination = germinationCount > 0 ? (totalGermination / germinationCount) : 0;
+            
+            document.getElementById('total-projects').textContent = data.length;
+            document.getElementById('total-area').textContent = totalArea.toFixed(2);
+            document.getElementById('average-germination').textContent = averageGermination.toFixed(1) + '%';
+        }
+        
         // Show the selected view
         function showView(viewName) {
             // Hide all views
@@ -1526,8 +1658,11 @@
             const data = allData[currentSheet];
             filteredData = [...data];
             
-            if (currentSheet === 'Dataโครงการ') {
-                // For project sheet, use the appropriate view
+            // For all project-related sheets, use the appropriate view
+            if (currentSheet === 'Dataโครงการ' || 
+                currentSheet === 'planting-sugarcane-field' || 
+                currentSheet === 'crop-change-sugarcane') {
+                
                 if (currentView === 'table') {
                     // Generate table headers based on data
                     if (data.length > 0) {
@@ -1566,9 +1701,12 @@
             const headersContainer = document.getElementById('table-headers');
             headersContainer.innerHTML = '';
             
-            if (currentSheet === 'Dataโครงการ') {
-                // Show important columns for projects (A-P columns)
-                const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร', 'สถานะ', 'วันที่เริ่มโครงการ', 'ความคืบหน้า (%)'];
+            if (currentSheet === 'Dataโครงการ' || 
+                currentSheet === 'planting-sugarcane-field' || 
+                currentSheet === 'crop-change-sugarcane') {
+                
+                // Show important columns for projects
+                const importantColumns = ['เลขแปลงintech', 'ชื่อชาวไร่', 'เขต', 'ชื่อประเภทอ้อย', 'พื้นที่', 'วันที่ปลูก', 'เปอร์เซ็นการงอก', 'สถานะโครงการ'];
                 
                 // Filter to only show columns that exist in data
                 const displayHeaders = importantColumns.filter(header => 
@@ -1669,7 +1807,6 @@
                     const value = item[header] || '';
                     
                     // Format special fields
-                    // แก้ไข: ใช้ฟังก์ชัน getConditionClass ใหม่สำหรับเงื่อนไขโครงการ
                     if (header === 'เงื่อนไขโครงการ' || header.toLowerCase().includes('เงื่อนไข')) {
                         const conditionClass = getConditionClass(value);
                         cell.innerHTML = `<span class="result-badge ${conditionClass}">${value || 'ไม่ระบุ'}</span>`;
@@ -1680,6 +1817,9 @@
                                 cell.innerHTML += `<span class="anomaly-tag">⚠️</span>`;
                             }
                         }
+                    } else if (header === 'สถานะโครงการ') {
+                        const projectTypeClass = getProjectTypeClass(value);
+                        cell.innerHTML = `<span class="project-type-badge ${projectTypeClass}">${value}</span>`;
                     } else if (header.toLowerCase().includes('สถานะ')) {
                         const statusClass = getStatusClass(value);
                         cell.innerHTML = `<span class="badge-status ${statusClass}">${value}</span>`;
@@ -1693,8 +1833,22 @@
                         if (score >= 80) badgeClass = 'bg-success';
                         else if (score >= 60) badgeClass = 'bg-warning';
                         cell.innerHTML = `<span class="badge ${badgeClass}">${score}</span>`;
-                    } else if (header.toLowerCase().includes('พื้นที่')) {
-                        cell.textContent = value ? `${value} ไร่` : '-';
+                    } else if (header === 'พื้นที่') {
+                        const area = parseFloat(value) || 0;
+                        cell.textContent = area > 0 ? `${area.toFixed(2)} ไร่` : '-';
+                    } else if (header === 'เปอร์เซ็นการงอก') {
+                        const germinationStr = value.toString();
+                        const germinationMatch = germinationStr.match(/(\d+(\.\d+)?)/);
+                        if (germinationMatch) {
+                            const germination = parseFloat(germinationMatch[1]);
+                            let badgeClass = 'bg-danger';
+                            if (germination >= 80) badgeClass = 'bg-success';
+                            else if (germination >= 60) badgeClass = 'bg-warning';
+                            else if (germination >= 40) badgeClass = 'bg-info';
+                            cell.innerHTML = `<span class="badge ${badgeClass}">${germination}%</span>`;
+                        } else {
+                            cell.textContent = value;
+                        }
                     } else if (header.toLowerCase().includes('ความคืบหน้า') || header.toLowerCase().includes('progress')) {
                         const progress = parseInt(value) || 0;
                         let progressClass = 'bg-danger';
@@ -1778,21 +1932,26 @@
             
             // Create full details for each project
             data.forEach((item, index) => {
-                const projectCode = item['รหัสโครงการ'] || 'ไม่ระบุ';
-                const projectName = item['ชื่อโครงการ'] || 'ไม่ระบุ';
+                const projectCode = item['เลขแปลงintech'] || 'ไม่ระบุ';
+                const farmerName = item['ชื่อชาวไร่'] || 'ไม่ระบุ';
+                const projectType = item['สถานะโครงการ'] || 'ไม่ระบุ';
+                const projectTypeClass = getProjectTypeClass(projectType);
                 
                 // Build HTML for all A-P columns
                 let detailsHtml = `
                     <div class="project-full-details" data-id="${item.id}">
                         <div class="project-full-header">
-                            <div class="project-full-code">${projectCode}</div>
-                            <div class="project-full-name">${projectName}</div>
+                            <div class="project-full-code">แปลงที่: ${projectCode}</div>
+                            <div class="project-full-name">เกษตรกร: ${farmerName}</div>
+                            <div class="mt-2">
+                                <span class="project-type-badge ${projectTypeClass}">${projectType}</span>
+                            </div>
                         </div>
                         
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="details-section">
-                                    <h6 class="section-title">ข้อมูลพื้นฐานโครงการ</h6>
+                                    <h6 class="section-title">ข้อมูลพื้นฐานแปลง</h6>
                 `;
                 
                 // First 8 columns (A-H)
@@ -1814,7 +1973,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="details-section">
-                                    <h6 class="section-title">ข้อมูลติดต่อและความคืบหน้า</h6>
+                                    <h6 class="section-title">ข้อมูลการปลูกและผลผลิต</h6>
                 `;
                 
                 // Next 8 columns (I-P)
@@ -1860,7 +2019,6 @@
         }
         
         // Filter data based on search and filters
-        // แก้ไข: ปรับการกรองข้อมูลสำหรับเงื่อนไขโครงการให้ถูกต้อง
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
@@ -1878,7 +2036,10 @@
             }
             
             // Apply status or condition filter
-            if (currentSheet === 'Dataโครงการ') {
+            if (currentSheet === 'Dataโครงการ' || 
+                currentSheet === 'planting-sugarcane-field' || 
+                currentSheet === 'crop-change-sugarcane') {
+                
                 const statusFilter = document.getElementById('status-filter').value;
                 if (statusFilter !== 'all') {
                     data = data.filter(item => {
@@ -1949,7 +2110,10 @@
             filteredData = data;
             
             // Update display based on current view
-            if (currentSheet === 'Dataโครงการ') {
+            if (currentSheet === 'Dataโครงการ' || 
+                currentSheet === 'planting-sugarcane-field' || 
+                currentSheet === 'crop-change-sugarcane') {
+                
                 if (currentView === 'table') {
                     populateTable(data);
                 } else if (currentView === 'full') {
@@ -1959,9 +2123,13 @@
                 populateTable(data);
             }
             
-            // Update stats if on inspection sheet
+            // Update stats
             if (currentSheet === 'Dataการตรวจ') {
                 updateInspectionStats();
+            } else if (currentSheet === 'Dataโครงการ' || 
+                       currentSheet === 'planting-sugarcane-field' || 
+                       currentSheet === 'crop-change-sugarcane') {
+                updateProjectTypeStats();
             }
         }
         
@@ -1983,7 +2151,6 @@
         }
         
         // Update inspection statistics
-        // แก้ไข: ปรับการนับสถิติให้ถูกต้องตามเงื่อนไขใหม่
         function updateInspectionStats() {
             const data = filteredData.length > 0 ? filteredData : allData['Dataการตรวจ'];
             
@@ -2071,7 +2238,7 @@
         // Show project full details in modal (all A-P columns)
         function showProjectFullDetailsModal(itemId) {
             // Find the item
-            const item = allData['Dataโครงการ'].find(i => i.id === itemId);
+            const item = allData[currentSheet].find(i => i.id === itemId);
             
             if (!item) {
                 showToast('ไม่พบข้อมูล', 'ไม่สามารถแสดงรายละเอียดได้', 'error');
@@ -2079,17 +2246,25 @@
             }
             
             // Build details content - show all A-P columns
+            const projectCode = item['เลขแปลงintech'] || 'ไม่ระบุ';
+            const farmerName = item['ชื่อชาวไร่'] || 'ไม่ระบุ';
+            const projectType = item['สถานะโครงการ'] || 'ไม่ระบุ';
+            const projectTypeClass = getProjectTypeClass(projectType);
+            
             let content = `
                 <div class="project-full-details">
                     <div class="project-full-header">
-                        <div class="project-full-code">${item['รหัสโครงการ'] || 'ไม่ระบุ'}</div>
-                        <div class="project-full-name">${item['ชื่อโครงการ'] || 'ไม่ระบุ'}</div>
+                        <div class="project-full-code">แปลงที่: ${projectCode}</div>
+                        <div class="project-full-name">เกษตรกร: ${farmerName}</div>
+                        <div class="mt-2">
+                            <span class="project-type-badge ${projectTypeClass}">${projectType}</span>
+                        </div>
                     </div>
                     
                     <div class="row">
                         <div class="col-md-6">
                             <div class="details-section">
-                                <h6 class="section-title">ข้อมูลพื้นฐานโครงการ</h6>
+                                <h6 class="section-title">ข้อมูลพื้นฐานแปลง</h6>
             `;
             
             // First 8 columns (A-H)
@@ -2111,7 +2286,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="details-section">
-                                <h6 class="section-title">ข้อมูลติดต่อและความคืบหน้า</h6>
+                                <h6 class="section-title">ข้อมูลการปลูกและผลผลิต</h6>
             `;
             
             // Next 8 columns (I-P)
@@ -2137,7 +2312,7 @@
             
             // Set modal content
             document.getElementById('project-details-content').innerHTML = content;
-            document.getElementById('modal-title').textContent = `รายละเอียดโครงการทั้งหมด: ${item['รหัสโครงการ'] || 'ไม่ระบุ'}`;
+            document.getElementById('modal-title').textContent = `รายละเอียดแปลง: ${projectCode}`;
             
             // Show modal
             const modal = new bootstrap.Modal(document.getElementById('projectDetailsModal'));
@@ -2311,7 +2486,13 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `${currentSheet}_${new Date().toISOString().slice(0,10)}.csv`;
+            
+            // Set appropriate filename based on current sheet
+            let filename = currentSheet;
+            if (currentSheet === 'planting-sugarcane-field') filename = 'ปลูกอ้อยในนา';
+            else if (currentSheet === 'crop-change-sugarcane') filename = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
+            
+            link.download = `${filename}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
             
@@ -2320,7 +2501,7 @@
         
         // Export single project data
         function exportProjectData(itemId) {
-            const item = allData['Dataโครงการ'].find(i => i.id === itemId);
+            const item = allData[currentSheet].find(i => i.id === itemId);
             
             if (!item) {
                 showToast('ไม่พบข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'error');
@@ -2344,7 +2525,7 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            const projectCode = item['รหัสโครงการ'] || 'project';
+            const projectCode = item['เลขแปลงintech'] || item['รหัสโครงการ'] || 'project';
             link.download = `${projectCode}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
@@ -2402,7 +2583,20 @@
             return '';
         }
         
-        // แก้ไข: ปรับฟังก์ชัน getConditionClass ให้คืนค่า class ที่ถูกต้อง
+        // Get project type class based on status
+        function getProjectTypeClass(projectType) {
+            if (!projectType) return '';
+            
+            const typeLower = projectType.toLowerCase();
+            if (typeLower.includes('ปลูกอ้อยในนา') || typeLower.includes('อ้อยในนา')) {
+                return 'type-sugarcane-field';
+            } else if (typeLower.includes('เปลี่ยนพืชอื่น') || typeLower.includes('เปลี่ยนพืช')) {
+                return 'type-crop-change';
+            }
+            return '';
+        }
+        
+        // Get condition class
         function getConditionClass(condition) {
             if (!condition) return 'result-other';
             
@@ -2499,7 +2693,7 @@
             return match ? parseFloat(match.join('')) : 0;
         }
         
-        // แก้ไข: ปรับฟังก์ชัน formatFieldValue ให้แสดงสีถูกต้องสำหรับเงื่อนไขโครงการ
+        // Format field value
         function formatFieldValue(key, value) {
             if (!value || value.toString().trim() === '') return '-';
             
@@ -2511,6 +2705,12 @@
                 (keyLower.includes('เงื่อนไข') && !keyLower.includes('อื่น'))) {
                 const conditionClass = getConditionClass(valueStr);
                 return `<span class="result-badge ${conditionClass}">${valueStr || 'ไม่ระบุ'}</span>`;
+            }
+            
+            // สำหรับคอลัมน์ "สถานะโครงการ"
+            if (keyLower.includes('สถานะโครงการ')) {
+                const projectTypeClass = getProjectTypeClass(valueStr);
+                return `<span class="project-type-badge ${projectTypeClass}">${valueStr}</span>`;
             }
             
             if (keyLower.includes('สถานะ')) {
@@ -2527,7 +2727,22 @@
             }
             
             if (keyLower.includes('พื้นที่') && !keyLower.includes('ที่อยู่')) {
-                return valueStr ? `${valueStr} ไร่` : '-';
+                const area = parseFloat(valueStr) || 0;
+                return area > 0 ? `${area.toFixed(2)} ไร่` : '-';
+            }
+            
+            if (keyLower.includes('เปอร์เซ็นการงอก')) {
+                const germinationStr = valueStr;
+                const germinationMatch = germinationStr.match(/(\d+(\.\d+)?)/);
+                if (germinationMatch) {
+                    const germination = parseFloat(germinationMatch[1]);
+                    let badgeClass = 'bg-danger';
+                    if (germination >= 80) badgeClass = 'bg-success';
+                    else if (germination >= 60) badgeClass = 'bg-warning';
+                    else if (germination >= 40) badgeClass = 'bg-info';
+                    return `<span class="badge ${badgeClass}">${germination}%</span>`;
+                }
+                return valueStr;
             }
             
             if (keyLower.includes('ความคืบหน้า') || keyLower.includes('progress')) {
@@ -2572,6 +2787,7 @@
             .badge.bg-success { background-color: var(--green-primary) !important; }
             .badge.bg-warning { background-color: #ffc107 !important; color: #212529; }
             .badge.bg-danger { background-color: #dc3545 !important; }
+            .badge.bg-info { background-color: #17a2b8 !important; }
             .bg-warning { background-color: var(--warning-yellow) !important; }
             .progress-bar.bg-success { background-color: var(--green-primary) !important; }
             .progress-bar.bg-info { background-color: var(--pastel-blue) !important; color: var(--text-dark); }
