@@ -341,56 +341,13 @@
             border: 1px solid #AED581;
         }
         
-        /* Inspection Result Badges */
-        .result-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
+        /* Condition Badges */
+        .condition-badge {
+            padding: 6px 12px;
+            border-radius: 4px;
             font-size: 0.9rem;
             font-weight: 600;
             display: inline-block;
-            text-align: center;
-            min-width: 100px;
-        }
-        
-        /* สีเขียวชัดเจนสำหรับ "ผ่าน" */
-        .result-passed {
-            background-color: #d4edda !important;
-            color: #155724 !important;
-            border: 2px solid #c3e6cb !important;
-            box-shadow: 0 2px 5px rgba(40, 167, 69, 0.2);
-        }
-        
-        /* สีแดงชัดเจนสำหรับ "ไม่ผ่าน" */
-        .result-failed {
-            background-color: #f8d7da !important;
-            color: #721c24 !important;
-            border: 2px solid #f5c6cb !important;
-            box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
-        }
-        
-        /* สีเทาสำหรับค่าอื่นที่ไม่ใช่ "ผ่าน" หรือ "ไม่ผ่าน" */
-        .result-other {
-            background-color: #e9ecef !important;
-            color: #495057 !important;
-            border: 2px solid #dee2e6 !important;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Condition Indicator - แสดงเงื่อนไขด้านหลัง */
-        .condition-indicator {
-            position: relative;
-            padding-right: 100px !important;
-        }
-        
-        .condition-badge {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
             min-width: 80px;
             text-align: center;
         }
@@ -411,33 +368,6 @@
             background-color: #e9ecef;
             color: #495057;
             border: 1px solid #dee2e6;
-        }
-        
-        /* Anomaly Detection Styles */
-        .anomaly-warning {
-            background-color: rgba(255, 82, 82, 0.05);
-            position: relative;
-        }
-        
-        .anomaly-warning:hover {
-            background-color: rgba(255, 82, 82, 0.1) !important;
-        }
-        
-        .anomaly-warning::before {
-            content: '⚠️';
-            position: absolute;
-            left: -10px;
-            font-size: 0.9rem;
-        }
-        
-        .anomaly-tag {
-            background-color: var(--warning-red);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.7rem;
-            margin-left: 5px;
-            font-weight: bold;
         }
         
         /* Setup Section */
@@ -534,8 +464,8 @@
             color: var(--text-light);
         }
         
-        /* Inspection Stats */
-        .inspection-stats {
+        /* Project Type Stats */
+        .project-type-stats {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
@@ -563,14 +493,6 @@
             color: var(--text-light);
         }
         
-        /* Project Type Stats */
-        .project-type-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-        }
-        
         /* Modal Styles */
         .modal-header {
             background: var(--green-gradient);
@@ -579,30 +501,6 @@
         
         .modal-title {
             font-weight: 600;
-        }
-        
-        /* Anomaly Report Section */
-        .anomaly-report {
-            background-color: rgba(255, 82, 82, 0.05);
-            border: 1px solid var(--warning-red);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .anomaly-report h6 {
-            color: var(--warning-red);
-            font-weight: 600;
-        }
-        
-        .anomaly-item {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 82, 82, 0.2);
-        }
-        
-        .anomaly-item:last-child {
-            border-bottom: none;
         }
         
         /* Footer */
@@ -646,17 +544,6 @@
             .header {
                 padding: 1.5rem 0;
             }
-            
-            .condition-indicator {
-                padding-right: 80px !important;
-            }
-            
-            .condition-badge {
-                right: 8px;
-                min-width: 60px;
-                font-size: 0.75rem;
-                padding: 4px 8px;
-            }
         }
         
         @media (max-width: 576px) {
@@ -670,7 +557,7 @@
                 padding: 1rem;
             }
             
-            .inspection-stats, .project-type-stats {
+            .project-type-stats {
                 gap: 10px;
             }
             
@@ -681,16 +568,6 @@
             
             .stat-value {
                 font-size: 1.5rem;
-            }
-            
-            .condition-indicator {
-                padding-right: 70px !important;
-            }
-            
-            .condition-badge {
-                min-width: 50px;
-                font-size: 0.7rem;
-                padding: 3px 6px;
             }
         }
         
@@ -857,16 +734,10 @@
                 <button class="tab-btn" data-sheet="crop-change-sugarcane">
                     <i class="fas fa-exchange-alt"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70
                 </button>
-                <button class="tab-btn" data-sheet="inspection-sugarcane-field">
-                    <i class="fas fa-clipboard-check"></i>ผลตรวจปลูกอ้อยในนา
-                </button>
-                <button class="tab-btn" data-sheet="inspection-crop-change">
-                    <i class="fas fa-clipboard-check"></i>ผลตรวจเปลี่ยนพืชอื่น
-                </button>
             </div>
 
-            <!-- Project Type Stats (Only for project type tabs) -->
-            <div class="project-type-stats" id="project-type-stats" style="display: none;">
+            <!-- Project Type Stats -->
+            <div class="project-type-stats" id="project-type-stats">
                 <div class="stat-item">
                     <div class="stat-value text-success" id="total-projects">0</div>
                     <div class="stat-title">ทั้งหมด</div>
@@ -881,8 +752,8 @@
                 </div>
             </div>
 
-            <!-- View Toggle (Only for Dataโครงการ and project type tabs) -->
-            <div class="view-toggle-simple" id="view-toggle" style="display: flex;">
+            <!-- View Toggle -->
+            <div class="view-toggle-simple" id="view-toggle">
                 <button class="btn btn-sm btn-outline-green active" data-view="table">
                     <i class="fas fa-table me-1"></i>ตารางสรุป
                 </button>
@@ -891,43 +762,14 @@
                 </button>
             </div>
 
-            <!-- Anomaly Report (Only for inspection tabs) -->
-            <div id="anomaly-report-section" class="anomaly-report" style="display: none;">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">
-                        <i class="fas fa-exclamation-triangle me-2"></i>ตรวจพบความผิดปกติในเงื่อนไขโครงการ
-                    </h6>
-                    <span class="badge bg-danger" id="anomaly-count">0</span>
-                </div>
-                <div id="anomaly-details" class="mt-2 small">
-                    <!-- Anomaly details will be populated here -->
-                </div>
-            </div>
-
-            <!-- Inspection Stats (Only for inspection tabs) -->
-            <div class="inspection-stats" id="inspection-stats" style="display: none;">
-                <div class="stat-item">
-                    <div class="stat-value text-success" id="total-inspections">0</div>
-                    <div class="stat-title">ทั้งหมด</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="passed-inspections">0</div>
-                    <div class="stat-title">ผ่าน</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value text-danger" id="failed-inspections">0</div>
-                    <div class="stat-title">ไม่ผ่าน</div>
-                </div>
-            </div>
-
             <!-- Search and Filter -->
             <div class="card">
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
-                                <input type="text" id="search-input" class="form-control" placeholder="ค้นหาโครงการ, ชื่อเกษตรกร, ที่อยู่แปลง, เงื่อนไขโครงการ...">
+                                <input type="text" id="search-input" class="form-control" placeholder="ค้นหาโครงการ, ชื่อเกษตรกร, ที่อยู่แปลง...">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -939,18 +781,11 @@
                                 <option value="กำลังดำเนิน">กำลังดำเนินการ</option>
                             </select>
                         </div>
-                        <div class="col-md-2">
-                            <select id="result-filter" class="form-select" style="display: none;">
+                        <div class="col-md-3">
+                            <select id="condition-filter" class="form-select">
                                 <option value="all">เงื่อนไขทั้งหมด</option>
                                 <option value="ผ่าน">ผ่าน</option>
                                 <option value="ไม่ผ่าน">ไม่ผ่าน</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <select id="anomaly-filter" class="form-select" style="display: none;">
-                                <option value="all">ข้อมูลทั้งหมด</option>
-                                <option value="anomaly">เฉพาะความผิดปกติ</option>
-                                <option value="normal">เฉพาะข้อมูลปกติ</option>
                             </select>
                         </div>
                     </div>
@@ -958,7 +793,6 @@
                     <div class="filter-buttons mt-3">
                         <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
                         <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
-                        <button class="filter-btn" data-filter="passed">ผ่านทั้งหมด</button>
                         <button class="btn-outline-green" id="refresh-btn">
                             <i class="fas fa-redo-alt me-1"></i>รีเฟรช
                         </button>
@@ -1053,52 +887,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Inspection Details Modal -->
-        <div class="modal fade" id="inspectionDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-search me-2"></i>
-                            <span id="inspection-modal-title">รายละเอียดเงื่อนไขโครงการ</span>
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" id="inspection-details-content">
-                        <!-- Details will be populated by JavaScript -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-green" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>ปิด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Anomaly Details Modal -->
-        <div class="modal fade" id="anomalyDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-warning">
-                        <h5 class="modal-title">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            รายงานความผิดปกติในเงื่อนไขโครงการ
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" id="anomaly-details-content">
-                        <!-- Anomaly details will be populated here -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-green" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>ปิด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -1136,35 +924,21 @@
         // Field mapping for project sheet (คอลัมน์ A-P) - ตาม Google Sheets จริง
         const PROJECT_FIELDS_A_P = [
             'เลขแปลงintech',           // A
-            'เลขโควตา',           // B
-            'ชื่อชาวไร่',         // C
-            'รหัสนักเกษตร',         // C
-            'ชื่อนักเกษตร',         // C
-            'เขต',           // D
-            'ชื่อประเภทอ้อย',           // E
-            'พื้นที่',         // F
-            'วันที่วัดแปลง',     // G
-            'วันที่ปลูก',   // J
-            'เปอร์เซ็นการงอก',           // K
-            'พิกัด',              // L
-            'ตรวจแปลง',       // M
-            'สถานะโครงการ'
+            'เลขโควตา',                // B
+            'ชื่อชาวไร่',              // C
+            'รหัสนักเกษตร',            // D
+            'ชื่อนักเกษตร',            // E
+            'เขต',                     // F
+            'ชื่อประเภทอ้อย',          // G
+            'พื้นที่',                 // H
+            'วันที่วัดแปลง',           // I
+            'วันที่ปลูก',              // J
+            'เปอร์เซ็นการงอก',        // K
+            'พิกัด',                   // L
+            'ตรวจแปลง',                // M
+            'สถานะโครงการ',            // N
+            'เงื่อนไขโครงการ'          // O
         ];
-        
-        // Field mapping for inspection sheet
-        const INSPECTION_FIELDS = {
-            'condition': 'เงื่อนไขโครงการ',  // คอลัมน์ R ใน Google Sheets
-            'code': 'รหัสการตรวจ',
-            'projectCode': 'รหัสโครงการ',
-            'projectName': 'ชื่อโครงการ',
-            'farmer': 'ชื่อเกษตรกร',
-            'date': 'วันที่ตรวจ',
-            'inspector': 'ผู้ตรวจ',
-            'score': 'คะแนนการตรวจ',
-            'observation': 'ข้อสังเกต',
-            'recommendation': 'คำแนะนำ',
-            'statusAfter': 'สถานะหลังตรวจ'
-        };
         
         // Current state
         let currentSheet = 'Dataโครงการ';
@@ -1174,13 +948,9 @@
             'Dataการตรวจ': [],
             'planting-sugarcane-field': [], // ปลูกอ้อยในนา
             'crop-change-sugarcane': [],     // เปลี่ยนพืชอื่นมาปลูกอ้อย
-            'inspection-sugarcane-field': [], // ผลตรวจปลูกอ้อยในนา
-            'inspection-crop-change': []      // ผลตรวจเปลี่ยนพืชอื่น
         };
         let filteredData = [];
         let isSetupComplete = false;
-        let anomalies = [];
-        let anomalyDetectionEnabled = false;
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
@@ -1216,11 +986,8 @@
             // Status filter
             document.getElementById('status-filter').addEventListener('change', filterData);
             
-            // Result filter
-            document.getElementById('result-filter').addEventListener('change', filterData);
-            
-            // Anomaly filter
-            document.getElementById('anomaly-filter').addEventListener('change', filterData);
+            // Condition filter
+            document.getElementById('condition-filter').addEventListener('change', filterData);
             
             // Tab switching
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1237,47 +1004,15 @@
                         'Dataโครงการ': 'ข้อมูลโครงการทั้งหมด',
                         'planting-sugarcane-field': 'โครงการปลูกอ้อยในนา ปี69/70',
                         'crop-change-sugarcane': 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70',
-                        'inspection-sugarcane-field': 'ผลการตรวจแปลงปลูกอ้อยในนา',
-                        'inspection-crop-change': 'ผลการตรวจแปลงเปลี่ยนพืชอื่นมาปลูกอ้อย'
                     };
                     document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
                     document.getElementById('modal-title').textContent = `รายละเอียด - ${titleMap[currentSheet] || currentSheet}`;
-                    document.getElementById('inspection-modal-title').textContent = `รายละเอียดผลการตรวจแปลง`;
-                    
-                    // Show/hide filters and components based on sheet
-                    if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                        // สำหรับผลการตรวจแปลง
-                        document.getElementById('result-filter').style.display = 'block';
-                        document.getElementById('status-filter').style.display = 'none';
-                        document.getElementById('anomaly-filter').style.display = 'block';
-                        document.getElementById('inspection-stats').style.display = 'flex';
-                        document.getElementById('project-type-stats').style.display = 'none';
-                        document.getElementById('anomaly-report-section').style.display = 'block';
-                        document.getElementById('view-toggle').style.display = 'none';
-                        document.getElementById('table-view').style.display = 'block';
-                        document.getElementById('full-view').style.display = 'none';
-                        updateInspectionStats();
-                    } else if (currentSheet === 'Dataโครงการ' || 
-                               currentSheet === 'planting-sugarcane-field' || 
-                               currentSheet === 'crop-change-sugarcane') {
-                        // สำหรับข้อมูลโครงการ
-                        document.getElementById('result-filter').style.display = 'none';
-                        document.getElementById('status-filter').style.display = 'block';
-                        document.getElementById('anomaly-filter').style.display = 'none';
-                        document.getElementById('inspection-stats').style.display = 'none';
-                        document.getElementById('project-type-stats').style.display = 'flex';
-                        document.getElementById('anomaly-report-section').style.display = 'none';
-                        document.getElementById('view-toggle').style.display = 'flex';
-                        
-                        // Show current view
-                        showView(currentView);
-                        
-                        // Update project type stats
-                        updateProjectTypeStats();
-                    }
                     
                     // Display data for current sheet
                     displayData();
+                    
+                    // Update project type stats
+                    updateProjectTypeStats();
                 });
             });
             
@@ -1343,17 +1078,6 @@
                 // Process project data to create filtered datasets
                 processProjectData();
                 
-                // Process inspection data to create filtered datasets
-                processInspectionData();
-                
-                // Run anomaly detection for inspection data (เงื่อนไขโครงการ)
-                if (allData['Dataการตรวจ'].length > 0) {
-                    detectConditionAnomalies();
-                    if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                        showAnomalyReport();
-                    }
-                }
-                
                 // Update last update time
                 const now = new Date();
                 const thaiTime = formatDateToThai(now);
@@ -1362,14 +1086,8 @@
                 // Display current sheet data
                 displayData();
                 
-                // Update stats if on inspection sheet
-                if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                    updateInspectionStats();
-                } else if (currentSheet === 'Dataโครงการ' || 
-                           currentSheet === 'planting-sugarcane-field' || 
-                           currentSheet === 'crop-change-sugarcane') {
-                    updateProjectTypeStats();
-                }
+                // Update stats
+                updateProjectTypeStats();
                 
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
@@ -1389,57 +1107,61 @@
         // Process project data to create filtered datasets
         function processProjectData() {
             const allProjects = allData['Dataโครงการ'];
+            const allInspections = allData['Dataการตรวจ'];
+            
+            // Merge inspection data with project data
+            const projectMap = new Map();
+            
+            // First, map all projects by เลขแปลงintech
+            allProjects.forEach(project => {
+                const projectCode = project['เลขแปลงintech'] || '';
+                if (projectCode) {
+                    projectMap.set(projectCode, project);
+                }
+            });
+            
+            // Then, merge inspection data (เงื่อนไขโครงการ) into projects
+            allInspections.forEach(inspection => {
+                const projectCode = inspection['รหัสโครงการ'] || inspection['เลขแปลงintech'] || '';
+                if (projectCode && projectMap.has(projectCode)) {
+                    const project = projectMap.get(projectCode);
+                    
+                    // Add condition from inspection
+                    const condition = inspection['เงื่อนไขโครงการ'] || '';
+                    if (condition) {
+                        project['เงื่อนไขโครงการ'] = condition;
+                    }
+                    
+                    // Add other inspection fields if needed
+                    project['วันที่ตรวจ'] = inspection['วันที่ตรวจ'] || '';
+                    project['ผู้ตรวจ'] = inspection['ผู้ตรวจ'] || '';
+                    project['คะแนนการตรวจ'] = inspection['คะแนนการตรวจ'] || '';
+                    project['ข้อสังเกต'] = inspection['ข้อสังเกต'] || '';
+                }
+            });
+            
+            // Convert map back to array
+            const mergedProjects = Array.from(projectMap.values());
             
             // Filter for planting sugarcane in field (ปลูกอ้อยในนา)
-            allData['planting-sugarcane-field'] = allProjects.filter(item => {
+            allData['planting-sugarcane-field'] = mergedProjects.filter(item => {
                 const projectStatus = item['สถานะโครงการ'] || '';
                 return projectStatus.toLowerCase().includes('ปลูกอ้อยในนา') || 
                        projectStatus.toLowerCase().includes('อ้อยในนา');
             });
             
             // Filter for crop change to sugarcane (เปลี่ยนพืชอื่นมาปลูกอ้อย)
-            allData['crop-change-sugarcane'] = allProjects.filter(item => {
+            allData['crop-change-sugarcane'] = mergedProjects.filter(item => {
                 const projectStatus = item['สถานะโครงการ'] || '';
                 return projectStatus.toLowerCase().includes('เปลี่ยนพืชอื่น') || 
                        projectStatus.toLowerCase().includes('เปลี่ยนพืช');
             });
             
+            // Update main data with merged data
+            allData['Dataโครงการ'] = mergedProjects;
+            
             console.log(`ปลูกอ้อยในนา: ${allData['planting-sugarcane-field'].length} รายการ`);
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
-        }
-        
-        // Process inspection data to create filtered datasets
-        function processInspectionData() {
-            const allInspections = allData['Dataการตรวจ'];
-            const allProjects = allData['Dataโครงการ'];
-            
-            // Create a map of project code to project type for quick lookup
-            const projectTypeMap = {};
-            allProjects.forEach(project => {
-                const projectCode = project['เลขแปลงintech'] || project['รหัสโครงการ'] || '';
-                if (projectCode) {
-                    projectTypeMap[projectCode] = project['สถานะโครงการ'] || '';
-                }
-            });
-            
-            // Filter for planting sugarcane in field inspections
-            allData['inspection-sugarcane-field'] = allInspections.filter(item => {
-                const projectCode = item['รหัสโครงการ'] || item['เลขแปลงintech'] || '';
-                const projectType = projectTypeMap[projectCode] || '';
-                return projectType.toLowerCase().includes('ปลูกอ้อยในนา') || 
-                       projectType.toLowerCase().includes('อ้อยในนา');
-            });
-            
-            // Filter for crop change to sugarcane inspections
-            allData['inspection-crop-change'] = allInspections.filter(item => {
-                const projectCode = item['รหัสโครงการ'] || item['เลขแปลงintech'] || '';
-                const projectType = projectTypeMap[projectCode] || '';
-                return projectType.toLowerCase().includes('เปลี่ยนพืชอื่น') || 
-                       projectType.toLowerCase().includes('เปลี่ยนพืช');
-            });
-            
-            console.log(`ผลตรวจปลูกอ้อยในนา: ${allData['inspection-sugarcane-field'].length} รายการ`);
-            console.log(`ผลตรวจเปลี่ยนพืชอื่น: ${allData['inspection-crop-change'].length} รายการ`);
         }
         
         // Fetch data from Google Sheets (Public Method) - ดึงข้อมูลจริง
@@ -1510,9 +1232,9 @@
                 // Add unique ID
                 item.id = `row-${i}-${Date.now()}`;
                 
-                // For project sheet, map to A-P columns
+                // For project sheet, ensure we have all fields
                 if (sheetName === 'Dataโครงการ') {
-                    // Ensure we have all A-P fields
+                    // Ensure we have all fields
                     PROJECT_FIELDS_A_P.forEach(fieldName => {
                         if (!item[fieldName]) {
                             item[fieldName] = '';
@@ -1522,7 +1244,7 @@
                 
                 // For inspection sheet, make sure we have condition field
                 if (sheetName === 'Dataการตรวจ') {
-                    // Check if we have เงื่อนไขโครงการ field (column R)
+                    // Check if we have เงื่อนไขโครงการ field
                     if (!item['เงื่อนไขโครงการ'] || item['เงื่อนไขโครงการ'].trim() === '') {
                         // Try to find similar field names
                         for (const key in item) {
@@ -1585,121 +1307,6 @@
             return result.map(val => val.trim());
         }
         
-        // Detect anomalies in condition data (เฉพาะเงื่อนไขโครงการ)
-        function detectConditionAnomalies() {
-            anomalies = [];
-            const data = allData['Dataการตรวจ'];
-            
-            if (data.length === 0) return;
-            
-            // Analyze each row for anomalies in condition field only
-            data.forEach((item, index) => {
-                const rowAnomalies = [];
-                const rowId = item.id || `row-${index + 1}`;
-                const projectName = item[INSPECTION_FIELDS.projectName] || 'ไม่ระบุ';
-                
-                // 1. Check for empty or missing condition (คอลัมน์ R)
-                const condition = item['เงื่อนไขโครงการ'] || '';
-                const conditionTrimmed = condition.trim();
-                
-                if (!condition || conditionTrimmed === '') {
-                    rowAnomalies.push({
-                        type: 'missing_condition',
-                        message: `เงื่อนไขโครงการ (คอลัมน์ R) ว่างเปล่า`,
-                        field: 'เงื่อนไขโครงการ',
-                        value: condition
-                    });
-                } 
-                // 2. Check for invalid condition values (not "ผ่าน" or "ไม่ผ่าน")
-                else {
-                    const normalizedCondition = conditionTrimmed.toLowerCase();
-                    if (normalizedCondition !== 'ผ่าน' && normalizedCondition !== 'ไม่ผ่าน') {
-                        rowAnomalies.push({
-                            type: 'invalid_condition',
-                            message: `เงื่อนไขโครงการ "${conditionTrimmed}" ไม่ถูกต้อง (ควรเป็น "ผ่าน" หรือ "ไม่ผ่าน")`,
-                            field: 'เงื่อนไขโครงการ',
-                            value: conditionTrimmed
-                        });
-                    }
-                }
-                
-                // 3. Check for condition with multiple values (contains comma)
-                if (condition.includes(',') || condition.includes('/') || condition.includes('และ')) {
-                    rowAnomalies.push({
-                        type: 'multiple_conditions',
-                        message: `เงื่อนไขโครงการมีหลายค่า: "${condition}"`,
-                        field: 'เงื่อนไขโครงการ',
-                        value: condition
-                    });
-                }
-                
-                // Add to anomalies list if any found
-                if (rowAnomalies.length > 0) {
-                    anomalies.push({
-                        rowId: rowId,
-                        rowIndex: index,
-                        projectCode: item[INSPECTION_FIELDS.projectCode] || 'ไม่ระบุ',
-                        projectName: projectName,
-                        condition: condition,
-                        issues: rowAnomalies
-                    });
-                }
-            });
-            
-            anomalyDetectionEnabled = true;
-            console.log(`ตรวจพบความผิดปกติในเงื่อนไขโครงการ: ${anomalies.length} รายการ`);
-        }
-        
-        // Display anomaly report
-        function showAnomalyReport() {
-            const reportSection = document.getElementById('anomaly-report-section');
-            const anomalyDetails = document.getElementById('anomaly-details');
-            const anomalyCount = document.getElementById('anomaly-count');
-            
-            if (anomalies.length === 0) {
-                reportSection.style.display = 'none';
-                return;
-            }
-            
-            reportSection.style.display = 'block';
-            anomalyCount.textContent = anomalies.length;
-            
-            // Build report HTML
-            let reportHtml = `<div class="mb-2">ตรวจพบความผิดปกติ ${anomalies.length} รายการในเงื่อนไขโครงการ:</div>`;
-            
-            // Group by anomaly type
-            const anomalyTypes = {};
-            anomalies.forEach(anomaly => {
-                anomaly.issues.forEach(issue => {
-                    if (!anomalyTypes[issue.type]) {
-                        anomalyTypes[issue.type] = 0;
-                    }
-                    anomalyTypes[issue.type]++;
-                });
-            });
-            
-            Object.entries(anomalyTypes).forEach(([type, count]) => {
-                const typeNames = {
-                    'missing_condition': 'เงื่อนไขโครงการว่างเปล่า',
-                    'invalid_condition': 'เงื่อนไขโครงการไม่ถูกต้อง',
-                    'multiple_conditions': 'เงื่อนไขโครงการมีหลายค่า'
-                };
-                
-                reportHtml += `<div class="mb-1"><strong>${typeNames[type] || type}:</strong> ${count} รายการ</div>`;
-            });
-            
-            reportHtml += `<div class="mt-2">
-                <button class="btn btn-sm btn-outline-warning" id="view-full-anomaly-report">
-                    <i class="fas fa-list me-1"></i>ดูรายละเอียดทั้งหมด
-                </button>
-            </div>`;
-            
-            anomalyDetails.innerHTML = reportHtml;
-            
-            // Add event listener for view full report button
-            document.getElementById('view-full-anomaly-report')?.addEventListener('click', showFullAnomalyReport);
-        }
-        
         // Update project type statistics
         function updateProjectTypeStats() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
@@ -1759,28 +1366,8 @@
             const data = allData[currentSheet];
             filteredData = [...data];
             
-            // For all project-related sheets, use the appropriate view
-            if (currentSheet === 'Dataโครงการ' || 
-                currentSheet === 'planting-sugarcane-field' || 
-                currentSheet === 'crop-change-sugarcane') {
-                
-                if (currentView === 'table') {
-                    // Generate table headers based on data
-                    if (data.length > 0) {
-                        generateTableHeaders(data[0]);
-                        populateTable(data);
-                    } else {
-                        // Show empty state
-                        document.getElementById('table-headers').innerHTML = '<th colspan="10">ไม่มีข้อมูลในชีทนี้</th>';
-                        document.getElementById('table-body').innerHTML = '';
-                        document.getElementById('empty-state').style.display = 'block';
-                        document.getElementById('record-count').textContent = '0 รายการ';
-                    }
-                } else if (currentView === 'full') {
-                    populateFullView(data);
-                }
-            } else {
-                // For inspection sheet, always use table view
+            if (currentView === 'table') {
+                // Generate table headers based on data
                 if (data.length > 0) {
                     generateTableHeaders(data[0]);
                     populateTable(data);
@@ -1791,6 +1378,8 @@
                     document.getElementById('empty-state').style.display = 'block';
                     document.getElementById('record-count').textContent = '0 รายการ';
                 }
+            } else if (currentView === 'full') {
+                populateFullView(data);
             }
             
             // Apply any existing filters
@@ -1802,54 +1391,29 @@
             const headersContainer = document.getElementById('table-headers');
             headersContainer.innerHTML = '';
             
-            if (currentSheet === 'Dataโครงการ' || 
-                currentSheet === 'planting-sugarcane-field' || 
-                currentSheet === 'crop-change-sugarcane') {
-                
-                // Show important columns for projects
-                const importantColumns = ['เลขแปลงintech', 'ชื่อชาวไร่', 'เขต', 'ชื่อประเภทอ้อย', 'พื้นที่', 'วันที่ปลูก', 'เปอร์เซ็นการงอก', 'สถานะโครงการ'];
-                
-                // Filter to only show columns that exist in data
-                const displayHeaders = importantColumns.filter(header => 
-                    dataItem[header] !== undefined
-                );
-                
-                // If no important columns found, use first few columns from data
-                if (displayHeaders.length === 0) {
-                    const allHeaders = Object.keys(dataItem).filter(key => key !== 'id' && key !== '');
-                    displayHeaders.push(...allHeaders.slice(0, 7));
-                }
-                
-                // Create header cells
-                displayHeaders.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    th.title = header;
-                    headersContainer.appendChild(th);
-                });
-            } else if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                // Show important columns for inspections with condition indicator
-                const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ชื่อเกษตรกร', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ', 'ข้อสังเกต'];
-                
-                // Filter to only show columns that exist in data
-                const displayHeaders = importantColumns.filter(header => 
-                    dataItem[header] !== undefined
-                );
-                
-                // Create header cells
-                displayHeaders.forEach(header => {
-                    const th = document.createElement('th');
-                    th.textContent = header;
-                    th.title = header;
-                    headersContainer.appendChild(th);
-                });
-                
-                // Add condition indicator column header
-                const conditionTh = document.createElement('th');
-                conditionTh.textContent = 'ผลการตรวจ';
-                conditionTh.style.minWidth = '100px';
-                headersContainer.appendChild(conditionTh);
-            }
+            // Show important columns for projects
+            const importantColumns = [
+                'เลขแปลงintech', 
+                'เลขโควตา', 
+                'ชื่อชาวไร่', 
+                'เขต', 
+                'รหัสนักเกษตร', 
+                'ชื่อประเภทอ้อย', 
+                'เงื่อนไขโครงการ'
+            ];
+            
+            // Filter to only show columns that exist in data
+            const displayHeaders = importantColumns.filter(header => 
+                dataItem[header] !== undefined
+            );
+            
+            // Create header cells
+            displayHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                th.title = header;
+                headersContainer.appendChild(th);
+            });
             
             // Add action column
             const actionTh = document.createElement('th');
@@ -1876,20 +1440,11 @@
             const headerCells = document.querySelectorAll('#table-headers th');
             const displayHeaders = Array.from(headerCells)
                 .map(th => th.textContent)
-                .filter(text => text !== 'จัดการ' && text !== 'ผลการตรวจ');
+                .filter(text => text !== 'จัดการ');
             
             // Create rows
-            data.forEach((item, rowIndex) => {
+            data.forEach((item) => {
                 const row = document.createElement('tr');
-                
-                // Check if this row has anomalies (only for inspection sheets)
-                if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                    const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
-                    if (rowAnomaly) {
-                        row.classList.add('anomaly-warning');
-                        row.setAttribute('title', `ตรวจพบ ${rowAnomaly.issues.length} ความผิดปกติในเงื่อนไขโครงการ`);
-                    }
-                }
                 
                 // Create data cells for display headers
                 displayHeaders.forEach(header => {
@@ -1897,117 +1452,43 @@
                     const value = item[header] || '';
                     
                     // Format special fields
-                    if (header === 'สถานะโครงการ') {
+                    if (header === 'เงื่อนไขโครงการ') {
+                        const conditionClass = getConditionClass(value);
+                        cell.innerHTML = `<span class="condition-badge ${conditionClass}">${value}</span>`;
+                    } else if (header === 'ชื่อประเภทอ้อย') {
                         const projectTypeClass = getProjectTypeClass(value);
                         cell.innerHTML = `<span class="project-type-badge ${projectTypeClass}">${value}</span>`;
-                    } else if (header.toLowerCase().includes('สถานะ')) {
-                        const statusClass = getStatusClass(value);
-                        cell.innerHTML = `<span class="badge-status ${statusClass}">${value}</span>`;
-                    } else if (header.toLowerCase().includes('งบ') || header.toLowerCase().includes('budget') || header.toLowerCase().includes('สนับสนุน')) {
-                        cell.textContent = formatCurrency(value);
-                    } else if (header.toLowerCase().includes('date') || header.toLowerCase().includes('วันที่')) {
-                        cell.textContent = formatThaiDate(value);
-                    } else if (header.toLowerCase().includes('คะแนน') || header.toLowerCase().includes('score')) {
-                        const score = parseInt(value) || 0;
-                        let badgeClass = 'bg-danger';
-                        if (score >= 80) badgeClass = 'bg-success';
-                        else if (score >= 60) badgeClass = 'bg-warning';
-                        cell.innerHTML = `<span class="badge ${badgeClass}">${score}</span>`;
                     } else if (header === 'พื้นที่') {
                         const area = parseFloat(value) || 0;
                         cell.textContent = area > 0 ? `${area.toFixed(2)} ไร่` : '-';
-                    } else if (header === 'เปอร์เซ็นการงอก') {
-                        const germinationStr = value.toString();
-                        const germinationMatch = germinationStr.match(/(\d+(\.\d+)?)/);
-                        if (germinationMatch) {
-                            const germination = parseFloat(germinationMatch[1]);
-                            let badgeClass = 'bg-danger';
-                            if (germination >= 80) badgeClass = 'bg-success';
-                            else if (germination >= 60) badgeClass = 'bg-warning';
-                            else if (germination >= 40) badgeClass = 'bg-info';
-                            cell.innerHTML = `<span class="badge ${badgeClass}">${germination}%</span>`;
-                        } else {
-                            cell.textContent = value;
-                        }
-                    } else if (header.toLowerCase().includes('ความคืบหน้า') || header.toLowerCase().includes('progress')) {
-                        const progress = parseInt(value) || 0;
-                        let progressClass = 'bg-danger';
-                        if (progress >= 80) progressClass = 'bg-success';
-                        else if (progress >= 50) progressClass = 'bg-warning';
-                        else if (progress >= 20) progressClass = 'bg-info';
-                        cell.innerHTML = `
-                            <div class="d-flex align-items-center">
-                                <div class="progress flex-grow-1 me-2" style="height: 10px;">
-                                    <div class="progress-bar ${progressClass}" style="width: ${progress}%"></div>
-                                </div>
-                                <span>${progress}%</span>
-                            </div>
-                        `;
                     } else {
                         // Truncate long text
                         cell.textContent = value.length > 30 ? value.substring(0, 30) + '...' : value;
                         cell.title = value;
                     }
                     
-                    // สำหรับ inspection sheets ให้เพิ่ม class condition-indicator
-                    if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                        cell.classList.add('condition-indicator');
-                    }
-                    
                     row.appendChild(cell);
                 });
                 
-                // Add condition cell for inspection sheets
-                if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                    const condition = item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
-                    const conditionClass = getConditionIndicatorClass(condition);
-                    const conditionCell = document.createElement('td');
-                    conditionCell.innerHTML = `<span class="condition-badge ${conditionClass}">${condition}</span>`;
-                    row.appendChild(conditionCell);
-                }
-                
                 // Add action cell
                 const actionCell = document.createElement('td');
-                if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                    let actionButtons = `<button class="btn btn-sm btn-outline-green view-inspection-btn" data-id="${item.id}" title="ดูรายละเอียดเงื่อนไขโครงการ">
-                            <i class="fas fa-search"></i>
-                        </button>`;
-                    
-                    // Add anomaly indicator if this row has anomalies
-                    const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
-                    if (rowAnomaly) {
-                        actionButtons = `<span class="me-1" title="พบ ${rowAnomaly.issues.length} ความผิดปกติ">⚠️</span>` + actionButtons;
-                    }
-                    
-                    actionCell.innerHTML = actionButtons;
-                } else {
-                    actionCell.innerHTML = `
-                        <button class="btn btn-sm btn-outline-green view-details-btn" data-id="${item.id}" title="ดูรายละเอียดโครงการ">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    `;
-                }
+                actionCell.innerHTML = `
+                    <button class="btn btn-sm btn-outline-green view-details-btn" data-id="${item.id}" title="ดูรายละเอียดโครงการ">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                `;
                 row.appendChild(actionCell);
                 
                 tableBody.appendChild(row);
             });
             
             // Add event listeners to view buttons
-            if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                document.querySelectorAll('.view-inspection-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        showInspectionDetails(itemId);
-                    });
+            document.querySelectorAll('.view-details-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const itemId = this.getAttribute('data-id');
+                    showProjectFullDetailsModal(itemId);
                 });
-            } else {
-                document.querySelectorAll('.view-details-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        const itemId = this.getAttribute('data-id');
-                        showProjectDetails(itemId);
-                    });
-                });
-            }
+            });
         }
         
         // Populate full view with all A-P columns
@@ -2025,7 +1506,7 @@
             document.getElementById('record-count').textContent = `${data.length} รายการ`;
             
             // Create full details for each project
-            data.forEach((item, index) => {
+            data.forEach((item) => {
                 const projectCode = item['เลขแปลงintech'] || 'ไม่ระบุ';
                 const farmerName = item['ชื่อชาวไร่'] || 'ไม่ระบุ';
                 const projectType = item['สถานะโครงการ'] || 'ไม่ระบุ';
@@ -2048,7 +1529,7 @@
                                     <h6 class="section-title">ข้อมูลพื้นฐานแปลง</h6>
                 `;
                 
-                // First 8 columns (A-H)
+                // First 8 columns
                 const basicFields = PROJECT_FIELDS_A_P.slice(0, 8);
                 basicFields.forEach(field => {
                     const value = item[field] || 'ไม่ระบุ';
@@ -2070,7 +1551,7 @@
                                     <h6 class="section-title">ข้อมูลการปลูกและผลผลิต</h6>
                 `;
                 
-                // Next 8 columns (I-P)
+                // Next 8 columns
                 const contactFields = PROJECT_FIELDS_A_P.slice(8);
                 contactFields.forEach(field => {
                     const value = item[field] || 'ไม่ระบุ';
@@ -2116,7 +1597,8 @@
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-            const anomalyFilter = document.getElementById('anomaly-filter').value;
+            const conditionFilter = document.getElementById('condition-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
             
             let data = allData[currentSheet];
             
@@ -2129,46 +1611,27 @@
                 });
             }
             
-            // Apply status or condition filter
-            if (currentSheet === 'Dataโครงการ' || 
-                currentSheet === 'planting-sugarcane-field' || 
-                currentSheet === 'crop-change-sugarcane') {
-                
-                const statusFilter = document.getElementById('status-filter').value;
-                if (statusFilter !== 'all') {
-                    data = data.filter(item => {
-                        const status = item['สถานะ'] || '';
-                        return status.toLowerCase().includes(statusFilter.toLowerCase());
-                    });
-                }
-            } else if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                const resultFilter = document.getElementById('result-filter').value;
-                if (resultFilter !== 'all') {
-                    data = data.filter(item => {
-                        const condition = item['เงื่อนไขโครงการ'] || '';
-                        const conditionLower = condition.toLowerCase().trim();
-                        
-                        if (resultFilter === 'ผ่าน') {
-                            return conditionLower === 'ผ่าน';
-                        } else if (resultFilter === 'ไม่ผ่าน') {
-                            return conditionLower === 'ไม่ผ่าน';
-                        }
-                        return false;
-                    });
-                }
-                
-                // Apply anomaly filter
-                if (anomalyFilter !== 'all') {
-                    data = data.filter(item => {
-                        const hasAnomaly = anomalies.some(a => a.rowId === item.id);
-                        if (anomalyFilter === 'anomaly') {
-                            return hasAnomaly;
-                        } else if (anomalyFilter === 'normal') {
-                            return !hasAnomaly;
-                        }
-                        return true;
-                    });
-                }
+            // Apply status filter
+            if (statusFilter !== 'all') {
+                data = data.filter(item => {
+                    const status = item['สถานะโครงการ'] || '';
+                    return status.toLowerCase().includes(statusFilter.toLowerCase());
+                });
+            }
+            
+            // Apply condition filter
+            if (conditionFilter !== 'all') {
+                data = data.filter(item => {
+                    const condition = item['เงื่อนไขโครงการ'] || '';
+                    const conditionLower = condition.toLowerCase().trim();
+                    
+                    if (conditionFilter === 'ผ่าน') {
+                        return conditionLower === 'ผ่าน';
+                    } else if (conditionFilter === 'ไม่ผ่าน') {
+                        return conditionLower === 'ไม่ผ่าน';
+                    }
+                    return true;
+                });
             }
             
             // Apply additional filters
@@ -2191,48 +1654,27 @@
                             return false;
                         });
                         break;
-                    case 'passed':
-                        // Filter for passed conditions only
-                        data = data.filter(item => {
-                            const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition.toLowerCase().trim() === 'ผ่าน';
-                        });
-                        break;
                 }
             }
             
             filteredData = data;
             
             // Update display based on current view
-            if (currentSheet === 'Dataโครงการ' || 
-                currentSheet === 'planting-sugarcane-field' || 
-                currentSheet === 'crop-change-sugarcane') {
-                
-                if (currentView === 'table') {
-                    populateTable(data);
-                } else if (currentView === 'full') {
-                    populateFullView(data);
-                }
-            } else {
+            if (currentView === 'table') {
                 populateTable(data);
+            } else if (currentView === 'full') {
+                populateFullView(data);
             }
             
             // Update stats
-            if (currentSheet === 'inspection-sugarcane-field' || currentSheet === 'inspection-crop-change') {
-                updateInspectionStats();
-            } else if (currentSheet === 'Dataโครงการ' || 
-                       currentSheet === 'planting-sugarcane-field' || 
-                       currentSheet === 'crop-change-sugarcane') {
-                updateProjectTypeStats();
-            }
+            updateProjectTypeStats();
         }
         
         // Reset all filters
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('status-filter').value = 'all';
-            document.getElementById('result-filter').value = 'all';
-            document.getElementById('anomaly-filter').value = 'all';
+            document.getElementById('condition-filter').value = 'all';
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-filter') === 'all') {
@@ -2242,91 +1684,6 @@
             
             filterData();
             showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
-        }
-        
-        // Update inspection statistics
-        function updateInspectionStats() {
-            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
-            
-            if (data.length === 0) {
-                document.getElementById('total-inspections').textContent = '0';
-                document.getElementById('passed-inspections').textContent = '0';
-                document.getElementById('failed-inspections').textContent = '0';
-                return;
-            }
-            
-            // Count by condition - นับเฉพาะ "ผ่าน" และ "ไม่ผ่าน" เท่านั้น
-            let passed = 0;
-            let failed = 0;
-            
-            data.forEach(item => {
-                const condition = item['เงื่อนไขโครงการ'] || '';
-                const conditionLower = condition.toLowerCase().trim();
-                
-                if (conditionLower === 'ผ่าน') {
-                    passed++;
-                } else if (conditionLower === 'ไม่ผ่าน') {
-                    failed++;
-                }
-                // ไม่นับกรณีอื่น ๆ (ว่างเปล่าหรือค่าอื่น)
-            });
-            
-            document.getElementById('total-inspections').textContent = data.length;
-            document.getElementById('passed-inspections').textContent = passed;
-            document.getElementById('failed-inspections').textContent = failed;
-        }
-        
-        // Show project details in modal
-        function showProjectDetails(itemId) {
-            // Find the item
-            const item = allData[currentSheet].find(i => i.id === itemId);
-            
-            if (!item) {
-                showToast('ไม่พบข้อมูล', 'ไม่สามารถแสดงรายละเอียดได้', 'error');
-                return;
-            }
-            
-            // Build details content
-            let content = '<div class="row">';
-            
-            // Get all fields except id
-            const fields = Object.entries(item).filter(([key]) => key !== 'id');
-            
-            // Split into two columns for better display
-            const midPoint = Math.ceil(fields.length / 2);
-            
-            content += '<div class="col-md-6">';
-            for (let i = 0; i < midPoint; i++) {
-                const [key, value] = fields[i];
-                content += `
-                    <div class="mb-3">
-                        <strong class="d-block text-green">${key}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
-                    </div>
-                `;
-            }
-            content += '</div>';
-            
-            content += '<div class="col-md-6">';
-            for (let i = midPoint; i < fields.length; i++) {
-                const [key, value] = fields[i];
-                content += `
-                    <div class="mb-3">
-                        <strong class="d-block text-green">${key}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
-                    </div>
-                `;
-            }
-            content += '</div>';
-            
-            content += '</div>';
-            
-            // Set modal content
-            document.getElementById('project-details-content').innerHTML = content;
-            
-            // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('projectDetailsModal'));
-            modal.show();
         }
         
         // Show project full details in modal (all A-P columns)
@@ -2361,7 +1718,7 @@
                                 <h6 class="section-title">ข้อมูลพื้นฐานแปลง</h6>
             `;
             
-            // First 8 columns (A-H)
+            // First 8 columns
             const basicFields = PROJECT_FIELDS_A_P.slice(0, 8);
             basicFields.forEach(field => {
                 const value = item[field] || 'ไม่ระบุ';
@@ -2383,7 +1740,7 @@
                                 <h6 class="section-title">ข้อมูลการปลูกและผลผลิต</h6>
             `;
             
-            // Next 8 columns (I-P)
+            // Next 8 columns
             const contactFields = PROJECT_FIELDS_A_P.slice(8);
             contactFields.forEach(field => {
                 const value = item[field] || 'ไม่ระบุ';
@@ -2410,145 +1767,6 @@
             
             // Show modal
             const modal = new bootstrap.Modal(document.getElementById('projectDetailsModal'));
-            modal.show();
-        }
-        
-        // Show inspection details in modal
-        function showInspectionDetails(itemId) {
-            // Find the item
-            const item = allData[currentSheet].find(i => i.id === itemId);
-            
-            if (!item) {
-                showToast('ไม่พบข้อมูล', 'ไม่สามารถแสดงรายละเอียดได้', 'error');
-                return;
-            }
-            
-            // Check if this item has anomalies
-            const itemAnomaly = anomalies.find(a => a.rowId === itemId);
-            
-            // Build details content with emphasis on condition
-            let content = '<div class="row">';
-            
-            // Show anomalies warning if present
-            if (itemAnomaly) {
-                content += `
-                    <div class="col-12 mb-3">
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle me-2"></i>
-                            <strong>ตรวจพบความผิดปกติในเงื่อนไขโครงการ</strong>
-                            <ul class="mb-0 mt-2">
-                                ${itemAnomaly.issues.map(issue => `<li>${issue.message}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Show condition prominently at top
-            const condition = item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
-            const conditionClass = getConditionClass(condition);
-            
-            content += `
-                <div class="col-12 mb-4">
-                    <div class="text-center">
-                        <div class="result-badge ${conditionClass}" style="font-size: 1.2rem; padding: 12px 24px; display: inline-block;">
-                            เงื่อนไขโครงการ: ${condition}
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // Get all fields except id, organize by importance
-            const importantFields = ['รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ', 'ข้อสังเกต', 'คำแนะนำ', 'สถานะหลังตรวจ'];
-            const otherFields = Object.entries(item)
-                .filter(([key]) => key !== 'id' && key !== 'เงื่อนไขโครงการ' && !importantFields.includes(key))
-                .map(([key]) => key);
-            
-            const allFields = [...importantFields, ...otherFields];
-            
-            // Split into two columns
-            const midPoint = Math.ceil(allFields.length / 2);
-            
-            content += '<div class="col-md-6">';
-            for (let i = 0; i < midPoint; i++) {
-                const key = allFields[i];
-                const value = item[key] || '';
-                if (value) {
-                    content += `
-                        <div class="mb-3">
-                            <strong class="d-block text-green">${key}</strong>
-                            <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
-                        </div>
-                    `;
-                }
-            }
-            content += '</div>';
-            
-            content += '<div class="col-md-6">';
-            for (let i = midPoint; i < allFields.length; i++) {
-                const key = allFields[i];
-                const value = item[key] || '';
-                if (value) {
-                    content += `
-                        <div class="mb-3">
-                            <strong class="d-block text-green">${key}</strong>
-                            <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
-                        </div>
-                    `;
-                }
-            }
-            content += '</div>';
-            
-            content += '</div>';
-            
-            // Set modal content
-            document.getElementById('inspection-details-content').innerHTML = content;
-            
-            // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('inspectionDetailsModal'));
-            modal.show();
-        }
-        
-        // Show full anomaly report in modal
-        function showFullAnomalyReport() {
-            let reportHtml = '';
-            
-            if (anomalies.length === 0) {
-                reportHtml = '<p class="text-center">ไม่พบความผิดปกติในเงื่อนไขโครงการ</p>';
-            } else {
-                reportHtml = `<p>พบความผิดปกติในเงื่อนไขโครงการทั้งหมด <strong>${anomalies.length}</strong> รายการ:</p>`;
-                
-                anomalies.forEach((anomaly, index) => {
-                    reportHtml += `
-                        <div class="anomaly-item">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <strong>${index + 1}. โครงการ: ${anomaly.projectName}</strong><br>
-                                    <small>รหัสโครงการ: ${anomaly.projectCode}</small><br>
-                                    <small>เงื่อนไข: ${anomaly.condition || 'ว่างเปล่า'}</small>
-                                </div>
-                                <span class="badge bg-danger">${anomaly.issues.length} ข้อ</span>
-                            </div>
-                            <ul class="mb-0 mt-2 ps-3">
-                                ${anomaly.issues.map(issue => `<li>${issue.message}</li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
-                });
-                
-                reportHtml += `
-                    <div class="mt-3 p-2 bg-light rounded">
-                        <small><i class="fas fa-info-circle me-1"></i>
-                        หมายเหตุ: เงื่อนไขโครงการที่ถูกต้องควรเป็น "ผ่าน" หรือ "ไม่ผ่าน" เท่านั้น
-                        </small>
-                    </div>
-                `;
-            }
-            
-            document.getElementById('anomaly-details-content').innerHTML = reportHtml;
-            
-            // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('anomalyDetailsModal'));
             modal.show();
         }
         
@@ -2585,8 +1803,6 @@
             let filename = currentSheet;
             if (currentSheet === 'planting-sugarcane-field') filename = 'ปลูกอ้อยในนา';
             else if (currentSheet === 'crop-change-sugarcane') filename = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
-            else if (currentSheet === 'inspection-sugarcane-field') filename = 'ผลตรวจปลูกอ้อยในนา';
-            else if (currentSheet === 'inspection-crop-change') filename = 'ผลตรวจเปลี่ยนพืชอื่น';
             
             link.download = `${filename}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
@@ -2621,7 +1837,7 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            const projectCode = item['เลขแปลงintech'] || item['รหัสโครงการ'] || 'project';
+            const projectCode = item['เลขแปลงintech'] || 'project';
             link.download = `${projectCode}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
@@ -2694,16 +1910,6 @@
         
         // Get condition class for badge
         function getConditionClass(condition) {
-            if (!condition) return 'result-other';
-            
-            const conditionLower = condition.toLowerCase().trim();
-            if (conditionLower === 'ผ่าน') return 'result-passed';
-            if (conditionLower === 'ไม่ผ่าน') return 'result-failed';
-            return 'result-other';
-        }
-        
-        // Get condition indicator class for inline display
-        function getConditionIndicatorClass(condition) {
             if (!condition) return 'condition-other';
             
             const conditionLower = condition.toLowerCase().trim();
@@ -2806,11 +2012,11 @@
             const keyLower = key.toLowerCase();
             const valueStr = value.toString().trim();
             
-            // สำหรับคอลัมน์ "เงื่อนไขโครงการ" หรือคอลัมน์ที่เกี่ยวข้อง
+            // สำหรับคอลัมน์ "เงื่อนไขโครงการ"
             if (keyLower.includes('เงื่อนไขโครงการ') || 
                 (keyLower.includes('เงื่อนไข') && !keyLower.includes('อื่น'))) {
                 const conditionClass = getConditionClass(valueStr);
-                return `<span class="result-badge ${conditionClass}">${valueStr || 'ไม่ระบุ'}</span>`;
+                return `<span class="condition-badge ${conditionClass}">${valueStr || 'ไม่ระบุ'}</span>`;
             }
             
             // สำหรับคอลัมน์ "สถานะโครงการ"
@@ -2822,10 +2028,6 @@
             if (keyLower.includes('สถานะ')) {
                 const statusClass = getStatusClass(valueStr);
                 return `<span class="badge-status ${statusClass}">${valueStr}</span>`;
-            }
-            
-            if (keyLower.includes('งบ') || keyLower.includes('budget') || keyLower.includes('สนับสนุน')) {
-                return formatCurrency(valueStr);
             }
             
             if (keyLower.includes('date') || keyLower.includes('วันที่')) {
@@ -2847,31 +2049,6 @@
                     else if (germination >= 60) badgeClass = 'bg-warning';
                     else if (germination >= 40) badgeClass = 'bg-info';
                     return `<span class="badge ${badgeClass}">${germination}%</span>`;
-                }
-                return valueStr;
-            }
-            
-            if (keyLower.includes('ความคืบหน้า') || keyLower.includes('progress')) {
-                const progress = parseInt(valueStr) || 0;
-                let progressClass = 'bg-danger';
-                if (progress >= 80) progressClass = 'bg-success';
-                else if (progress >= 50) progressClass = 'bg-warning';
-                else if (progress >= 20) progressClass = 'bg-info';
-                return `
-                    <div class="d-flex align-items-center">
-                        <div class="progress flex-grow-1 me-2" style="height: 10px;">
-                            <div class="progress-bar ${progressClass}" style="width: ${progress}%"></div>
-                        </div>
-                        <span>${progress}%</span>
-                    </div>
-                `;
-            }
-            
-            if (keyLower.includes('เบอร์') || keyLower.includes('โทร') || keyLower.includes('phone') || keyLower.includes('contact')) {
-                // Format phone number
-                const phone = valueStr.replace(/\D/g, '');
-                if (phone.length === 10) {
-                    return `${phone.substring(0, 3)}-${phone.substring(3, 6)}-${phone.substring(6)}`;
                 }
                 return valueStr;
             }
