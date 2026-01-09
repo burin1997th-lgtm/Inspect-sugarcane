@@ -882,11 +882,10 @@
                     </div>
                     <div class="col-md-4">
                         <select id="condition-filter" class="form-select">
-                            <option value="all">เงื่อนไขทั้งหมด</option>
-                            <option value="ผ่าน">ผ่านเงื่อนไข</option>
-                            <option value="ไม่ผ่าน">ไม่ผ่านเงื่อนไข</option>
+                            <option value="all">สถานะการตรวจ</option>
+                            <option value="ผ่าน">ผ่าน</option>
+                            <option value="ไม่ผ่าน">ไม่ผ่าน</option>
                             <option value="รอตรวจแปลง">รอตรวจแปลง</option>
-                            <option value="ตรวจแล้ว">ตรวจแล้วทั้งหมด</option>
                         </select>
                     </div>
                 </div>
@@ -908,57 +907,16 @@
                                 <!-- ตัวเลือกนักเกษตรจะถูกเพิ่มโดย JavaScript -->
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold text-muted">ประเภทโครงการ</label>
-                            <select id="project-type-filter" class="form-select">
-                                <option value="all">ประเภททั้งหมด</option>
-                                <option value="ปลูกอ้อยในนา">ปลูกอ้อยในนา</option>
-                                <option value="เปลี่ยนพืชอื่นมาปลูกอ้อย">เปลี่ยนพืชอื่นมาปลูกอ้อย</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row g-3 mt-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">ช่วงพื้นที่ (ไร่)</label>
-                            <div class="d-flex align-items-center">
-                                <input type="number" id="area-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
-                                <span class="mx-2">ถึง</span>
-                                <input type="number" id="area-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
-                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-area-filter">
-                                    <i class="fas fa-check me-1"></i>ตกลง
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">% การงอก</label>
-                            <div class="d-flex align-items-center">
-                                <input type="number" id="germination-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
-                                <span class="mx-2">ถึง</span>
-                                <input type="number" id="germination-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
-                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-germination-filter">
-                                    <i class="fas fa-check me-1"></i>ตกลง
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- Filter Buttons -->
                 <div class="filter-buttons mt-3">
                     <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-                    <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
-                    <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
-                    <button class="filter-btn" data-filter="checked">ตรวจแล้ว</button>
-                    <button class="filter-btn" data-filter="high-germination">% การงอกสูง (&gt;80%)</button>
                     <button class="btn-outline-green" id="refresh-btn">
                         <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
                     </button>
                     <button class="btn-outline-green" id="reset-filters">
                         <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
-                    </button>
-                    <button class="btn-kbs btn-sm" id="advanced-filter-toggle">
-                        <i class="fas fa-sliders-h me-1"></i>กรองละเอียด
                     </button>
                 </div>
             </div>
