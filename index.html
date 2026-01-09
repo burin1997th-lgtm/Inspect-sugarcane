@@ -64,12 +64,13 @@
         }
         
         .logo-img {
-            max-width: 70px;
+            max-width: 120px; /* ขนาดใหญ่ขึ้นสำหรับโลโก้ KBS */
             max-height: 70px;
             margin-right: 20px;
             border-radius: 8px;
             background: var(--white);
-            padding: 5px;
+            padding: 8px;
+            object-fit: contain;
         }
         
         .logo-text {
@@ -512,7 +513,7 @@
         }
         
         .footer-logo {
-            max-width: 50px;
+            max-width: 80px; /* ขนาดใหญ่ขึ้นสำหรับ footer */
             margin-bottom: 15px;
             filter: brightness(0) invert(1);
         }
@@ -551,8 +552,8 @@
             }
             
             .logo-img {
-                max-width: 50px;
-                max-height: 50px;
+                max-width: 100px;
+                max-height: 60px;
                 margin-right: 15px;
             }
         }
@@ -589,6 +590,11 @@
             .logo-img {
                 margin-right: 0;
                 margin-bottom: 10px;
+                max-width: 100px;
+            }
+            
+            .footer-logo {
+                max-width: 60px;
             }
         }
         
@@ -660,6 +666,21 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary-green);
         }
+        
+        /* KBS Logo Specific Styles */
+        .kbs-logo {
+            object-fit: contain;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+        }
+        
+        /* Setup KBS Logo */
+        .setup-kbs-logo {
+            max-width: 150px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -668,9 +689,10 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-container">
-                    <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYRqCqImwN2PqH-LqF5GcltODA-z9-i1fzERlsLtSNaMZYGqep3H4sJjEJjY2x7y78WHKxWHMgJQ1StZqS50e6oGCCIr=s1600" 
+                    <!-- เปลี่ยนลิงก์โลโก้เป็นลิงก์ใหม่จาก Wikimedia -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
                          alt="KBS Group Logo" 
-                         class="logo-img">
+                         class="logo-img kbs-logo">
                     <div class="logo-text">
                         <h1 class="logo-title">ระบบจัดการโครงการ</h1>
                         <p class="logo-subtitle">ข้อมูลโครงการปลูกอ้อยในนา และโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70</p>
@@ -698,16 +720,18 @@
                 <i class="fas fa-cog"></i>ตั้งค่าเริ่มต้นระบบ
             </div>
             <div class="card-body setup-section">
-                <div class="setup-icon">
-                    <i class="fas fa-table"></i>
-                </div>
-                <h2 class="setup-title">เชื่อมต่อระบบกับข้อมูลโครงการ</h2>
+                <!-- เพิ่มโลโก้ KBS ในหน้า setup -->
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
+                     alt="KBS Group Logo" 
+                     class="setup-kbs-logo kbs-logo">
+                
+                <h2 class="setup-title">KBS Group - ระบบจัดการโครงการ</h2>
                 <p class="mb-4">ระบบนี้ใช้ข้อมูลจาก Google Sheets ที่เผยแพร่เป็นสาธารณะ (Public Mode)</p>
                 
                 <div class="setup-steps">
                     <div class="step">
                         <span class="step-number">1</span>
-                        <strong>ข้อมูลโครงการ</strong>
+                        <strong>ข้อมูลโครงการ KBS Group</strong>
                         <p class="mb-0 mt-1">ระบบนี้แสดงข้อมูลโครงการปลูกอ้อยในนา และโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70</p>
                     </div>
                     
@@ -728,7 +752,7 @@
                     <i class="fas fa-play-circle me-2"></i>เริ่มใช้งานระบบ
                 </button>
                 
-                <p class="mt-3 text-muted small">* ระบบนี้สำหรับใช้ภายในองค์กรเท่านั้น</p>
+                <p class="mt-3 text-muted small">* ระบบนี้สำหรับใช้ภายในองค์กร KBS Group เท่านั้น</p>
             </div>
         </div>
 
@@ -900,9 +924,10 @@
     <!-- Footer -->
     <div class="footer">
         <div class="container">
-            <img src="https://lh3.googleusercontent.com/drive-viewer/AEYmBYRqCqImwN2PqH-LqF5GcltODA-z9-i1fzERlsLtSNaMZYGqep3H4sJjEJjY2x7y78WHKxWHMgJQ1StZqS50e6oGCCIr=s1600" 
+            <!-- เปลี่ยนลิงก์โลโก้ใน footer เป็นลิงก์ใหม่จาก Wikimedia -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
                  alt="KBS Group Logo" 
-                 class="footer-logo">
+                 class="footer-logo kbs-logo">
             <div class="row">
                 <div class="col-md-6 text-md-start">
                     <h5 class="mb-3">KBS Group</h5>
