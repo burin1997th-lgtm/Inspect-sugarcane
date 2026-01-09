@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการโครงการเกษตร</title>
+    <title>ระบบจัดการโครงการ - Green Pastel Theme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,12 +11,22 @@
         :root {
             --pastel-green: #A8E6CF;
             --pastel-green-dark: #7BCFAB;
+            --pastel-mint: #DCEDC1;
+            --pastel-light-green: #F0F7DA;
+            --pastel-blue: #B3E5FC;
+            --pastel-yellow: #FFD3B6;
+            --pastel-pink: #FFAAA5;
             --green-primary: #4CAF50;
             --green-dark: #388E3C;
+            --green-light: #C8E6C9;
             --green-bg: #F1F8E9;
             --green-gradient: linear-gradient(135deg, #81C784 0%, #4CAF50 100%);
             --text-dark: #2E4A3E;
+            --text-light: #556B5A;
             --white: #FFFFFF;
+            --light-gray: #F8F9FA;
+            --warning-red: #FF5252;
+            --warning-yellow: #FFC107;
         }
         
         body {
@@ -30,48 +40,84 @@
         .header {
             background: var(--green-gradient);
             color: var(--white);
-            padding: 1.5rem 0;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(129, 199, 132, 0.2);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(129, 199, 132, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
         }
         
         .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: relative;
+            z-index: 2;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 0;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo-icon {
+            background: var(--white);
+            color: var(--green-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .subtitle {
             font-weight: 300;
             opacity: 0.9;
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
         
         /* Card Styles */
         .card {
             border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(129, 199, 132, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(129, 199, 132, 0.1);
             background: var(--white);
+            transition: all 0.3s ease;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(129, 199, 132, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--pastel-green);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(129, 199, 132, 0.15);
         }
         
         .card-header {
             background: var(--green-gradient);
             color: var(--white);
-            border-radius: 12px 12px 0 0 !important;
-            padding: 1rem 1.5rem;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.2rem 1.5rem;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             border: none;
+        }
+        
+        .card-header i {
+            margin-right: 10px;
+            font-size: 1.1rem;
         }
         
         /* Button Styles */
@@ -79,8 +125,8 @@
             background: var(--green-gradient);
             border: none;
             color: white;
-            border-radius: 6px;
-            padding: 8px 16px;
+            border-radius: 8px;
+            padding: 10px 20px;
             font-weight: 500;
             transition: all 0.3s;
         }
@@ -88,16 +134,16 @@
         .btn-green:hover {
             background: var(--green-dark);
             color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
         
         .btn-outline-green {
-            border: 1px solid var(--green-primary);
+            border: 2px solid var(--green-primary);
             color: var(--green-primary);
             background: transparent;
-            border-radius: 6px;
-            padding: 6px 14px;
+            border-radius: 8px;
+            padding: 8px 18px;
             font-weight: 500;
             transition: all 0.3s;
         }
@@ -105,48 +151,88 @@
         .btn-outline-green:hover {
             background: var(--green-primary);
             color: white;
+            border-color: var(--green-primary);
+        }
+        
+        /* Tab Styles */
+        .tab-container {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            border: 1px solid var(--pastel-green);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px 15px;
+            background: var(--pastel-light-green);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tab-btn i {
+            margin-right: 8px;
+        }
+        
+        .tab-btn.active {
+            background: var(--green-gradient);
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
         }
         
         /* Search and Filter */
         .search-box {
             position: relative;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         
         .search-box input {
-            padding: 10px 15px 10px 40px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-            font-size: 0.95rem;
+            padding: 12px 20px 12px 45px;
+            border-radius: 10px;
+            border: 1px solid var(--pastel-green);
+            font-size: 1rem;
             transition: all 0.3s;
             background: var(--white);
         }
         
         .search-box input:focus {
             border-color: var(--green-primary);
-            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+            box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.1);
         }
         
         .search-box i {
             position: absolute;
-            left: 12px;
-            top: 10px;
+            left: 15px;
+            top: 14px;
             color: var(--green-primary);
+            font-size: 1.1rem;
         }
         
         .filter-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 1rem;
+            gap: 10px;
+            margin-bottom: 1.5rem;
         }
         
         .filter-btn {
             border-radius: 20px;
-            padding: 6px 16px;
-            font-size: 0.85rem;
+            padding: 8px 18px;
+            font-size: 0.9rem;
             transition: all 0.2s;
-            border: 1px solid #ddd;
+            border: 1px solid var(--pastel-green);
             background: var(--white);
             color: var(--text-dark);
         }
@@ -160,39 +246,31 @@
         /* Table Styles */
         .table-container {
             overflow-x: auto;
-            border-radius: 8px;
-            max-height: 600px;
+            border-radius: 10px;
         }
         
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            min-width: 800px;
         }
         
         .data-table thead {
-            background: #E8F5E9;
-            position: sticky;
-            top: 0;
-            z-index: 10;
+            background: var(--pastel-light-green);
         }
         
         .data-table th {
             color: var(--green-dark);
             font-weight: 600;
-            padding: 10px 8px;
+            padding: 16px 15px;
             border-bottom: 2px solid var(--pastel-green);
             text-align: left;
             white-space: nowrap;
-            font-size: 0.9rem;
-            min-width: 120px;
         }
         
         .data-table td {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-            vertical-align: middle;
-            font-size: 0.85rem;
+            padding: 14px 15px;
+            border-bottom: 1px solid #E8F5E9;
         }
         
         .data-table tbody tr {
@@ -203,101 +281,319 @@
             background-color: rgba(168, 230, 207, 0.1);
         }
         
-        /* Scrollbar styling */
-        .table-container::-webkit-scrollbar {
-            height: 8px;
-            width: 8px;
-        }
-        
-        .table-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        
-        .table-container::-webkit-scrollbar-thumb {
-            background: var(--pastel-green);
-            border-radius: 4px;
-        }
-        
-        .table-container::-webkit-scrollbar-thumb:hover {
-            background: var(--pastel-green-dark);
-        }
-        
         /* Status Badges */
         .badge-status {
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 500;
             display: inline-block;
         }
         
-        .status-approved {
-            background-color: #C8E6C9;
-            color: #1B5E20;
+        .status-pending {
+            background-color: var(--pastel-yellow);
+            color: #E65100;
+            border: 1px solid #FFB74D;
         }
         
-        .status-pending {
-            background-color: #FFF3CD;
-            color: #856404;
+        .status-approved {
+            background-color: var(--pastel-green);
+            color: var(--green-dark);
+            border: 1px solid var(--pastel-green-dark);
         }
         
         .status-rejected {
-            background-color: #F8D7DA;
-            color: #721C24;
+            background-color: var(--pastel-pink);
+            color: #C62828;
+            border: 1px solid #EF9A9A;
+        }
+        
+        .status-in-progress {
+            background-color: var(--pastel-blue);
+            color: #1565C0;
+            border: 1px solid #81D4FA;
+        }
+        
+        .status-completed {
+            background-color: #C8E6C9;
+            color: #1B5E20;
+            border: 1px solid #A5D6A7;
+        }
+        
+        /* Inspection Result Badges */
+        .result-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .result-passed {
+            background-color: var(--pastel-green);
+            color: var(--green-dark);
+            border: 2px solid var(--pastel-green-dark);
+            box-shadow: 0 2px 5px rgba(129, 199, 132, 0.2);
+        }
+        
+        .result-failed {
+            background-color: var(--pastel-pink);
+            color: #C62828;
+            border: 2px solid #EF9A9A;
+            box-shadow: 0 2px 5px rgba(239, 154, 154, 0.2);
+        }
+        
+        /* Anomaly Detection Styles */
+        .anomaly-warning {
+            background-color: rgba(255, 82, 82, 0.05);
+            position: relative;
+        }
+        
+        .anomaly-warning:hover {
+            background-color: rgba(255, 82, 82, 0.1) !important;
+        }
+        
+        .anomaly-warning::before {
+            content: '⚠️';
+            position: absolute;
+            left: -10px;
+            font-size: 0.9rem;
+        }
+        
+        .anomaly-tag {
+            background-color: var(--warning-red);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        
+        /* Setup Section */
+        .setup-section {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .setup-icon {
+            font-size: 4rem;
+            color: var(--green-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .setup-title {
+            color: var(--green-dark);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .setup-steps {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            text-align: left;
+        }
+        
+        .step {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--green-primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: var(--green-primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner-green {
+            color: var(--green-primary);
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            color: var(--pastel-green);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+        
+        /* Stats Cards */
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            border: 1px solid var(--pastel-green);
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Inspection Stats */
+        .inspection-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-item {
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--pastel-green);
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Modal Styles */
+        .modal-header {
+            background: var(--green-gradient);
+            color: white;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+        }
+        
+        /* Anomaly Report Section */
+        .anomaly-report {
+            background-color: rgba(255, 82, 82, 0.05);
+            border: 1px solid var(--warning-red);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .anomaly-report h6 {
+            color: var(--warning-red);
+            font-weight: 600;
+        }
+        
+        .anomaly-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 82, 82, 0.2);
+        }
+        
+        .anomaly-item:last-child {
+            border-bottom: none;
         }
         
         /* Footer */
         .footer {
-            margin-top: 2rem;
-            padding: 1.5rem 0;
+            margin-top: 3rem;
+            padding: 2rem 0;
             background: var(--text-dark);
             color: white;
             text-align: center;
-            font-size: 0.85rem;
+        }
+        
+        .footer a {
+            color: var(--pastel-green);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: var(--pastel-green-dark);
         }
         
         /* Responsive Design */
-        @media (max-width: 1200px) {
-            .data-table {
-                min-width: 1500px;
-            }
-        }
-        
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
             .logo {
-                font-size: 1.5rem;
+                font-size: 1.8rem;
             }
             
-            .data-table th, .data-table td {
-                padding: 6px 4px;
-                font-size: 0.8rem;
+            .tab-btn {
+                min-width: 100%;
+                margin-bottom: 5px;
             }
             
             .filter-buttons {
                 justify-content: center;
             }
+            
+            .data-table th, .data-table td {
+                padding: 10px 8px;
+                font-size: 0.9rem;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+            }
         }
         
         @media (max-width: 576px) {
             .container {
-                padding-left: 10px;
-                padding-right: 10px;
+                padding-left: 15px;
+                padding-right: 15px;
             }
             
             .card-header {
-                font-size: 1rem;
-                padding: 0.8rem 1rem;
+                font-size: 1.1rem;
+                padding: 1rem;
             }
             
-            .search-box input {
-                font-size: 0.9rem;
-                padding: 8px 12px 8px 35px;
+            .inspection-stats {
+                gap: 10px;
+            }
+            
+            .stat-item {
+                min-width: 100px;
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -307,13 +603,23 @@
     <div class="header">
         <div class="container">
             <div class="header-content">
-                <div>
-                    <h1 class="logo">ระบบจัดการโครงการเกษตร</h1>
-                    <p class="subtitle">ข้อมูลโครงการทั้งหมด (คอลัมน์ A-P)</p>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="logo-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <div>
+                        <h1 class="logo mb-0">ระบบจัดการโครงการเกษตร</h1>
+                        <p class="subtitle mb-0">ข้อมูลโครงการและเงื่อนไขโครงการ</p>
+                    </div>
                 </div>
-                <div class="text-end">
-                    <div class="sheet-info small">
-                        <i class="fas fa-sync-alt me-1"></i>อัปเดตล่าสุด: <span id="last-update">-</span>
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <p class="mb-0">แสดงข้อมูลจาก Google Sheets: ข้อมูลโครงการทั้งหมด และเงื่อนไขโครงการ</p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <div class="sheet-info">
+                            <i class="fas fa-sync-alt me-1"></i>อัปเดตล่าสุด: <span id="last-update">-</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -322,104 +628,198 @@
 
     <!-- Main Content -->
     <div class="container">
-        <!-- Search and Filter -->
-        <div class="card">
-            <div class="card-body">
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" class="form-control" placeholder="ค้นหาทุกข้อมูลในโครงการ...">
+        <!-- Setup Section (Initially Visible) -->
+        <div class="card" id="setup-section">
+            <div class="card-header">
+                <i class="fas fa-cog"></i>ตั้งค่าเริ่มต้น
+            </div>
+            <div class="card-body setup-section">
+                <div class="setup-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <h2 class="setup-title">เชื่อมต่อกับ Google Sheets ของคุณ</h2>
+                <p class="mb-4">ระบบนี้ใช้วิธีการเผยแพร่ Google Sheets เป็นสาธารณะ (Public) ไม่ต้องใช้ API Key</p>
+                
+                <div class="setup-steps">
+                    <div class="step">
+                        <span class="step-number">1</span>
+                        <strong>เปิด Google Sheets ของคุณ</strong>
+                        <p class="mb-0 mt-1">เปิด Sheets ที่ต้องการแสดงข้อมูล: <a href="https://docs.google.com/spreadsheets/d/12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM/edit" target="_blank">คลิกที่นี่</a></p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">2</span>
+                        <strong>เผยแพร่เป็นสาธารณะ</strong>
+                        <p class="mb-0 mt-1">ไปที่ File → Share → Publish to web → เลือก "Entire document" → คลิก Publish</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        <strong>ยืนยันการตั้งค่า</strong>
+                        <p class="mb-0 mt-1">คลิกปุ่มด้านล่างเพื่อเริ่มใช้งานระบบ</p>
+                    </div>
+                </div>
+                
+                <button class="btn-green btn-lg" id="start-btn">
+                    <i class="fas fa-play-circle me-2"></i>เริ่มใช้งานระบบ
+                </button>
+                
+                <p class="mt-3 text-muted small">* ต้องเผยแพร่ Google Sheets เป็นสาธารณะก่อนใช้งาน</p>
+            </div>
+        </div>
+
+        <!-- Main Interface (Initially Hidden) -->
+        <div id="main-interface" style="display: none;">
+            <!-- Tabs -->
+            <div class="tab-container">
+                <button class="tab-btn active" data-sheet="Dataโครงการ">
+                    <i class="fas fa-list-check"></i>ข้อมูลโครงการทั้งหมด
+                </button>
+                <button class="tab-btn" data-sheet="Dataการตรวจ">
+                    <i class="fas fa-clipboard-check"></i>เงื่อนไขโครงการ
+                </button>
+            </div>
+
+            <!-- Anomaly Report (Only for Dataการตรวจ) -->
+            <div id="anomaly-report-section" class="anomaly-report" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>ตรวจพบความผิดปกติในเงื่อนไขโครงการ
+                    </h6>
+                    <span class="badge bg-danger" id="anomaly-count">0</span>
+                </div>
+                <div id="anomaly-details" class="mt-2 small">
+                    <!-- Anomaly details will be populated here -->
+                </div>
+            </div>
+
+            <!-- Inspection Stats (Only for Dataการตรวจ) -->
+            <div class="inspection-stats" id="inspection-stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-value text-success" id="total-inspections">0</div>
+                    <div class="stat-title">ทั้งหมด</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="passed-inspections">0</div>
+                    <div class="stat-title">ผ่าน</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-danger" id="failed-inspections">0</div>
+                    <div class="stat-title">ไม่ผ่าน</div>
+                </div>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" class="form-control" placeholder="ค้นหาโครงการ, ชื่อเกษตรกร, ที่อยู่แปลง, เงื่อนไขโครงการ...">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <select id="status-filter" class="form-select">
+                                <option value="all">สถานะทั้งหมด</option>
+                                <option value="รอ">รอตรวจสอบ</option>
+                                <option value="อนุมัติ">อนุมัติแล้ว</option>
+                                <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
+                                <option value="กำลังดำเนิน">กำลังดำเนินการ</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="result-filter" class="form-select" style="display: none;">
+                                <option value="all">เงื่อนไขทั้งหมด</option>
+                                <option value="ผ่าน">ผ่าน</option>
+                                <option value="ไม่ผ่าน">ไม่ผ่าน</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select id="anomaly-filter" class="form-select" style="display: none;">
+                                <option value="all">ข้อมูลทั้งหมด</option>
+                                <option value="anomaly">เฉพาะความผิดปกติ</option>
+                                <option value="normal">เฉพาะข้อมูลปกติ</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <select id="status-filter" class="form-select form-select-sm">
-                            <option value="all">สถานะทั้งหมด</option>
-                            <option value="อนุมัติ">อนุมัติแล้ว</option>
-                            <option value="รอ">รอตรวจสอบ</option>
-                            <option value="ไม่อนุมัติ">ไม่อนุมัติ</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
-                        <button class="btn-green w-100" id="refresh-btn">
+                    
+                    <div class="filter-buttons mt-3">
+                        <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                        <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
+                        <button class="filter-btn" data-filter="anomaly">มีความผิดปกติ</button>
+                        <button class="filter-btn" data-filter="passed">ผ่านทั้งหมด</button>
+                        <button class="btn-outline-green" id="refresh-btn">
                             <i class="fas fa-redo-alt me-1"></i>รีเฟรช
                         </button>
                     </div>
                 </div>
-                
-                <div class="filter-buttons mt-3">
-                    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-                    <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
-                    <button class="filter-btn" data-filter="area-high">พื้นที่ใหญ่ (>5 ไร่)</button>
-                    <button class="filter-btn" data-filter="area-low">พื้นที่เล็ก (≤5 ไร่)</button>
-                    <button class="filter-btn" data-filter="newest">ล่าสุด 50 รายการ</button>
-                </div>
             </div>
-        </div>
 
-        <!-- Data Display -->
-        <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <div>
-                    <i class="fas fa-database me-2"></i>
-                    ข้อมูลโครงการทั้งหมด (คอลัมน์ A-P)
-                    <span class="badge bg-white text-green ms-2" id="record-count">0 รายการ</span>
+            <!-- Data Display -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-database"></i>
+                        <span id="table-title">ข้อมูลโครงการทั้งหมด</span>
+                        <span class="badge bg-white text-green ms-2" id="record-count">0 รายการ</span>
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-outline-green me-2" id="export-btn">
+                            <i class="fas fa-download me-1"></i>ส่งออก
+                        </button>
+                        <button class="btn btn-sm btn-green" id="open-sheets-btn">
+                            <i class="fas fa-external-link-alt me-1"></i>เปิด Google Sheets
+                        </button>
+                    </div>
                 </div>
-                <div>
-                    <button class="btn btn-sm btn-outline-green me-2" id="export-btn">
-                        <i class="fas fa-download me-1"></i>ส่งออก
-                    </button>
-                    <button class="btn btn-sm btn-green" id="open-sheets-btn">
-                        <i class="fas fa-external-link-alt me-1"></i>เปิด Google Sheets
-                    </button>
-                </div>
-            </div>
-            <div class="card-body p-0">
-                <!-- Loading Spinner -->
-                <div class="loading-spinner" id="loading-spinner" style="display: none;">
-                    <div class="text-center py-5">
-                        <div class="spinner-border text-success" role="status">
+                <div class="card-body p-0">
+                    <!-- Loading Spinner -->
+                    <div class="loading-spinner" id="loading-spinner">
+                        <div class="spinner-border spinner-green" role="status">
                             <span class="visually-hidden">กำลังโหลด...</span>
                         </div>
                         <p class="mt-3">กำลังโหลดข้อมูลจาก Google Sheets...</p>
-                        <p class="text-muted small">กำลังดึงข้อมูลคอลัมน์ A-P ทั้งหมด</p>
+                        <p class="text-muted small">กรุณารอสักครู่ ขณะนี้ระบบกำลังดึงข้อมูลล่าสุด</p>
                     </div>
-                </div>
-                
-                <!-- Data Table -->
-                <div class="table-container">
-                    <table class="data-table" id="data-table">
-                        <thead id="table-headers">
-                            <!-- Headers will be populated by JavaScript -->
-                        </thead>
-                        <tbody id="table-body">
-                            <!-- Data will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Empty State -->
-                <div id="empty-state" class="text-center py-5" style="display: none;">
-                    <div class="text-muted mb-3">
-                        <i class="fas fa-inbox fa-3x"></i>
+                    
+                    <!-- Data Table -->
+                    <div class="table-container">
+                        <table class="data-table" id="data-table">
+                            <thead>
+                                <tr id="table-headers">
+                                    <!-- Headers will be populated by JavaScript -->
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Data will be populated by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
-                    <h5 class="mb-2">ไม่พบข้อมูล</h5>
-                    <p class="text-muted mb-3">ลองเปลี่ยนคำค้นหาหรือตัวกรองดู</p>
-                    <button class="btn-outline-green" id="reset-filters">
-                        <i class="fas fa-filter me-1"></i>ล้างตัวกรองทั้งหมด
-                    </button>
+                    
+                    <!-- Empty State -->
+                    <div id="empty-state" class="empty-state" style="display: none;">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <h4 class="mb-2">ไม่พบข้อมูล</h4>
+                        <p class="text-muted mb-3">ลองเปลี่ยนคำค้นหาหรือตัวกรองดู</p>
+                        <button class="btn-outline-green" id="reset-filters">
+                            <i class="fas fa-filter me-1"></i>ล้างตัวกรองทั้งหมด
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         
         <!-- Project Details Modal -->
         <div class="modal fade" id="projectDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fas fa-info-circle me-2"></i>
-                            รายละเอียดโครงการ (คอลัมน์ A-P ทั้งหมด)
+                            <span id="modal-title">รายละเอียดโครงการ</span>
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
@@ -434,14 +834,71 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Inspection Details Modal -->
+        <div class="modal fade" id="inspectionDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-search me-2"></i>
+                            <span id="inspection-modal-title">รายละเอียดเงื่อนไขโครงการ</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="inspection-details-content">
+                        <!-- Details will be populated by JavaScript -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-green" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i>ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Anomaly Details Modal -->
+        <div class="modal fade" id="anomalyDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            รายงานความผิดปกติในเงื่อนไขโครงการ
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body" id="anomaly-details-content">
+                        <!-- Anomaly details will be populated here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-green" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i>ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
     <div class="footer">
         <div class="container">
-            <p class="mb-1">© พ.ศ. 2566 ระบบจัดการโครงการเกษตร</p>
-            <p class="small mb-0">แสดงข้อมูลจาก Google Sheets | Sheet ID: 12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM</p>
-            <p class="small mb-0">กำลังแสดง: ข้อมูลโครงการทั้งหมด (คอลัมน์ A-P)</p>
+            <div class="row">
+                <div class="col-md-6 text-md-start">
+                    <h5 class="mb-3">ระบบจัดการโครงการเกษตร</h5>
+                    <p class="small mb-0">ข้อมูลโครงการและเงื่อนไขโครงการจาก Google Sheets</p>
+                    <p class="small mb-0">ธีมสีเขียวพาสเทส | Public Mode</p>
+                </div>
+                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                    <p class="mb-1">Sheet ID: 12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM</p>
+                    <p class="small mb-0">อัปเดตอัตโนมัติทุก 5 นาที</p>
+                    <p class="small mb-0">สร้างสำหรับใช้งานกับ GitHub Pages</p>
+                </div>
+            </div>
+            <hr class="my-3" style="border-color: rgba(255,255,255,0.1);">
+            <p class="mb-0 small">© พ.ศ. 2566 ระบบจัดการโครงการเกษตร | Green Pastel Theme</p>
         </div>
     </div>
 
@@ -450,20 +907,55 @@
     <script>
         // Configuration
         const SHEET_ID = '12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM';
-        const SHEET_NAME = 'Dataโครงการ';
+        
+        // Sheet names
+        const SHEETS = {
+            'Dataโครงการ': 'Dataโครงการ',      // ข้อมูลโครงการทั้งหมด
+            'Dataการตรวจ': 'Dataการตรวจ'       // ข้อมูลเงื่อนไขโครงการ
+        };
+        
+        // Field mapping for inspection sheet
+        const INSPECTION_FIELDS = {
+            'condition': 'เงื่อนไขโครงการ',  // คอลัมน์ R ใน Google Sheets
+            'code': 'รหัสการตรวจ',
+            'projectCode': 'รหัสโครงการ',
+            'projectName': 'ชื่อโครงการ',
+            'farmer': 'ชื่อเกษตรกร',
+            'date': 'วันที่ตรวจ',
+            'inspector': 'ผู้ตรวจ',
+            'score': 'คะแนนการตรวจ',
+            'observation': 'ข้อสังเกต',
+            'recommendation': 'คำแนะนำ',
+            'statusAfter': 'สถานะหลังตรวจ'
+        };
         
         // Current state
-        let allData = [];
+        let currentSheet = 'Dataโครงการ';
+        let allData = {
+            'Dataโครงการ': [],
+            'Dataการตรวจ': []
+        };
         let filteredData = [];
-        let allColumns = [];
+        let isSetupComplete = false;
+        let anomalies = [];
+        let anomalyDetectionEnabled = false;
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            // Load data
-            loadData();
+            // Check if setup was previously completed
+            const savedSetup = localStorage.getItem('sheetsSetupComplete');
+            if (savedSetup === 'true') {
+                isSetupComplete = true;
+                document.getElementById('setup-section').style.display = 'none';
+                document.getElementById('main-interface').style.display = 'block';
+                loadAllSheetsData();
+            }
+            
+            // Setup button
+            document.getElementById('start-btn').addEventListener('click', startSystem);
             
             // Refresh button
-            document.getElementById('refresh-btn').addEventListener('click', loadData);
+            document.getElementById('refresh-btn').addEventListener('click', loadAllSheetsData);
             
             // Reset filters button
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
@@ -473,7 +965,7 @@
             
             // Open sheets button
             document.getElementById('open-sheets-btn').addEventListener('click', function() {
-                window.open(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit#gid=0`, '_blank');
+                window.open('https://docs.google.com/spreadsheets/d/12TQKzC0ElmjCGfxz7dqW8ueO8X7Ynpcu9cpTYKUYRtM/edit', '_blank');
             });
             
             // Search input
@@ -481,6 +973,52 @@
             
             // Status filter
             document.getElementById('status-filter').addEventListener('change', filterData);
+            
+            // Result filter
+            document.getElementById('result-filter').addEventListener('change', filterData);
+            
+            // Anomaly filter
+            document.getElementById('anomaly-filter').addEventListener('change', filterData);
+            
+            // Tab switching
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Update active tab
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Switch sheet
+                    currentSheet = this.getAttribute('data-sheet');
+                    
+                    // Update table title
+                    const titleMap = {
+                        'Dataโครงการ': 'ข้อมูลโครงการทั้งหมด',
+                        'Dataการตรวจ': 'เงื่อนไขโครงการ'
+                    };
+                    document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
+                    document.getElementById('modal-title').textContent = `รายละเอียด - ${titleMap[currentSheet] || currentSheet}`;
+                    document.getElementById('inspection-modal-title').textContent = `รายละเอียดเงื่อนไขโครงการ`;
+                    
+                    // Show/hide filters based on sheet
+                    if (currentSheet === 'Dataการตรวจ') {
+                        document.getElementById('result-filter').style.display = 'block';
+                        document.getElementById('status-filter').style.display = 'none';
+                        document.getElementById('anomaly-filter').style.display = 'block';
+                        document.getElementById('inspection-stats').style.display = 'flex';
+                        document.getElementById('anomaly-report-section').style.display = 'block';
+                        updateInspectionStats();
+                    } else {
+                        document.getElementById('result-filter').style.display = 'none';
+                        document.getElementById('status-filter').style.display = 'block';
+                        document.getElementById('anomaly-filter').style.display = 'none';
+                        document.getElementById('inspection-stats').style.display = 'none';
+                        document.getElementById('anomaly-report-section').style.display = 'none';
+                    }
+                    
+                    // Display data for current sheet
+                    displayData();
+                });
+            });
             
             // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -491,21 +1029,51 @@
                 });
             });
             
-            // Auto-refresh data every 5 minutes
-            setInterval(loadData, 5 * 60 * 1000);
+            // Auto-refresh data every 5 minutes if setup is complete
+            if (isSetupComplete) {
+                setInterval(loadAllSheetsData, 5 * 60 * 1000);
+            }
         });
         
-        // Load data from Google Sheets
-        async function loadData() {
+        // Start the system (after setup)
+        function startSystem() {
+            isSetupComplete = true;
+            localStorage.setItem('sheetsSetupComplete', 'true');
+            
+            // Hide setup, show main interface
+            document.getElementById('setup-section').style.display = 'none';
+            document.getElementById('main-interface').style.display = 'block';
+            
+            // Load data
+            loadAllSheetsData();
+            
+            // Show success message
+            showToast('ตั้งค่าระบบสำเร็จแล้ว!', 'กำลังโหลดข้อมูลจาก Google Sheets...', 'success');
+        }
+        
+        // Load data from all Google Sheets
+        async function loadAllSheetsData() {
             showLoading(true);
             
             try {
-                const data = await fetchSheetData();
-                allData = data;
+                // Load data for each sheet
+                for (const [sheetName, sheetTab] of Object.entries(SHEETS)) {
+                    console.log(`กำลังโหลดข้อมูล: ${sheetName} (${sheetTab})`);
+                    const data = await fetchSheetData(sheetTab);
+                    allData[sheetName] = data;
+                    
+                    // Log sample of data for debugging
+                    if (data.length > 0) {
+                        console.log(`ตัวอย่างข้อมูล ${sheetName}:`, data[0]);
+                    }
+                }
                 
-                if (data.length > 0) {
-                    // Extract all columns from first data item (คอลัมน์ A-P)
-                    allColumns = Object.keys(data[0]).filter(key => key !== 'id' && key !== 'ลำดับ');
+                // Run anomaly detection for inspection data (เงื่อนไขโครงการ)
+                if (allData['Dataการตรวจ'].length > 0) {
+                    detectConditionAnomalies();
+                    if (currentSheet === 'Dataการตรวจ') {
+                        showAnomalyReport();
+                    }
                 }
                 
                 // Update last update time
@@ -513,8 +1081,13 @@
                 const thaiTime = formatDateToThai(now);
                 document.getElementById('last-update').textContent = thaiTime;
                 
-                // Display data
+                // Display current sheet data
                 displayData();
+                
+                // Update stats if on inspection sheet
+                if (currentSheet === 'Dataการตรวจ') {
+                    updateInspectionStats();
+                }
                 
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
@@ -523,14 +1096,18 @@
                 showError('ไม่สามารถโหลดข้อมูลได้: ' + error.message);
                 showLoading(false);
                 
-                // Use sample data for demo
-                useSampleData();
+                // Show setup section again if error
+                document.getElementById('setup-section').style.display = 'block';
+                document.getElementById('main-interface').style.display = 'none';
+                isSetupComplete = false;
+                localStorage.removeItem('sheetsSetupComplete');
             }
         }
         
         // Fetch data from Google Sheets (Public Method)
-        async function fetchSheetData() {
-            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_NAME)}`;
+        async function fetchSheetData(sheetName) {
+            // URL for public Google Sheets (published to web)
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
             
             try {
                 const response = await fetch(url);
@@ -542,16 +1119,17 @@
                 const csvText = await response.text();
                 
                 if (!csvText || csvText.trim() === '') {
-                    throw new Error('ชีทว่างเปล่าหรือไม่พบ');
+                    console.warn(`ชีท "${sheetName}" ว่างเปล่าหรือไม่พบ`);
+                    return generateSampleData(sheetName);
                 }
                 
-                return parseCSV(csvText);
+                return parseCSV(csvText, sheetName);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error(`Error fetching ${sheetName}:`, error);
                 
                 // Try alternative method
                 try {
-                    const altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(SHEET_NAME)}`;
+                    const altUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/pub?output=csv&gid=0&single=true&sheet=${encodeURIComponent(sheetName)}`;
                     const altResponse = await fetch(altUrl);
                     
                     if (!altResponse.ok) {
@@ -559,24 +1137,27 @@
                     }
                     
                     const csvText = await altResponse.text();
-                    return parseCSV(csvText);
+                    return parseCSV(csvText, sheetName);
                 } catch (altError) {
                     console.error('Alternative method also failed:', altError);
-                    throw altError;
+                    
+                    // Final fallback - use sample data
+                    console.log('Using sample data for', sheetName);
+                    return generateSampleData(sheetName);
                 }
             }
         }
         
-        // Parse CSV data - ดึงข้อมูลคอลัมน์ A-P
-        function parseCSV(csvText) {
+        // Parse CSV data with special handling for inspection sheet
+        function parseCSV(csvText, sheetName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             
             if (lines.length === 0) {
                 return [];
             }
             
-            // Parse headers (first row) - คอลัมน์ A-P (16 คอลัมน์)
-            const headers = parseCSVLine(lines[0]).map(h => h.trim()).slice(0, 16);
+            // Parse headers (first row)
+            const headers = parseCSVLine(lines[0]).map(h => h.trim());
             
             // Parse data rows
             const data = [];
@@ -585,14 +1166,33 @@
                 const values = parseCSVLine(lines[i]);
                 const item = {};
                 
-                // เอาเฉพาะคอลัมน์ A-P (16 คอลัมน์แรก)
                 headers.forEach((header, index) => {
-                    item[header] = (values[index] || '').trim();
+                    item[header] = values[index] || '';
                 });
                 
-                // Add unique ID and sequence number
-                item.id = `row-${i}`;
-                item.ลำดับ = i;
+                // Add unique ID
+                item.id = `row-${i}-${Date.now()}`;
+                
+                // For inspection sheet, make sure we have condition field
+                if (sheetName === 'Dataการตรวจ') {
+                    // Check if we have เงื่อนไขโครงการ field (column R)
+                    if (!item['เงื่อนไขโครงการ'] || item['เงื่อนไขโครงการ'].trim() === '') {
+                        // Try to find similar field names
+                        for (const key in item) {
+                            if (key.toLowerCase().includes('เงื่อนไข') || 
+                                key.toLowerCase().includes('condition') ||
+                                key.toLowerCase().includes('ผล')) {
+                                item['เงื่อนไขโครงการ'] = item[key];
+                                break;
+                            }
+                        }
+                        
+                        // If still not found, use default
+                        if (!item['เงื่อนไขโครงการ']) {
+                            item['เงื่อนไขโครงการ'] = '';
+                        }
+                    }
+                }
                 
                 data.push(item);
             }
@@ -600,7 +1200,7 @@
             return data;
         }
         
-        // Parse a single CSV line
+        // Parse a single CSV line (handles quotes and commas)
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -614,7 +1214,7 @@
                     inQuotes = true;
                 } else if (char === '"' && inQuotes && nextChar === '"') {
                     current += '"';
-                    i++;
+                    i++; // Skip next quote
                 } else if (char === '"' && inQuotes) {
                     inQuotes = false;
                 } else if (char === ',' && !inQuotes) {
@@ -629,112 +1229,241 @@
             return result.map(val => val.trim());
         }
         
-        // Use sample data for demonstration
-        function useSampleData() {
+        // Generate sample data for demonstration
+        function generateSampleData(sheetName) {
             const sampleData = [];
+            const rowCount = 20;
             
-            // Sample columns A-P (16 columns) based on typical agriculture project data
-            const sampleColumns = [
-                'ลำดับโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร',
-                'รหัสเกษตรกร', 'เบอร์โทร', 'ที่อยู่', 'ตำบล',
-                'อำเภอ', 'จังหวัด', 'พื้นที่ (ไร่)', 'วันที่เริ่มโครงการ',
-                'วันที่สิ้นสุดโครงการ', 'สถานะ', 'งบประมาณ', 'หมายเหตุ'
-            ];
-            
-            allColumns = sampleColumns;
-            
-            // Generate sample data
-            for (let i = 1; i <= 100; i++) {
-                const item = {
-                    id: `sample-${i}`,
-                    ลำดับ: i
-                };
-                
-                // Fill each column with sample data
-                sampleColumns.forEach((col, index) => {
-                    switch(col) {
-                        case 'ลำดับโครงการ':
-                            item[col] = `AG${String(i).padStart(4, '0')}`;
-                            break;
-                        case 'ชื่อโครงการ':
-                            item[col] = `โครงการเกษตรตัวอย่างที่ ${i}`;
-                            break;
-                        case 'ประเภทโครงการ':
-                            const types = ['ปลูกข้าว', 'ปลูกผัก', 'ปลูกไม้ผล', 'เลี้ยงสัตว์', 'แปรรูปผลผลิต'];
-                            item[col] = types[Math.floor(Math.random() * types.length)];
-                            break;
-                        case 'ชื่อเกษตรกร':
-                            item[col] = `เกษตรกร ${i}`;
-                            break;
-                        case 'รหัสเกษตรกร':
-                            item[col] = `AGR${String(i).padStart(3, '0')}`;
-                            break;
-                        case 'เบอร์โทร':
-                            item[col] = `08${Math.floor(Math.random() * 90000000) + 10000000}`;
-                            break;
-                        case 'ที่อยู่':
-                            item[col] = `หมู่ ${Math.floor(Math.random() * 10) + 1}`;
-                            break;
-                        case 'ตำบล':
-                            item[col] = `ตำบลตัวอย่าง ${String.fromCharCode(65 + Math.floor(Math.random() * 5))}`;
-                            break;
-                        case 'อำเภอ':
-                            item[col] = `อำเภอตัวอย่าง ${String.fromCharCode(65 + Math.floor(Math.random() * 5))}`;
-                            break;
-                        case 'จังหวัด':
-                            item[col] = `จังหวัดตัวอย่าง`;
-                            break;
-                        case 'พื้นที่ (ไร่)':
-                            item[col] = (Math.random() * 20 + 1).toFixed(2);
-                            break;
-                        case 'วันที่เริ่มโครงการ':
-                            const startDay = Math.floor(Math.random() * 28) + 1;
-                            const startMonth = Math.floor(Math.random() * 12) + 1;
-                            item[col] = `${startDay}/${startMonth}/2566`;
-                            break;
-                        case 'วันที่สิ้นสุดโครงการ':
-                            const endDay = Math.floor(Math.random() * 28) + 1;
-                            const endMonth = Math.floor(Math.random() * 12) + 1;
-                            item[col] = `${endDay}/${endMonth}/2567`;
-                            break;
-                        case 'สถานะ':
-                            const statuses = ['อนุมัติ', 'รอตรวจสอบ', 'ไม่อนุมัติ', 'กำลังดำเนินการ'];
-                            item[col] = statuses[Math.floor(Math.random() * statuses.length)];
-                            break;
-                        case 'งบประมาณ':
-                            item[col] = (Math.floor(Math.random() * 500000) + 10000).toLocaleString();
-                            break;
-                        case 'หมายเหตุ':
-                            item[col] = `หมายเหตุโครงการตัวอย่างที่ ${i}`;
-                            break;
-                        default:
-                            item[col] = `ข้อมูล ${col} ${i}`;
-                    }
-                });
-                
-                sampleData.push(item);
+            for (let i = 1; i <= rowCount; i++) {
+                if (sheetName === 'Dataโครงการ') {
+                    const projectTypes = ['ปลูกข้าว', 'ปลูกผัก', 'ปลูกไม้ผล', 'เลี้ยงสัตว์', 'แปรรูปผลผลิต'];
+                    const statuses = ['รอตรวจสอบ', 'อนุมัติแล้ว', 'ไม่อนุมัติ', 'กำลังดำเนินการ', 'เสร็จสิ้น'];
+                    const randomType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+                    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                    
+                    sampleData.push({
+                        'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
+                        'ชื่อโครงการ': `โครงการ${randomType}ที่ ${i}`,
+                        'ประเภทโครงการ': randomType,
+                        'ชื่อเกษตรกร': `เกษตรกร ${i}`,
+                        'ที่อยู่แปลง': `หมู่ ${Math.floor(Math.random() * 10) + 1} ตำบลตัวอย่าง อำเภอตัวอย่าง`,
+                        'พื้นที่ (ไร่)': (Math.random() * 10).toFixed(1),
+                        'วันที่เริ่มโครงการ': `${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2566`,
+                        'สถานะ': randomStatus,
+                        'งบประมาณสนับสนุน': (Math.floor(Math.random() * 200000) + 10000).toLocaleString(),
+                        'หมายเหตุ': `หมายเหตุโครงการ ${randomType}ที่ ${i}`,
+                        'id': `project-${i}`
+                    });
+                } else if (sheetName === 'Dataการตรวจ') {
+                    // Generate data for condition sheet
+                    const conditions = ['ผ่าน', 'ไม่ผ่าน', ''];
+                    let randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
+                    
+                    // Create some anomalies for demonstration
+                    if (i === 3) randomCondition = ''; // Empty condition
+                    if (i === 7) randomCondition = 'กำลังพิจารณา'; // Invalid condition
+                    if (i === 12) randomCondition = 'ผ่าน,ไม่ผ่าน'; // Multiple values
+                    
+                    const dateDay = Math.floor(Math.random() * 28) + 1;
+                    const dateMonth = Math.floor(Math.random() * 12) + 1;
+                    
+                    sampleData.push({
+                        'รหัสการตรวจ': `INS${String(i).padStart(3, '0')}`,
+                        'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
+                        'ชื่อโครงการ': `โครงการตรวจแปลงที่ ${i}`,
+                        'ชื่อเกษตรกร': `เกษตรกร ${i}`,
+                        'วันที่ตรวจ': `${dateDay}/${dateMonth}/2566`,
+                        'ผู้ตรวจ': `ผู้ตรวจ ${Math.floor(Math.random() * 5) + 1}`,
+                        'เงื่อนไขโครงการ': randomCondition, // คอลัมน์ R
+                        'คะแนนการตรวจ': Math.floor(Math.random() * 100),
+                        'ข้อสังเกต': `พื้นที่ปลูกมีความเหมาะสม ${randomCondition === 'ผ่าน' ? 'ดี' : 'ต้องปรับปรุง'}`,
+                        'คำแนะนำ': randomCondition === 'ผ่าน' ? 'ดำเนินการตามแผนได้' : 'ควรปรับปรุงพื้นที่ก่อนดำเนินการต่อ',
+                        'สถานะหลังตรวจ': randomCondition === 'ผ่าน' ? 'อนุมัติแล้ว' : 'รอการปรับปรุง',
+                        'id': `inspection-${i}`
+                    });
+                }
             }
             
-            allData = sampleData;
-            displayData();
-            
-            // Update last update time
-            const now = new Date();
-            const thaiTime = formatDateToThai(now);
-            document.getElementById('last-update').textContent = thaiTime;
-            
-            showToast('ใช้ข้อมูลตัวอย่าง', 'กำลังแสดงข้อมูลตัวอย่างคอลัมน์ A-P', 'info');
+            return sampleData;
         }
         
-        // Display data
-        function displayData() {
-            filteredData = [...allData];
+        // Detect anomalies in condition data (เฉพาะเงื่อนไขโครงการ)
+        function detectConditionAnomalies() {
+            anomalies = [];
+            const data = allData['Dataการตรวจ'];
             
-            if (allData.length > 0) {
-                // Generate table headers based on all columns A-P
-                generateTableHeaders();
-                populateTable(allData);
+            if (data.length === 0) return;
+            
+            // Analyze each row for anomalies in condition field only
+            data.forEach((item, index) => {
+                const rowAnomalies = [];
+                const rowId = item.id || `row-${index + 1}`;
+                const projectName = item[INSPECTION_FIELDS.projectName] || 'ไม่ระบุ';
+                
+                // 1. Check for empty or missing condition (คอลัมน์ R)
+                const condition = item['เงื่อนไขโครงการ'] || '';
+                if (!condition || condition.trim() === '') {
+                    rowAnomalies.push({
+                        type: 'missing_condition',
+                        message: `เงื่อนไขโครงการ (คอลัมน์ R) ว่างเปล่า`,
+                        field: 'เงื่อนไขโครงการ',
+                        value: condition
+                    });
+                }
+                
+                // 2. Check for unusual condition values (not "ผ่าน" or "ไม่ผ่าน")
+                const normalizedCondition = condition.toLowerCase().trim();
+                const validConditions = ['ผ่าน', 'ไม่ผ่าน'];
+                let isValidCondition = false;
+                
+                for (const valid of validConditions) {
+                    if (normalizedCondition === valid.toLowerCase()) {
+                        isValidCondition = true;
+                        break;
+                    }
+                }
+                
+                if (!isValidCondition && condition.trim() !== '') {
+                    rowAnomalies.push({
+                        type: 'unusual_condition',
+                        message: `เงื่อนไขโครงการ "${condition}" ไม่ใช่ "ผ่าน" หรือ "ไม่ผ่าน"`,
+                        field: 'เงื่อนไขโครงการ',
+                        value: condition
+                    });
+                }
+                
+                // 3. Check for condition with multiple values (contains comma)
+                if (condition.includes(',') || condition.includes('/') || condition.includes('และ')) {
+                    rowAnomalies.push({
+                        type: 'multiple_conditions',
+                        message: `เงื่อนไขโครงการมีหลายค่า: "${condition}"`,
+                        field: 'เงื่อนไขโครงการ',
+                        value: condition
+                    });
+                }
+                
+                // Add to anomalies list if any found
+                if (rowAnomalies.length > 0) {
+                    anomalies.push({
+                        rowId: rowId,
+                        rowIndex: index,
+                        projectCode: item[INSPECTION_FIELDS.projectCode] || 'ไม่ระบุ',
+                        projectName: projectName,
+                        condition: condition,
+                        issues: rowAnomalies
+                    });
+                }
+            });
+            
+            anomalyDetectionEnabled = true;
+            console.log(`ตรวจพบความผิดปกติในเงื่อนไขโครงการ: ${anomalies.length} รายการ`);
+        }
+        
+        // Display anomaly report
+        function showAnomalyReport() {
+            const reportSection = document.getElementById('anomaly-report-section');
+            const anomalyDetails = document.getElementById('anomaly-details');
+            const anomalyCount = document.getElementById('anomaly-count');
+            
+            if (anomalies.length === 0) {
+                reportSection.style.display = 'none';
+                return;
+            }
+            
+            reportSection.style.display = 'block';
+            anomalyCount.textContent = anomalies.length;
+            
+            // Build report HTML
+            let reportHtml = `<div class="mb-2">ตรวจพบความผิดปกติ ${anomalies.length} รายการในเงื่อนไขโครงการ:</div>`;
+            
+            // Group by anomaly type
+            const anomalyTypes = {};
+            anomalies.forEach(anomaly => {
+                anomaly.issues.forEach(issue => {
+                    if (!anomalyTypes[issue.type]) {
+                        anomalyTypes[issue.type] = 0;
+                    }
+                    anomalyTypes[issue.type]++;
+                });
+            });
+            
+            Object.entries(anomalyTypes).forEach(([type, count]) => {
+                const typeNames = {
+                    'missing_condition': 'เงื่อนไขโครงการว่างเปล่า',
+                    'unusual_condition': 'เงื่อนไขโครงการไม่ถูกต้อง',
+                    'multiple_conditions': 'เงื่อนไขโครงการมีหลายค่า'
+                };
+                
+                reportHtml += `<div class="mb-1"><strong>${typeNames[type] || type}:</strong> ${count} รายการ</div>`;
+            });
+            
+            reportHtml += `<div class="mt-2">
+                <button class="btn btn-sm btn-outline-warning" id="view-full-anomaly-report">
+                    <i class="fas fa-list me-1"></i>ดูรายละเอียดทั้งหมด
+                </button>
+            </div>`;
+            
+            anomalyDetails.innerHTML = reportHtml;
+            
+            // Add event listener for view full report button
+            document.getElementById('view-full-anomaly-report')?.addEventListener('click', showFullAnomalyReport);
+        }
+        
+        // Show full anomaly report in modal
+        function showFullAnomalyReport() {
+            let reportHtml = '';
+            
+            if (anomalies.length === 0) {
+                reportHtml = '<p class="text-center">ไม่พบความผิดปกติในเงื่อนไขโครงการ</p>';
             } else {
+                reportHtml = `<p>พบความผิดปกติในเงื่อนไขโครงการทั้งหมด <strong>${anomalies.length}</strong> รายการ:</p>`;
+                
+                anomalies.forEach((anomaly, index) => {
+                    reportHtml += `
+                        <div class="anomaly-item">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <strong>${index + 1}. โครงการ: ${anomaly.projectName}</strong><br>
+                                    <small>รหัสโครงการ: ${anomaly.projectCode}</small><br>
+                                    <small>เงื่อนไข: ${anomaly.condition || 'ว่างเปล่า'}</small>
+                                </div>
+                                <span class="badge bg-danger">${anomaly.issues.length} ข้อ</span>
+                            </div>
+                            <ul class="mb-0 mt-2 ps-3">
+                                ${anomaly.issues.map(issue => `<li>${issue.message}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+                
+                reportHtml += `
+                    <div class="mt-3 p-2 bg-light rounded">
+                        <small><i class="fas fa-info-circle me-1"></i>
+                        หมายเหตุ: เงื่อนไขโครงการที่ถูกต้องควรเป็น "ผ่าน" หรือ "ไม่ผ่าน" เท่านั้น
+                        </small>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('anomaly-details-content').innerHTML = reportHtml;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('anomalyDetailsModal'));
+            modal.show();
+        }
+        
+        // Display data for current sheet
+        function displayData() {
+            const data = allData[currentSheet];
+            filteredData = [...data];
+            
+            // Generate table headers based on data
+            if (data.length > 0) {
+                generateTableHeaders(data[0]);
+                populateTable(data);
+            } else {
+                // Show empty state
+                document.getElementById('table-headers').innerHTML = '<th colspan="10">ไม่มีข้อมูลในชีทนี้</th>';
                 document.getElementById('table-body').innerHTML = '';
                 document.getElementById('empty-state').style.display = 'block';
                 document.getElementById('record-count').textContent = '0 รายการ';
@@ -744,80 +1473,181 @@
             filterData();
         }
         
-        // Generate table headers based on all columns A-P
-        function generateTableHeaders() {
+        // Generate table headers based on data keys
+        function generateTableHeaders(dataItem) {
             const headersContainer = document.getElementById('table-headers');
             headersContainer.innerHTML = '';
             
-            // Add sequence column first
-            const seqTh = document.createElement('th');
-            seqTh.textContent = 'ลำดับ';
-            seqTh.style.minWidth = '50px';
-            headersContainer.appendChild(seqTh);
+            // Get headers from data item keys (exclude id)
+            const headers = Object.keys(dataItem).filter(key => key !== 'id' && key !== '');
             
-            // Add all columns A-P
-            allColumns.forEach(column => {
+            // Different column selection for different sheets
+            let displayHeaders = [];
+            
+            if (currentSheet === 'Dataโครงการ') {
+                // Show important columns for projects (เวอร์ชันเดิม)
+                const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร', 'พื้นที่ (ไร่)', 'สถานะ', 'วันที่เริ่มโครงการ'];
+                displayHeaders = headers.filter(header => importantColumns.includes(header)).slice(0, 7);
+            } else if (currentSheet === 'Dataการตรวจ') {
+                // Show important columns for conditions with "เงื่อนไขโครงการ" as first column
+                const importantColumns = ['เงื่อนไขโครงการ', 'รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ'];
+                
+                // Find condition field (prioritize 'เงื่อนไขโครงการ' which is column R)
+                let conditionField = 'เงื่อนไขโครงการ';
+                if (!dataItem['เงื่อนไขโครงการ']) {
+                    // Look for alternative condition field names
+                    for (const header of headers) {
+                        if (header.toLowerCase().includes('เงื่อนไข') || 
+                            header.toLowerCase().includes('condition')) {
+                            conditionField = header;
+                            break;
+                        }
+                    }
+                }
+                
+                displayHeaders = [conditionField];
+                
+                // Add other important columns
+                importantColumns.forEach(col => {
+                    if (col !== 'เงื่อนไขโครงการ' && headers.includes(col)) {
+                        displayHeaders.push(col);
+                    }
+                });
+                
+                // Make sure we have at least 6 columns
+                while (displayHeaders.length < 6 && headers.length > displayHeaders.length) {
+                    for (const header of headers) {
+                        if (!displayHeaders.includes(header)) {
+                            displayHeaders.push(header);
+                            break;
+                        }
+                    }
+                }
+                
+                displayHeaders = displayHeaders.slice(0, 6);
+            }
+            
+            // Create header cells
+            displayHeaders.forEach(header => {
                 const th = document.createElement('th');
-                th.textContent = column;
-                th.title = column;
-                th.style.minWidth = '120px';
+                th.textContent = header;
+                th.title = header;
                 headersContainer.appendChild(th);
             });
             
             // Add action column
             const actionTh = document.createElement('th');
             actionTh.textContent = 'จัดการ';
-            actionTh.style.minWidth = '80px';
+            actionTh.style.width = '80px';
             headersContainer.appendChild(actionTh);
         }
         
         // Populate table with data
         function populateTable(data) {
             const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = '';
             
             if (data.length === 0) {
                 document.getElementById('empty-state').style.display = 'block';
                 document.getElementById('record-count').textContent = '0 รายการ';
-                tableBody.innerHTML = '';
                 return;
             }
             
             document.getElementById('empty-state').style.display = 'none';
             document.getElementById('record-count').textContent = `${data.length} รายการ`;
             
-            // Clear existing rows
-            tableBody.innerHTML = '';
+            // Get headers from first data item
+            const firstItem = data[0];
+            let headers = Object.keys(firstItem).filter(key => key !== 'id' && key !== '');
+            
+            // Different column selection for different sheets
+            let displayHeaders = [];
+            
+            if (currentSheet === 'Dataโครงการ') {
+                const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร', 'พื้นที่ (ไร่)', 'สถานะ', 'วันที่เริ่มโครงการ'];
+                displayHeaders = headers.filter(header => importantColumns.includes(header)).slice(0, 7);
+            } else if (currentSheet === 'Dataการตรวจ') {
+                const importantColumns = ['เงื่อนไขโครงการ', 'รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ'];
+                
+                // Find condition field
+                let conditionField = 'เงื่อนไขโครงการ';
+                if (!firstItem['เงื่อนไขโครงการ']) {
+                    for (const header of headers) {
+                        if (header.toLowerCase().includes('เงื่อนไข') || 
+                            header.toLowerCase().includes('condition')) {
+                            conditionField = header;
+                            break;
+                        }
+                    }
+                }
+                
+                displayHeaders = [conditionField];
+                
+                importantColumns.forEach(col => {
+                    if (col !== 'เงื่อนไขโครงการ' && headers.includes(col)) {
+                        displayHeaders.push(col);
+                    }
+                });
+                
+                while (displayHeaders.length < 6 && headers.length > displayHeaders.length) {
+                    for (const header of headers) {
+                        if (!displayHeaders.includes(header)) {
+                            displayHeaders.push(header);
+                            break;
+                        }
+                    }
+                }
+                
+                displayHeaders = displayHeaders.slice(0, 6);
+            }
             
             // Create rows
-            data.forEach((item, index) => {
+            data.forEach((item, rowIndex) => {
                 const row = document.createElement('tr');
                 
-                // Add sequence cell
-                const seqCell = document.createElement('td');
-                seqCell.textContent = item.ลำดับ || index + 1;
-                seqCell.style.fontWeight = '500';
-                row.appendChild(seqCell);
+                // Check if this row has anomalies (only for Dataการตรวจ)
+                if (currentSheet === 'Dataการตรวจ') {
+                    const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
+                    if (rowAnomaly) {
+                        row.classList.add('anomaly-warning');
+                        row.setAttribute('title', `ตรวจพบ ${rowAnomaly.issues.length} ความผิดปกติในเงื่อนไขโครงการ`);
+                    }
+                }
                 
-                // Add cells for all columns A-P
-                allColumns.forEach(column => {
+                // Create data cells for display headers
+                displayHeaders.forEach(header => {
                     const cell = document.createElement('td');
-                    const value = item[column] || '';
+                    const value = item[header] || '';
                     
                     // Format special fields
-                    if (column.toLowerCase().includes('สถานะ')) {
+                    if (header === 'เงื่อนไขโครงการ' || header.toLowerCase().includes('เงื่อนไข')) {
+                        const resultClass = getConditionClass(value);
+                        cell.innerHTML = `<span class="result-badge ${resultClass}">${value || 'ไม่ระบุ'}</span>`;
+                        if (currentSheet === 'Dataการตรวจ') {
+                            const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
+                            if (rowAnomaly && (header === 'เงื่อนไขโครงการ' || header.toLowerCase().includes('เงื่อนไข'))) {
+                                // Add anomaly indicator for condition field
+                                cell.innerHTML += `<span class="anomaly-tag">⚠️</span>`;
+                            }
+                        }
+                    } else if (header.toLowerCase().includes('สถานะ')) {
                         const statusClass = getStatusClass(value);
                         cell.innerHTML = `<span class="badge-status ${statusClass}">${value}</span>`;
-                    } else if (column.toLowerCase().includes('งบ') || column.toLowerCase().includes('budget')) {
+                    } else if (header.toLowerCase().includes('งบ') || header.toLowerCase().includes('budget') || header.toLowerCase().includes('สนับสนุน')) {
                         cell.textContent = formatCurrency(value);
-                    } else if (column.toLowerCase().includes('date') || column.toLowerCase().includes('วันที่')) {
+                    } else if (header.toLowerCase().includes('date') || header.toLowerCase().includes('วันที่')) {
                         cell.textContent = formatThaiDate(value);
-                    } else if (column.toLowerCase().includes('พื้นที่') && !isNaN(parseFloat(value))) {
+                    } else if (header.toLowerCase().includes('คะแนน') || header.toLowerCase().includes('score')) {
+                        const score = parseInt(value) || 0;
+                        let badgeClass = 'bg-danger';
+                        if (score >= 80) badgeClass = 'bg-success';
+                        else if (score >= 60) badgeClass = 'bg-warning';
+                        cell.innerHTML = `<span class="badge ${badgeClass}">${score}</span>`;
+                    } else if (header.toLowerCase().includes('พื้นที่')) {
                         cell.textContent = value ? `${value} ไร่` : '-';
-                    } else if (column.toLowerCase().includes('เบอร์') || column.toLowerCase().includes('โทร')) {
-                        cell.textContent = formatPhoneNumber(value);
                     } else {
                         // Truncate long text
-                        cell.textContent = value.length > 50 ? value.substring(0, 50) + '...' : value;
+                        cell.textContent = value.length > 30 ? value.substring(0, 30) + '...' : value;
                         cell.title = value;
                     }
                     
@@ -826,31 +1656,55 @@
                 
                 // Add action cell
                 const actionCell = document.createElement('td');
-                actionCell.innerHTML = `
-                    <button class="btn btn-sm btn-outline-green view-details-btn" data-id="${item.id}" title="ดูรายละเอียดโครงการ">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                `;
+                if (currentSheet === 'Dataการตรวจ') {
+                    let actionButtons = `<button class="btn btn-sm btn-outline-green view-inspection-btn" data-id="${item.id}" title="ดูรายละเอียดเงื่อนไขโครงการ">
+                            <i class="fas fa-search"></i>
+                        </button>`;
+                    
+                    // Add anomaly indicator if this row has anomalies
+                    const rowAnomaly = anomalies.find(a => a.rowId === item.id || a.rowIndex === rowIndex);
+                    if (rowAnomaly) {
+                        actionButtons = `<span class="me-1" title="พบ ${rowAnomaly.issues.length} ความผิดปกติ">⚠️</span>` + actionButtons;
+                    }
+                    
+                    actionCell.innerHTML = actionButtons;
+                } else {
+                    actionCell.innerHTML = `
+                        <button class="btn btn-sm btn-outline-green view-details-btn" data-id="${item.id}" title="ดูรายละเอียดโครงการ">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    `;
+                }
                 row.appendChild(actionCell);
                 
                 tableBody.appendChild(row);
             });
             
             // Add event listeners to view buttons
-            document.querySelectorAll('.view-details-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-id');
-                    showProjectDetails(itemId);
+            if (currentSheet === 'Dataการตรวจ') {
+                document.querySelectorAll('.view-inspection-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-id');
+                        showInspectionDetails(itemId);
+                    });
                 });
-            });
+            } else {
+                document.querySelectorAll('.view-details-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const itemId = this.getAttribute('data-id');
+                        showProjectDetails(itemId);
+                    });
+                });
+            }
         }
         
         // Filter data based on search and filters
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            const anomalyFilter = document.getElementById('anomaly-filter').value;
             
-            let data = allData;
+            let data = allData[currentSheet];
             
             // Apply search filter
             if (searchTerm) {
@@ -861,18 +1715,42 @@
                 });
             }
             
-            // Apply status filter
-            const statusFilter = document.getElementById('status-filter').value;
-            if (statusFilter !== 'all') {
-                data = data.filter(item => {
-                    // Look for status in any field
-                    return Object.values(item).some(value => {
-                        if (typeof value === 'string') {
-                            return value.toLowerCase().includes(statusFilter);
-                        }
-                        return false;
+            // Apply status or condition filter
+            if (currentSheet === 'Dataโครงการ') {
+                const statusFilter = document.getElementById('status-filter').value;
+                if (statusFilter !== 'all') {
+                    data = data.filter(item => {
+                        // Look for status in any field
+                        return Object.values(item).some(value => {
+                            if (typeof value === 'string') {
+                                return value.toLowerCase().includes(statusFilter);
+                            }
+                            return false;
+                        });
                     });
-                });
+                }
+            } else if (currentSheet === 'Dataการตรวจ') {
+                const resultFilter = document.getElementById('result-filter').value;
+                if (resultFilter !== 'all') {
+                    data = data.filter(item => {
+                        // Look for condition in any field
+                        const condition = item['เงื่อนไขโครงการ'] || '';
+                        return condition.toLowerCase().includes(resultFilter.toLowerCase());
+                    });
+                }
+                
+                // Apply anomaly filter
+                if (anomalyFilter !== 'all') {
+                    data = data.filter(item => {
+                        const hasAnomaly = anomalies.some(a => a.rowId === item.id);
+                        if (anomalyFilter === 'anomaly') {
+                            return hasAnomaly;
+                        } else if (anomalyFilter === 'normal') {
+                            return !hasAnomaly;
+                        }
+                        return true;
+                    });
+                }
             }
             
             // Apply additional filters
@@ -895,47 +1773,37 @@
                             return false;
                         });
                         break;
-                    case 'area-high':
-                        // Filter for large area (> 5 ไร่)
+                    case 'passed':
+                        // Filter for passed conditions only
                         data = data.filter(item => {
-                            // Find area field
-                            for (const [key, value] of Object.entries(item)) {
-                                if ((key.toLowerCase().includes('พื้นที่')) && value) {
-                                    const area = parseFloat(value);
-                                    return !isNaN(area) && area > 5;
-                                }
-                            }
-                            return false;
+                            const condition = item['เงื่อนไขโครงการ'] || '';
+                            return condition.toLowerCase().includes('ผ่าน');
                         });
                         break;
-                    case 'area-low':
-                        // Filter for small area (≤ 5 ไร่)
+                    case 'anomaly':
+                        // Filter for items with anomalies
                         data = data.filter(item => {
-                            // Find area field
-                            for (const [key, value] of Object.entries(item)) {
-                                if ((key.toLowerCase().includes('พื้นที่')) && value) {
-                                    const area = parseFloat(value);
-                                    return !isNaN(area) && area > 0 && area <= 5;
-                                }
-                            }
-                            return false;
+                            return anomalies.some(a => a.rowId === item.id);
                         });
-                        break;
-                    case 'newest':
-                        // Show newest 50 items
-                        data = data.slice(-50).reverse();
                         break;
                 }
             }
             
             filteredData = data;
             populateTable(data);
+            
+            // Update stats if on inspection sheet
+            if (currentSheet === 'Dataการตรวจ') {
+                updateInspectionStats();
+            }
         }
         
         // Reset all filters
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('status-filter').value = 'all';
+            document.getElementById('result-filter').value = 'all';
+            document.getElementById('anomaly-filter').value = 'all';
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.getAttribute('data-filter') === 'all') {
@@ -947,42 +1815,76 @@
             showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
         }
         
+        // Update inspection statistics
+        function updateInspectionStats() {
+            const data = allData['Dataการตรวจ'];
+            
+            if (data.length === 0) {
+                document.getElementById('total-inspections').textContent = '0';
+                document.getElementById('passed-inspections').textContent = '0';
+                document.getElementById('failed-inspections').textContent = '0';
+                return;
+            }
+            
+            // Count by condition
+            let passed = 0;
+            let failed = 0;
+            
+            data.forEach(item => {
+                const condition = item['เงื่อนไขโครงการ'] || '';
+                const conditionLower = condition.toLowerCase();
+                
+                if (conditionLower.includes('ผ่าน')) {
+                    passed++;
+                } else if (conditionLower.includes('ไม่ผ่าน')) {
+                    failed++;
+                }
+                // ไม่นับกรณีอื่น ๆ (ว่างเปล่าหรือค่าอื่น)
+            });
+            
+            document.getElementById('total-inspections').textContent = data.length;
+            document.getElementById('passed-inspections').textContent = passed;
+            document.getElementById('failed-inspections').textContent = failed;
+        }
+        
         // Show project details in modal
         function showProjectDetails(itemId) {
-            const item = allData.find(i => i.id === itemId);
+            // Find the item
+            const item = allData[currentSheet].find(i => i.id === itemId);
             
             if (!item) {
                 showToast('ไม่พบข้อมูล', 'ไม่สามารถแสดงรายละเอียดได้', 'error');
                 return;
             }
             
+            // Build details content
             let content = '<div class="row">';
             
-            // Show all columns A-P in two columns
-            const columnsToShow = allColumns.filter(col => item[col] !== undefined && item[col] !== '');
-            const midPoint = Math.ceil(columnsToShow.length / 2);
+            // Get all fields except id
+            const fields = Object.entries(item).filter(([key]) => key !== 'id');
+            
+            // Split into two columns for better display
+            const midPoint = Math.ceil(fields.length / 2);
             
             content += '<div class="col-md-6">';
             for (let i = 0; i < midPoint; i++) {
-                const column = columnsToShow[i];
-                const value = item[column] || '';
+                const [key, value] = fields[i];
                 content += `
                     <div class="mb-3">
-                        <strong class="d-block text-green small">${column}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(column, value)}</div>
+                        <strong class="d-block text-green">${key}</strong>
+                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
                     </div>
                 `;
             }
             content += '</div>';
             
             content += '<div class="col-md-6">';
-            for (let i = midPoint; i < columnsToShow.length; i++) {
-                const column = columnsToShow[i];
-                const value = item[column] || '';
+            for (let i = midPoint; i < fields.length; i++) {
+                const [key, value] = fields[i];
                 content += `
                     <div class="mb-3">
-                        <strong class="d-block text-green small">${column}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(column, value)}</div>
+                        <strong class="d-block text-green">${key}</strong>
+                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
                     </div>
                 `;
             }
@@ -990,28 +1892,127 @@
             
             content += '</div>';
             
+            // Set modal content
             document.getElementById('project-details-content').innerHTML = content;
             
+            // Show modal
             const modal = new bootstrap.Modal(document.getElementById('projectDetailsModal'));
+            modal.show();
+        }
+        
+        // Show inspection details in modal
+        function showInspectionDetails(itemId) {
+            // Find the item
+            const item = allData[currentSheet].find(i => i.id === itemId);
+            
+            if (!item) {
+                showToast('ไม่พบข้อมูล', 'ไม่สามารถแสดงรายละเอียดได้', 'error');
+                return;
+            }
+            
+            // Check if this item has anomalies
+            const itemAnomaly = anomalies.find(a => a.rowId === itemId);
+            
+            // Build details content with emphasis on condition
+            let content = '<div class="row">';
+            
+            // Show anomalies warning if present
+            if (itemAnomaly) {
+                content += `
+                    <div class="col-12 mb-3">
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>ตรวจพบความผิดปกติในเงื่อนไขโครงการ</strong>
+                            <ul class="mb-0 mt-2">
+                                ${itemAnomaly.issues.map(issue => `<li>${issue.message}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Show condition prominently at top
+            const condition = item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
+            const conditionClass = getConditionClass(condition);
+            
+            content += `
+                <div class="col-12 mb-4">
+                    <div class="text-center">
+                        <div class="result-badge ${conditionClass}" style="font-size: 1.2rem; padding: 12px 24px; display: inline-block;">
+                            เงื่อนไขโครงการ: ${condition}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Get all fields except id, organize by importance
+            const importantFields = ['รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ', 'ข้อสังเกต', 'คำแนะนำ', 'สถานะหลังตรวจ'];
+            const otherFields = Object.entries(item)
+                .filter(([key]) => key !== 'id' && key !== 'เงื่อนไขโครงการ' && !importantFields.includes(key))
+                .map(([key]) => key);
+            
+            const allFields = [...importantFields, ...otherFields];
+            
+            // Split into two columns
+            const midPoint = Math.ceil(allFields.length / 2);
+            
+            content += '<div class="col-md-6">';
+            for (let i = 0; i < midPoint; i++) {
+                const key = allFields[i];
+                const value = item[key] || '';
+                if (value) {
+                    content += `
+                        <div class="mb-3">
+                            <strong class="d-block text-green">${key}</strong>
+                            <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
+                        </div>
+                    `;
+                }
+            }
+            content += '</div>';
+            
+            content += '<div class="col-md-6">';
+            for (let i = midPoint; i < allFields.length; i++) {
+                const key = allFields[i];
+                const value = item[key] || '';
+                if (value) {
+                    content += `
+                        <div class="mb-3">
+                            <strong class="d-block text-green">${key}</strong>
+                            <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
+                        </div>
+                    `;
+                }
+            }
+            content += '</div>';
+            
+            content += '</div>';
+            
+            // Set modal content
+            document.getElementById('inspection-details-content').innerHTML = content;
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('inspectionDetailsModal'));
             modal.show();
         }
         
         // Export data as CSV
         function exportData() {
-            const data = filteredData.length > 0 ? filteredData : allData;
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
             if (data.length === 0) {
                 showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
                 return;
             }
             
-            // Use all columns A-P for export
-            const headers = ['ลำดับ', ...allColumns];
+            // Convert to CSV
+            const headers = Object.keys(data[0]).filter(key => key !== 'id');
             const csvRows = [
                 headers.join(','),
                 ...data.map(row => 
                     headers.map(header => {
                         const value = row[header] || '';
+                        // Escape quotes and wrap in quotes if contains comma or quotes
                         const escaped = value.toString().replace(/"/g, '""');
                         return escaped.includes(',') || escaped.includes('"') || escaped.includes('\n') ? `"${escaped}"` : escaped;
                     }).join(',')
@@ -1023,7 +2024,7 @@
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `โครงการเกษตร_${new Date().toISOString().slice(0,10)}.csv`;
+            link.download = `${currentSheet}_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
             
@@ -1036,6 +2037,7 @@
         }
         
         function showToast(title, message, type) {
+            // Create toast element
             const toastId = 'toast-' + Date.now();
             const toastHtml = `
                 <div id="${toastId}" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1055">
@@ -1051,8 +2053,10 @@
                 </div>
             `;
             
+            // Add to body
             document.body.insertAdjacentHTML('beforeend', toastHtml);
             
+            // Auto remove after 5 seconds
             setTimeout(() => {
                 const toast = document.getElementById(toastId);
                 if (toast) {
@@ -1069,18 +2073,32 @@
             if (!status) return '';
             
             const statusLower = status.toLowerCase();
-            if (statusLower.includes('อนุมัติ') || statusLower.includes('approved') || statusLower.includes('ผ่าน')) return 'status-approved';
             if (statusLower.includes('รอ') || statusLower.includes('pending') || statusLower.includes('waiting')) return 'status-pending';
+            if (statusLower.includes('อนุมัติ') || statusLower.includes('approved') || statusLower.includes('ผ่าน')) return 'status-approved';
             if (statusLower.includes('ไม่อนุมัติ') || statusLower.includes('rejected') || statusLower.includes('ไม่ผ่าน')) return 'status-rejected';
+            if (statusLower.includes('กำลังดำเนิน') || statusLower.includes('in progress')) return 'status-in-progress';
+            if (statusLower.includes('เสร็จ') || statusLower.includes('completed')) return 'status-completed';
             return '';
         }
         
+        function getConditionClass(condition) {
+            if (!condition) return '';
+            
+            const conditionLower = condition.toLowerCase();
+            if (conditionLower.includes('ผ่าน')) return 'result-passed';
+            if (conditionLower.includes('ไม่ผ่าน')) return 'result-failed';
+            return '';
+        }
+        
+        // Format date to Thai date (พ.ศ.)
         function formatThaiDate(dateString) {
             if (!dateString) return '-';
             
+            // Try to parse date
             const date = parseThaiDate(dateString);
             if (!date) return dateString;
             
+            // Convert to Buddhist Era (พ.ศ.)
             const buddhistYear = date.getFullYear() + 543;
             const day = date.getDate();
             const month = date.getMonth() + 1;
@@ -1088,10 +2106,13 @@
             return `${day}/${month}/${buddhistYear}`;
         }
         
+        // Parse Thai date (dd/mm/yyyy where yyyy is Buddhist Era)
         function parseThaiDate(dateString) {
             if (!dateString) return null;
             
+            // Try different date formats
             const formats = [
+                // Thai date format: dd/mm/yyyy (พุทธศักราช)
                 (str) => {
                     const match = str.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
                     if (match) {
@@ -1103,7 +2124,9 @@
                     }
                     return null;
                 },
+                // ISO format
                 (str) => new Date(str),
+                // Any other format
                 (str) => {
                     try {
                         return new Date(str);
@@ -1123,6 +2146,7 @@
             return null;
         }
         
+        // Format date to Thai date with time
         function formatDateToThai(date) {
             const buddhistYear = date.getFullYear() + 543;
             const day = date.getDate();
@@ -1136,6 +2160,7 @@
         function formatCurrency(amount) {
             if (!amount) return '-';
             
+            // Extract numbers from string
             const num = extractNumber(amount);
             if (isNaN(num)) return amount;
             
@@ -1152,27 +2177,24 @@
             return match ? parseFloat(match.join('')) : 0;
         }
         
-        function formatPhoneNumber(phone) {
-            if (!phone) return '-';
-            const cleaned = phone.toString().replace(/\D/g, '');
-            if (cleaned.length === 10) {
-                return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            }
-            return phone;
-        }
-        
         function formatFieldValue(key, value) {
             if (!value) return '-';
             
             const keyLower = key.toLowerCase();
             const valueStr = value.toString();
             
+            if (keyLower.includes('เงื่อนไขโครงการ') || 
+                (keyLower.includes('เงื่อนไข') && !keyLower.includes('อื่น'))) {
+                const conditionClass = getConditionClass(valueStr);
+                return `<span class="result-badge ${conditionClass}">${valueStr}</span>`;
+            }
+            
             if (keyLower.includes('สถานะ')) {
                 const statusClass = getStatusClass(valueStr);
                 return `<span class="badge-status ${statusClass}">${valueStr}</span>`;
             }
             
-            if (keyLower.includes('งบ') || keyLower.includes('budget')) {
+            if (keyLower.includes('งบ') || keyLower.includes('budget') || keyLower.includes('สนับสนุน')) {
                 return formatCurrency(valueStr);
             }
             
@@ -1180,12 +2202,12 @@
                 return formatThaiDate(valueStr);
             }
             
-            if (keyLower.includes('เบอร์') || keyLower.includes('โทร')) {
-                return formatPhoneNumber(valueStr);
+            if (keyLower.includes('พื้นที่') && !keyLower.includes('ที่อยู่')) {
+                return valueStr ? `${valueStr} ไร่` : '-';
             }
             
-            if (valueStr.length > 100) {
-                return valueStr.substring(0, 100) + '...';
+            if (valueStr.length > 200) {
+                return valueStr.substring(0, 200) + '...';
             }
             
             return valueStr.replace(/\n/g, '<br>');
@@ -1195,8 +2217,13 @@
         const style = document.createElement('style');
         style.textContent = `
             .text-green { color: var(--green-primary) !important; }
-            .bg-success { background-color: var(--green-primary) !important; }
+            .text-success { color: var(--green-dark) !important; }
+            .bg-green-light { background-color: var(--green-bg) !important; }
             .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
+            .badge.bg-success { background-color: var(--green-primary) !important; }
+            .badge.bg-warning { background-color: #ffc107 !important; color: #212529; }
+            .badge.bg-danger { background-color: #dc3545 !important; }
+            .bg-warning { background-color: var(--warning-yellow) !important; }
         `;
         document.head.appendChild(style);
     </script>
