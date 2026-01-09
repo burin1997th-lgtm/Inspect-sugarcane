@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -547,99 +547,6 @@
             color: var(--pastel-green-dark);
         }
         
-        /* Project Details View */
-        .project-details-view {
-            display: none;
-        }
-        
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--pastel-green);
-            transition: all 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(129, 199, 132, 0.15);
-        }
-        
-        .project-card-header {
-            border-bottom: 2px solid var(--pastel-green);
-            padding-bottom: 12px;
-            margin-bottom: 15px;
-        }
-        
-        .project-code {
-            font-weight: 600;
-            color: var(--green-dark);
-            font-size: 1.2rem;
-        }
-        
-        .project-name {
-            font-weight: 500;
-            margin-top: 5px;
-            color: var(--text-dark);
-        }
-        
-        .project-info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px dashed #E8F5E9;
-        }
-        
-        .project-info-label {
-            font-weight: 500;
-            color: var(--text-light);
-            min-width: 120px;
-        }
-        
-        .project-info-value {
-            color: var(--text-dark);
-            text-align: right;
-            flex: 1;
-        }
-        
-        /* View Toggle */
-        .view-toggle {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-        }
-        
-        .view-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--pastel-green);
-            background: white;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .view-btn:first-child {
-            border-radius: 8px 0 0 8px;
-        }
-        
-        .view-btn:last-child {
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .view-btn.active {
-            background: var(--green-gradient);
-            color: white;
-            border-color: var(--green-primary);
-        }
-        
         /* Responsive Design */
         @media (max-width: 768px) {
             .logo {
@@ -662,10 +569,6 @@
             
             .header {
                 padding: 1.5rem 0;
-            }
-            
-            .project-grid {
-                grid-template-columns: 1fr;
             }
         }
         
@@ -692,15 +595,85 @@
             .stat-value {
                 font-size: 1.5rem;
             }
-            
-            .project-info-row {
-                flex-direction: column;
-            }
-            
-            .project-info-label, .project-info-value {
-                text-align: left;
-                width: 100%;
-            }
+        }
+        
+        /* Project Details Full View */
+        .project-full-details {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid var(--pastel-green);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .project-full-header {
+            border-bottom: 2px solid var(--pastel-green);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .project-full-code {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 5px;
+        }
+        
+        .project-full-name {
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        .details-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            color: var(--green-primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--pastel-green);
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #E8F5E9;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--text-light);
+            min-width: 180px;
+        }
+        
+        .detail-value {
+            color: var(--text-dark);
+            flex: 1;
+        }
+        
+        /* View Toggle - Simplified */
+        .view-toggle-simple {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        
+        .view-toggle-simple .btn {
+            padding: 8px 16px;
+            border: 1px solid var(--pastel-green);
+            background: white;
+            color: var(--text-dark);
+        }
+        
+        .view-toggle-simple .btn.active {
+            background: var(--green-gradient);
+            color: white;
+            border-color: var(--green-primary);
         }
     </style>
 </head>
@@ -787,15 +760,12 @@
             </div>
 
             <!-- View Toggle (Only for Dataโครงการ) -->
-            <div class="view-toggle" id="view-toggle" style="display: none;">
-                <button class="view-btn active" data-view="grid">
-                    <i class="fas fa-th-large me-1"></i>การ์ด
+            <div class="view-toggle-simple" id="view-toggle" style="display: none;">
+                <button class="btn btn-sm btn-outline-green active" data-view="table">
+                    <i class="fas fa-table me-1"></i>ตารางสรุป
                 </button>
-                <button class="view-btn" data-view="table">
-                    <i class="fas fa-table me-1"></i>ตาราง
-                </button>
-                <button class="view-btn" data-view="detailed">
-                    <i class="fas fa-list-alt me-1"></i>รายละเอียดเต็ม
+                <button class="btn btn-sm btn-outline-green ms-2" data-view="full">
+                    <i class="fas fa-file-alt me-1"></i>รายละเอียดเต็ม
                 </button>
             </div>
 
@@ -866,7 +836,6 @@
                     <div class="filter-buttons mt-3">
                         <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
                         <button class="filter-btn" data-filter="recent">ล่าสุด (30 วัน)</button>
-                        <button class="filter-btn" data-filter="anomaly">มีความผิดปกติ</button>
                         <button class="filter-btn" data-filter="passed">ผ่านทั้งหมด</button>
                         <button class="btn-outline-green" id="refresh-btn">
                             <i class="fas fa-redo-alt me-1"></i>รีเฟรช
@@ -902,31 +871,26 @@
                         <p class="text-muted small">กรุณารอสักครู่ ขณะนี้ระบบกำลังดึงข้อมูลล่าสุด</p>
                     </div>
                     
-                    <!-- Data Table View -->
-                    <div class="table-container" id="table-view">
-                        <table class="data-table" id="data-table">
-                            <thead>
-                                <tr id="table-headers">
-                                    <!-- Headers will be populated by JavaScript -->
-                                </tr>
-                            </thead>
-                            <tbody id="table-body">
-                                <!-- Data will be populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Project Grid View -->
-                    <div class="project-details-view p-4" id="grid-view">
-                        <div class="project-grid" id="project-grid">
-                            <!-- Project cards will be populated by JavaScript -->
+                    <!-- Table View -->
+                    <div id="table-view">
+                        <div class="table-container">
+                            <table class="data-table" id="data-table">
+                                <thead>
+                                    <tr id="table-headers">
+                                        <!-- Headers will be populated by JavaScript -->
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     
-                    <!-- Detailed View -->
-                    <div class="project-details-view p-4" id="detailed-view">
-                        <div id="detailed-projects">
-                            <!-- Detailed project cards will be populated by JavaScript -->
+                    <!-- Full Details View -->
+                    <div id="full-view" class="p-4" style="display: none;">
+                        <div id="full-projects-container">
+                            <!-- Full project details will be populated by JavaScript -->
                         </div>
                     </div>
                     
@@ -952,7 +916,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fas fa-info-circle me-2"></i>
-                            <span id="modal-title">รายละเอียดโครงการ (คอลัมน์ A-P)</span>
+                            <span id="modal-title">รายละเอียดโครงการ</span>
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
@@ -1013,29 +977,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Project Full Details Modal -->
-        <div class="modal fade" id="projectFullDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-file-alt me-2"></i>
-                            <span id="full-details-title">รายละเอียดโครงการเต็มรูปแบบ</span>
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body" id="project-full-details-content">
-                        <!-- Full details will be populated by JavaScript -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-green" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>ปิด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -1070,25 +1011,25 @@
             'Dataการตรวจ': 'Dataการตรวจ'       // ข้อมูลเงื่อนไขโครงการ
         };
         
-        // Field mapping for project sheet (คอลัมน์ A-P)
-        const PROJECT_FIELDS = {
-            'A': 'รหัสโครงการ',
-            'B': 'ชื่อโครงการ',
-            'C': 'ประเภทโครงการ',
-            'D': 'ชื่อเกษตรกร',
-            'E': 'ที่อยู่แปลง',
-            'F': 'พื้นที่ (ไร่)',
-            'G': 'วันที่เริ่มโครงการ',
-            'H': 'สถานะ',
-            'I': 'งบประมาณสนับสนุน',
-            'J': 'ผู้รับผิดชอบโครงการ',
-            'K': 'เบอร์ติดต่อ',
-            'L': 'หมายเหตุ',
-            'M': 'ความคืบหน้า (%)',
-            'N': 'วันที่สิ้นสุดโครงการ',
-            'O': 'ผลผลิตที่คาดหวัง',
-            'P': 'ปัญหาอุปสรรค'
-        };
+        // Field mapping for project sheet (คอลัมน์ A-P) - ตาม Google Sheets จริง
+        const PROJECT_FIELDS_A_P = [
+            'รหัสโครงการ',           // A
+            'ชื่อโครงการ',           // B
+            'ประเภทโครงการ',         // C
+            'ชื่อเกษตรกร',           // D
+            'ที่อยู่แปลง',           // E
+            'พื้นที่ (ไร่)',         // F
+            'วันที่เริ่มโครงการ',     // G
+            'สถานะ',                // H
+            'งบประมาณสนับสนุน',     // I
+            'ผู้รับผิดชอบโครงการ',   // J
+            'เบอร์ติดต่อ',           // K
+            'หมายเหตุ',              // L
+            'ความคืบหน้า (%)',       // M
+            'วันที่สิ้นสุดโครงการ',   // N
+            'ผลผลิตที่คาดหวัง',      // O
+            'ปัญหาอุปสรรค'          // P
+        ];
         
         // Field mapping for inspection sheet
         const INSPECTION_FIELDS = {
@@ -1107,7 +1048,7 @@
         
         // Current state
         let currentSheet = 'Dataโครงการ';
-        let currentView = 'grid'; // grid, table, detailed
+        let currentView = 'table'; // table, full
         let allData = {
             'Dataโครงการ': [],
             'Dataการตรวจ': []
@@ -1185,8 +1126,7 @@
                         document.getElementById('anomaly-report-section').style.display = 'block';
                         document.getElementById('view-toggle').style.display = 'none';
                         document.getElementById('table-view').style.display = 'block';
-                        document.getElementById('grid-view').style.display = 'none';
-                        document.getElementById('detailed-view').style.display = 'none';
+                        document.getElementById('full-view').style.display = 'none';
                         updateInspectionStats();
                     } else {
                         document.getElementById('result-filter').style.display = 'none';
@@ -1215,9 +1155,9 @@
             });
             
             // View toggle buttons
-            document.querySelectorAll('.view-btn').forEach(btn => {
+            document.querySelectorAll('.view-toggle-simple .btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.view-toggle-simple .btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentView = this.getAttribute('data-view');
                     showView(currentView);
@@ -1300,7 +1240,7 @@
             }
         }
         
-        // Fetch data from Google Sheets (Public Method)
+        // Fetch data from Google Sheets (Public Method) - ดึงข้อมูลจริง
         async function fetchSheetData(sheetName) {
             // URL for public Google Sheets (published to web)
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
@@ -1316,7 +1256,7 @@
                 
                 if (!csvText || csvText.trim() === '') {
                     console.warn(`ชีท "${sheetName}" ว่างเปล่าหรือไม่พบ`);
-                    return generateSampleData(sheetName);
+                    return [];
                 }
                 
                 return parseCSV(csvText, sheetName);
@@ -1337,14 +1277,13 @@
                 } catch (altError) {
                     console.error('Alternative method also failed:', altError);
                     
-                    // Final fallback - use sample data
-                    console.log('Using sample data for', sheetName);
-                    return generateSampleData(sheetName);
+                    // Return empty array instead of sample data
+                    return [];
                 }
             }
         }
         
-        // Parse CSV data with special handling for project sheet (A-P)
+        // Parse CSV data - ดึงข้อมูลจาก Google Sheets จริง
         function parseCSV(csvText, sheetName) {
             const lines = csvText.split('\n').filter(line => line.trim() !== '');
             
@@ -1369,18 +1308,12 @@
                 // Add unique ID
                 item.id = `row-${i}-${Date.now()}`;
                 
-                // For project sheet, ensure we have all A-P columns
+                // For project sheet, map to A-P columns
                 if (sheetName === 'Dataโครงการ') {
-                    // Map columns A-P based on position
-                    const columnLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
-                    columnLetters.forEach((letter, index) => {
-                        if (headers[index]) {
-                            const headerName = headers[index];
-                            // Make sure we have the standard field name
-                            const standardName = PROJECT_FIELDS[letter] || headerName;
-                            if (standardName !== headerName) {
-                                item[standardName] = item[headerName] || '';
-                            }
+                    // Ensure we have all A-P fields
+                    PROJECT_FIELDS_A_P.forEach(fieldName => {
+                        if (!item[fieldName]) {
+                            item[fieldName] = '';
                         }
                     });
                 }
@@ -1406,7 +1339,16 @@
                     }
                 }
                 
-                data.push(item);
+                // Only add if there's data in at least one column (skip empty rows)
+                const hasData = Object.values(item).some(value => 
+                    value && value.toString().trim() !== '' && 
+                    value.toString().toLowerCase() !== 'na' && 
+                    value.toString().toLowerCase() !== 'n/a'
+                );
+                
+                if (hasData) {
+                    data.push(item);
+                }
             }
             
             return data;
@@ -1439,71 +1381,6 @@
             
             result.push(current);
             return result.map(val => val.trim());
-        }
-        
-        // Generate sample data for demonstration
-        function generateSampleData(sheetName) {
-            const sampleData = [];
-            const rowCount = 20;
-            
-            for (let i = 1; i <= rowCount; i++) {
-                if (sheetName === 'Dataโครงการ') {
-                    const projectTypes = ['ปลูกข้าว', 'ปลูกผัก', 'ปลูกไม้ผล', 'เลี้ยงสัตว์', 'แปรรูปผลผลิต'];
-                    const statuses = ['รอตรวจสอบ', 'อนุมัติแล้ว', 'ไม่อนุมัติ', 'กำลังดำเนินการ', 'เสร็จสิ้น'];
-                    const progress = Math.floor(Math.random() * 100);
-                    const randomType = projectTypes[Math.floor(Math.random() * projectTypes.length)];
-                    const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-                    
-                    sampleData.push({
-                        'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
-                        'ชื่อโครงการ': `โครงการ${randomType}ที่ ${i}`,
-                        'ประเภทโครงการ': randomType,
-                        'ชื่อเกษตรกร': `เกษตรกร ${i}`,
-                        'ที่อยู่แปลง': `หมู่ ${Math.floor(Math.random() * 10) + 1} ตำบลตัวอย่าง อำเภอตัวอย่าง`,
-                        'พื้นที่ (ไร่)': (Math.random() * 10).toFixed(1),
-                        'วันที่เริ่มโครงการ': `${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2566`,
-                        'สถานะ': randomStatus,
-                        'งบประมาณสนับสนุน': (Math.floor(Math.random() * 200000) + 10000).toLocaleString(),
-                        'ผู้รับผิดชอบโครงการ': `เจ้าหน้าที่ ${Math.floor(Math.random() * 5) + 1}`,
-                        'เบอร์ติดต่อ': `08${Math.floor(Math.random() * 10000000).toString().padStart(8, '0')}`,
-                        'หมายเหตุ': `หมายเหตุโครงการ ${randomType}ที่ ${i}`,
-                        'ความคืบหน้า (%)': progress,
-                        'วันที่สิ้นสุดโครงการ': `${Math.floor(Math.random() * 28) + 1}/${Math.floor(Math.random() * 12) + 1}/2567`,
-                        'ผลผลิตที่คาดหวัง': `${Math.floor(Math.random() * 1000)} กิโลกรัม`,
-                        'ปัญหาอุปสรรค': progress < 50 ? 'พบปัญหาด้านสภาพอากาศ' : 'ไม่มีปัญหาอุปสรรค',
-                        'id': `project-${i}`
-                    });
-                } else if (sheetName === 'Dataการตรวจ') {
-                    // Generate data for condition sheet
-                    const conditions = ['ผ่าน', 'ไม่ผ่าน', ''];
-                    let randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-                    
-                    // Create some anomalies for demonstration
-                    if (i === 3) randomCondition = ''; // Empty condition
-                    if (i === 7) randomCondition = 'กำลังพิจารณา'; // Invalid condition
-                    if (i === 12) randomCondition = 'ผ่าน,ไม่ผ่าน'; // Multiple values
-                    
-                    const dateDay = Math.floor(Math.random() * 28) + 1;
-                    const dateMonth = Math.floor(Math.random() * 12) + 1;
-                    
-                    sampleData.push({
-                        'รหัสการตรวจ': `INS${String(i).padStart(3, '0')}`,
-                        'รหัสโครงการ': `AG${String(i).padStart(3, '0')}`,
-                        'ชื่อโครงการ': `โครงการตรวจแปลงที่ ${i}`,
-                        'ชื่อเกษตรกร': `เกษตรกร ${i}`,
-                        'วันที่ตรวจ': `${dateDay}/${dateMonth}/2566`,
-                        'ผู้ตรวจ': `ผู้ตรวจ ${Math.floor(Math.random() * 5) + 1}`,
-                        'เงื่อนไขโครงการ': randomCondition, // คอลัมน์ R
-                        'คะแนนการตรวจ': Math.floor(Math.random() * 100),
-                        'ข้อสังเกต': `พื้นที่ปลูกมีความเหมาะสม ${randomCondition === 'ผ่าน' ? 'ดี' : 'ต้องปรับปรุง'}`,
-                        'คำแนะนำ': randomCondition === 'ผ่าน' ? 'ดำเนินการตามแผนได้' : 'ควรปรับปรุงพื้นที่ก่อนดำเนินการต่อ',
-                        'สถานะหลังตรวจ': randomCondition === 'ผ่าน' ? 'อนุมัติแล้ว' : 'รอการปรับปรุง',
-                        'id': `inspection-${i}`
-                    });
-                }
-            }
-            
-            return sampleData;
         }
         
         // Detect anomalies in condition data (เฉพาะเงื่อนไขโครงการ)
@@ -1632,16 +1509,13 @@
         function showView(viewName) {
             // Hide all views
             document.getElementById('table-view').style.display = 'none';
-            document.getElementById('grid-view').style.display = 'none';
-            document.getElementById('detailed-view').style.display = 'none';
+            document.getElementById('full-view').style.display = 'none';
             
             // Show selected view
             if (viewName === 'table') {
                 document.getElementById('table-view').style.display = 'block';
-            } else if (viewName === 'grid') {
-                document.getElementById('grid-view').style.display = 'block';
-            } else if (viewName === 'detailed') {
-                document.getElementById('detailed-view').style.display = 'block';
+            } else if (viewName === 'full') {
+                document.getElementById('full-view').style.display = 'block';
             }
         }
         
@@ -1664,10 +1538,8 @@
                         document.getElementById('empty-state').style.display = 'block';
                         document.getElementById('record-count').textContent = '0 รายการ';
                     }
-                } else if (currentView === 'grid') {
-                    populateGrid(data);
-                } else if (currentView === 'detailed') {
-                    populateDetailed(data);
+                } else if (currentView === 'full') {
+                    populateFullView(data);
                 }
             } else {
                 // For inspection sheet, always use table view
@@ -1692,16 +1564,28 @@
             const headersContainer = document.getElementById('table-headers');
             headersContainer.innerHTML = '';
             
-            // Get headers from data item keys (exclude id)
-            const headers = Object.keys(dataItem).filter(key => key !== 'id' && key !== '');
-            
-            // Different column selection for different sheets
-            let displayHeaders = [];
-            
             if (currentSheet === 'Dataโครงการ') {
                 // Show important columns for projects (A-P columns)
                 const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร', 'สถานะ', 'วันที่เริ่มโครงการ', 'ความคืบหน้า (%)'];
-                displayHeaders = headers.filter(header => importantColumns.includes(header)).slice(0, 7);
+                
+                // Filter to only show columns that exist in data
+                const displayHeaders = importantColumns.filter(header => 
+                    dataItem[header] !== undefined
+                );
+                
+                // If no important columns found, use first few columns from data
+                if (displayHeaders.length === 0) {
+                    const allHeaders = Object.keys(dataItem).filter(key => key !== 'id' && key !== '');
+                    displayHeaders.push(...allHeaders.slice(0, 7));
+                }
+                
+                // Create header cells
+                displayHeaders.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    th.title = header;
+                    headersContainer.appendChild(th);
+                });
             } else if (currentSheet === 'Dataการตรวจ') {
                 // Show important columns for conditions with "เงื่อนไขโครงการ" as first column
                 const importantColumns = ['เงื่อนไขโครงการ', 'รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ'];
@@ -1710,7 +1594,7 @@
                 let conditionField = 'เงื่อนไขโครงการ';
                 if (!dataItem['เงื่อนไขโครงการ']) {
                     // Look for alternative condition field names
-                    for (const header of headers) {
+                    for (const header of Object.keys(dataItem)) {
                         if (header.toLowerCase().includes('เงื่อนไข') || 
                             header.toLowerCase().includes('condition')) {
                             conditionField = header;
@@ -1719,35 +1603,23 @@
                     }
                 }
                 
-                displayHeaders = [conditionField];
+                const displayHeaders = [conditionField];
                 
                 // Add other important columns
                 importantColumns.forEach(col => {
-                    if (col !== 'เงื่อนไขโครงการ' && headers.includes(col)) {
+                    if (col !== 'เงื่อนไขโครงการ' && dataItem[col] !== undefined) {
                         displayHeaders.push(col);
                     }
                 });
                 
-                // Make sure we have at least 6 columns
-                while (displayHeaders.length < 6 && headers.length > displayHeaders.length) {
-                    for (const header of headers) {
-                        if (!displayHeaders.includes(header)) {
-                            displayHeaders.push(header);
-                            break;
-                        }
-                    }
-                }
-                
-                displayHeaders = displayHeaders.slice(0, 6);
+                // Create header cells
+                displayHeaders.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    th.title = header;
+                    headersContainer.appendChild(th);
+                });
             }
-            
-            // Create header cells
-            displayHeaders.forEach(header => {
-                const th = document.createElement('th');
-                th.textContent = header;
-                th.title = header;
-                headersContainer.appendChild(th);
-            });
             
             // Add action column
             const actionTh = document.createElement('th');
@@ -1770,50 +1642,11 @@
             document.getElementById('empty-state').style.display = 'none';
             document.getElementById('record-count').textContent = `${data.length} รายการ`;
             
-            // Get headers from first data item
-            const firstItem = data[0];
-            let headers = Object.keys(firstItem).filter(key => key !== 'id' && key !== '');
-            
-            // Different column selection for different sheets
-            let displayHeaders = [];
-            
-            if (currentSheet === 'Dataโครงการ') {
-                const importantColumns = ['รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร', 'สถานะ', 'วันที่เริ่มโครงการ', 'ความคืบหน้า (%)'];
-                displayHeaders = headers.filter(header => importantColumns.includes(header)).slice(0, 7);
-            } else if (currentSheet === 'Dataการตรวจ') {
-                const importantColumns = ['เงื่อนไขโครงการ', 'รหัสโครงการ', 'ชื่อโครงการ', 'วันที่ตรวจ', 'ผู้ตรวจ', 'คะแนนการตรวจ'];
-                
-                // Find condition field
-                let conditionField = 'เงื่อนไขโครงการ';
-                if (!firstItem['เงื่อนไขโครงการ']) {
-                    for (const header of headers) {
-                        if (header.toLowerCase().includes('เงื่อนไข') || 
-                            header.toLowerCase().includes('condition')) {
-                            conditionField = header;
-                            break;
-                        }
-                    }
-                }
-                
-                displayHeaders = [conditionField];
-                
-                importantColumns.forEach(col => {
-                    if (col !== 'เงื่อนไขโครงการ' && headers.includes(col)) {
-                        displayHeaders.push(col);
-                    }
-                });
-                
-                while (displayHeaders.length < 6 && headers.length > displayHeaders.length) {
-                    for (const header of headers) {
-                        if (!displayHeaders.includes(header)) {
-                            displayHeaders.push(header);
-                            break;
-                        }
-                    }
-                }
-                
-                displayHeaders = displayHeaders.slice(0, 6);
-            }
+            // Get headers from table
+            const headerCells = document.querySelectorAll('#table-headers th');
+            const displayHeaders = Array.from(headerCells)
+                .map(th => th.textContent)
+                .filter(text => text !== 'จัดการ');
             
             // Create rows
             data.forEach((item, rowIndex) => {
@@ -1926,10 +1759,10 @@
             }
         }
         
-        // Populate grid view with project cards
-        function populateGrid(data) {
-            const gridContainer = document.getElementById('project-grid');
-            gridContainer.innerHTML = '';
+        // Populate full view with all A-P columns
+        function populateFullView(data) {
+            const container = document.getElementById('full-projects-container');
+            container.innerHTML = '';
             
             if (data.length === 0) {
                 document.getElementById('empty-state').style.display = 'block';
@@ -1940,264 +1773,85 @@
             document.getElementById('empty-state').style.display = 'none';
             document.getElementById('record-count').textContent = `${data.length} รายการ`;
             
-            // Create project cards
+            // Create full details for each project
             data.forEach((item, index) => {
                 const projectCode = item['รหัสโครงการ'] || 'ไม่ระบุ';
                 const projectName = item['ชื่อโครงการ'] || 'ไม่ระบุ';
-                const projectType = item['ประเภทโครงการ'] || 'ไม่ระบุ';
-                const farmer = item['ชื่อเกษตรกร'] || 'ไม่ระบุ';
-                const status = item['สถานะ'] || 'ไม่ระบุ';
-                const progress = item['ความคืบหน้า (%)'] || '0';
-                const startDate = item['วันที่เริ่มโครงการ'] || 'ไม่ระบุ';
-                const budget = item['งบประมาณสนับสนุน'] || '0';
                 
-                const statusClass = getStatusClass(status);
-                const progressNum = parseInt(progress) || 0;
-                let progressClass = 'bg-danger';
-                if (progressNum >= 80) progressClass = 'bg-success';
-                else if (progressNum >= 50) progressClass = 'bg-warning';
-                else if (progressNum >= 20) progressClass = 'bg-info';
-                
-                const cardHtml = `
-                    <div class="project-card" data-id="${item.id}">
-                        <div class="project-card-header">
-                            <div class="project-code">${projectCode}</div>
-                            <div class="project-name">${projectName}</div>
+                // Build HTML for all A-P columns
+                let detailsHtml = `
+                    <div class="project-full-details" data-id="${item.id}">
+                        <div class="project-full-header">
+                            <div class="project-full-code">${projectCode}</div>
+                            <div class="project-full-name">${projectName}</div>
                         </div>
                         
-                        <div class="project-info-row">
-                            <span class="project-info-label">ประเภทโครงการ:</span>
-                            <span class="project-info-value">${projectType}</span>
-                        </div>
-                        
-                        <div class="project-info-row">
-                            <span class="project-info-label">เกษตรกร:</span>
-                            <span class="project-info-value">${farmer}</span>
-                        </div>
-                        
-                        <div class="project-info-row">
-                            <span class="project-info-label">สถานะ:</span>
-                            <span class="project-info-value">
-                                <span class="badge-status ${statusClass}">${status}</span>
-                            </span>
-                        </div>
-                        
-                        <div class="project-info-row">
-                            <span class="project-info-label">ความคืบหน้า:</span>
-                            <span class="project-info-value">
-                                <div class="d-flex align-items-center">
-                                    <div class="progress flex-grow-1 me-2" style="height: 8px;">
-                                        <div class="progress-bar ${progressClass}" style="width: ${progressNum}%"></div>
-                                    </div>
-                                    <span>${progressNum}%</span>
-                                </div>
-                            </span>
-                        </div>
-                        
-                        <div class="project-info-row">
-                            <span class="project-info-label">วันที่เริ่ม:</span>
-                            <span class="project-info-value">${formatThaiDate(startDate)}</span>
-                        </div>
-                        
-                        <div class="project-info-row">
-                            <span class="project-info-label">งบประมาณ:</span>
-                            <span class="project-info-value">${formatCurrency(budget)}</span>
-                        </div>
-                        
-                        <div class="d-flex justify-content-between mt-3">
-                            <button class="btn btn-sm btn-outline-green view-project-details" data-id="${item.id}">
-                                <i class="fas fa-eye me-1"></i>ดูรายละเอียด
-                            </button>
-                            <button class="btn btn-sm btn-green view-full-details" data-id="${item.id}">
-                                <i class="fas fa-file-alt me-1"></i>ดูทั้งหมด
-                            </button>
-                        </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="details-section">
+                                    <h6 class="section-title">ข้อมูลพื้นฐานโครงการ</h6>
                 `;
                 
-                gridContainer.insertAdjacentHTML('beforeend', cardHtml);
-            });
-            
-            // Add event listeners to view buttons
-            document.querySelectorAll('.view-project-details').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-id');
-                    showProjectDetails(itemId);
+                // First 8 columns (A-H)
+                const basicFields = PROJECT_FIELDS_A_P.slice(0, 8);
+                basicFields.forEach(field => {
+                    const value = item[field] || 'ไม่ระบุ';
+                    if (field && value) {
+                        detailsHtml += `
+                            <div class="detail-row">
+                                <div class="detail-label">${field}:</div>
+                                <div class="detail-value">${formatFieldValue(field, value)}</div>
+                            </div>
+                        `;
+                    }
                 });
-            });
-            
-            document.querySelectorAll('.view-full-details').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-id');
-                    showProjectFullDetails(itemId);
+                
+                detailsHtml += `
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="details-section">
+                                    <h6 class="section-title">ข้อมูลติดต่อและความคืบหน้า</h6>
+                `;
+                
+                // Next 8 columns (I-P)
+                const contactFields = PROJECT_FIELDS_A_P.slice(8);
+                contactFields.forEach(field => {
+                    const value = item[field] || 'ไม่ระบุ';
+                    if (field && value) {
+                        detailsHtml += `
+                            <div class="detail-row">
+                                <div class="detail-label">${field}:</div>
+                                <div class="detail-value">${formatFieldValue(field, value)}</div>
+                            </div>
+                        `;
+                    }
                 });
-            });
-        }
-        
-        // Populate detailed view with expanded project cards
-        function populateDetailed(data) {
-            const detailedContainer = document.getElementById('detailed-projects');
-            detailedContainer.innerHTML = '';
-            
-            if (data.length === 0) {
-                document.getElementById('empty-state').style.display = 'block';
-                document.getElementById('record-count').textContent = '0 รายการ';
-                return;
-            }
-            
-            document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('record-count').textContent = `${data.length} รายการ`;
-            
-            // Create detailed project cards
-            data.forEach((item, index) => {
-                const projectCode = item['รหัสโครงการ'] || 'ไม่ระบุ';
-                const projectName = item['ชื่อโครงการ'] || 'ไม่ระบุ';
-                const projectType = item['ประเภทโครงการ'] || 'ไม่ระบุ';
-                const farmer = item['ชื่อเกษตรกร'] || 'ไม่ระบุ';
-                const address = item['ที่อยู่แปลง'] || 'ไม่ระบุ';
-                const area = item['พื้นที่ (ไร่)'] || 'ไม่ระบุ';
-                const status = item['สถานะ'] || 'ไม่ระบุ';
-                const progress = item['ความคืบหน้า (%)'] || '0';
-                const startDate = item['วันที่เริ่มโครงการ'] || 'ไม่ระบุ';
-                const endDate = item['วันที่สิ้นสุดโครงการ'] || 'ไม่ระบุ';
-                const budget = item['งบประมาณสนับสนุน'] || '0';
-                const responsible = item['ผู้รับผิดชอบโครงการ'] || 'ไม่ระบุ';
-                const contact = item['เบอร์ติดต่อ'] || 'ไม่ระบุ';
-                const notes = item['หมายเหตุ'] || 'ไม่มี';
-                const expectedOutput = item['ผลผลิตที่คาดหวัง'] || 'ไม่ระบุ';
-                const problems = item['ปัญหาอุปสรรค'] || 'ไม่มี';
                 
-                const statusClass = getStatusClass(status);
-                const progressNum = parseInt(progress) || 0;
-                let progressClass = 'bg-danger';
-                if (progressNum >= 80) progressClass = 'bg-success';
-                else if (progressNum >= 50) progressClass = 'bg-warning';
-                else if (progressNum >= 20) progressClass = 'bg-info';
-                
-                const cardHtml = `
-                    <div class="project-card mb-4" data-id="${item.id}">
-                        <div class="project-card-header">
-                            <div class="project-code">${projectCode}</div>
-                            <div class="project-name">${projectName}</div>
-                        </div>
-                        
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ประเภทโครงการ:</span>
-                                    <span class="project-info-value">${projectType}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">เกษตรกร:</span>
-                                    <span class="project-info-value">${farmer}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ที่อยู่แปลง:</span>
-                                    <span class="project-info-value">${address}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">พื้นที่ (ไร่):</span>
-                                    <span class="project-info-value">${area} ไร่</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">สถานะ:</span>
-                                    <span class="project-info-value">
-                                        <span class="badge-status ${statusClass}">${status}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">วันที่เริ่ม:</span>
-                                    <span class="project-info-value">${formatThaiDate(startDate)}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">วันที่สิ้นสุด:</span>
-                                    <span class="project-info-value">${formatThaiDate(endDate)}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ความคืบหน้า:</span>
-                                    <span class="project-info-value">
-                                        <div class="d-flex align-items-center">
-                                            <div class="progress flex-grow-1 me-2" style="height: 10px;">
-                                                <div class="progress-bar ${progressClass}" style="width: ${progressNum}%"></div>
-                                            </div>
-                                            <span>${progressNum}%</span>
-                                        </div>
-                                    </span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">งบประมาณ:</span>
-                                    <span class="project-info-value">${formatCurrency(budget)}</span>
-                                </div>
-                                
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ผู้รับผิดชอบ:</span>
-                                    <span class="project-info-value">${responsible}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">เบอร์ติดต่อ:</span>
-                                    <span class="project-info-value">${contact}</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ผลผลิตที่คาดหวัง:</span>
-                                    <span class="project-info-value">${expectedOutput}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">หมายเหตุ:</span>
-                                    <span class="project-info-value">${notes}</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-3">
-                            <div class="col-12">
-                                <div class="project-info-row">
-                                    <span class="project-info-label">ปัญหาอุปสรรค:</span>
-                                    <span class="project-info-value">${problems}</span>
+                detailsHtml += `
                                 </div>
                             </div>
                         </div>
                         
                         <div class="d-flex justify-content-between mt-4">
-                            <button class="btn btn-sm btn-outline-green view-full-modal" data-id="${item.id}">
-                                <i class="fas fa-file-alt me-1"></i>ดูข้อมูลทั้งหมด
+                            <button class="btn btn-sm btn-outline-green view-all-details" data-id="${item.id}">
+                                <i class="fas fa-expand-alt me-1"></i>ดูในหน้าต่างใหญ่
                             </button>
                             <button class="btn btn-sm btn-green" onclick="exportProjectData('${item.id}')">
-                                <i class="fas fa-download me-1"></i>ดาวน์โหลด
+                                <i class="fas fa-download me-1"></i>ดาวน์โหลดข้อมูล
                             </button>
                         </div>
                     </div>
                 `;
                 
-                detailedContainer.insertAdjacentHTML('beforeend', cardHtml);
+                container.insertAdjacentHTML('beforeend', detailsHtml);
             });
             
             // Add event listeners to view buttons
-            document.querySelectorAll('.view-full-modal').forEach(btn => {
+            document.querySelectorAll('.view-all-details').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-id');
-                    showProjectFullDetails(itemId);
+                    showProjectFullDetailsModal(itemId);
                 });
             });
         }
@@ -2279,12 +1933,6 @@
                             return condition.toLowerCase().includes('ผ่าน');
                         });
                         break;
-                    case 'anomaly':
-                        // Filter for items with anomalies
-                        data = data.filter(item => {
-                            return anomalies.some(a => a.rowId === item.id);
-                        });
-                        break;
                 }
             }
             
@@ -2294,10 +1942,8 @@
             if (currentSheet === 'Dataโครงการ') {
                 if (currentView === 'table') {
                     populateTable(data);
-                } else if (currentView === 'grid') {
-                    populateGrid(data);
-                } else if (currentView === 'detailed') {
-                    populateDetailed(data);
+                } else if (currentView === 'full') {
+                    populateFullView(data);
                 }
             } else {
                 populateTable(data);
@@ -2412,7 +2058,7 @@
         }
         
         // Show project full details in modal (all A-P columns)
-        function showProjectFullDetails(itemId) {
+        function showProjectFullDetailsModal(itemId) {
             // Find the item
             const item = allData['Dataโครงการ'].find(i => i.id === itemId);
             
@@ -2422,56 +2068,68 @@
             }
             
             // Build details content - show all A-P columns
-            let content = '<div class="row">';
-            
-            // Define all A-P columns in order
-            const apColumns = [
-                'รหัสโครงการ', 'ชื่อโครงการ', 'ประเภทโครงการ', 'ชื่อเกษตรกร',
-                'ที่อยู่แปลง', 'พื้นที่ (ไร่)', 'วันที่เริ่มโครงการ', 'สถานะ',
-                'งบประมาณสนับสนุน', 'ผู้รับผิดชอบโครงการ', 'เบอร์ติดต่อ',
-                'หมายเหตุ', 'ความคืบหน้า (%)', 'วันที่สิ้นสุดโครงการ',
-                'ผลผลิตที่คาดหวัง', 'ปัญหาอุปสรรค'
-            ];
-            
-            // Split into two columns
-            const midPoint = Math.ceil(apColumns.length / 2);
-            
-            content += '<div class="col-md-6">';
-            for (let i = 0; i < midPoint; i++) {
-                const key = apColumns[i];
-                const value = item[key] || 'ไม่ระบุ';
-                content += `
-                    <div class="mb-3">
-                        <strong class="d-block text-green">${key}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
+            let content = `
+                <div class="project-full-details">
+                    <div class="project-full-header">
+                        <div class="project-full-code">${item['รหัสโครงการ'] || 'ไม่ระบุ'}</div>
+                        <div class="project-full-name">${item['ชื่อโครงการ'] || 'ไม่ระบุ'}</div>
                     </div>
-                `;
-            }
-            content += '</div>';
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="details-section">
+                                <h6 class="section-title">ข้อมูลพื้นฐานโครงการ</h6>
+            `;
             
-            content += '<div class="col-md-6">';
-            for (let i = midPoint; i < apColumns.length; i++) {
-                const key = apColumns[i];
-                const value = item[key] || 'ไม่ระบุ';
-                content += `
-                    <div class="mb-3">
-                        <strong class="d-block text-green">${key}</strong>
-                        <div class="p-2 bg-light rounded">${formatFieldValue(key, value)}</div>
+            // First 8 columns (A-H)
+            const basicFields = PROJECT_FIELDS_A_P.slice(0, 8);
+            basicFields.forEach(field => {
+                const value = item[field] || 'ไม่ระบุ';
+                if (field && value) {
+                    content += `
+                        <div class="detail-row">
+                            <div class="detail-label">${field}:</div>
+                            <div class="detail-value">${formatFieldValue(field, value)}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            content += `
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="details-section">
+                                <h6 class="section-title">ข้อมูลติดต่อและความคืบหน้า</h6>
+            `;
+            
+            // Next 8 columns (I-P)
+            const contactFields = PROJECT_FIELDS_A_P.slice(8);
+            contactFields.forEach(field => {
+                const value = item[field] || 'ไม่ระบุ';
+                if (field && value) {
+                    content += `
+                        <div class="detail-row">
+                            <div class="detail-label">${field}:</div>
+                            <div class="detail-value">${formatFieldValue(field, value)}</div>
+                        </div>
+                    `;
+                }
+            });
+            
+            content += `
+                            </div>
+                        </div>
                     </div>
-                `;
-            }
-            content += '</div>';
-            
-            content += '</div>';
-            
-            // Update modal title
-            document.getElementById('full-details-title').textContent = `รายละเอียดโครงการเต็มรูปแบบ: ${item['รหัสโครงการ'] || 'ไม่ระบุ'}`;
+                </div>
+            `;
             
             // Set modal content
-            document.getElementById('project-full-details-content').innerHTML = content;
+            document.getElementById('project-details-content').innerHTML = content;
+            document.getElementById('modal-title').textContent = `รายละเอียดโครงการทั้งหมด: ${item['รหัสโครงการ'] || 'ไม่ระบุ'}`;
             
             // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('projectFullDetailsModal'));
+            const modal = new bootstrap.Modal(document.getElementById('projectDetailsModal'));
             modal.show();
         }
         
@@ -2830,10 +2488,10 @@
         }
         
         function formatFieldValue(key, value) {
-            if (!value) return '-';
+            if (!value || value.toString().trim() === '') return '-';
             
             const keyLower = key.toLowerCase();
-            const valueStr = value.toString();
+            const valueStr = value.toString().trim();
             
             if (keyLower.includes('เงื่อนไขโครงการ') || 
                 (keyLower.includes('เงื่อนไข') && !keyLower.includes('อื่น'))) {
@@ -2874,8 +2532,17 @@
                 `;
             }
             
-            if (valueStr.length > 200) {
-                return valueStr.substring(0, 200) + '...';
+            if (keyLower.includes('เบอร์') || keyLower.includes('โทร') || keyLower.includes('phone') || keyLower.includes('contact')) {
+                // Format phone number
+                const phone = valueStr.replace(/\D/g, '');
+                if (phone.length === 10) {
+                    return `${phone.substring(0, 3)}-${phone.substring(3, 6)}-${phone.substring(6)}`;
+                }
+                return valueStr;
+            }
+            
+            if (valueStr.length > 100) {
+                return valueStr.substring(0, 100) + '...';
             }
             
             return valueStr.replace(/\n/g, '<br>');
