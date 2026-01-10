@@ -665,26 +665,6 @@
             }
         }
         
-        /* View Toggle */
-        .view-toggle {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 15px;
-        }
-        
-        .view-toggle .btn {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
-            background: white;
-            color: var(--text-dark);
-        }
-        
-        .view-toggle .btn.active {
-            background: var(--secondary-green);
-            color: white;
-            border-color: var(--secondary-green);
-        }
-        
         /* Toast Notification */
         .toast-container {
             position: fixed;
@@ -1108,10 +1088,10 @@
             border-top: 1px solid #eee;
         }
         
-        /* เพิ่มขนาด Pie Chart */
+        /* เพิ่มขนาด Pie Chart - ขนาดใหญ่ขึ้น */
         .pie-chart-wrapper {
             position: relative;
-            height: 320px; /* เพิ่มความสูง */
+            height: 400px; /* เพิ่มความสูงจาก 320px เป็น 400px */
             width: 100%;
             margin: 0 auto;
         }
@@ -1128,29 +1108,14 @@
             margin-bottom: 20px;
         }
         
-        .stats-actions-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: flex-start;
-        }
-        
         .stats-section {
             flex: 1;
             min-width: 300px;
         }
         
-        .actions-section {
-            flex: 0 0 auto;
-        }
-        
         @media (max-width: 992px) {
             .stats-actions-container {
                 flex-direction: column;
-            }
-            
-            .actions-section {
-                width: 100%;
             }
         }
     </style>
@@ -1244,8 +1209,8 @@
                     <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
                     <div class="stats-section">
                         <div class="row">
-                            <!-- Pie Chart Section (ขนาดใหญ่) -->
-                            <div class="col-lg-5">
+                            <!-- Pie Chart Section (ขนาดใหญ่) - เพิ่มจาก col-lg-5 เป็น col-lg-6 -->
+                            <div class="col-lg-6">
                                 <div class="pie-chart-container">
                                     <h4 class="chart-title">
                                         <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
@@ -1280,8 +1245,8 @@
                                 </div>
                             </div>
                             
-                            <!-- Project Stats -->
-                            <div class="col-lg-7">
+                            <!-- Project Stats - ลดจาก col-lg-7 เป็น col-lg-6 -->
+                            <div class="col-lg-6">
                                 <div class="stats-grid" id="project-stats">
                                     <div class="stat-item">
                                         <div class="stat-value text-success comma-number" id="total-projects">0</div>
@@ -1315,41 +1280,6 @@
                                         <div class="stat-value comma-number" id="failed-projects">0</div>
                                         <div class="stat-title">ไม่ผ่าน(แปลง)</div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- ส่วนปุ่ม Refresh (ย้ายจากด้านบน) -->
-                    <div class="actions-section">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="fas fa-sync-alt"></i>การจัดการข้อมูล
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid gap-2">
-                                    <button class="btn-green" id="refresh-btn">
-                                        <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
-                                    </button>
-                                    <button class="btn-blue" id="reset-filters-top">
-                                        <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
-                                    </button>
-                                    <button class="btn-purple" id="view-toggle-btn-table">
-                                        <i class="fas fa-table me-1"></i>มุมมองตาราง
-                                    </button>
-                                    <button class="btn-purple" id="view-toggle-btn-card">
-                                        <i class="fas fa-th-large me-1"></i>มุมมองการ์ด
-                                    </button>
-                                </div>
-                                <div class="mt-3 text-center">
-                                    <p class="small text-muted mb-1">
-                                        <i class="fas fa-info-circle me-1"></i>
-                                        อัปเดตอัตโนมัติทุก 5 นาที
-                                    </p>
-                                    <p class="small text-muted">
-                                        <i class="fas fa-clock me-1"></i>
-                                        อัปเดตล่าสุด: <span id="last-update-small">-</span>
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -1455,13 +1385,6 @@
                                     <!-- Data will be populated by JavaScript -->
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    
-                    <!-- Card View -->
-                    <div id="card-view" class="p-4" style="display: none;">
-                        <div class="row" id="cards-container">
-                            <!-- Cards will be populated by JavaScript -->
                         </div>
                     </div>
                     
@@ -1882,7 +1805,6 @@
         
         // Current state
         let currentSheet = 'planting-sugarcane-field';
-        let currentView = 'table'; // table, card
         let allData = {
             'Dataโครงการ': [],
             'Dataการตรวจ': [],
@@ -1927,12 +1849,8 @@
             // Setup button
             document.getElementById('start-btn').addEventListener('click', startSystem);
             
-            // Refresh button
-            document.getElementById('refresh-btn').addEventListener('click', loadAllSheetsData);
-            
-            // Reset filters buttons
+            // Reset filters button
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
-            document.getElementById('reset-filters-top').addEventListener('click', resetFilters);
             document.getElementById('reset-filters-btn').addEventListener('click', resetFilters);
             
             // Export buttons (มี 2 ปุ่ม)
@@ -1946,21 +1864,6 @@
                 } else {
                     showCropChangeProjectDetails();
                 }
-            });
-            
-            // View toggle buttons (ใหม่)
-            document.getElementById('view-toggle-btn-table').addEventListener('click', function() {
-                currentView = 'table';
-                showView(currentView);
-                updateViewToggleButtons();
-                filterData(); // Re-apply filters with new view
-            });
-            
-            document.getElementById('view-toggle-btn-card').addEventListener('click', function() {
-                currentView = 'card';
-                showView(currentView);
-                updateViewToggleButtons();
-                filterData(); // Re-apply filters with new view
             });
             
             // Search input
@@ -2032,28 +1935,6 @@
             if (isSetupComplete) {
                 setInterval(loadAllSheetsData, 5 * 60 * 1000);
             }
-            
-            // Initialize view toggle buttons
-            updateViewToggleButtons();
-        }
-        
-        // Update view toggle buttons state
-        function updateViewToggleButtons() {
-            const tableBtn = document.getElementById('view-toggle-btn-table');
-            const cardBtn = document.getElementById('view-toggle-btn-card');
-            
-            // Reset both buttons
-            tableBtn.classList.remove('btn-purple', 'btn-blue');
-            cardBtn.classList.remove('btn-purple', 'btn-blue');
-            
-            // Set active button
-            if (currentView === 'table') {
-                tableBtn.classList.add('btn-blue');
-                cardBtn.classList.add('btn-purple');
-            } else {
-                tableBtn.classList.add('btn-purple');
-                cardBtn.classList.add('btn-blue');
-            }
         }
         
         // Start the system (after setup)
@@ -2108,7 +1989,6 @@
                 const now = new Date();
                 const thaiTime = formatDateToThai(now);
                 document.getElementById('last-update').textContent = thaiTime;
-                document.getElementById('last-update-small').textContent = thaiTime;
                 
                 // Display current sheet data
                 displayData();
@@ -2412,7 +2292,7 @@
                                     usePointStyle: true,
                                     font: {
                                         family: "'Sarabun', sans-serif",
-                                        size: 13 // เพิ่มขนาดฟอนต์
+                                        size: 14 // เพิ่มขนาดฟอนต์
                                     }
                                 }
                             },
@@ -2439,8 +2319,8 @@
                             animateRotate: true,
                             duration: 1000
                         },
-                        cutout: '40%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
-                        radius: '90%' // เพิ่มขนาดให้ใหญ่ขึ้น
+                        cutout: '30%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
+                        radius: '100%' // เพิ่มขนาดให้ใหญ่ที่สุด
                     }
                 });
             }
@@ -2550,30 +2430,12 @@
             return result.map(val => val.trim());
         }
         
-        // Show the selected view
-        function showView(viewName) {
-            // Hide all views
-            document.getElementById('table-view').style.display = 'none';
-            document.getElementById('card-view').style.display = 'none';
-            
-            // Show selected view
-            if (viewName === 'table') {
-                document.getElementById('table-view').style.display = 'block';
-            } else if (viewName === 'card') {
-                document.getElementById('card-view').style.display = 'block';
-            }
-        }
-        
         // Display data for current sheet
         function displayData() {
             const data = allData[currentSheet];
             filteredData = [...data];
             
-            if (currentView === 'table') {
-                populateTable(data);
-            } else if (currentView === 'card') {
-                populateCards(data);
-            }
+            populateTable(data);
             
             // Apply any existing filters
             filterData();
@@ -2679,93 +2541,6 @@
             
             // Add event listeners to view buttons
             document.querySelectorAll('.view-details-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const itemId = this.getAttribute('data-id');
-                    showProjectDetailsModal(itemId);
-                });
-            });
-        }
-        
-        // Populate cards with data
-        function populateCards(data) {
-            const container = document.getElementById('cards-container');
-            container.innerHTML = '';
-            
-            if (data.length === 0) {
-                document.getElementById('empty-state').style.display = 'block';
-                document.getElementById('record-count').textContent = '0 รายการ';
-                return;
-            }
-            
-            document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('record-count').textContent = formatNumber(data.length) + ' รายการ';
-            
-            // Create cards
-            data.forEach((item) => {
-                const projectCode = item['เลขแปลงintech'] || 'ไม่ระบุ';
-                const farmerName = item['ชื่อชาวไร่'] || 'ไม่ระบุ';
-                const zone = item['เขต'] || 'ไม่ระบุ';
-                const farmerOfficer = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
-                const area = parseFloat(item['พื้นที่']) || 0;
-                const plantingDate = item['วันที่ปลูก'] || 'ไม่ระบุ';
-                const condition = item['เงื่อนไขโครงการ'] || 'ไม่ระบุ';
-                const conditionClass = getConditionClass(condition);
-                const germination = item['เปอร์เซ็นการงอก'] || 'ไม่ระบุ';
-                
-                // Check if project has been inspected
-                const isChecked = condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
-                const checkedClass = isChecked ? 'checked-highlight' : '';
-                
-                const cardHtml = `
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 ${checkedClass}">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <strong>${projectCode}</strong>
-                                <span class="condition-badge ${conditionClass}">${condition}</span>
-                            </div>
-                            <div class="card-body">
-                                <h6 class="card-title mb-3">${farmerName}</h6>
-                                <div class="row small mb-2">
-                                    <div class="col-6">
-                                        <div class="text-muted">เขต</div>
-                                        <div class="fw-bold">${zone}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-muted">นักเกษตร</div>
-                                        <div class="fw-bold">${farmerOfficer}</div>
-                                    </div>
-                                </div>
-                                <div class="row small mb-3">
-                                    <div class="col-6">
-                                        <div class="text-muted">พื้นที่</div>
-                                        <div class="fw-bold">${area > 0 ? formatNumber(area) + ' ไร่' : '-'}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-muted">วันที่ปลูก</div>
-                                        <div class="fw-bold">${plantingDate}</div>
-                                    </div>
-                                </div>
-                                <div class="row small">
-                                    <div class="col-12">
-                                        <div class="text-muted">% การงอก</div>
-                                        <div class="fw-bold">${germination}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer bg-transparent">
-                                <button class="btn btn-sm btn-blue w-100 view-details-card" data-id="${item.id}">
-                                    <i class="fas fa-eye me-1"></i>ดูรายละเอียด
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                container.insertAdjacentHTML('beforeend', cardHtml);
-            });
-            
-            // Add event listeners to card view buttons
-            document.querySelectorAll('.view-details-card').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const itemId = this.getAttribute('data-id');
                     showProjectDetailsModal(itemId);
@@ -2885,12 +2660,8 @@
             
             filteredData = data;
             
-            // Update display based on current view
-            if (currentView === 'table') {
-                populateTable(data);
-            } else if (currentView === 'card') {
-                populateCards(data);
-            }
+            // Update display
+            populateTable(data);
             
             // Update stats
             updateProjectStats();
