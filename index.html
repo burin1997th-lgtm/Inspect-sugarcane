@@ -1202,91 +1202,89 @@
                     <i class="fas fa-exchange-alt"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70
                 </button>
             </div>
-
-            <!-- Project Stats with Pie Chart และปุ่ม Export -->
-            <div class="project-stats-container">
-                <div class="stats-actions-container">
-                    <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
-                    <div class="stats-section">
-                        <div class="row">
-                            <!-- Pie Chart Section (ขนาดใหญ่) - เพิ่มจาก col-lg-5 เป็น col-lg-6 -->
-                            <div class="col-lg-6">
-                                <div class="pie-chart-container">
-                                    <h4 class="chart-title">
-                                        <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
-                                    </h4>
-                                    <div class="pie-chart-wrapper">
-                                        <canvas id="conditionPieChart"></canvas>
-                                    </div>
-                                    <div class="chart-stats">
-                                        <div class="chart-stat-item">
-                                            <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
-                                            <div class="chart-stat-label">ผ่าน</div>
-                                        </div>
-                                        <div class="chart-stat-item">
-                                            <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
-                                            <div class="chart-stat-label">ไม่ผ่าน</div>
-                                        </div>
-                                        <div class="chart-stat-item">
-                                            <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
-                                            <div class="chart-stat-label">รอตรวจ</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- ปุ่ม Export ใต้ Pie Chart -->
-                                    <div class="pie-chart-actions">
-                                        <button class="btn-blue" id="export-btn">
-                                            <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
-                                        </button>
-                                        <button class="btn-blue ms-2" id="project-details-btn">
-                                            <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
-                                        </button>
-                                    </div>
-                                </div>
+        <!-- Project Stats with Pie Chart และปุ่ม Export -->
+<div class="project-stats-container">
+    <div class="stats-actions-container">
+        <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
+        <div class="stats-section">
+            <div class="row">
+                <!-- Pie Chart Section - ลดจาก col-lg-6 เป็น col-lg-4 -->
+                <div class="col-lg-4">
+                    <div class="pie-chart-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
+                        </h4>
+                        <div class="pie-chart-wrapper">
+                            <canvas id="conditionPieChart"></canvas>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="chart-stat-item">
+                                <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
+                                <div class="chart-stat-label">ผ่าน</div>
                             </div>
-                            
-                            <!-- Project Stats - ลดจาก col-lg-7 เป็น col-lg-6 -->
-                            <div class="col-lg-6">
-                                <div class="stats-grid" id="project-stats">
-                                    <div class="stat-item">
-                                        <div class="stat-value text-success comma-number" id="total-projects">0</div>
-                                        <div class="stat-title">ทั้งหมด(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value comma-number" id="total-area">0</div>
-                                        <div class="stat-title">พื้นที่รวม(ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-checked">
-                                        <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
-                                        <div class="stat-title">ตรวจแล้ว(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-checked">
-                                        <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-                                        <div class="stat-title">ตรวจแล้ว (ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-not-checked">
-                                        <div class="stat-value comma-number" id="not-checked-projects">0</div>
-                                        <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-not-checked">
-                                        <div class="stat-value comma-number" id="not-checked-area">0</div>
-                                        <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-passed">
-                                        <div class="stat-value comma-number" id="passed-projects">0</div>
-                                        <div class="stat-title">ผ่าน(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-failed">
-                                        <div class="stat-value comma-number" id="failed-projects">0</div>
-                                        <div class="stat-title">ไม่ผ่าน(แปลง)</div>
-                                    </div>
-                                </div>
+                            <div class="chart-stat-item">
+                                <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
+                                <div class="chart-stat-label">ไม่ผ่าน</div>
                             </div>
+                            <div class="chart-stat-item">
+                                <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
+                                <div class="chart-stat-label">รอตรวจ</div>
+                            </div>
+                        </div>
+                        
+                        <!-- ปุ่ม Export ใต้ Pie Chart -->
+                        <div class="pie-chart-actions">
+                            <button class="btn-blue" id="export-btn">
+                                <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
+                            </button>
+                            <button class="btn-blue ms-2" id="project-details-btn">
+                                <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Stats - เพิ่มจาก col-lg-6 เป็น col-lg-8 -->
+                <div class="col-lg-8">
+                    <div class="stats-grid" id="project-stats">
+                        <div class="stat-item">
+                            <div class="stat-value text-success comma-number" id="total-projects">0</div>
+                            <div class="stat-title">ทั้งหมด(แปลง)</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value comma-number" id="total-area">0</div>
+                            <div class="stat-title">พื้นที่รวม(ไร่)</div>
+                        </div>
+                        <div class="stat-item stat-item-checked">
+                            <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
+                            <div class="stat-title">ตรวจแล้ว(แปลง)</div>
+                        </div>
+                        <div class="stat-item stat-item-checked">
+                            <div class="stat-value text-primary comma-number" id="checked-area">0</div>
+                            <div class="stat-title">ตรวจแล้ว (ไร่)</div>
+                        </div>
+                        <div class="stat-item stat-item-not-checked">
+                            <div class="stat-value comma-number" id="not-checked-projects">0</div>
+                            <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
+                        </div>
+                        <div class="stat-item stat-item-not-checked">
+                            <div class="stat-value comma-number" id="not-checked-area">0</div>
+                            <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
+                        </div>
+                        <div class="stat-item stat-item-passed">
+                            <div class="stat-value comma-number" id="passed-projects">0</div>
+                            <div class="stat-title">ผ่าน(แปลง)</div>
+                        </div>
+                        <div class="stat-item stat-item-failed">
+                            <div class="stat-value comma-number" id="failed-projects">0</div>
+                            <div class="stat-title">ไม่ผ่าน(แปลง)</div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+    </div>
+</div>
             <!-- Search and Filter Section -->
             <div class="filter-section">
                 <h5 class="filter-section-title">
