@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -1049,6 +1049,55 @@
             gap: 15px;
             margin-bottom: 20px;
         }
+        
+        /* สำหรับเลขมีคอมม่า */
+        .comma-number {
+            font-feature-settings: "tnum" 1;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        /* Condition List Small */
+        .condition-list-small {
+            counter-reset: condition-counter;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .condition-list-small li {
+            counter-increment: condition-counter;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .condition-list-small li:before {
+            content: counter(condition-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--project-blue);
+            font-weight: bold;
+        }
+        
+        .sub-condition-list-small {
+            list-style-type: none;
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+        
+        .sub-condition-list-small li {
+            position: relative;
+            padding-left: 15px;
+            margin-bottom: 3px;
+            font-size: 0.95rem;
+        }
+        
+        .sub-condition-list-small li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-green);
+        }
     </style>
 </head>
 <body>
@@ -1147,15 +1196,15 @@
                         </div>
                         <div class="chart-stats">
                             <div class="chart-stat-item">
-                                <div class="chart-stat-value text-success" id="passed-percentage">0%</div>
+                                <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
                                 <div class="chart-stat-label">ผ่าน</div>
                             </div>
                             <div class="chart-stat-item">
-                                <div class="chart-stat-value text-danger" id="failed-percentage">0%</div>
+                                <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
                                 <div class="chart-stat-label">ไม่ผ่าน</div>
                             </div>
                             <div class="chart-stat-item">
-                                <div class="chart-stat-value text-warning" id="pending-percentage">0%</div>
+                                <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
                                 <div class="chart-stat-label">รอตรวจ</div>
                             </div>
                         </div>
@@ -1166,35 +1215,35 @@
                 <div class="col-lg-8">
                     <div class="stats-grid" id="project-stats">
                         <div class="stat-item">
-                            <div class="stat-value text-success" id="total-projects">0</div>
+                            <div class="stat-value text-success comma-number" id="total-projects">0</div>
                             <div class="stat-title">ทั้งหมด(แปลง)</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-value" id="total-area">0</div>
+                            <div class="stat-value comma-number" id="total-area">0</div>
                             <div class="stat-title">พื้นที่รวม(ไร่)</div>
                         </div>
                         <div class="stat-item stat-item-checked">
-                            <div class="stat-value text-primary" id="checked-projects">0</div>
+                            <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
                             <div class="stat-title">ตรวจแล้ว(แปลง)</div>
                         </div>
                         <div class="stat-item stat-item-checked">
-                            <div class="stat-value text-primary" id="checked-area">0</div>
+                            <div class="stat-value text-primary comma-number" id="checked-area">0</div>
                             <div class="stat-title">ตรวจแล้ว (ไร่)</div>
                         </div>
                         <div class="stat-item stat-item-not-checked">
-                            <div class="stat-value" id="not-checked-projects">0</div>
+                            <div class="stat-value comma-number" id="not-checked-projects">0</div>
                             <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
                         </div>
                         <div class="stat-item stat-item-not-checked">
-                            <div class="stat-value" id="not-checked-area">0</div>
+                            <div class="stat-value comma-number" id="not-checked-area">0</div>
                             <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
                         </div>
                         <div class="stat-item stat-item-passed">
-                            <div class="stat-value" id="passed-projects">0</div>
+                            <div class="stat-value comma-number" id="passed-projects">0</div>
                             <div class="stat-title">ผ่าน(แปลง)</div>
                         </div>
                         <div class="stat-item stat-item-failed">
-                            <div class="stat-value" id="failed-projects">0</div>
+                            <div class="stat-value comma-number" id="failed-projects">0</div>
                             <div class="stat-title">ไม่ผ่าน(แปลง)</div>
                         </div>
                     </div>
@@ -1281,7 +1330,7 @@
                     <div>
                         <i class="fas fa-database"></i>
                         <span id="table-title">ข้อมูลโครงการทั้งหมด</span>
-                        <span class="badge bg-white text-success ms-2" id="record-count">0 รายการ</span>
+                        <span class="badge bg-white text-success ms-2 comma-number" id="record-count">0 รายการ</span>
                     </div>
                     <div>
                         <button class="btn btn-sm btn-blue me-2" id="export-btn">
@@ -1494,21 +1543,21 @@
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">พื้นที่เป้าหมาย</div>
-                                            <div class="display-4 text-center text-primary mb-2">15,000</div>
+                                            <div class="display-4 text-center text-primary mb-2 comma-number">15,000</div>
                                             <p class="text-center mb-0">ไร่</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">งบประมาณทั้งหมด</div>
-                                            <div class="display-4 text-center text-primary mb-2">12,000,000</div>
+                                            <div class="display-4 text-center text-primary mb-2 comma-number">12,000,000</div>
                                             <p class="text-center mb-0">บาท</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">ผลผลิตปีที่ 1</div>
-                                            <div class="display-4 text-center text-primary mb-2">195,000</div>
+                                            <div class="display-4 text-center text-primary mb-2 comma-number">195,000</div>
                                             <p class="text-center mb-0">ตัน/ปี</p>
                                         </div>
                                     </div>
@@ -1649,21 +1698,21 @@
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">พื้นที่เป้าหมาย</div>
-                                            <div class="display-4 text-center text-purple mb-2">30,000</div>
+                                            <div class="display-4 text-center text-purple mb-2 comma-number">30,000</div>
                                             <p class="text-center mb-0">ไร่</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">งบประมาณทั้งหมด</div>
-                                            <div class="display-4 text-center text-purple mb-2">21,000,000</div>
+                                            <div class="display-4 text-center text-purple mb-2 comma-number">21,000,000</div>
                                             <p class="text-center mb-0">บาท</p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="summary-card">
                                             <div class="summary-title">ผลผลิตปีที่ 1</div>
-                                            <div class="display-4 text-center text-purple mb-2">390,000</div>
+                                            <div class="display-4 text-center text-purple mb-2 comma-number">390,000</div>
                                             <p class="text-center mb-0">ตัน/ปี</p>
                                         </div>
                                     </div>
@@ -1754,6 +1803,19 @@
         let uniqueZones = new Set();
         let uniqueFarmerOfficers = new Set();
         let conditionPieChart = null;
+        
+        // Helper function to format numbers with commas
+        function formatNumber(num) {
+            if (num === null || num === undefined || isNaN(num)) return '0';
+            
+            // สำหรับเลขทศนิยม
+            if (typeof num === 'number' && num % 1 !== 0) {
+                return num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+            
+            // สำหรับเลขจำนวนเต็ม
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
         
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
@@ -2137,14 +2199,15 @@
                 }
             });
             
-            document.getElementById('total-projects').textContent = data.length;
-            document.getElementById('total-area').textContent = totalArea.toFixed(2);
-            document.getElementById('checked-projects').textContent = checkedCount;
-            document.getElementById('checked-area').textContent = checkedArea.toFixed(2);
-            document.getElementById('not-checked-projects').textContent = notCheckedCount;
-            document.getElementById('not-checked-area').textContent = notCheckedArea.toFixed(2);
-            document.getElementById('passed-projects').textContent = passedCount;
-            document.getElementById('failed-projects').textContent = failedCount;
+            // Update DOM elements with formatted numbers
+            document.getElementById('total-projects').textContent = formatNumber(data.length);
+            document.getElementById('total-area').textContent = formatNumber(totalArea);
+            document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
+            document.getElementById('checked-area').textContent = formatNumber(checkedArea);
+            document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
+            document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
+            document.getElementById('passed-projects').textContent = formatNumber(passedCount);
+            document.getElementById('failed-projects').textContent = formatNumber(failedCount);
         }
         
         // Update condition pie chart
@@ -2185,10 +2248,10 @@
             const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
             const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
             
-            // Update percentage displays
-            document.getElementById('passed-percentage').textContent = passedPercentage + '%';
-            document.getElementById('failed-percentage').textContent = failedPercentage + '%';
-            document.getElementById('pending-percentage').textContent = pendingPercentage + '%';
+            // Update percentage displays - แสดงตัวเลขที่มีคอมม่า
+            document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
+            document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
+            document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
             
             // Create or update pie chart
             const ctx = document.getElementById('conditionPieChart').getContext('2d');
@@ -2236,7 +2299,8 @@
                                         const label = context.label || '';
                                         const value = context.raw || 0;
                                         const percentage = Math.round((value / total) * 100);
-                                        return `${label}: ${value} โครงการ (${percentage}%)`;
+                                        const formattedValue = formatNumber(value);
+                                        return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
                                     }
                                 }
                             }
@@ -2399,7 +2463,7 @@
             }
             
             document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('record-count').textContent = `${data.length} รายการ`;
+            document.getElementById('record-count').textContent = formatNumber(data.length) + ' รายการ';
             
             // Define which columns to show in table
             const tableColumns = [
@@ -2448,7 +2512,7 @@
                         cell.innerHTML = `<span class="condition-badge ${conditionClass}">${value}</span>`;
                     } else if (column === 'พื้นที่') {
                         const area = parseFloat(value) || 0;
-                        cell.textContent = area > 0 ? `${area.toFixed(2)} ไร่` : '-';
+                        cell.textContent = area > 0 ? `${formatNumber(area)} ไร่` : '-';
                     } else if (column === 'เปอร์เซ็นการงอก') {
                         const germinationMatch = value.toString().match(/(\d+(\.\d+)?)/);
                         if (germinationMatch) {
@@ -2502,7 +2566,7 @@
             }
             
             document.getElementById('empty-state').style.display = 'none';
-            document.getElementById('record-count').textContent = `${data.length} รายการ`;
+            document.getElementById('record-count').textContent = formatNumber(data.length) + ' รายการ';
             
             // Create cards
             data.forEach((item) => {
@@ -2542,7 +2606,7 @@
                                 <div class="row small mb-3">
                                     <div class="col-6">
                                         <div class="text-muted">พื้นที่</div>
-                                        <div class="fw-bold">${area > 0 ? area.toFixed(2) + ' ไร่' : '-'}</div>
+                                        <div class="fw-bold">${area > 0 ? formatNumber(area) + ' ไร่' : '-'}</div>
                                     </div>
                                     <div class="col-6">
                                         <div class="text-muted">วันที่ปลูก</div>
@@ -2803,7 +2867,7 @@
                                     </tr>
                                     <tr>
                                         <td class="text-muted">พื้นที่:</td>
-                                        <td class="fw-bold">${area > 0 ? area.toFixed(2) + ' ไร่' : '-'}</td>
+                                        <td class="fw-bold">${area > 0 ? formatNumber(area) + ' ไร่' : '-'}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-muted">พิกัด:</td>
