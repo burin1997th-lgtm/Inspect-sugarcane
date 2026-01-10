@@ -23,7 +23,7 @@
             --kbs-orange: #FF9800;
             --kbs-dark: #333333;
             --project-purple: #7B1FA2;
-            --project-blue: #1976D2;
+            --project-blue: #1976D32;
         }
         
         body {
@@ -488,64 +488,72 @@
             opacity: 0.7;
         }
         
-        /* Stats Cards */
-        .stat-card {
-            text-align: center;
-            padding: 20px;
-            border-radius: 10px;
+        /* Stats Cards สำหรับ 2 ข้อมูล */
+        .stats-2-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        
+        .stat-item-large {
             background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            height: 100%;
-            border-top: 4px solid var(--kbs-orange);
-        }
-        
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--primary-green);
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-        
-        /* Project Stats */
-        .project-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-        }
-        
-        .stat-item {
-            flex: 1;
-            min-width: 150px;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 30px 20px;
+            border-radius: 15px;
             text-align: center;
             border: 1px solid #eee;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .stat-item-large:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
         
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
+        .stat-value-large {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1;
             color: var(--primary-green);
         }
         
-        .stat-title {
-            font-size: 0.9rem;
+        .stat-title-large {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .stat-desc-large {
+            font-size: 1rem;
             color: var(--text-light);
+            opacity: 0.8;
+        }
+        
+        .stat-item-total {
+            border-top: 8px solid var(--primary-green) !important;
+            background: linear-gradient(135deg, #f1f8e9 0%, #e8f5e9 100%);
+        }
+        
+        .stat-item-checked {
+            border-top: 8px solid var(--project-blue) !important;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        
+        .stat-item-total .stat-value-large {
+            color: var(--primary-green);
+        }
+        
+        .stat-item-checked .stat-value-large {
+            color: var(--project-blue);
         }
         
         /* Modal Styles */
@@ -565,12 +573,6 @@
             background: linear-gradient(to right, var(--primary-green), var(--project-blue));
             color: white;
             text-align: center;
-        }
-        
-        .footer-logo {
-            max-width: 80px;
-            margin-bottom: 15px;
-            filter: brightness(0) invert(1);
         }
         
         .footer a {
@@ -612,12 +614,21 @@
                 margin-right: 15px;
             }
             
-            .project-stats {
-                gap: 10px;
+            .stats-2-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
             
-            .stat-item {
-                min-width: calc(50% - 10px);
+            .stat-item-large {
+                padding: 25px 15px;
+            }
+            
+            .stat-value-large {
+                font-size: 3.2rem;
+            }
+            
+            .stat-title-large {
+                font-size: 1.2rem;
             }
         }
         
@@ -632,17 +643,12 @@
                 padding: 1rem;
             }
             
-            .project-stats {
-                gap: 10px;
+            .stat-value-large {
+                font-size: 2.8rem;
             }
             
-            .stat-item {
-                min-width: calc(50% - 10px);
-                padding: 10px;
-            }
-            
-            .stat-value {
-                font-size: 1.5rem;
+            .stat-title-large {
+                font-size: 1.1rem;
             }
             
             .logo-container {
@@ -654,10 +660,6 @@
                 margin-right: 0;
                 margin-bottom: 10px;
                 max-width: 100px;
-            }
-            
-            .footer-logo {
-                max-width: 60px;
             }
             
             .filter-section .row > div {
@@ -714,19 +716,9 @@
             background: var(--primary-green);
         }
         
-        /* KBS Logo Specific Styles */
-        .kbs-logo {
-            object-fit: contain;
-            background: white;
-            border-radius: 8px;
-            padding: 5px;
-        }
-        
-        /* Setup KBS Logo */
+        /* Setup Section - เอาล็อกโก้ออก */
         .setup-kbs-logo {
-            max-width: 150px;
-            margin: 0 auto 1.5rem;
-            display: block;
+            display: none;
         }
         
         /* Filter Section */
@@ -758,193 +750,6 @@
         .checked-highlight {
             background-color: #f0f7ff !important;
             border-left: 4px solid #2196F3 !important;
-        }
-        
-        .stat-item-checked {
-            border-top: 4px solid #2196F3 !important;
-        }
-        
-        /* Project Info Section */
-        .project-info-section {
-            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border: 2px solid var(--project-blue);
-        }
-        
-        .project-info-title {
-            color: var(--project-blue);
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-        
-        .project-detail-item {
-            margin-bottom: 12px;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .project-detail-item:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--project-blue);
-            font-size: 1.2rem;
-        }
-        
-        /* Condition List */
-        .condition-list {
-            counter-reset: condition-counter;
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .condition-list li {
-            counter-increment: condition-counter;
-            margin-bottom: 15px;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .condition-list li:before {
-            content: counter(condition-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            background: var(--project-blue);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 24px;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        
-        /* Sub-condition List */
-        .sub-condition-list {
-            list-style-type: none;
-            padding-left: 25px;
-            margin-top: 8px;
-        }
-        
-        .sub-condition-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 6px;
-        }
-        
-        .sub-condition-list li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--project-blue);
-        }
-        
-        /* Requirement Box */
-        .requirement-box {
-            background: #FFF3E0;
-            border-left: 4px solid #FF9800;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
-        }
-        
-        .requirement-title {
-            color: #E65100;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        /* Warning Box */
-        .warning-box {
-            background: #FFEBEE;
-            border-left: 4px solid #F44336;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
-        }
-        
-        .warning-title {
-            color: #C62828;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        /* Project Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-            margin: 20px 0;
-        }
-        
-        .timeline:before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--project-blue);
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: -30px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--project-blue);
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--project-blue);
-        }
-        
-        .timeline-content {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .timeline-date {
-            color: var(--project-blue);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        /* Project Summary Cards */
-        .summary-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--project-blue);
-        }
-        
-        .summary-title {
-            color: var(--project-blue);
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        
-        /* Stat Item Not Checked */
-        .stat-item-not-checked {
-            border-top: 4px solid #FF9800 !important;
-        }
-        
-        .stat-item-not-checked .stat-value {
-            color: #FF9800;
         }
         
         /* Pie Chart Container */
@@ -1003,32 +808,6 @@
         
         .crop-change-project .card-header {
             background: linear-gradient(to right, var(--primary-green), var(--project-purple)) !important;
-        }
-        
-        /* Color for passed projects */
-        .stat-item-passed {
-            border-top: 4px solid #4CAF50 !important;
-        }
-        
-        .stat-item-passed .stat-value {
-            color: #4CAF50;
-        }
-        
-        /* Color for failed projects */
-        .stat-item-failed {
-            border-top: 4px solid #F44336 !important;
-        }
-        
-        .stat-item-failed .stat-value {
-            color: #F44336;
-        }
-        
-        /* Project Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
         }
         
         /* สำหรับเลขมีคอมม่า */
@@ -1091,7 +870,7 @@
         /* เพิ่มขนาด Pie Chart - ขนาดใหญ่ขึ้น */
         .pie-chart-wrapper {
             position: relative;
-            height: 400px; /* เพิ่มความสูงจาก 320px เป็น 400px */
+            height: 400px;
             width: 100%;
             margin: 0 auto;
         }
@@ -1156,10 +935,7 @@
                 <i class="fas fa-cog"></i>ตั้งค่าเริ่มต้นระบบ
             </div>
             <div class="card-body setup-section">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
-                     alt="KBS Group Logo" 
-                     class="setup-kbs-logo kbs-logo">
-                
+                <!-- เอาล็อกโก้ออก -->
                 <h2 class="setup-title">KBS Group - ระบบจัดการโครงการปลูกอ้อย</h2>
                 <p class="mb-4">ระบบนี้ใช้ข้อมูลจาก Google Sheets ที่เผยแพร่เป็นสาธารณะ (Public Mode)</p>
                 
@@ -1209,7 +985,7 @@
                     <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
                     <div class="stats-section">
                         <div class="row">
-                            <!-- Pie Chart Section (ขนาดใหญ่) - เพิ่มจาก col-lg-5 เป็น col-lg-6 -->
+                            <!-- Pie Chart Section -->
                             <div class="col-lg-6">
                                 <div class="pie-chart-container">
                                     <h4 class="chart-title">
@@ -1245,40 +1021,21 @@
                                 </div>
                             </div>
                             
-                            <!-- Project Stats - ลดจาก col-lg-7 เป็น col-lg-6 -->
+                            <!-- Project Stats - แสดง 2 ข้อมูลใน 1 Row -->
                             <div class="col-lg-6">
-                                <div class="stats-grid" id="project-stats">
-                                    <div class="stat-item">
-                                        <div class="stat-value text-success comma-number" id="total-projects">0</div>
-                                        <div class="stat-title">ทั้งหมด(แปลง)</div>
+                                <div class="stats-2-grid" id="project-stats">
+                                    <!-- ข้อมูลทั้งหมด(แปลง) -->
+                                    <div class="stat-item-large stat-item-total">
+                                        <div class="stat-value-large comma-number" id="total-projects">0</div>
+                                        <div class="stat-title-large">ทั้งหมด(แปลง)</div>
+                                        <div class="stat-desc-large">จำนวนแปลงที่เข้าร่วมโครงการทั้งหมด</div>
                                     </div>
-                                    <div class="stat-item">
-                                        <div class="stat-value comma-number" id="total-area">0</div>
-                                        <div class="stat-title">พื้นที่รวม(ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-checked">
-                                        <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
-                                        <div class="stat-title">ตรวจแล้ว(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-checked">
-                                        <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-                                        <div class="stat-title">ตรวจแล้ว (ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-not-checked">
-                                        <div class="stat-value comma-number" id="not-checked-projects">0</div>
-                                        <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-not-checked">
-                                        <div class="stat-value comma-number" id="not-checked-area">0</div>
-                                        <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-passed">
-                                        <div class="stat-value comma-number" id="passed-projects">0</div>
-                                        <div class="stat-title">ผ่าน(แปลง)</div>
-                                    </div>
-                                    <div class="stat-item stat-item-failed">
-                                        <div class="stat-value comma-number" id="failed-projects">0</div>
-                                        <div class="stat-title">ไม่ผ่าน(แปลง)</div>
+                                    
+                                    <!-- ข้อมูลตรวจแล้ว(แปลง) -->
+                                    <div class="stat-item-large stat-item-checked">
+                                        <div class="stat-value-large comma-number" id="checked-projects">0</div>
+                                        <div class="stat-title-large">ตรวจแล้ว(แปลง)</div>
+                                        <div class="stat-desc-large">จำนวนแปลงที่ตรวจสอบแล้ว</div>
                                     </div>
                                 </div>
                             </div>
@@ -1744,12 +1501,9 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer - เอาล็อกโก้ออก -->
     <div class="footer">
         <div class="container">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/KBS-LOGO-resize.png" 
-                 alt="KBS Group Logo" 
-                 class="footer-logo kbs-logo">
             <div class="row">
                 <div class="col-md-6 text-md-start">
                     <h5 class="mb-3">KBS Group</h5>
@@ -2160,60 +1914,27 @@
             
             if (data.length === 0) {
                 document.getElementById('total-projects').textContent = '0';
-                document.getElementById('total-area').textContent = '0';
                 document.getElementById('checked-projects').textContent = '0';
-                document.getElementById('checked-area').textContent = '0';
-                document.getElementById('not-checked-projects').textContent = '0';
-                document.getElementById('not-checked-area').textContent = '0';
-                document.getElementById('passed-projects').textContent = '0';
-                document.getElementById('failed-projects').textContent = '0';
                 return;
             }
             
             // Calculate statistics
-            let totalArea = 0;
             let checkedCount = 0;
-            let checkedArea = 0;
-            let notCheckedCount = 0;
-            let notCheckedArea = 0;
-            let passedCount = 0;
-            let failedCount = 0;
             
             data.forEach(item => {
-                // Calculate total area
-                const area = parseFloat(item['พื้นที่']) || 0;
-                totalArea += area;
-                
                 // Count checked projects (ผ่าน or ไม่ผ่าน)
                 const condition = item['เงื่อนไขโครงการ'] || '';
                 if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
                     checkedCount++;
-                    checkedArea += area;
-                } else if (condition === 'รอตรวจแปลง' || condition === '') {
-                    notCheckedCount++;
-                    notCheckedArea += area;
-                }
-                
-                // Count conditions
-                if (condition === 'ผ่าน') {
-                    passedCount++;
-                } else if (condition === 'ไม่ผ่าน') {
-                    failedCount++;
                 }
             });
             
             // Update DOM elements with formatted numbers
             document.getElementById('total-projects').textContent = formatNumber(data.length);
-            document.getElementById('total-area').textContent = formatNumber(totalArea);
             document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
-            document.getElementById('checked-area').textContent = formatNumber(checkedArea);
-            document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
-            document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
-            document.getElementById('passed-projects').textContent = formatNumber(passedCount);
-            document.getElementById('failed-projects').textContent = formatNumber(failedCount);
         }
         
-        // Update condition pie chart (ปรับขนาดใหญ่ขึ้น)
+        // Update condition pie chart
         function updateConditionPieChart() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
@@ -2251,7 +1972,7 @@
             const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
             const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
             
-            // Update percentage displays - แสดงตัวเลขที่มีคอมม่า
+            // Update percentage displays
             document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
             document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
             document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
@@ -2277,8 +1998,8 @@
                                 '#FF9800'  // Orange for pending
                             ],
                             borderColor: '#fff',
-                            borderWidth: 3, // เพิ่มความหนา
-                            hoverOffset: 20 // เพิ่ม hover offset
+                            borderWidth: 3,
+                            hoverOffset: 20
                         }]
                     },
                     options: {
@@ -2292,7 +2013,7 @@
                                     usePointStyle: true,
                                     font: {
                                         family: "'Sarabun', sans-serif",
-                                        size: 14 // เพิ่มขนาดฟอนต์
+                                        size: 14
                                     }
                                 }
                             },
@@ -2319,8 +2040,8 @@
                             animateRotate: true,
                             duration: 1000
                         },
-                        cutout: '30%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
-                        radius: '100%' // เพิ่มขนาดให้ใหญ่ที่สุด
+                        cutout: '30%',
+                        radius: '100%'
                     }
                 });
             }
