@@ -828,7 +828,7 @@
                 </button>
             </div>
 
-            <!-- Project Stats - เพิ่มสถิติตรวจแล้ว -->
+            <!-- Project Stats -->
             <div class="project-stats" id="project-stats">
                 <div class="stat-item">
                     <div class="stat-value text-success" id="total-projects">0</div>
@@ -891,74 +891,37 @@
                     </div>
                 </div>
                 
-                <!-- Advanced Filters -->
+                <!-- Advanced Filters - ปรับปรุงตามที่ต้องการ -->
                 <div class="advanced-filter">
                     <div class="row g-3">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">เขต</label>
                             <select id="zone-filter" class="form-select">
                                 <option value="all">ทุกเขต</option>
                                 <!-- ตัวเลือกเขตจะถูกเพิ่มโดย JavaScript -->
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label small fw-bold text-muted">ชื่อนักเกษตร</label>
                             <select id="farmer-officer-filter" class="form-select">
                                 <option value="all">นักเกษตรทั้งหมด</option>
                                 <!-- ตัวเลือกนักเกษตรจะถูกเพิ่มโดย JavaScript -->
                             </select>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label small fw-bold text-muted">ประเภทโครงการ</label>
-                            <select id="project-type-filter" class="form-select">
-                                <option value="all">ประเภททั้งหมด</option>
-                                <option value="ปลูกอ้อยในนา">ปลูกอ้อยในนา</option>
-                                <option value="เปลี่ยนพืชอื่นมาปลูกอ้อย">เปลี่ยนพืชอื่นมาปลูกอ้อย</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="row g-3 mt-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">ช่วงพื้นที่ (ไร่)</label>
-                            <div class="d-flex align-items-center">
-                                <input type="number" id="area-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
-                                <span class="mx-2">ถึง</span>
-                                <input type="number" id="area-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
-                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-area-filter">
-                                    <i class="fas fa-check me-1"></i>ตกลง
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">% การงอก</label>
-                            <div class="d-flex align-items-center">
-                                <input type="number" id="germination-min" class="form-control form-control-sm" placeholder="ต่ำสุด" style="width: 100px;">
-                                <span class="mx-2">ถึง</span>
-                                <input type="number" id="germination-max" class="form-control form-control-sm" placeholder="สูงสุด" style="width: 100px;">
-                                <button class="btn btn-sm btn-outline-green ms-3" id="apply-germination-filter">
-                                    <i class="fas fa-check me-1"></i>ตกลง
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 
-                <!-- Filter Buttons -->
+                <!-- Filter Buttons - ปรับปรุงใหม่ -->
                 <div class="filter-buttons mt-3">
                     <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
                     <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
                     <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
                     <button class="filter-btn" data-filter="checked">ตรวจแล้ว</button>
-                    <button class="filter-btn" data-filter="high-germination">% การงอกสูง (&gt;80%)</button>
                     <button class="btn-outline-green" id="refresh-btn">
                         <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
                     </button>
                     <button class="btn-outline-green" id="reset-filters">
                         <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
-                    </button>
-                    <button class="btn-kbs btn-sm" id="advanced-filter-toggle">
-                        <i class="fas fa-sliders-h me-1"></i>กรองละเอียด
                     </button>
                 </div>
             </div>
@@ -1163,18 +1126,14 @@
             // Condition filter
             document.getElementById('condition-filter').addEventListener('change', filterData);
             
-            // Zone filter
-            document.getElementById('zone-filter').addEventListener('change', filterData);
+            // Zone filter - เพิ่ม event listener สำหรับการอัพเดทตัวกรองนักเกษตร
+            document.getElementById('zone-filter').addEventListener('change', function() {
+                updateFarmerOfficerFilter();
+                filterData(); // กรองข้อมูลเมื่อเปลี่ยนเขต
+            });
             
             // Farmer officer filter
             document.getElementById('farmer-officer-filter').addEventListener('change', filterData);
-            
-            // Project type filter
-            document.getElementById('project-type-filter').addEventListener('change', filterData);
-            
-            // Area filter buttons
-            document.getElementById('apply-area-filter').addEventListener('click', filterData);
-            document.getElementById('apply-germination-filter').addEventListener('click', filterData);
             
             // Tab switching
             document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1199,6 +1158,9 @@
                     
                     // Update project stats
                     updateProjectStats();
+                    
+                    // Update filter options
+                    updateFilterOptions();
                 });
             });
             
@@ -1220,18 +1182,6 @@
                     showView(currentView);
                     filterData(); // Re-apply filters with new view
                 });
-            });
-            
-            // Advanced filter toggle
-            document.getElementById('advanced-filter-toggle').addEventListener('click', function() {
-                const advancedFilter = document.querySelector('.advanced-filter');
-                if (advancedFilter.style.display === 'none') {
-                    advancedFilter.style.display = 'block';
-                    this.innerHTML = '<i class="fas fa-times me-1"></i>ปิดกรองละเอียด';
-                } else {
-                    advancedFilter.style.display = 'none';
-                    this.innerHTML = '<i class="fas fa-sliders-h me-1"></i>กรองละเอียด';
-                }
             });
             
             // Auto-refresh data every 5 minutes if setup is complete
@@ -1422,7 +1372,7 @@
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
         }
         
-        // Update filter dropdown options
+        // Update filter dropdown options - ปรับปรุงใหม่
         function updateFilterOptions() {
             const data = allData[currentSheet];
             
@@ -1454,11 +1404,35 @@
                 zoneFilter.appendChild(option);
             });
             
+            // Update farmer officer filter dropdown (เริ่มต้นด้วยทั้งหมด)
+            updateFarmerOfficerFilter();
+        }
+        
+        // ฟังก์ชันใหม่: อัพเดทตัวกรองนักเกษตรตามเขตที่เลือก
+        function updateFarmerOfficerFilter() {
+            const data = allData[currentSheet];
+            const zoneFilter = document.getElementById('zone-filter');
+            const selectedZone = zoneFilter.value;
+            
+            // เก็บเฉพาะนักเกษตรในเขตที่เลือก (หรือทั้งหมดถ้าเลือก "ทุกเขต")
+            const filteredOfficers = new Set();
+            
+            data.forEach(item => {
+                const zone = item['เขต'] || '';
+                const farmerOfficer = item['ชื่อนักเกษตร'] || '';
+                
+                if (farmerOfficer && farmerOfficer.trim() !== '') {
+                    if (selectedZone === 'all' || zone === selectedZone) {
+                        filteredOfficers.add(farmerOfficer.trim());
+                    }
+                }
+            });
+            
             // Update farmer officer filter dropdown
             const farmerOfficerFilter = document.getElementById('farmer-officer-filter');
             farmerOfficerFilter.innerHTML = '<option value="all">นักเกษตรทั้งหมด</option>';
             
-            Array.from(uniqueFarmerOfficers).sort().forEach(officer => {
+            Array.from(filteredOfficers).sort().forEach(officer => {
                 const option = document.createElement('option');
                 option.value = officer;
                 option.textContent = officer;
@@ -1570,7 +1544,7 @@
             return result.map(val => val.trim());
         }
         
-        // Update project statistics - เพิ่มสถิติตรวจแล้ว
+        // Update project statistics
         function updateProjectStats() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
@@ -1842,18 +1816,13 @@
             });
         }
         
-        // Filter data based on search and filters
+        // Filter data based on search and filters - ปรับปรุงใหม่
         function filterData() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
             const conditionFilter = document.getElementById('condition-filter').value;
             const zoneFilter = document.getElementById('zone-filter').value;
             const farmerOfficerFilter = document.getElementById('farmer-officer-filter').value;
-            const projectTypeFilter = document.getElementById('project-type-filter').value;
-            const areaMin = parseFloat(document.getElementById('area-min').value) || 0;
-            const areaMax = parseFloat(document.getElementById('area-max').value) || Infinity;
-            const germinationMin = parseFloat(document.getElementById('germination-min').value) || 0;
-            const germinationMax = parseFloat(document.getElementById('germination-max').value) || 100;
             
             let data = allData[currentSheet];
             
@@ -1901,35 +1870,6 @@
                 });
             }
             
-            // Apply project type filter
-            if (projectTypeFilter !== 'all') {
-                data = data.filter(item => {
-                    const projectStatus = item['สถานะโครงการ'] || '';
-                    return projectStatus.includes(projectTypeFilter);
-                });
-            }
-            
-            // Apply area filter
-            if (areaMin > 0 || areaMax < Infinity) {
-                data = data.filter(item => {
-                    const area = parseFloat(item['พื้นที่']) || 0;
-                    return area >= areaMin && area <= areaMax;
-                });
-            }
-            
-            // Apply germination filter
-            if (germinationMin > 0 || germinationMax < 100) {
-                data = data.filter(item => {
-                    const germinationStr = item['เปอร์เซ็นการงอก'] || '0';
-                    const germinationMatch = germinationStr.toString().match(/(\d+(\.\d+)?)/);
-                    if (germinationMatch) {
-                        const germination = parseFloat(germinationMatch[1]);
-                        return germination >= germinationMin && germination <= germinationMax;
-                    }
-                    return false;
-                });
-            }
-            
             // Apply additional filters
             if (activeFilter !== 'all') {
                 switch(activeFilter) {
@@ -1960,18 +1900,6 @@
                             return condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
                         });
                         break;
-                    case 'high-germination':
-                        // Filter for high germination rate (>80%)
-                        data = data.filter(item => {
-                            const germinationStr = item['เปอร์เซ็นการงอก'] || '0';
-                            const germinationMatch = germinationStr.toString().match(/(\d+(\.\d+)?)/);
-                            if (germinationMatch) {
-                                const germination = parseFloat(germinationMatch[1]);
-                                return germination > 80;
-                            }
-                            return false;
-                        });
-                        break;
                 }
             }
             
@@ -1988,17 +1916,15 @@
             updateProjectStats();
         }
         
-        // Reset all filters
+        // Reset all filters - ปรับปรุงใหม่
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('condition-filter').value = 'all';
             document.getElementById('zone-filter').value = 'all';
             document.getElementById('farmer-officer-filter').value = 'all';
-            document.getElementById('project-type-filter').value = 'all';
-            document.getElementById('area-min').value = '';
-            document.getElementById('area-max').value = '';
-            document.getElementById('germination-min').value = '';
-            document.getElementById('germination-max').value = '';
+            
+            // เรียกใช้ updateFarmerOfficerFilter เพื่อรีเซ็ตตัวกรองนักเกษตร
+            updateFarmerOfficerFilter();
             
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
