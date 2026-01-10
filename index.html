@@ -974,6 +974,7 @@
             padding: 20px;
             margin-bottom: 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            position: relative;
         }
         
         .chart-title {
@@ -1098,6 +1099,60 @@
             left: 0;
             color: var(--secondary-green);
         }
+        
+        /* ปุ่ม Export ที่อยู่ด้านล่าง Pie Chart */
+        .pie-chart-actions {
+            margin-top: 20px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* เพิ่มขนาด Pie Chart */
+        .pie-chart-wrapper {
+            position: relative;
+            height: 320px; /* เพิ่มความสูง */
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Container สำหรับ Pie Chart และ Stats */
+        .pie-chart-and-stats {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        /* สำหรับการจัดวางใหม่ */
+        .project-stats-container {
+            margin-bottom: 20px;
+        }
+        
+        .stats-actions-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-start;
+        }
+        
+        .stats-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .actions-section {
+            flex: 0 0 auto;
+        }
+        
+        @media (max-width: 992px) {
+            .stats-actions-container {
+                flex-direction: column;
+            }
+            
+            .actions-section {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1183,81 +1238,123 @@
                 </button>
             </div>
 
-            <!-- Project Stats with Pie Chart -->
-            <div class="row">
-                <!-- Pie Chart Section -->
-                <div class="col-lg-4">
-                    <div class="pie-chart-container">
-                        <h4 class="chart-title">
-                            <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
-                        </h4>
-                        <div style="position: relative; height: 300px;">
-                            <canvas id="conditionPieChart"></canvas>
+            <!-- Project Stats with Pie Chart และปุ่ม Export -->
+            <div class="project-stats-container">
+                <div class="stats-actions-container">
+                    <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
+                    <div class="stats-section">
+                        <div class="row">
+                            <!-- Pie Chart Section (ขนาดใหญ่) -->
+                            <div class="col-lg-5">
+                                <div class="pie-chart-container">
+                                    <h4 class="chart-title">
+                                        <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
+                                    </h4>
+                                    <div class="pie-chart-wrapper">
+                                        <canvas id="conditionPieChart"></canvas>
+                                    </div>
+                                    <div class="chart-stats">
+                                        <div class="chart-stat-item">
+                                            <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
+                                            <div class="chart-stat-label">ผ่าน</div>
+                                        </div>
+                                        <div class="chart-stat-item">
+                                            <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
+                                            <div class="chart-stat-label">ไม่ผ่าน</div>
+                                        </div>
+                                        <div class="chart-stat-item">
+                                            <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
+                                            <div class="chart-stat-label">รอตรวจ</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- ปุ่ม Export ใต้ Pie Chart -->
+                                    <div class="pie-chart-actions">
+                                        <button class="btn-blue" id="export-btn">
+                                            <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
+                                        </button>
+                                        <button class="btn-blue ms-2" id="project-details-btn">
+                                            <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Project Stats -->
+                            <div class="col-lg-7">
+                                <div class="stats-grid" id="project-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-value text-success comma-number" id="total-projects">0</div>
+                                        <div class="stat-title">ทั้งหมด(แปลง)</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-value comma-number" id="total-area">0</div>
+                                        <div class="stat-title">พื้นที่รวม(ไร่)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-checked">
+                                        <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
+                                        <div class="stat-title">ตรวจแล้ว(แปลง)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-checked">
+                                        <div class="stat-value text-primary comma-number" id="checked-area">0</div>
+                                        <div class="stat-title">ตรวจแล้ว (ไร่)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-not-checked">
+                                        <div class="stat-value comma-number" id="not-checked-projects">0</div>
+                                        <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-not-checked">
+                                        <div class="stat-value comma-number" id="not-checked-area">0</div>
+                                        <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-passed">
+                                        <div class="stat-value comma-number" id="passed-projects">0</div>
+                                        <div class="stat-title">ผ่าน(แปลง)</div>
+                                    </div>
+                                    <div class="stat-item stat-item-failed">
+                                        <div class="stat-value comma-number" id="failed-projects">0</div>
+                                        <div class="stat-title">ไม่ผ่าน(แปลง)</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="chart-stats">
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
-                                <div class="chart-stat-label">ผ่าน</div>
+                    </div>
+                    
+                    <!-- ส่วนปุ่ม Refresh (ย้ายจากด้านบน) -->
+                    <div class="actions-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-sync-alt"></i>การจัดการข้อมูล
                             </div>
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
-                                <div class="chart-stat-label">ไม่ผ่าน</div>
-                            </div>
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
-                                <div class="chart-stat-label">รอตรวจ</div>
+                            <div class="card-body">
+                                <div class="d-grid gap-2">
+                                    <button class="btn-green" id="refresh-btn">
+                                        <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
+                                    </button>
+                                    <button class="btn-blue" id="reset-filters-top">
+                                        <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
+                                    </button>
+                                    <button class="btn-purple" id="view-toggle-btn-table">
+                                        <i class="fas fa-table me-1"></i>มุมมองตาราง
+                                    </button>
+                                    <button class="btn-purple" id="view-toggle-btn-card">
+                                        <i class="fas fa-th-large me-1"></i>มุมมองการ์ด
+                                    </button>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <p class="small text-muted mb-1">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        อัปเดตอัตโนมัติทุก 5 นาที
+                                    </p>
+                                    <p class="small text-muted">
+                                        <i class="fas fa-clock me-1"></i>
+                                        อัปเดตล่าสุด: <span id="last-update-small">-</span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Project Stats -->
-                <div class="col-lg-8">
-                    <div class="stats-grid" id="project-stats">
-                        <div class="stat-item">
-                            <div class="stat-value text-success comma-number" id="total-projects">0</div>
-                            <div class="stat-title">ทั้งหมด(แปลง)</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value comma-number" id="total-area">0</div>
-                            <div class="stat-title">พื้นที่รวม(ไร่)</div>
-                        </div>
-                        <div class="stat-item stat-item-checked">
-                            <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
-                            <div class="stat-title">ตรวจแล้ว(แปลง)</div>
-                        </div>
-                        <div class="stat-item stat-item-checked">
-                            <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-                            <div class="stat-title">ตรวจแล้ว (ไร่)</div>
-                        </div>
-                        <div class="stat-item stat-item-not-checked">
-                            <div class="stat-value comma-number" id="not-checked-projects">0</div>
-                            <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
-                        </div>
-                        <div class="stat-item stat-item-not-checked">
-                            <div class="stat-value comma-number" id="not-checked-area">0</div>
-                            <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
-                        </div>
-                        <div class="stat-item stat-item-passed">
-                            <div class="stat-value comma-number" id="passed-projects">0</div>
-                            <div class="stat-title">ผ่าน(แปลง)</div>
-                        </div>
-                        <div class="stat-item stat-item-failed">
-                            <div class="stat-value comma-number" id="failed-projects">0</div>
-                            <div class="stat-title">ไม่ผ่าน(แปลง)</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View Toggle -->
-            <div class="view-toggle" id="view-toggle">
-                <button class="btn btn-sm btn-outline-green active" data-view="table">
-                    <i class="fas fa-table me-1"></i>มุมมองตาราง
-                </button>
-                <button class="btn btn-sm btn-outline-green ms-2" data-view="card">
-                    <i class="fas fa-th-large me-1"></i>มุมมองการ์ด
-                </button>
             </div>
 
             <!-- Search and Filter Section -->
@@ -1315,9 +1412,6 @@
                     <button class="filter-btn" data-filter="not-checked">ยังไม่ตรวจ</button>
                     <button class="filter-btn" data-filter="passed">ผ่านเงื่อนไข</button>
                     <button class="filter-btn" data-filter="failed">ไม่ผ่านเงื่อนไข</button>
-                    <button class="btn-blue" id="refresh-btn">
-                        <i class="fas fa-redo-alt me-1"></i>รีเฟรชข้อมูล
-                    </button>
                     <button class="btn-blue" id="reset-filters">
                         <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
                     </button>
@@ -1333,11 +1427,8 @@
                         <span class="badge bg-white text-success ms-2 comma-number" id="record-count">0 รายการ</span>
                     </div>
                     <div>
-                        <button class="btn btn-sm btn-blue me-2" id="export-btn">
-                            <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
-                        </button>
-                        <button class="btn btn-sm btn-blue" id="project-details-btn">
-                            <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
+                        <button class="btn btn-sm btn-blue me-2" id="export-data-btn">
+                            <i class="fas fa-file-export me-1"></i>ส่งออกข้อมูล
                         </button>
                     </div>
                 </div>
@@ -1839,14 +1930,16 @@
             // Refresh button
             document.getElementById('refresh-btn').addEventListener('click', loadAllSheetsData);
             
-            // Reset filters button
+            // Reset filters buttons
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
+            document.getElementById('reset-filters-top').addEventListener('click', resetFilters);
             document.getElementById('reset-filters-btn').addEventListener('click', resetFilters);
             
-            // Export button
+            // Export buttons (มี 2 ปุ่ม)
             document.getElementById('export-btn').addEventListener('click', exportData);
+            document.getElementById('export-data-btn').addEventListener('click', exportData);
             
-            // Project details button - แก้ไขเพื่อเปิดโมดัลตามประเภทโครงการ
+            // Project details button
             document.getElementById('project-details-btn').addEventListener('click', function() {
                 if (currentSheet === 'planting-sugarcane-field') {
                     showPlantingProjectDetails();
@@ -1855,16 +1948,31 @@
                 }
             });
             
+            // View toggle buttons (ใหม่)
+            document.getElementById('view-toggle-btn-table').addEventListener('click', function() {
+                currentView = 'table';
+                showView(currentView);
+                updateViewToggleButtons();
+                filterData(); // Re-apply filters with new view
+            });
+            
+            document.getElementById('view-toggle-btn-card').addEventListener('click', function() {
+                currentView = 'card';
+                showView(currentView);
+                updateViewToggleButtons();
+                filterData(); // Re-apply filters with new view
+            });
+            
             // Search input
             document.getElementById('search-input').addEventListener('input', filterData);
             
             // Condition filter
             document.getElementById('condition-filter').addEventListener('change', filterData);
             
-            // Zone filter - เพิ่ม event listener สำหรับการอัพเดทตัวกรองนักเกษตร
+            // Zone filter
             document.getElementById('zone-filter').addEventListener('change', function() {
                 updateFarmerOfficerFilter();
-                filterData(); // กรองข้อมูลเมื่อเปลี่ยนเขต
+                filterData();
             });
             
             // Farmer officer filter
@@ -1905,6 +2013,9 @@
                     
                     // Update filter options
                     updateFilterOptions();
+                    
+                    // Update pie chart
+                    updateConditionPieChart();
                 });
             });
             
@@ -1917,20 +2028,31 @@
                 });
             });
             
-            // View toggle buttons
-            document.querySelectorAll('.view-toggle .btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.view-toggle .btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentView = this.getAttribute('data-view');
-                    showView(currentView);
-                    filterData(); // Re-apply filters with new view
-                });
-            });
-            
             // Auto-refresh data every 5 minutes if setup is complete
             if (isSetupComplete) {
                 setInterval(loadAllSheetsData, 5 * 60 * 1000);
+            }
+            
+            // Initialize view toggle buttons
+            updateViewToggleButtons();
+        }
+        
+        // Update view toggle buttons state
+        function updateViewToggleButtons() {
+            const tableBtn = document.getElementById('view-toggle-btn-table');
+            const cardBtn = document.getElementById('view-toggle-btn-card');
+            
+            // Reset both buttons
+            tableBtn.classList.remove('btn-purple', 'btn-blue');
+            cardBtn.classList.remove('btn-purple', 'btn-blue');
+            
+            // Set active button
+            if (currentView === 'table') {
+                tableBtn.classList.add('btn-blue');
+                cardBtn.classList.add('btn-purple');
+            } else {
+                tableBtn.classList.add('btn-purple');
+                cardBtn.classList.add('btn-blue');
             }
         }
         
@@ -1986,6 +2108,7 @@
                 const now = new Date();
                 const thaiTime = formatDateToThai(now);
                 document.getElementById('last-update').textContent = thaiTime;
+                document.getElementById('last-update-small').textContent = thaiTime;
                 
                 // Display current sheet data
                 displayData();
@@ -2119,7 +2242,7 @@
             updateFarmerOfficerFilter();
         }
         
-        // ฟังก์ชันใหม่: อัพเดทตัวกรองนักเกษตรตามเขตที่เลือก
+        // อัพเดทตัวกรองนักเกษตรตามเขตที่เลือก
         function updateFarmerOfficerFilter() {
             const data = allData[currentSheet];
             const zoneFilter = document.getElementById('zone-filter');
@@ -2151,7 +2274,7 @@
             });
         }
         
-        // Update project statistics - เพิ่มสถิติยังไม่ตรวจแปลงและไม่ผ่านเงื่อนไข
+        // Update project statistics
         function updateProjectStats() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
@@ -2210,7 +2333,7 @@
             document.getElementById('failed-projects').textContent = formatNumber(failedCount);
         }
         
-        // Update condition pie chart
+        // Update condition pie chart (ปรับขนาดใหญ่ขึ้น)
         function updateConditionPieChart() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
             
@@ -2261,7 +2384,7 @@
                 conditionPieChart.data.datasets[0].data = [passedCount, failedCount, pendingCount];
                 conditionPieChart.update();
             } else {
-                // Create new chart
+                // Create new chart with larger size
                 conditionPieChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
@@ -2274,8 +2397,8 @@
                                 '#FF9800'  // Orange for pending
                             ],
                             borderColor: '#fff',
-                            borderWidth: 2,
-                            hoverOffset: 15
+                            borderWidth: 3, // เพิ่มความหนา
+                            hoverOffset: 20 // เพิ่ม hover offset
                         }]
                     },
                     options: {
@@ -2289,7 +2412,7 @@
                                     usePointStyle: true,
                                     font: {
                                         family: "'Sarabun', sans-serif",
-                                        size: 12
+                                        size: 13 // เพิ่มขนาดฟอนต์
                                     }
                                 }
                             },
@@ -2302,13 +2425,22 @@
                                         const formattedValue = formatNumber(value);
                                         return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
                                     }
+                                },
+                                titleFont: {
+                                    size: 14
+                                },
+                                bodyFont: {
+                                    size: 13
                                 }
                             }
                         },
                         animation: {
                             animateScale: true,
-                            animateRotate: true
-                        }
+                            animateRotate: true,
+                            duration: 1000
+                        },
+                        cutout: '40%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
+                        radius: '90%' // เพิ่มขนาดให้ใหญ่ขึ้น
                     }
                 });
             }
