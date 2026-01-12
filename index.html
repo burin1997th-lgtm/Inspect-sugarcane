@@ -24,6 +24,8 @@
             --kbs-dark: #333333;
             --project-purple: #7B1FA2;
             --project-blue: #1976D2;
+            --target-dark: #2c3e50;
+            --progress-blue: #1a73e8;
         }
         
         body {
@@ -547,76 +549,97 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-       /* สไตล์ Project Stats */
-.target-subtext {
-    font-size: 0.75rem;
-    margin-top: 5px;
-    opacity: 0.8;
-}
-
-.target-subtext .text-success {
-    color: #28a745 !important;
-}
-
-.target-subtext .text-warning {
-    color: #ffc107 !important;
-}
-
-/* ปุ่มรีเฟรช */
-#refresh-targets-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 0.8rem;
-    padding: 4px 10px;
-    z-index: 10;
-}
-
-/* สไตล์ความคืบหน้า */
-.progress-overview .progress {
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.progress-overview .progress-bar {
-    border-radius: 6px;
-}
-
-.progress-value {
-    font-size: 1.8rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 5px;
-}
-
-.progress-label {
-    font-size: 0.8rem;
-    opacity: 0.9;
-}
-
-.progress-estimate small {
-    font-size: 0.75rem;
-    opacity: 0.9;
-}
-
-/* สไตล์สถิติ */
-.stat-subtext {
-    font-size: 0.75rem;
-    margin-top: 3px;
-    opacity: 0.7;
-}
-
-.stat-item-checked .stat-value {
-    color: #17a2b8 !important;
-}
-
-.stat-item-passed .stat-value {
-    color: #28a745 !important;
-}
-
-.stat-item-failed .stat-value {
-    color: #dc3545 !important;
-}
+        
+        /* Target Section Styles */
+        .target-section {
+            background: linear-gradient(135deg, var(--target-dark) 0%, #34495e 100%);
+            border-radius: 10px;
+            color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .target-value-lg {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .target-label-lg {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .target-value-sm {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        
+        .target-label-sm {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        /* Progress Section Styles */
+        .progress-section {
+            background: linear-gradient(135deg, var(--progress-blue) 0%, #0d47a1 100%);
+            border-radius: 10px;
+            color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .progress-overview .progress {
+            border-radius: 6px;
+            overflow: hidden;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .progress-overview .progress-bar {
+            border-radius: 6px;
+        }
+        
+        .progress-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .progress-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        .progress-estimate small {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        
+        /* Stat Subtext */
+        .stat-subtext {
+            font-size: 0.75rem;
+            margin-top: 3px;
+            opacity: 0.7;
+        }
+        
+        .stat-item-checked .stat-value {
+            color: #17a2b8 !important;
+        }
+        
+        .stat-item-passed .stat-value {
+            color: #28a745 !important;
+        }
+        
+        .stat-item-failed .stat-value {
+            color: #dc3545 !important;
+        }
+        
         /* Modal Styles */
         .modal-header {
             background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
@@ -688,6 +711,14 @@
             .stat-item {
                 min-width: calc(50% - 10px);
             }
+            
+            .target-value-lg {
+                font-size: 2rem;
+            }
+            
+            .progress-value {
+                font-size: 1.5rem;
+            }
         }
         
         @media (max-width: 576px) {
@@ -731,6 +762,10 @@
             
             .filter-section .row > div {
                 margin-bottom: 10px;
+            }
+            
+            .target-value-lg {
+                font-size: 1.8rem;
             }
         }
         
@@ -1160,7 +1195,7 @@
         /* เพิ่มขนาด Pie Chart - ขนาดใหญ่ขึ้น */
         .pie-chart-wrapper {
             position: relative;
-            height: 400px; /* เพิ่มความสูงจาก 320px เป็น 400px */
+            height: 400px;
             width: 100%;
             margin: 0 auto;
         }
@@ -1182,6 +1217,30 @@
             min-width: 300px;
         }
         
+        /* Project Type Buttons */
+        .project-switch .btn-group {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .project-switch .btn {
+            font-size: 0.85rem;
+            padding: 8px 12px;
+        }
+        
+        .project-name-badge .badge {
+            font-size: 0.75rem;
+            padding: 5px 10px;
+        }
+        
+        /* Progress Item */
+        .progress-item {
+            padding: 10px;
+        }
+        
+        .progress-details {
+            margin-top: 15px;
+        }
+        
         @media (max-width: 992px) {
             .stats-actions-container {
                 flex-direction: column;
@@ -1195,7 +1254,6 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-container">
-                    <!-- เปลี่ยนเป็นโลโก้ KBS Sugar จากลิงค์ที่ให้ -->
                     <img src="https://i.postimg.cc/wMdZPmTL/skr-nch-xt-2026-01-12-092906.png" 
                          alt="KBS Sugar Logo" 
                          class="logo-img kbs-logo">
@@ -1226,7 +1284,6 @@
                 <i class="fas fa-cog"></i>ตั้งค่าเริ่มต้นระบบ
             </div>
             <div class="card-body setup-section">
-                <!-- เปลี่ยนเป็นโลโก้ KBS Sugar จากลิงค์ที่ให้ -->
                 <img src="https://i.postimg.cc/wMdZPmTL/skr-nch-xt-2026-01-12-092906.png" 
                      alt="KBS Sugar Logo" 
                      class="setup-kbs-logo kbs-logo">
@@ -1243,14 +1300,14 @@
                     
                     <div class="step">
                         <span class="step-number">2</span>
-                        <strong>การรักษาความปลอดภัย</strong>
-                        <p class="mb-0 mt-1">ไฟล์ต้นฉบับมีการป้องกันการแก้ไขโดยบุคคลทั่วไป ข้อมูลจะแสดงแบบอ่านอย่างเดียว</p>
+                        <strong>ระบบติดตามเป้าหมายใหม่</strong>
+                        <p class="mb-0 mt-1">เพิ่มระบบดึงข้อมูลเป้าหมายจากชีท "เป้าหมาย" พร้อมคำนวณความคืบหน้าโครงการ</p>
                     </div>
                     
                     <div class="step">
                         <span class="step-number">3</span>
                         <strong>เริ่มใช้งานระบบ</strong>
-                        <p class="mb-0 mt-1">คลิกปุ่มด้านล่างเพื่อเริ่มใช้งานระบบดูข้อมูลโครงการ</p>
+                        <p class="mb-0 mt-1">คลิกปุ่มด้านล่างเพื่อเริ่มใช้งานระบบดูข้อมูลโครงการและติดตามความคืบหน้า</p>
                     </div>
                 </div>
                 
@@ -1273,195 +1330,199 @@
                     <i class="fas fa-exchange-alt"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70
                 </button>
             </div>
-   <!-- Project Stats with Pie Chart และปุ่ม Export -->
-<div class="project-stats-container">
-    <div class="stats-actions-container">
-        <!-- ส่วน Pie Chart (ขนาดใหญ่ขึ้น) -->
-        <div class="stats-section">
-            <div class="row">
-                <!-- Pie Chart Section - ขยายเป็น 70% ของหน้า -->
-                <div class="col-lg-8">
-                    <div class="pie-chart-container">
-                        <h4 class="chart-title">
-                            <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
-                        </h4>
-                        <div class="pie-chart-wrapper">
-                            <canvas id="conditionPieChart"></canvas>
+
+            <!-- Project Stats with Pie Chart และปุ่ม Export -->
+            <div class="project-stats-container">
+                <div class="row">
+                    <!-- Pie Chart Section -->
+                    <div class="col-lg-8">
+                        <div class="pie-chart-container">
+                            <h4 class="chart-title">
+                                <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลง
+                            </h4>
+                            <div class="pie-chart-wrapper">
+                                <canvas id="conditionPieChart"></canvas>
+                            </div>
+                            <div class="chart-stats">
+                                <div class="chart-stat-item">
+                                    <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
+                                    <div class="chart-stat-label">ผ่าน</div>
+                                </div>
+                                <div class="chart-stat-item">
+                                    <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
+                                    <div class="chart-stat-label">ไม่ผ่าน</div>
+                                </div>
+                                <div class="chart-stat-item">
+                                    <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
+                                    <div class="chart-stat-label">รอตรวจ</div>
+                                </div>
+                            </div>
+                            
+                            <!-- ปุ่ม Export ใต้ Pie Chart -->
+                            <div class="pie-chart-actions">
+                                <button class="btn-blue" id="export-btn">
+                                    <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
+                                </button>
+                                <button class="btn-blue ms-2" id="project-details-btn">
+                                    <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
+                                </button>
+                            </div>
                         </div>
-                        <div class="chart-stats">
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-success comma-number" id="passed-percentage">0%</div>
-                                <div class="chart-stat-label">ผ่าน</div>
+                    </div>
+                    
+                    <!-- Project Stats Section -->
+                    <div class="col-lg-4">
+                        <!-- ส่วนที่ 1: เป้าหมายโครงการ -->
+                        <div class="target-section">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="mb-0"><i class="fas fa-bullseye me-2"></i>เป้าหมายโครงการ</h6>
+                                <button class="btn btn-sm btn-light" id="refresh-targets-btn" title="รีเฟรชข้อมูลเป้าหมาย">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
                             </div>
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-danger comma-number" id="failed-percentage">0%</div>
-                                <div class="chart-stat-label">ไม่ผ่าน</div>
+                            
+                            <!-- สวิตช์เลือกโครงการ -->
+                            <div class="project-switch mb-3">
+                                <div class="btn-group w-100" role="group">
+                                    <button type="button" class="btn btn-warning project-type-btn active" data-project-type="plant-cane-in-rice-field">
+                                        <i class="fas fa-seedling me-2"></i>ปลูกอ้อยในนา
+                                    </button>
+                                    <button type="button" class="btn btn-warning project-type-btn" data-project-type="change-to-cane">
+                                        <i class="fas fa-exchange-alt me-2"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย
+                                    </button>
+                                </div>
                             </div>
-                            <div class="chart-stat-item">
-                                <div class="chart-stat-value text-warning comma-number" id="pending-percentage">0%</div>
-                                <div class="chart-stat-label">รอตรวจ</div>
+                            
+                            <!-- ข้อมูลเป้าหมาย -->
+                            <div class="target-info text-center">
+                                <div class="target-display mb-3">
+                                    <div class="target-value-lg comma-number" id="active-project-target">0</div>
+                                    <div class="target-label-lg">แปลง</div>
+                                    <div class="target-subtext" id="target-loading-status">
+                                        <small><i class="fas fa-spinner fa-spin me-1"></i> กำลังโหลดข้อมูลเป้าหมาย...</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="zone-target">
+                                            <div class="target-value-sm comma-number" id="selected-zone-target">0</div>
+                                            <div class="target-label-sm">เป้าหมายเขตที่เลือก</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="zone-count">
+                                            <div class="target-value-sm comma-number" id="selected-zone-count">0</div>
+                                            <div class="target-label-sm">จำนวนเขตที่เลือก</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <div class="project-name-badge">
+                                        <span class="badge bg-success" id="current-project-badge">ปลูกอ้อยในนา</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <!-- ปุ่ม Export ใต้ Pie Chart -->
-                        <div class="pie-chart-actions">
-                            <button class="btn-blue" id="export-btn">
-                                <i class="fas fa-download me-1"></i>ส่งออกข้อมูล
-                            </button>
-                            <button class="btn-blue ms-2" id="project-details-btn">
-                                <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
-                            </button>
+                        <!-- ส่วนที่ 2: ความคืบหน้า -->
+                        <div class="progress-section">
+                            <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>ความคืบหน้าโครงการ</h6>
+                            
+                            <div class="progress-overview mb-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>ความคืบหน้าทั้งหมด</span>
+                                    <span id="overall-progress-percent">0%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
+                                         id="overall-progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row progress-details">
+                                <div class="col-6">
+                                    <div class="progress-item text-center">
+                                        <div class="progress-value comma-number" id="achieved-projects">0</div>
+                                        <div class="progress-label">ดำเนินการแล้ว</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="progress-item text-center">
+                                        <div class="progress-value comma-number" id="remaining-projects">0</div>
+                                        <div class="progress-label">เหลือดำเนินการ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-estimate mt-3 text-center">
+                                <small><i class="fas fa-clock me-1"></i>ประมาณแล้วเสร็จ: <span id="completion-estimate">-</span></small>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-   <!-- Project Stats - แก้ไขใหม่ -->
-<div class="col-lg-4">
-    <div class="stats-grid" id="project-stats">
-        <!-- ส่วนที่ 1: เป้าหมายโครงการ -->
-        <div class="target-section mb-3 p-3" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); border-radius: 10px; color: white;">
-            <h6 class="mb-3"><i class="fas fa-bullseye me-2"></i>เป้าหมายโครงการ</h6>
-            
-            <!-- สวิตช์เลือกโครงการ -->
-            <div class="project-switch mb-3">
-                <div class="btn-group w-100" role="group">
-                    <button type="button" class="btn btn-success project-type-btn active" data-project-type="plant-cane-in-rice-field">
-                        <i class="fas fa-seedling me-2"></i>ปลูกอ้อยในนา
-                    </button>
-                    <button type="button" class="btn btn-warning project-type-btn" data-project-type="change-to-cane">
-                        <i class="fas fa-exchange-alt me-2"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย
-                    </button>
-                </div>
             </div>
-            
-            <!-- ข้อมูลเป้าหมาย -->
-            <div class="target-info text-center">
-                <div class="target-display mb-3">
-                    <div class="target-value-lg" id="active-project-target">0</div>
-                    <div class="target-label-lg">แปลง</div>
-                    <div class="target-subtext" id="target-loading-status">
-                        <small><i class="fas fa-spinner fa-spin me-1"></i> กำลังโหลดข้อมูลเป้าหมาย...</small>
+
+            <!-- สถิติโครงการแบบกริด -->
+            <div class="stats-grid mb-4">
+                <div class="stat-item">
+                    <div class="stat-value text-success comma-number" id="total-projects">0</div>
+                    <div class="stat-title">ทั้งหมด(แปลง)</div>
+                    <div class="stat-subtext text-muted">
+                        <small>โครงการ: <span id="current-project-type">-</span></small>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <div class="zone-target">
-                            <div class="target-value-sm" id="selected-zone-target">0</div>
-                            <div class="target-label-sm">เป้าหมายเขตที่เลือก</div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="zone-count">
-                            <div class="target-value-sm" id="selected-zone-count">0</div>
-                            <div class="target-label-sm">จำนวนเขตที่เลือก</div>
-                        </div>
+                <div class="stat-item">
+                    <div class="stat-value comma-number" id="total-area">0</div>
+                    <div class="stat-title">พื้นที่รวม(ไร่)</div>
+                </div>
+                <div class="stat-item stat-item-checked">
+                    <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
+                    <div class="stat-title">ตรวจแล้ว(แปลง)</div>
+                    <div class="stat-subtext">
+                        <small><span id="checked-percentage">0%</span> ของทั้งหมด</small>
                     </div>
                 </div>
-                
-                <div class="mt-3">
-                    <div class="project-name-badge">
-                        <span class="badge bg-success" id="current-project-badge">ปลูกอ้อยในนา</span>
+                <div class="stat-item stat-item-checked">
+                    <div class="stat-value text-primary comma-number" id="checked-area">0</div>
+                    <div class="stat-title">ตรวจแล้ว (ไร่)</div>
+                </div>
+                <div class="stat-item stat-item-not-checked">
+                    <div class="stat-value comma-number" id="not-checked-projects">0</div>
+                    <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
+                    <div class="stat-subtext">
+                        <small><span id="not-checked-percentage">0%</span> ของทั้งหมด</small>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- ส่วนที่ 2: ความคืบหน้า -->
-        <div class="progress-section mb-3 p-3" style="background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); border-radius: 10px; color: white;">
-            <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>ความคืบหน้าโครงการ</h6>
-            
-            <div class="progress-overview mb-3">
-                <div class="d-flex justify-content-between mb-2">
-                    <span>ความคืบหน้าทั้งหมด</span>
-                    <span id="overall-progress-percent">0%</span>
+                <div class="stat-item stat-item-not-checked">
+                    <div class="stat-value comma-number" id="not-checked-area">0</div>
+                    <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
                 </div>
-                <div class="progress" style="height: 12px; background: rgba(255,255,255,0.3);">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
-                         id="overall-progress-bar" style="width: 0%"></div>
-                </div>
-            </div>
-            
-            <div class="row progress-details">
-                <div class="col-6">
-                    <div class="progress-item text-center">
-                        <div class="progress-value" id="achieved-projects">0</div>
-                        <div class="progress-label">ดำเนินการแล้ว</div>
+                <div class="stat-item stat-item-passed">
+                    <div class="stat-value comma-number" id="passed-projects">0</div>
+                    <div class="stat-title">ผ่าน(แปลง)</div>
+                    <div class="stat-subtext">
+                        <small><span id="passed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="progress-item text-center">
-                        <div class="progress-value" id="remaining-projects">0</div>
-                        <div class="progress-label">เหลือดำเนินการ</div>
+                <div class="stat-item stat-item-passed">
+                    <div class="stat-value comma-number" id="passed-area">0</div>
+                    <div class="stat-title">ผ่าน(ไร่)</div>
+                </div>
+                <div class="stat-item stat-item-failed">
+                    <div class="stat-value comma-number" id="failed-projects">0</div>
+                    <div class="stat-title">ไม่ผ่าน(แปลง)</div>
+                    <div class="stat-subtext">
+                        <small><span id="failed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
                     </div>
                 </div>
+                <div class="stat-item stat-item-failed">
+                    <div class="stat-value comma-number" id="failed-area">0</div>
+                    <div class="stat-title">ไม่ผ่าน(ไร่)</div>
+                </div>
             </div>
-            
-            <div class="progress-estimate mt-3 text-center">
-                <small><i class="fas fa-clock me-1"></i>ประมาณแล้วเสร็จ: <span id="completion-estimate">-</span></small>
-            </div>
-        </div>
-        
-        <!-- ส่วนที่ 3: สถิติเดิม -->
-        <div class="stat-item">
-            <div class="stat-value text-success comma-number" id="total-projects">0</div>
-            <div class="stat-title">ทั้งหมด(แปลง)</div>
-            <div class="stat-subtext text-muted">
-                <small>โครงการ: <span id="current-project-type">-</span></small>
-            </div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value comma-number" id="total-area">0</div>
-            <div class="stat-title">พื้นที่รวม(ไร่)</div>
-        </div>
-        <div class="stat-item stat-item-checked">
-            <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
-            <div class="stat-title">ตรวจแล้ว(แปลง)</div>
-            <div class="stat-subtext">
-                <small><span id="checked-percentage">0%</span> ของทั้งหมด</small>
-            </div>
-        </div>
-        <div class="stat-item stat-item-checked">
-            <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-            <div class="stat-title">ตรวจแล้ว (ไร่)</div>
-        </div>
-        <div class="stat-item stat-item-not-checked">
-            <div class="stat-value comma-number" id="not-checked-projects">0</div>
-            <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
-            <div class="stat-subtext">
-                <small><span id="not-checked-percentage">0%</span> ของทั้งหมด</small>
-            </div>
-        </div>
-        <div class="stat-item stat-item-not-checked">
-            <div class="stat-value comma-number" id="not-checked-area">0</div>
-            <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
-        </div>
-        <div class="stat-item stat-item-passed">
-            <div class="stat-value comma-number" id="passed-projects">0</div>
-            <div class="stat-title">ผ่าน(แปลง)</div>
-            <div class="stat-subtext">
-                <small><span id="passed-percentage">0%</span> ของที่ตรวจแล้ว</small>
-            </div>
-        </div>
-        <!-- เพิ่มพื้นที่ผ่าน -->
-        <div class="stat-item stat-item-passed">
-            <div class="stat-value comma-number" id="passed-area">0</div>
-            <div class="stat-title">ผ่าน(ไร่)</div>
-        </div>
-        <div class="stat-item stat-item-failed">
-            <div class="stat-value comma-number" id="failed-projects">0</div>
-            <div class="stat-title">ไม่ผ่าน(แปลง)</div>
-            <div class="stat-subtext">
-                <small><span id="failed-percentage">0%</span> ของที่ตรวจแล้ว</small>
-            </div>
-        </div>
-        <!-- เพิ่มพื้นที่ไม่ผ่าน -->
-        <div class="stat-item stat-item-failed">
-            <div class="stat-value comma-number" id="failed-area">0</div>
-            <div class="stat-title">ไม่ผ่าน(ไร่)</div>
-        </div>
-    </div>
-</div>
+
             <!-- Search and Filter Section -->
             <div class="filter-section">
                 <h5 class="filter-section-title">
@@ -1671,57 +1732,58 @@
                                 </div>
                             </div>
                             
-                     <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
-<div class="mb-4"> <!-- ลด margin-bottom -->
-    <h5 class="text-primary mb-3"> <!-- ใช้ h5 แทน h4 -->
-        <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
-    </h5>
-    
-    <ol class="condition-list-small">
-        <li>
-            <strong class="small">โครงการปลูกอ้อยในนา</strong> <!-- ลดขนาดตัวหนา -->
-            <ul class="sub-condition-list-small">
-                <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
-                <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
-                <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 15,000 ไร่</li>
-                <li>ช่วยค่าปลูก 800 บาท/ไร่ จำนวน 12,000,000 บาท</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">เงื่อนไขการจ่าย</strong>
-            <ul class="sub-condition-list-small">
-                <li>ไม่จ่ายเป็นเงินสด</li>
-                <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
-                <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">วิธีการปลูก</strong>
-            <ul class="sub-condition-list-small">
-                <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
-                <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-                <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
-                <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">ผลผลิต</strong>
-            <ul class="sub-condition-list-small">
-                <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 195,000 ตัน/ปี</li>
-                <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 165,000 ตัน/ปี</li>
-                <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 135,000 ตัน/ปี</li>
-                <li>รวมผลผลิต 3 ปี: จำนวน 495,000 ตัน/ปี</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">งบประมาณ</strong>
-            <ul class="sub-condition-list-small">
-                <li>งบประมาณต่อปี: จำนวน 62 บาท/ตัน</li>
-                <li>งบประมาณ 3 ปี: จำนวน 24 บาท/ตัน</li>
-            </ul>
-        </li>
-    </ol>
-</div>
+                            <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
+                            <div class="mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
+                                </h5>
+                                
+                                <ol class="condition-list-small">
+                                    <li>
+                                        <strong class="small">โครงการปลูกอ้อยในนา</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
+                                            <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
+                                            <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 15,000 ไร่</li>
+                                            <li>ช่วยค่าปลูก 800 บาท/ไร่ จำนวน 12,000,000 บาท</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">เงื่อนไขการจ่าย</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ไม่จ่ายเป็นเงินสด</li>
+                                            <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
+                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">วิธีการปลูก</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
+                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
+                                            <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
+                                            <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">ผลผลิต</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 195,000 ตัน/ปี</li>
+                                            <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 165,000 ตัน/ปี</li>
+                                            <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 135,000 ตัน/ปี</li>
+                                            <li>รวมผลผลิต 3 ปี: จำนวน 495,000 ตัน/ปี</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">งบประมาณ</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>งบประมาณต่อปี: จำนวน 62 บาท/ตัน</li>
+                                            <li>งบประมาณ 3 ปี: จำนวน 24 บาท/ตัน</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                            
                             <!-- ส่วนที่ 3: สรุปข้อมูลสำคัญ -->
                             <div>
                                 <h4 class="text-primary mb-4">
@@ -1826,57 +1888,58 @@
                                 </div>
                             </div>
                             
-                        <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
-<div class="mb-4">
-    <h5 class="text-purple mb-3">
-        <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
-    </h5>
-    
-    <ol class="condition-list-small">
-        <li>
-            <strong class="small">โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย</strong>
-            <ul class="sub-condition-list-small">
-                <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
-                <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
-                <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 30,000 ไร่</li>
-                <li>ช่วยค่าปลูก 700 บาท/ไร่ จำนวน 21,000,000 บาท</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">เงื่อนไขการจ่าย</strong>
-            <ul class="sub-condition-list-small">
-                <li>ไม่จ่ายเป็นเงินสด</li>
-                <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
-                <li>พื้นที่เข้าร่วมโครงการปลูกอ้อยในนา ไม่ได้รับสิทธิ์</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">วิธีการปลูก</strong>
-            <ul class="sub-condition-list-small">
-                <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
-                <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-                <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
-                <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">ผลผลิต</strong>
-            <ul class="sub-condition-list-small">
-                <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 390,000 ตัน/ปี</li>
-                <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 330,000 ตัน/ปี</li>
-                <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 270,000 ตัน/ปี</li>
-                <li>รวมผลผลิต 3 ปี: จำนวน 990,000 ตัน/ปี</li>
-            </ul>
-        </li>
-        <li>
-            <strong class="small">งบประมาณ</strong>
-            <ul class="sub-condition-list-small">
-                <li>งบประมาณต่อปี: จำนวน 54 บาท/ตัน</li>
-                <li>งบประมาณ 3 ปี: จำนวน 21 บาท/ตัน</li>
-            </ul>
-        </li>
-    </ol>
-</div>
+                            <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
+                            <div class="mb-4">
+                                <h5 class="text-purple mb-3">
+                                    <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
+                                </h5>
+                                
+                                <ol class="condition-list-small">
+                                    <li>
+                                        <strong class="small">โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
+                                            <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
+                                            <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 30,000 ไร่</li>
+                                            <li>ช่วยค่าปลูก 700 บาท/ไร่ จำนวน 21,000,000 บาท</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">เงื่อนไขการจ่าย</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ไม่จ่ายเป็นเงินสด</li>
+                                            <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
+                                            <li>พื้นที่เข้าร่วมโครงการปลูกอ้อยในนา ไม่ได้รับสิทธิ์</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">วิธีการปลูก</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
+                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
+                                            <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
+                                            <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">ผลผลิต</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 390,000 ตัน/ปี</li>
+                                            <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 330,000 ตัน/ปี</li>
+                                            <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 270,000 ตัน/ปี</li>
+                                            <li>รวมผลผลิต 3 ปี: จำนวน 990,000 ตัน/ปี</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <strong class="small">งบประมาณ</strong>
+                                        <ul class="sub-condition-list-small">
+                                            <li>งบประมาณต่อปี: จำนวน 54 บาท/ตัน</li>
+                                            <li>งบประมาณ 3 ปี: จำนวน 21 บาท/ตัน</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                            
                             <!-- ส่วนที่ 3: สรุปข้อมูลสำคัญ -->
                             <div>
                                 <h4 class="text-purple mb-4">
@@ -1922,7 +1985,6 @@
     <!-- Footer -->
     <div class="footer">
         <div class="container">
-            <!-- เปลี่ยนเป็นโลโก้ KBS Sugar จากลิงค์ที่ให้ -->
             <img src="https://i.postimg.cc/wMdZPmTL/skr-nch-xt-2026-01-12-092906.png" 
                  alt="KBS Sugar Logo" 
                  class="footer-logo kbs-logo">
@@ -1937,7 +1999,7 @@
                     <p class="mb-1">ข้อมูลระบบ:</p>
                     <p class="small mb-0">แสดงข้อมูลจาก Google Sheets (Public Mode)</p>
                     <p class="small mb-0">อัปเดตอัตโนมัติทุก 5 นาที</p>
-                    <p class="small mb-0">รุ่น: 2.0.0 | KBS Sugar Internal</p>
+                    <p class="small mb-0">รุ่น: 2.1.0 | KBS Sugar Internal (เพิ่มระบบติดตามเป้าหมาย)</p>
                 </div>
             </div>
             <hr class="my-3" style="border-color: rgba(255,255,255,0.1);">
@@ -1957,7 +2019,14 @@
         // Sheet names
         const SHEETS = {
             'Dataโครงการ': 'Dataโครงการ',      // ข้อมูลโครงการทั้งหมด
-            'Dataการตรวจ': 'Dataการตรวจ'       // ข้อมูลเงื่อนไขโครงการ
+            'Dataการตรวจ': 'Dataการตรวจ',       // ข้อมูลเงื่อนไขโครงการ
+            'เป้าหมาย': 'เป้าหมาย'              // เพิ่ม: ข้อมูลเป้าหมายโครงการ
+        };
+        
+        // Target keys for project types
+        const TARGET_KEYS = {
+            'planting-sugarcane-field': 'plant-cane-in-rice-field',    // ปลูกอ้อยในนา
+            'crop-change-sugarcane': 'change-to-cane'                   // เปลี่ยนพืชอื่นมาปลูกอ้อย
         };
         
         // Important field names for display
@@ -1984,8 +2053,24 @@
         let allData = {
             'Dataโครงการ': [],
             'Dataการตรวจ': [],
-            'planting-sugarcane-field': [], // ปลูกอ้อยในนา
-            'crop-change-sugarcane': [],     // เปลี่ยนพืชอื่นมาปลูกอ้อย
+            'เป้าหมาย': [],                      // เพิ่ม: ข้อมูลเป้าหมาย
+            'planting-sugarcane-field': [],      // ปลูกอ้อยในนา
+            'crop-change-sugarcane': [],         // เปลี่ยนพืชอื่นมาปลูกอ้อย
+            'targets': {                         // เพิ่ม: ข้อมูลเป้าหมายที่ประมวลผลแล้ว
+                'plant-cane-in-rice-field': { 
+                    target: 0, 
+                    area: 0,
+                    displayName: 'ปลูกอ้อยในนา',
+                    description: 'โครงการปลูกอ้อยในนา ปี 69/70'
+                },
+                'change-to-cane': { 
+                    target: 0, 
+                    area: 0,
+                    displayName: 'เปลี่ยนพืชอื่นมาปลูกอ้อย',
+                    description: 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70'
+                },
+                'zones': {}
+            }
         };
         let filteredData = [];
         let isSetupComplete = false;
@@ -2029,7 +2114,7 @@
             document.getElementById('reset-filters').addEventListener('click', resetFilters);
             document.getElementById('reset-filters-btn').addEventListener('click', resetFilters);
             
-            // Export buttons (มี 2 ปุ่ม)
+            // Export buttons
             document.getElementById('export-btn').addEventListener('click', exportData);
             document.getElementById('export-data-btn').addEventListener('click', exportData);
             
@@ -2052,6 +2137,7 @@
             document.getElementById('zone-filter').addEventListener('change', function() {
                 updateFarmerOfficerFilter();
                 filterData();
+                updateZoneTargetStats(); // อัพเดทเป้าหมายเขตเมื่อเปลี่ยนเขต
             });
             
             // Farmer officer filter
@@ -2084,6 +2170,9 @@
                         dataDisplayCard.classList.remove('planting-project');
                     }
                     
+                    // Update project type buttons
+                    updateProjectTypeButtons();
+                    
                     // Display data for current sheet
                     displayData();
                     
@@ -2095,6 +2184,9 @@
                     
                     // Update pie chart
                     updateConditionPieChart();
+                    
+                    // Update target display
+                    updateTargetDisplay();
                 });
             });
             
@@ -2107,9 +2199,67 @@
                 });
             });
             
+            // Add event listener for refresh targets button
+            document.getElementById('refresh-targets-btn').addEventListener('click', function() {
+                showToast('กำลังรีเฟรชข้อมูลเป้าหมาย', 'กำลังอัปเดตข้อมูลเป้าหมายล่าสุด', 'info');
+                loadAllSheetsData();
+            });
+            
+            // Add event listener for project type buttons
+            document.querySelectorAll('.project-type-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // อัพเดทสถานะปุ่ม
+                    document.querySelectorAll('.project-type-btn').forEach(b => {
+                        b.classList.remove('active');
+                        b.classList.remove('btn-success');
+                        b.classList.add('btn-warning');
+                    });
+                    
+                    this.classList.add('active');
+                    this.classList.remove('btn-warning');
+                    this.classList.add('btn-success');
+                    
+                    // สลับแท็บโครงการ
+                    const projectType = this.getAttribute('data-project-type');
+                    if (projectType === 'plant-cane-in-rice-field') {
+                        // ไปที่แท็บปลูกอ้อยในนา
+                        document.querySelector('[data-sheet="planting-sugarcane-field"]').click();
+                    } else {
+                        // ไปที่แท็บเปลี่ยนพืชอื่นมาปลูกอ้อย
+                        document.querySelector('[data-sheet="crop-change-sugarcane"]').click();
+                    }
+                    
+                    // อัพเดทแสดงผลเป้าหมาย
+                    updateTargetDisplay();
+                });
+            });
+            
             // Auto-refresh data every 5 minutes if setup is complete
             if (isSetupComplete) {
                 setInterval(loadAllSheetsData, 5 * 60 * 1000);
+            }
+        }
+        
+        // อัพเดทปุ่มเลือกประเภทโครงการ
+        function updateProjectTypeButtons() {
+            const isPlanting = currentSheet === 'planting-sugarcane-field';
+            const plantingBtn = document.querySelector('[data-project-type="plant-cane-in-rice-field"]');
+            const changeBtn = document.querySelector('[data-project-type="change-to-cane"]');
+            
+            if (isPlanting) {
+                plantingBtn.classList.add('active');
+                plantingBtn.classList.remove('btn-warning');
+                plantingBtn.classList.add('btn-success');
+                changeBtn.classList.remove('active');
+                changeBtn.classList.remove('btn-success');
+                changeBtn.classList.add('btn-warning');
+            } else {
+                changeBtn.classList.add('active');
+                changeBtn.classList.remove('btn-warning');
+                changeBtn.classList.add('btn-success');
+                plantingBtn.classList.remove('active');
+                plantingBtn.classList.remove('btn-success');
+                plantingBtn.classList.add('btn-warning');
             }
         }
         
@@ -2155,11 +2305,19 @@
                     // Log sample of data for debugging
                     if (data.length > 0) {
                         console.log(`โหลด ${sheetName} สำเร็จ: ${data.length} รายการ`);
+                        
+                        // แสดงตัวอย่างข้อมูลสำหรับชีทเป้าหมาย
+                        if (sheetName === 'เป้าหมาย' && data.length > 0) {
+                            console.log('ตัวอย่างข้อมูลเป้าหมาย:', data[0]);
+                        }
                     }
                 }
                 
-                // Process project data to create filtered datasets
+                // Process project data
                 processProjectData();
+                
+                // Process target data
+                processTargetData();
                 
                 // Update last update time
                 const now = new Date();
@@ -2178,18 +2336,15 @@
                 // Update pie chart
                 updateConditionPieChart();
                 
+                // Update target display
+                updateTargetDisplay();
+                
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
             } catch (error) {
                 console.error('Error loading data:', error);
                 showError('ไม่สามารถโหลดข้อมูลได้: ' + error.message);
                 showLoading(false);
-                
-                // Show setup section again if error
-                document.getElementById('setup-section').style.display = 'block';
-                document.getElementById('main-interface').style.display = 'none';
-                isSetupComplete = false;
-                localStorage.removeItem('kbsSetupComplete');
             }
         }
         
@@ -2262,6 +2417,100 @@
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
         }
         
+        // Process target data
+        function processTargetData() {
+            const targetData = allData['เป้าหมาย'];
+            
+            if (!targetData || targetData.length === 0) {
+                console.warn('ไม่พบข้อมูลเป้าหมายในชีท "เป้าหมาย"');
+                showToast('แจ้งเตือน', 'ไม่พบข้อมูลเป้าหมาย กรุณาตรวจสอบชีท "เป้าหมาย"', 'warning');
+                return;
+            }
+            
+            console.log(`พบข้อมูลเป้าหมาย ${targetData.length} รายการ`);
+            
+            // Reset target data
+            const targetMap = {
+                'plant-cane-in-rice-field': { 
+                    target: 0, 
+                    area: 0,
+                    displayName: 'ปลูกอ้อยในนา',
+                    description: 'โครงการปลูกอ้อยในนา ปี 69/70'
+                },
+                'change-to-cane': { 
+                    target: 0, 
+                    area: 0,
+                    displayName: 'เปลี่ยนพืชอื่นมาปลูกอ้อย',
+                    description: 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70'
+                },
+                'zones': {}
+            };
+            
+            // Process target data
+            targetData.forEach((item, index) => {
+                // Check for different possible column names
+                const projectType = item['ประเภทโครงการ'] || item['โครงการ'] || item['type'] || '';
+                const zone = item['เขต'] || item['zone'] || item['area'] || '';
+                const targetPlots = parseFloat(item['เป้าหมายแปลง']) || parseFloat(item['แปลง']) || parseFloat(item['plots']) || 0;
+                const targetArea = parseFloat(item['เป้าหมายพื้นที่']) || parseFloat(item['พื้นที่']) || parseFloat(item['area']) || 0;
+                
+                // Debug log
+                console.log(`เป้าหมาย ${index + 1}: ${projectType}, เขต: ${zone}, แปลง: ${targetPlots}, พื้นที่: ${targetArea}`);
+                
+                // Group by project type
+                const projectTypeLower = projectType.toLowerCase();
+                if (projectTypeLower.includes('ปลูกอ้อยในนา') || 
+                    projectTypeLower.includes('อ้อยในนา') ||
+                    projectTypeLower.includes('plant') ||
+                    projectTypeLower.includes('ปลูก')) {
+                    
+                    targetMap['plant-cane-in-rice-field'].target += targetPlots;
+                    targetMap['plant-cane-in-rice-field'].area += targetArea;
+                    
+                } else if (projectTypeLower.includes('เปลี่ยนพืชอื่น') || 
+                           projectTypeLower.includes('เปลี่ยนพืช') ||
+                           projectTypeLower.includes('change') ||
+                           projectTypeLower.includes('เปลี่ยน')) {
+                    
+                    targetMap['change-to-cane'].target += targetPlots;
+                    targetMap['change-to-cane'].area += targetArea;
+                }
+                
+                // Group by zone (if zone data exists)
+                if (zone && zone.trim() !== '') {
+                    const zoneKey = zone.trim();
+                    if (!targetMap.zones[zoneKey]) {
+                        targetMap.zones[zoneKey] = { 
+                            target: 0, 
+                            area: 0,
+                            'plant-cane-in-rice-field': { target: 0, area: 0 },
+                            'change-to-cane': { target: 0, area: 0 }
+                        };
+                    }
+                    
+                    targetMap.zones[zoneKey].target += targetPlots;
+                    targetMap.zones[zoneKey].area += targetArea;
+                    
+                    // Split by project type within each zone
+                    if (projectTypeLower.includes('ปลูกอ้อยในนา') || projectTypeLower.includes('อ้อยในนา')) {
+                        targetMap.zones[zoneKey]['plant-cane-in-rice-field'].target += targetPlots;
+                        targetMap.zones[zoneKey]['plant-cane-in-rice-field'].area += targetArea;
+                    } else if (projectTypeLower.includes('เปลี่ยนพืชอื่น') || projectTypeLower.includes('เปลี่ยนพืช')) {
+                        targetMap.zones[zoneKey]['change-to-cane'].target += targetPlots;
+                        targetMap.zones[zoneKey]['change-to-cane'].area += targetArea;
+                    }
+                }
+            });
+            
+            // Save processed target data
+            allData['targets'] = targetMap;
+            
+            console.log('สรุปข้อมูลเป้าหมาย:');
+            console.log('- ปลูกอ้อยในนา:', targetMap['plant-cane-in-rice-field']);
+            console.log('- เปลี่ยนพืชอื่นมาปลูกอ้อย:', targetMap['change-to-cane']);
+            console.log('- จำนวนเขต:', Object.keys(targetMap.zones).length);
+        }
+        
         // Update filter dropdown options
         function updateFilterOptions() {
             const data = allData[currentSheet];
@@ -2294,17 +2543,16 @@
                 zoneFilter.appendChild(option);
             });
             
-            // Update farmer officer filter dropdown (เริ่มต้นด้วยทั้งหมด)
+            // Update farmer officer filter dropdown
             updateFarmerOfficerFilter();
         }
         
-        // อัพเดทตัวกรองนักเกษตรตามเขตที่เลือก
+        // Update farmer officer filter based on selected zone
         function updateFarmerOfficerFilter() {
             const data = allData[currentSheet];
             const zoneFilter = document.getElementById('zone-filter');
             const selectedZone = zoneFilter.value;
             
-            // เก็บเฉพาะนักเกษตรในเขตที่เลือก (หรือทั้งหมดถ้าเลือก "ทุกเขต")
             const filteredOfficers = new Set();
             
             data.forEach(item => {
@@ -2330,189 +2578,360 @@
             });
         }
         
-      // Update project statistics
-function updateProjectStats() {
-    const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
-    
-    if (data.length === 0) {
-        // Reset all values to 0
-        const statIds = [
-            'total-projects', 'total-area',
-            'checked-projects', 'checked-area',
-            'not-checked-projects', 'not-checked-area',
-            'passed-projects', 'passed-area',
-            'failed-projects', 'failed-area'
-        ];
-        
-        statIds.forEach(id => {
-            document.getElementById(id).textContent = '0';
-        });
-        return;
-    }
-    
-    // Calculate statistics
-    let totalArea = 0;
-    let checkedCount = 0;
-    let checkedArea = 0;
-    let notCheckedCount = 0;
-    let notCheckedArea = 0;
-    let passedCount = 0;
-    let passedArea = 0;
-    let failedCount = 0;
-    let failedArea = 0;
-    
-    data.forEach(item => {
-        // Calculate total area
-        const area = parseFloat(item['พื้นที่']) || 0;
-        totalArea += area;
-        
-        // Count checked projects (ผ่าน or ไม่ผ่าน)
-        const condition = item['เงื่อนไขโครงการ'] || '';
-        if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
-            checkedCount++;
-            checkedArea += area;
+        // Update target display
+        function updateTargetDisplay() {
+            const targets = allData.targets;
             
-            // แยกพื้นที่ตามผลการตรวจ
-            if (condition === 'ผ่าน') {
-                passedCount++;
-                passedArea += area;
-            } else if (condition === 'ไม่ผ่าน') {
-                failedCount++;
-                failedArea += area;
+            if (!targets) {
+                console.warn('ยังไม่มีข้อมูลเป้าหมาย');
+                updateTargetDisplayStatus('loading');
+                return;
             }
-        } else if (condition === 'รอตรวจแปลง' || condition === '') {
-            notCheckedCount++;
-            notCheckedArea += area;
+            
+            // Determine current project type
+            const projectType = currentSheet === 'planting-sugarcane-field' ? 
+                               'plant-cane-in-rice-field' : 'change-to-cane';
+            
+            const targetInfo = targets[projectType];
+            const data = allData[currentSheet];
+            const currentCount = data.length;
+            
+            if (!targetInfo || targetInfo.target === 0) {
+                updateTargetDisplayStatus('no-target');
+                return;
+            }
+            
+            // Calculate progress
+            const progressPercent = targetInfo.target > 0 ? 
+                                   Math.min(100, Math.round((currentCount / targetInfo.target) * 100)) : 0;
+            
+            // Update main target display
+            document.getElementById('active-project-target').textContent = formatNumber(targetInfo.target);
+            
+            // Update progress
+            document.getElementById('overall-progress-percent').textContent = progressPercent + '%';
+            document.getElementById('overall-progress-bar').style.width = progressPercent + '%';
+            
+            // Update project counts
+            document.getElementById('achieved-projects').textContent = formatNumber(currentCount);
+            document.getElementById('remaining-projects').textContent = formatNumber(Math.max(0, targetInfo.target - currentCount));
+            
+            // Update project name
+            document.getElementById('current-project-badge').textContent = targetInfo.displayName;
+            document.getElementById('current-project-type').textContent = targetInfo.displayName;
+            
+            // Update zone targets
+            updateZoneTargetStats();
+            
+            // Update completion estimate
+            updateCompletionEstimate(currentCount, targetInfo.target);
+            
+            // Update status
+            updateTargetDisplayStatus('loaded', progressPercent);
         }
-    });
-    
-    // Update DOM elements with formatted numbers
-    document.getElementById('total-projects').textContent = formatNumber(data.length);
-    document.getElementById('total-area').textContent = formatNumber(totalArea);
-    document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
-    document.getElementById('checked-area').textContent = formatNumber(checkedArea);
-    document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
-    document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
-    document.getElementById('passed-projects').textContent = formatNumber(passedCount);
-    document.getElementById('passed-area').textContent = formatNumber(passedArea);
-    document.getElementById('failed-projects').textContent = formatNumber(failedCount);
-    document.getElementById('failed-area').textContent = formatNumber(failedArea);
-}
         
-   // Update condition pie chart (ปรับขนาดใหญ่ขึ้น)
-function updateConditionPieChart() {
-    const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
-    
-    if (data.length === 0) {
-        // Reset pie chart if no data
-        if (conditionPieChart) {
-            conditionPieChart.data.datasets[0].data = [0, 0, 0];
-            conditionPieChart.update();
+        // Update zone target statistics
+        function updateZoneTargetStats() {
+            const zoneFilter = document.getElementById('zone-filter');
+            const selectedZone = zoneFilter.value;
+            const targets = allData.targets;
+            
+            if (!targets || !targets.zones) {
+                document.getElementById('selected-zone-target').textContent = '0';
+                document.getElementById('selected-zone-count').textContent = '0';
+                return;
+            }
+            
+            if (selectedZone === 'all') {
+                // Show total of all zones
+                const totalZones = Object.keys(targets.zones).length;
+                let totalTarget = 0;
+                
+                Object.values(targets.zones).forEach(zone => {
+                    totalTarget += zone.target;
+                });
+                
+                document.getElementById('selected-zone-target').textContent = formatNumber(totalTarget);
+                document.getElementById('selected-zone-count').textContent = formatNumber(totalZones);
+            } else {
+                // Show selected zone only
+                const zoneTarget = targets.zones[selectedZone];
+                if (zoneTarget) {
+                    document.getElementById('selected-zone-target').textContent = formatNumber(zoneTarget.target);
+                    document.getElementById('selected-zone-count').textContent = '1';
+                } else {
+                    document.getElementById('selected-zone-target').textContent = '0';
+                    document.getElementById('selected-zone-count').textContent = '0';
+                }
+            }
         }
-        document.getElementById('passed-percentage').textContent = '0 (0%)';
-        document.getElementById('failed-percentage').textContent = '0 (0%)';
-        document.getElementById('pending-percentage').textContent = '0 (0%)';
-        return;
-    }
-    
-    // Calculate condition counts
-    let passedCount = 0;
-    let failedCount = 0;
-    let pendingCount = 0;
-    
-    data.forEach(item => {
-        const condition = item['เงื่อนไขโครงการ'] || '';
-        if (condition === 'ผ่าน') {
-            passedCount++;
-        } else if (condition === 'ไม่ผ่าน') {
-            failedCount++;
-        } else {
-            pendingCount++;
+        
+        // Update target display status
+        function updateTargetDisplayStatus(status, progressPercent = 0) {
+            const statusElement = document.getElementById('target-loading-status');
+            
+            switch(status) {
+                case 'loading':
+                    statusElement.innerHTML = '<small class="text-info"><i class="fas fa-spinner fa-spin me-1"></i> กำลังโหลดข้อมูลเป้าหมาย...</small>';
+                    break;
+                case 'no-target':
+                    statusElement.innerHTML = '<small class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i> ไม่พบเป้าหมายสำหรับโครงการนี้</small>';
+                    break;
+                case 'loaded':
+                    const progressClass = progressPercent >= 100 ? 'text-success' : 
+                                         progressPercent >= 70 ? 'text-primary' : 
+                                         progressPercent >= 40 ? 'text-warning' : 'text-danger';
+                    statusElement.innerHTML = `<small class="${progressClass}"><i class="fas fa-chart-line me-1"></i> คืบหน้า: ${progressPercent}%</small>`;
+                    break;
+                default:
+                    statusElement.innerHTML = '<small class="text-muted"><i class="fas fa-info-circle me-1"></i> รอข้อมูลเป้าหมาย</small>';
+            }
         }
-    });
-    
-    // Calculate percentages
-    const total = data.length;
-    const passedPercentage = total > 0 ? Math.round((passedCount / total) * 100) : 0;
-    const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
-    const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
-    
-    // Update percentage displays - แสดงตัวเลขที่มีคอมม่า
-    document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
-    document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
-    document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
-    
-    // Create or update pie chart
-    const ctx = document.getElementById('conditionPieChart').getContext('2d');
-    
-    if (conditionPieChart) {
-        // Update existing chart
-        conditionPieChart.data.datasets[0].data = [passedCount, failedCount, pendingCount];
-        conditionPieChart.update();
-    } else {
-        // Create new chart with larger size
-        conditionPieChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
-                datasets: [{
-                    data: [passedCount, failedCount, pendingCount],
-                    backgroundColor: [
-                        '#4CAF50', // Green for passed
-                        '#F44336', // Red for failed
-                        '#FF9800'  // Orange for pending
-                    ],
-                    borderColor: '#fff',
-                    borderWidth: 3, // เพิ่มความหนา
-                    hoverOffset: 20 // เพิ่ม hover offset
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            usePointStyle: true,
-                            font: {
-                                family: "'Sarabun', sans-serif",
-                                size: 14 // เพิ่มขนาดฟอนต์
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const label = context.label || '';
-                                const value = context.raw || 0;
-                                const percentage = Math.round((value / total) * 100);
-                                const formattedValue = formatNumber(value);
-                                return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
-                            }
-                        },
-                        titleFont: {
-                            size: 14
-                        },
-                        bodyFont: {
-                            size: 13
-                        }
+        
+        // Calculate completion estimate
+        function updateCompletionEstimate(currentCount, target) {
+            const estimateElement = document.getElementById('completion-estimate');
+            
+            if (currentCount >= target) {
+                estimateElement.textContent = 'ดำเนินการเสร็จสิ้นแล้ว';
+                return;
+            }
+            
+            const remaining = target - currentCount;
+            const today = new Date();
+            const estimateDate = new Date(today);
+            
+            // Calculate estimated days (assuming 5 projects per day)
+            const projectsPerDay = 5;
+            const daysNeeded = Math.ceil(remaining / projectsPerDay);
+            
+            // Add working days (skip weekends)
+            let workDaysAdded = 0;
+            while (workDaysAdded < daysNeeded) {
+                estimateDate.setDate(estimateDate.getDate() + 1);
+                
+                // Check if it's a working day (Monday-Friday)
+                const dayOfWeek = estimateDate.getDay();
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // 0 = Sunday, 6 = Saturday
+                    workDaysAdded++;
+                }
+            }
+            
+            // Format as Thai date
+            const thaiMonths = [
+                'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
+                'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'
+            ];
+            
+            const day = estimateDate.getDate();
+            const month = thaiMonths[estimateDate.getMonth()];
+            const year = estimateDate.getFullYear() + 543; // Convert to Buddhist Era
+            
+            estimateElement.textContent = `${day} ${month} ${year}`;
+        }
+        
+        // Update project statistics
+        function updateProjectStats() {
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+            
+            if (data.length === 0) {
+                // Reset all values to 0
+                const statIds = [
+                    'total-projects', 'total-area',
+                    'checked-projects', 'checked-area',
+                    'not-checked-projects', 'not-checked-area',
+                    'passed-projects', 'passed-area',
+                    'failed-projects', 'failed-area'
+                ];
+                
+                statIds.forEach(id => {
+                    document.getElementById(id).textContent = '0';
+                });
+                
+                // Reset percentages
+                document.getElementById('checked-percentage').textContent = '0%';
+                document.getElementById('not-checked-percentage').textContent = '0%';
+                document.getElementById('passed-percentage-stat').textContent = '0%';
+                document.getElementById('failed-percentage-stat').textContent = '0%';
+                
+                return;
+            }
+            
+            // Calculate statistics
+            let totalArea = 0;
+            let checkedCount = 0;
+            let checkedArea = 0;
+            let notCheckedCount = 0;
+            let notCheckedArea = 0;
+            let passedCount = 0;
+            let passedArea = 0;
+            let failedCount = 0;
+            let failedArea = 0;
+            
+            data.forEach(item => {
+                // Calculate total area
+                const area = parseFloat(item['พื้นที่']) || 0;
+                totalArea += area;
+                
+                // Count checked projects (ผ่าน or ไม่ผ่าน)
+                const condition = item['เงื่อนไขโครงการ'] || '';
+                if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
+                    checkedCount++;
+                    checkedArea += area;
+                    
+                    // Separate area by inspection result
+                    if (condition === 'ผ่าน') {
+                        passedCount++;
+                        passedArea += area;
+                    } else if (condition === 'ไม่ผ่าน') {
+                        failedCount++;
+                        failedArea += area;
                     }
-                },
-                animation: {
-                    animateScale: true,
-                    animateRotate: true,
-                    duration: 1000
-                },
-                cutout: '30%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
-                radius: '100%' // เพิ่มขนาดให้ใหญ่ที่สุด
-            }
-        });
-    }
-}
+                } else if (condition === 'รอตรวจแปลง' || condition === '') {
+                    notCheckedCount++;
+                    notCheckedArea += area;
+                }
+            });
+            
+            // Calculate percentages
+            const checkedPercent = data.length > 0 ? Math.round((checkedCount / data.length) * 100) : 0;
+            const notCheckedPercent = data.length > 0 ? Math.round((notCheckedCount / data.length) * 100) : 0;
+            const passedPercent = checkedCount > 0 ? Math.round((passedCount / checkedCount) * 100) : 0;
+            const failedPercent = checkedCount > 0 ? Math.round((failedCount / checkedCount) * 100) : 0;
+            
+            // Update DOM elements with formatted numbers
+            document.getElementById('total-projects').textContent = formatNumber(data.length);
+            document.getElementById('total-area').textContent = formatNumber(totalArea);
+            document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
+            document.getElementById('checked-area').textContent = formatNumber(checkedArea);
+            document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
+            document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
+            document.getElementById('passed-projects').textContent = formatNumber(passedCount);
+            document.getElementById('passed-area').textContent = formatNumber(passedArea);
+            document.getElementById('failed-projects').textContent = formatNumber(failedCount);
+            document.getElementById('failed-area').textContent = formatNumber(failedArea);
+            
+            // Update percentages
+            document.getElementById('checked-percentage').textContent = checkedPercent + '%';
+            document.getElementById('not-checked-percentage').textContent = notCheckedPercent + '%';
+            document.getElementById('passed-percentage-stat').textContent = passedPercent + '%';
+            document.getElementById('failed-percentage-stat').textContent = failedPercent + '%';
+        }
         
-        // Fetch data from Google Sheets (Public Method)
+        // Update condition pie chart
+        function updateConditionPieChart() {
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+            
+            if (data.length === 0) {
+                // Reset pie chart if no data
+                if (conditionPieChart) {
+                    conditionPieChart.data.datasets[0].data = [0, 0, 0];
+                    conditionPieChart.update();
+                }
+                document.getElementById('passed-percentage').textContent = '0 (0%)';
+                document.getElementById('failed-percentage').textContent = '0 (0%)';
+                document.getElementById('pending-percentage').textContent = '0 (0%)';
+                return;
+            }
+            
+            // Calculate condition counts
+            let passedCount = 0;
+            let failedCount = 0;
+            let pendingCount = 0;
+            
+            data.forEach(item => {
+                const condition = item['เงื่อนไขโครงการ'] || '';
+                if (condition === 'ผ่าน') {
+                    passedCount++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    failedCount++;
+                } else {
+                    pendingCount++;
+                }
+            });
+            
+            // Calculate percentages
+            const total = data.length;
+            const passedPercentage = total > 0 ? Math.round((passedCount / total) * 100) : 0;
+            const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
+            const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
+            
+            // Update percentage displays
+            document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
+            document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
+            document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
+            
+            // Create or update pie chart
+            const ctx = document.getElementById('conditionPieChart').getContext('2d');
+            
+            if (conditionPieChart) {
+                // Update existing chart
+                conditionPieChart.data.datasets[0].data = [passedCount, failedCount, pendingCount];
+                conditionPieChart.update();
+            } else {
+                // Create new chart
+                conditionPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
+                        datasets: [{
+                            data: [passedCount, failedCount, pendingCount],
+                            backgroundColor: [
+                                '#4CAF50', // Green for passed
+                                '#F44336', // Red for failed
+                                '#FF9800'  // Orange for pending
+                            ],
+                            borderColor: '#fff',
+                            borderWidth: 3,
+                            hoverOffset: 20
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: {
+                                        family: "'Sarabun', sans-serif",
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const percentage = Math.round((value / total) * 100);
+                                        const formattedValue = formatNumber(value);
+                                        return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
+                                    }
+                                },
+                                titleFont: {
+                                    size: 14
+                                },
+                                bodyFont: {
+                                    size: 13
+                                }
+                            }
+                        },
+                        animation: {
+                            animateScale: true,
+                            animateRotate: true,
+                            duration: 1000
+                        },
+                        cutout: '30%',
+                        radius: '100%'
+                    }
+                });
+            }
+        }
+        
+        // Fetch data from Google Sheets
         async function fetchSheetData(sheetName) {
             // URL for public Google Sheets (published to web)
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}`;
@@ -2587,7 +3006,7 @@ function updateConditionPieChart() {
             return data;
         }
         
-        // Parse a single CSV line (handles quotes and commas)
+        // Parse a single CSV line
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -2794,7 +3213,6 @@ function updateConditionPieChart() {
             if (activeFilter !== 'all') {
                 switch(activeFilter) {
                     case 'recent':
-                        // Filter for recent items (last 30 days)
                         const oneMonthAgo = new Date();
                         oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
                         data = data.filter(item => {
@@ -2807,35 +3225,30 @@ function updateConditionPieChart() {
                         });
                         break;
                     case 'large':
-                        // Filter for large areas (> 10 rai)
                         data = data.filter(item => {
                             const area = parseFloat(item['พื้นที่']) || 0;
                             return area > 10;
                         });
                         break;
                     case 'checked':
-                        // Filter for checked projects
                         data = data.filter(item => {
                             const condition = item['เงื่อนไขโครงการ'] || '';
                             return condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
                         });
                         break;
                     case 'not-checked':
-                        // Filter for not checked projects
                         data = data.filter(item => {
                             const condition = item['เงื่อนไขโครงการ'] || '';
                             return condition === 'รอตรวจแปลง' || condition === '';
                         });
                         break;
                     case 'passed':
-                        // Filter for passed projects
                         data = data.filter(item => {
                             const condition = item['เงื่อนไขโครงการ'] || '';
                             return condition === 'ผ่าน';
                         });
                         break;
                     case 'failed':
-                        // Filter for failed projects
                         data = data.filter(item => {
                             const condition = item['เงื่อนไขโครงการ'] || '';
                             return condition === 'ไม่ผ่าน';
@@ -2854,33 +3267,37 @@ function updateConditionPieChart() {
             
             // Update pie chart
             updateConditionPieChart();
+            
+            // Update target display
+            updateTargetDisplay();
         }
         
-       // Reset all filters
-function resetFilters() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('condition-filter').value = 'all';
-    document.getElementById('zone-filter').value = 'all';
-    document.getElementById('farmer-officer-filter').value = 'all';
-    
-    // เรียกใช้ updateFarmerOfficerFilter เพื่อรีเซ็ตตัวกรองนักเกษตร
-    updateFarmerOfficerFilter();
-    
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-filter') === 'all') {
-            btn.classList.add('active');
+        // Reset all filters
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('condition-filter').value = 'all';
+            document.getElementById('zone-filter').value = 'all';
+            document.getElementById('farmer-officer-filter').value = 'all';
+            
+            // Reset farmer officer filter
+            updateFarmerOfficerFilter();
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Reset stats to show all data
+            filteredData = [...allData[currentSheet]];
+            populateTable(filteredData);
+            updateProjectStats();
+            updateConditionPieChart();
+            updateTargetDisplay();
+            
+            showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
         }
-    });
-    
-    // Reset stats to show all data
-    filteredData = [...allData[currentSheet]];
-    populateTable(filteredData);
-    updateProjectStats();
-    updateConditionPieChart();
-    
-    showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
-}
         
         // Show project details in modal
         function showProjectDetailsModal(itemId) {
@@ -3182,7 +3599,7 @@ function resetFilters() {
             return `${day}/${month}/${buddhistYear} ${hour}:${minute} น.`;
         }
         
-        // Parse Thai date (dd/mm/yyyy where yyyy is Buddhist Era)
+        // Parse Thai date
         function parseThaiDate(dateString) {
             if (!dateString) return null;
             
