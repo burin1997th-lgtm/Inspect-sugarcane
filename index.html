@@ -547,44 +547,29 @@
             font-size: 0.9rem;
             color: var(--text-light);
         }
-        /* สไตล์ Project Stats */
-.project-switch .btn-group .btn {
-    font-size: 0.85rem;
-    padding: 8px 5px;
-}
-
-.project-switch .btn.active {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.target-value-lg {
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1;
-    margin-bottom: 5px;
-}
-
-.target-label-lg {
-    font-size: 0.9rem;
-    opacity: 0.9;
-}
-
-.target-value-sm {
-    font-size: 1.2rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 3px;
-}
-
-.target-label-sm {
-    font-size: 0.7rem;
+       /* สไตล์ Project Stats */
+.target-subtext {
+    font-size: 0.75rem;
+    margin-top: 5px;
     opacity: 0.8;
 }
 
-.project-name-badge .badge {
+.target-subtext .text-success {
+    color: #28a745 !important;
+}
+
+.target-subtext .text-warning {
+    color: #ffc107 !important;
+}
+
+/* ปุ่มรีเฟรช */
+#refresh-targets-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
     font-size: 0.8rem;
-    padding: 5px 12px;
+    padding: 4px 10px;
+    z-index: 10;
 }
 
 /* สไตล์ความคืบหน้า */
@@ -1329,58 +1314,95 @@
                         </div>
                     </div>
                 </div>
-     <!-- Project Stats - เหลือ 30% ของหน้า -->
+                
+   <!-- Project Stats - แก้ไขใหม่ -->
 <div class="col-lg-4">
     <div class="stats-grid" id="project-stats">
-        <!-- เพิ่มส่วนเป้าหมาย -->
-        <div class="target-section mb-3 p-3" style="background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); border-radius: 10px; color: white;">
-            <h6 class="mb-2"><i class="fas fa-bullseye me-2"></i>เป้าหมายโครงการ</h6>
-            <div class="row">
-                <div class="col-6">
-                    <div class="text-center">
-                        <div class="target-value" id="target-cane-in-rice-field">15,000</div>
-                        <div class="target-label">เป้าปลูกอ้อยในนา</div>
-                        <div class="target-progress">
-                            <div class="progress" style="height: 6px; background: rgba(255,255,255,0.3);">
-                                <div class="progress-bar bg-success" id="progress-cane-in-rice-field" style="width: 0%"></div>
-                            </div>
-                            <small><span id="achieved-cane-in-rice-field">0</span>/<span id="target-total-cane-in-rice-field">15,000</span></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="text-center">
-                        <div class="target-value" id="target-change-to-cane">30,000</div>
-                        <div class="target-label">เป้าเปลี่ยนพืชอื่นมาปลูกอ้อย</div>
-                        <div class="target-progress">
-                            <div class="progress" style="height: 6px; background: rgba(255,255,255,0.3);">
-                                <div class="progress-bar bg-warning" id="progress-change-to-cane" style="width: 0%"></div>
-                            </div>
-                            <small><span id="achieved-change-to-cane">0</span>/<span id="target-total-change-to-cane">30,000</span></small>
-                        </div>
-                    </div>
+        <!-- ส่วนที่ 1: เป้าหมายโครงการ -->
+        <div class="target-section mb-3 p-3" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); border-radius: 10px; color: white;">
+            <h6 class="mb-3"><i class="fas fa-bullseye me-2"></i>เป้าหมายโครงการ</h6>
+            
+            <!-- สวิตช์เลือกโครงการ -->
+            <div class="project-switch mb-3">
+                <div class="btn-group w-100" role="group">
+                    <button type="button" class="btn btn-success project-type-btn active" data-project-type="plant-cane-in-rice-field">
+                        <i class="fas fa-seedling me-2"></i>ปลูกอ้อยในนา
+                    </button>
+                    <button type="button" class="btn btn-warning project-type-btn" data-project-type="change-to-cane">
+                        <i class="fas fa-exchange-alt me-2"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย
+                    </button>
                 </div>
             </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    <div class="text-center">
-                        <div class="target-value" id="target-active-project">-</div>
-                        <div class="target-label">
-                            <span id="active-project-name">โครงการที่เลือก</span>
-                            <span class="badge bg-info ms-2" id="project-type-badge">ยังไม่เลือก</span>
+            
+            <!-- ข้อมูลเป้าหมาย -->
+            <div class="target-info text-center">
+                <div class="target-display mb-3">
+                    <div class="target-value-lg" id="active-project-target">0</div>
+                    <div class="target-label-lg">แปลง</div>
+                    <div class="target-subtext" id="target-loading-status">
+                        <small><i class="fas fa-spinner fa-spin me-1"></i> กำลังโหลดข้อมูลเป้าหมาย...</small>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-6">
+                        <div class="zone-target">
+                            <div class="target-value-sm" id="selected-zone-target">0</div>
+                            <div class="target-label-sm">เป้าหมายเขตที่เลือก</div>
                         </div>
-                        <div class="target-progress">
-                            <div class="progress" style="height: 8px; background: rgba(255,255,255,0.3);">
-                                <div class="progress-bar bg-info" id="progress-active-project" style="width: 0%"></div>
-                            </div>
-                            <small>ความคืบหน้า: <span id="active-project-progress">0%</span> (<span id="active-project-remaining">0</span> เหลือ)</small>
+                    </div>
+                    <div class="col-6">
+                        <div class="zone-count">
+                            <div class="target-value-sm" id="selected-zone-count">0</div>
+                            <div class="target-label-sm">จำนวนเขตที่เลือก</div>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <div class="project-name-badge">
+                        <span class="badge bg-success" id="current-project-badge">ปลูกอ้อยในนา</span>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- สถิติเดิม -->
+        <!-- ส่วนที่ 2: ความคืบหน้า -->
+        <div class="progress-section mb-3 p-3" style="background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); border-radius: 10px; color: white;">
+            <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>ความคืบหน้าโครงการ</h6>
+            
+            <div class="progress-overview mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>ความคืบหน้าทั้งหมด</span>
+                    <span id="overall-progress-percent">0%</span>
+                </div>
+                <div class="progress" style="height: 12px; background: rgba(255,255,255,0.3);">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
+                         id="overall-progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="row progress-details">
+                <div class="col-6">
+                    <div class="progress-item text-center">
+                        <div class="progress-value" id="achieved-projects">0</div>
+                        <div class="progress-label">ดำเนินการแล้ว</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="progress-item text-center">
+                        <div class="progress-value" id="remaining-projects">0</div>
+                        <div class="progress-label">เหลือดำเนินการ</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-estimate mt-3 text-center">
+                <small><i class="fas fa-clock me-1"></i>ประมาณแล้วเสร็จ: <span id="completion-estimate">-</span></small>
+            </div>
+        </div>
+        
+        <!-- ส่วนที่ 3: สถิติเดิม -->
         <div class="stat-item">
             <div class="stat-value text-success comma-number" id="total-projects">0</div>
             <div class="stat-title">ทั้งหมด(แปลง)</div>
