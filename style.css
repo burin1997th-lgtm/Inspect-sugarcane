@@ -1,0 +1,30 @@
+.target-section {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.target-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.target-label {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-bottom: 8px;
+}
+
+.target-progress {
+    margin-top: 5px;
+}
+
+.stat-subtext {
+    font-size: 0.75rem;
+    margin-top: 3px;
+    opacity: 0.8;
+}
+
+/* Animation สำหรับ progress bar */
+.progress-bar {
+    transition: width 0.5s ease-in-out;
+}
