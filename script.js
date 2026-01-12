@@ -1,34 +1,128 @@
-// ข้อมูลเป้าหมายตามโครงการและเขต
-const PROJECT_TARGET_DATA = {
-    'plant-cane-in-rice-field': {
-        name: 'ปลูกอ้อยในนา',
-        badgeColor: 'success',
-        icon: 'fa-seedling',
-        total: 15000,
-        zoneTargets: {
-            '1': 1000, '2': 875, '3': 1100, '4': 875, '5': 1200,
-            '6': 1200, '7': 875, '8': 1000, '10': 1000, '11': 875,
-            '12': 300, '21': 875, 'C1': 875, 'C2': 875, 'C3': 1200, 'C4': 875
-        }
-    },
-    'change-to-cane': {
-        name: 'เปลี่ยนพืชอื่นมาปลูกอ้อย',
-        badgeColor: 'warning',
-        icon: 'fa-exchange-alt',
-        total: 30000,
-        zoneTargets: {
-            '1': 2000, '2': 2000, '3': 2000, '4': 1500, '5': 2000,
-            '6': 2000, '7': 2000, '8': 2000, '10': 2000, '11': 2000,
-            '12': 500, '21': 2000, 'C1': 2000, 'C2': 2000, 'C3': 2000, 'C4': 2000
-        }
-    }
+// คอนฟิกสำหรับดึงข้อมูลเป้าหมาย
+const TARGET_CONFIG = {
+    SHEET_ID: '15eCkphn1ZCWJu1fg3ppe3Os-bKxAb4alvC33mAEgGrw', // ID เดียวกัน
+    SHEET_NAME: 'เป้าหมาย',
+    DATA_URLS: [
+        'https://docs.google.com/spreadsheets/d/e/2PACX-1vTHlqFXL5N8DKNhyg8au_M9eypFk65rXRgXdCna7pO9gadqpHLmtcz8FHKeCaBlxuqGcIY60PxUhyu-/pub?gid=980262450&single=true&output=csv',
+        `https://opensheet.elk.sh/${CONFIG.SHEET_ID}/${encodeURIComponent('เป้าหมาย')}`
+    ]
 };
 
+// ตัวแปรเก็บข้อมูลเป้าหมาย
+let targetData = null;
 let currentProjectType = 'plant-cane-in-rice-field';
 let selectedZones = [];
 
+// ฟังก์ชันโหลดข้อมูลเป้าหมาย
+function loadTargetData(forceRefresh = false) {
+    $('#target-loading-status').html('<small><i class="fas fa-spinner fa-spin me-1"></i> กำลังโหลดข้อมูลเป้าหมาย...</small>');
+    
+    // ตรวจสอบแคชก่อน
+    if (!forceRefresh) {
+        const cachedTargets = getCachedData('targetData');
+        if (cachedTargets) {
+            targetData = cachedTargets;
+            processTargetData();
+            return;
+        }
+    }
+    
+    // ดึงข้อมูลจาก Google Sheet
+    fetchTargetData();
+}
+
+// ดึงข้อมูลเป้าหมายจาก Google Sheet
+function fetchTargetData() {
+    console.log('📥 กำลังโหลดข้อมูลเป้าหมายจากชีท "เป้าหมาย"...');
+    
+    // ลองโหลดด้วย URL ต่างๆ
+    tryLoadTargetData(0);
+}
+
+function tryLoadTargetData(index) {
+    if (index >= TARGET_CONFIG.DATA_URLS.length) {
+        console.error('❌ ไม่สามารถโหลดข้อมูลเป้าหมายได้');
+        $('#target-loading-status').html('<small class="text-warning"><i class="fas fa-exclamation-triangle me-1"></i> ไม่สามารถโหลดข้อมูลเป้าหมาย</small>');
+        return;
+    }
+    
+    const url = TARGET_CONFIG.DATA_URLS[index];
+    
+    if (url.includes('opensheet.elk.sh')) {
+        // JSON format
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            timeout: 15000,
+            success: function(data) {
+                handleTargetDataSuccess(data);
+            },
+            error: function(xhr, status, error) {
+                console.error(`❌ โหลดเป้าหมาย JSON ล้มเหลว:`, error);
+                tryLoadTargetData(index + 1);
+            }
+        });
+    } else {
+        // CSV format
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            encoding: 'UTF-8',
+            complete: function(results) {
+                if (results.data && results.data.length > 0) {
+                    handleTargetDataSuccess(results.data);
+                } else {
+                    console.log(`❌ เป้าหมาย CSV ไม่มีข้อมูล`);
+                    tryLoadTargetData(index + 1);
+                }
+            },
+            error: function(error) {
+                console.error(`❌ เป้าหมาย CSV ล้มเหลว:`, error);
+                tryLoadTargetData(index + 1);
+            }
+        });
+    }
+}
+
+function handleTargetDataSuccess(data) {
+    console.log(`✅ โหลดข้อมูลเป้าหมายสำเร็จ: ${data.length} รายการ`);
+    
+    targetData = data;
+    
+    // แคชข้อมูล
+    cacheData('targetData', data);
+    
+    // ประมวลผลข้อมูล
+    processTargetData();
+    
+    // อัพเดต UI
+    $('#target-loading-status').html('<small class="text-success"><i class="fas fa-check-circle me-1"></i> โหลดข้อมูลเป้าหมายสำเร็จ</small>');
+    
+    setTimeout(() => {
+        $('#target-loading-status').html('');
+    }, 2000);
+}
+
+function processTargetData() {
+    if (!targetData || targetData.length === 0) {
+        console.warn('⚠️ ไม่พบข้อมูลเป้าหมาย');
+        return;
+    }
+    
+    // ตรวจสอบโครงสร้างข้อมูล
+    console.log('โครงสร้างข้อมูลเป้าหมาย:', targetData[0]);
+    
+    // อัพเดตเป้าหมาย
+    updateProjectTargets();
+}
+
 // ฟังก์ชันเริ่มต้น Project Stats
 function initializeProjectStats() {
+    // โหลดข้อมูลเป้าหมาย
+    loadTargetData();
+    
     // เพิ่ม event listener สำหรับปุ่มเลือกโครงการ
     $('.project-type-btn').click(function() {
         $('.project-type-btn').removeClass('active');
@@ -43,48 +137,146 @@ function initializeProjectStats() {
     updateProjectTargets();
 }
 
-// อัพเดตข้อมูลเป้าหมาย
+// อัพเดตข้อมูลเป้าหมายจากข้อมูลที่โหลดมา
 function updateProjectTargets() {
-    const project = PROJECT_TARGET_DATA[currentProjectType];
+    if (!targetData) {
+        $('#active-project-target').text('0');
+        return;
+    }
     
-    // อัพเดตข้อมูลโครงการ
-    $('#active-project-target').text(formatNumber(project.total));
-    $('#current-project-badge').text(project.name).removeClass('bg-success bg-warning').addClass(`bg-${project.badgeColor}`);
-    $('#current-project-type').text(project.name);
+    // ค้นหาหัวคอลัมน์ที่เกี่ยวข้อง
+    const firstRow = targetData[0];
+    const headers = Object.keys(firstRow);
+    
+    console.log('headers ในชีทเป้าหมาย:', headers);
+    
+    // ค้นหาคอลัมน์ที่เกี่ยวข้อง (รองรับหลายชื่อ)
+    let zoneColumn = null;
+    let target1Column = null;
+    let target2Column = null;
+    
+    // ค้นหาคอลัมน์เขต
+    const zoneKeywords = ['เขต', 'พื้นที่', 'Zone', 'Area'];
+    zoneColumn = headers.find(h => zoneKeywords.some(keyword => h.includes(keyword)));
+    
+    // ค้นหาคอลัมน์เป้าหมายปลูกอ้อยในนา
+    const target1Keywords = ['เป้าปลูกอ้อยในนา', 'ปลูกอ้อยในนา', 'เป้าหมาย1', 'Target1'];
+    target1Column = headers.find(h => target1Keywords.some(keyword => h.includes(keyword)));
+    
+    // ค้นหาคอลัมน์เป้าหมายเปลี่ยนพืชอื่นมาปลูกอ้อย
+    const target2Keywords = ['เป้าเปลี่ยนพืชอื่นมาปลูกอ้อย', 'เปลี่ยนพืชอื่นมาปลูกอ้อย', 'เป้าหมาย2', 'Target2'];
+    target2Column = headers.find(h => target2Keywords.some(keyword => h.includes(keyword)));
+    
+    console.log('พบคอลัมน์:', { zoneColumn, target1Column, target2Column });
+    
+    // ถ้าหาไม่เจอ ให้ใช้คอลัมน์แรกๆ
+    if (!zoneColumn && headers.length > 0) zoneColumn = headers[0];
+    if (!target1Column && headers.length > 1) target1Column = headers[1];
+    if (!target2Column && headers.length > 2) target2Column = headers[2];
+    
+    // คำนวณผลรวมตามโครงการที่เลือก
+    let totalTarget = 0;
+    const zoneTargets = {};
+    
+    targetData.forEach(row => {
+        const zone = row[zoneColumn] ? row[zoneColumn].toString().trim() : '';
+        
+        if (zone) {
+            // คำนวณเป้าหมายตามโครงการที่เลือก
+            if (currentProjectType === 'plant-cane-in-rice-field') {
+                const targetValue = parseTargetValue(row[target1Column]);
+                if (!isNaN(targetValue)) {
+                    totalTarget += targetValue;
+                    zoneTargets[zone] = targetValue;
+                }
+            } else if (currentProjectType === 'change-to-cane') {
+                const targetValue = parseTargetValue(row[target2Column]);
+                if (!isNaN(targetValue)) {
+                    totalTarget += targetValue;
+                    zoneTargets[zone] = targetValue;
+                }
+            }
+        }
+    });
+    
+    // บันทึกข้อมูลเป้าหมายตามเขต
+    window.targetZoneData = {
+        projectType: currentProjectType,
+        total: totalTarget,
+        zoneTargets: zoneTargets
+    };
+    
+    // อัพเดต UI
+    const projectName = currentProjectType === 'plant-cane-in-rice-field' ? 'ปลูกอ้อยในนา' : 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
+    const badgeColor = currentProjectType === 'plant-cane-in-rice-field' ? 'success' : 'warning';
+    
+    $('#active-project-target').text(formatNumber(totalTarget));
+    $('#current-project-badge').text(projectName).removeClass('bg-success bg-warning').addClass(`bg-${badgeColor}`);
+    $('#current-project-type').text(projectName);
     
     // คำนวณเป้าหมายตามเขตที่เลือก
     calculateZoneTarget();
     
-    // อัพเดตจำนวนที่เหลือ (เริ่มต้นคือเป้าหมายทั้งหมด)
-    $('#remaining-projects').text(formatNumber(project.total));
+    // อัพเดตจำนวนที่เหลือ
+    $('#remaining-projects').text(formatNumber(totalTarget));
+}
+
+// ฟังก์ชันแปลงค่าจาก string เป็น number
+function parseTargetValue(value) {
+    if (!value) return 0;
+    
+    // ลบ comma และแปลงเป็นตัวเลข
+    const cleanValue = value.toString().replace(/,/g, '').trim();
+    const num = parseFloat(cleanValue);
+    
+    return isNaN(num) ? 0 : num;
 }
 
 // คำนวณเป้าหมายตามเขตที่เลือก
 function calculateZoneTarget() {
-    const project = PROJECT_TARGET_DATA[currentProjectType];
+    if (!window.targetZoneData) {
+        $('#selected-zone-target').text('0');
+        $('#selected-zone-count').text('0');
+        return;
+    }
+    
+    const { zoneTargets } = window.targetZoneData;
     
     if (selectedZones.length === 0) {
         // ถ้าไม่เลือกเขตใดเลย
-        $('#selected-zone-target').text(formatNumber(project.total));
+        $('#selected-zone-target').text(formatNumber(window.targetZoneData.total));
         $('#selected-zone-count').text('ทั้งหมด');
     } else {
         // คำนวณเฉพาะเขตที่เลือก
         let zoneTarget = 0;
+        let matchedZones = 0;
+        
         selectedZones.forEach(zone => {
-            if (project.zoneTargets[zone]) {
-                zoneTarget += project.zoneTargets[zone];
+            // ลองค้นหาเขตโดยไม่สนใจ case และช่องว่าง
+            const normalizedZone = zone.toString().trim();
+            
+            // ค้นหาใน zoneTargets
+            for (const targetZone in zoneTargets) {
+                const normalizedTargetZone = targetZone.toString().trim();
+                if (normalizedTargetZone === normalizedZone || 
+                    normalizedTargetZone.includes(normalizedZone) || 
+                    normalizedZone.includes(normalizedTargetZone)) {
+                    zoneTarget += zoneTargets[targetZone];
+                    matchedZones++;
+                    break;
+                }
             }
         });
         
         $('#selected-zone-target').text(formatNumber(zoneTarget));
-        $('#selected-zone-count').text(selectedZones.length);
+        $('#selected-zone-count').text(matchedZones);
     }
 }
 
 // อัพเดตความคืบหน้าโครงการ
 function updateProjectProgress() {
     const totalProjects = parseInt($('#total-projects').text().replace(/,/g, '')) || 0;
-    const projectTotal = PROJECT_TARGET_DATA[currentProjectType].total;
+    const projectTotal = window.targetZoneData ? window.targetZoneData.total : 0;
     
     // คำนวณเปอร์เซ็นต์ความคืบหน้า
     const progressPercent = projectTotal > 0 ? 
@@ -130,34 +322,6 @@ function updateCompletionEstimate(current, target) {
     $('#completion-estimate').text(estimateText);
 }
 
-// อัพเดตเปอร์เซ็นต์ในสถิติ
-function updateStatisticsPercentages(totalProjects) {
-    if (totalProjects === 0) {
-        $('#checked-percentage').text('0%');
-        $('#not-checked-percentage').text('0%');
-        $('#passed-percentage').text('0%');
-        $('#failed-percentage').text('0%');
-        return;
-    }
-    
-    const checkedProjects = parseInt($('#checked-projects').text().replace(/,/g, '')) || 0;
-    const notCheckedProjects = parseInt($('#not-checked-projects').text().replace(/,/g, '')) || 0;
-    const passedProjects = parseInt($('#passed-projects').text().replace(/,/g, '')) || 0;
-    const failedProjects = parseInt($('#failed-projects').text().replace(/,/g, '')) || 0;
-    
-    // คำนวณเปอร์เซ็นต์
-    const checkedPercentage = Math.round((checkedProjects / totalProjects) * 100);
-    const notCheckedPercentage = Math.round((notCheckedProjects / totalProjects) * 100);
-    const passedPercentage = checkedProjects > 0 ? Math.round((passedProjects / checkedProjects) * 100) : 0;
-    const failedPercentage = checkedProjects > 0 ? Math.round((failedProjects / checkedProjects) * 100) : 0;
-    
-    // อัพเดตแสดงผล
-    $('#checked-percentage').text(`${checkedPercentage}%`);
-    $('#not-checked-percentage').text(`${notCheckedPercentage}%`);
-    $('#passed-percentage').text(`${passedPercentage}%`);
-    $('#failed-percentage').text(`${failedPercentage}%`);
-}
-
 // ฟังก์ชันเมื่อมีการเปลี่ยน filter เขต
 function onZoneFilterChange(filteredZones) {
     selectedZones = filteredZones;
@@ -174,7 +338,7 @@ function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
-// ฟังก์ชันอัพเดตสถิติโครงการ (เรียกจากฟังก์ชันหลัก)
+// ฟังก์ชันอัพเดตสถิติโครงการ
 function updateProjectStats(data) {
     if (!data || data.length === 0) {
         resetProjectStats();
@@ -254,11 +418,51 @@ function resetProjectStats() {
     $('#overall-progress-percent').text('0%');
     $('#overall-progress-bar').css('width', '0%');
     $('#achieved-projects').text('0');
-    $('#remaining-projects').text(formatNumber(PROJECT_TARGET_DATA[currentProjectType].total));
+    $('#remaining-projects').text('0');
     $('#completion-estimate').text('-');
+}
+
+// ฟังก์ชันแคชข้อมูล
+function cacheData(key, data) {
+    try {
+        const cacheData = {
+            data: data,
+            timestamp: Date.now()
+        };
+        localStorage.setItem(`target_${key}`, JSON.stringify(cacheData));
+    } catch (e) {
+        console.warn(`⚠️ ไม่สามารถแคชข้อมูล ${key} ได้:`, e);
+    }
+}
+
+function getCachedData(key) {
+    try {
+        const cached = localStorage.getItem(`target_${key}`);
+        if (!cached) return null;
+        
+        const cacheData = JSON.parse(cached);
+        const age = Date.now() - cacheData.timestamp;
+        
+        // แคชไว้ 30 นาที
+        if (age < 30 * 60 * 1000) {
+            return cacheData.data;
+        }
+    } catch (e) {
+        console.warn(`⚠️ ปัญหาในการอ่านแคช ${key}:`, e);
+    }
+    return null;
 }
 
 // เรียกใช้งานเมื่อโหลดหน้า
 $(document).ready(function() {
     initializeProjectStats();
+    
+    // เพิ่มปุ่มรีเฟรชข้อมูลเป้าหมาย
+    $('#refresh-targets-btn').click(function() {
+        loadTargetData(true);
+        $(this).html('<i class="fas fa-spinner fa-spin me-1"></i> รีเฟรช...');
+        setTimeout(() => {
+            $(this).html('<i class="fas fa-sync-alt me-1"></i> รีเฟรชเป้าหมาย');
+        }, 2000);
+    });
 });
