@@ -1245,12 +1245,61 @@
                         </div>
                     </div>
                 </div>
-           <!-- Project Stats - เหลือ 30% ของหน้า -->
+         <!-- Project Stats - เหลือ 30% ของหน้า -->
 <div class="col-lg-4">
     <div class="stats-grid" id="project-stats">
+        <!-- เพิ่มส่วนเป้าหมาย -->
+        <div class="target-section mb-3 p-3" style="background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); border-radius: 10px; color: white;">
+            <h6 class="mb-2"><i class="fas fa-bullseye me-2"></i>เป้าหมายโครงการ</h6>
+            <div class="row">
+                <div class="col-6">
+                    <div class="text-center">
+                        <div class="target-value" id="target-cane-in-rice-field">15,000</div>
+                        <div class="target-label">เป้าปลูกอ้อยในนา</div>
+                        <div class="target-progress">
+                            <div class="progress" style="height: 6px; background: rgba(255,255,255,0.3);">
+                                <div class="progress-bar bg-success" id="progress-cane-in-rice-field" style="width: 0%"></div>
+                            </div>
+                            <small><span id="achieved-cane-in-rice-field">0</span>/<span id="target-total-cane-in-rice-field">15,000</span></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="text-center">
+                        <div class="target-value" id="target-change-to-cane">30,000</div>
+                        <div class="target-label">เป้าเปลี่ยนพืชอื่นมาปลูกอ้อย</div>
+                        <div class="target-progress">
+                            <div class="progress" style="height: 6px; background: rgba(255,255,255,0.3);">
+                                <div class="progress-bar bg-warning" id="progress-change-to-cane" style="width: 0%"></div>
+                            </div>
+                            <small><span id="achieved-change-to-cane">0</span>/<span id="target-total-change-to-cane">30,000</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div class="target-value" id="target-total-projects">45,000</div>
+                        <div class="target-label">เป้าหมายทั้งหมด</div>
+                        <div class="target-progress">
+                            <div class="progress" style="height: 8px; background: rgba(255,255,255,0.3);">
+                                <div class="progress-bar bg-info" id="progress-total-projects" style="width: 0%"></div>
+                            </div>
+                            <small>ความคืบหน้า: <span id="total-progress-percentage">0%</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- สถิติเดิม -->
         <div class="stat-item">
             <div class="stat-value text-success comma-number" id="total-projects">0</div>
             <div class="stat-title">ทั้งหมด(แปลง)</div>
+            <div class="stat-subtext text-muted">
+                <small>เป้าหมาย: <span id="target-display">45,000</span> (<span id="remaining-target">45,000</span> เหลือ)</small>
+            </div>
         </div>
         <div class="stat-item">
             <div class="stat-value comma-number" id="total-area">0</div>
@@ -1259,6 +1308,9 @@
         <div class="stat-item stat-item-checked">
             <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
             <div class="stat-title">ตรวจแล้ว(แปลง)</div>
+            <div class="stat-subtext">
+                <small><span id="checked-percentage">0%</span> ของทั้งหมด</small>
+            </div>
         </div>
         <div class="stat-item stat-item-checked">
             <div class="stat-value text-primary comma-number" id="checked-area">0</div>
@@ -1267,6 +1319,9 @@
         <div class="stat-item stat-item-not-checked">
             <div class="stat-value comma-number" id="not-checked-projects">0</div>
             <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
+            <div class="stat-subtext">
+                <small><span id="not-checked-percentage">0%</span> ของทั้งหมด</small>
+            </div>
         </div>
         <div class="stat-item stat-item-not-checked">
             <div class="stat-value comma-number" id="not-checked-area">0</div>
@@ -1275,6 +1330,9 @@
         <div class="stat-item stat-item-passed">
             <div class="stat-value comma-number" id="passed-projects">0</div>
             <div class="stat-title">ผ่าน(แปลง)</div>
+            <div class="stat-subtext">
+                <small><span id="passed-percentage">0%</span> ของที่ตรวจแล้ว</small>
+            </div>
         </div>
         <!-- เพิ่มพื้นที่ผ่าน -->
         <div class="stat-item stat-item-passed">
@@ -1284,6 +1342,9 @@
         <div class="stat-item stat-item-failed">
             <div class="stat-value comma-number" id="failed-projects">0</div>
             <div class="stat-title">ไม่ผ่าน(แปลง)</div>
+            <div class="stat-subtext">
+                <small><span id="failed-percentage">0%</span> ของที่ตรวจแล้ว</small>
+            </div>
         </div>
         <!-- เพิ่มพื้นที่ไม่ผ่าน -->
         <div class="stat-item stat-item-failed">
