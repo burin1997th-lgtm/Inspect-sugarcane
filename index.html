@@ -1245,7 +1245,7 @@
                         </div>
                     </div>
                 </div>
-         <!-- Project Stats - เหลือ 30% ของหน้า -->
+     <!-- Project Stats - เหลือ 30% ของหน้า -->
 <div class="col-lg-4">
     <div class="stats-grid" id="project-stats">
         <!-- เพิ่มส่วนเป้าหมาย -->
@@ -1280,13 +1280,16 @@
             <div class="row mt-2">
                 <div class="col-12">
                     <div class="text-center">
-                        <div class="target-value" id="target-total-projects">45,000</div>
-                        <div class="target-label">เป้าหมายทั้งหมด</div>
+                        <div class="target-value" id="target-active-project">-</div>
+                        <div class="target-label">
+                            <span id="active-project-name">โครงการที่เลือก</span>
+                            <span class="badge bg-info ms-2" id="project-type-badge">ยังไม่เลือก</span>
+                        </div>
                         <div class="target-progress">
                             <div class="progress" style="height: 8px; background: rgba(255,255,255,0.3);">
-                                <div class="progress-bar bg-info" id="progress-total-projects" style="width: 0%"></div>
+                                <div class="progress-bar bg-info" id="progress-active-project" style="width: 0%"></div>
                             </div>
-                            <small>ความคืบหน้า: <span id="total-progress-percentage">0%</span></small>
+                            <small>ความคืบหน้า: <span id="active-project-progress">0%</span> (<span id="active-project-remaining">0</span> เหลือ)</small>
                         </div>
                     </div>
                 </div>
@@ -1298,7 +1301,7 @@
             <div class="stat-value text-success comma-number" id="total-projects">0</div>
             <div class="stat-title">ทั้งหมด(แปลง)</div>
             <div class="stat-subtext text-muted">
-                <small>เป้าหมาย: <span id="target-display">45,000</span> (<span id="remaining-target">45,000</span> เหลือ)</small>
+                <small>โครงการ: <span id="current-project-type">-</span></small>
             </div>
         </div>
         <div class="stat-item">
