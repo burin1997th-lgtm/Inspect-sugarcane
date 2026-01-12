@@ -1,5 +1,50 @@
-.target-section {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+/* สไตล์สำหรับโครงการปลูกอ้อยในนา */
+.project-cane-in-rice-field .stat-value {
+    color: #28a745 !important;
+}
+
+.project-cane-in-rice-field .stat-item-checked .stat-value {
+    color: #17a2b8 !important;
+}
+
+.project-cane-in-rice-field .stat-item-passed .stat-value {
+    color: #28a745 !important;
+}
+
+.project-cane-in-rice-field .stat-item-failed .stat-value {
+    color: #dc3545 !important;
+}
+
+/* สไตล์สำหรับโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย */
+.project-change-to-cane .stat-value {
+    color: #ffc107 !important;
+}
+
+.project-change-to-cane .stat-item-checked .stat-value {
+    color: #17a2b8 !important;
+}
+
+.project-change-to-cane .stat-item-passed .stat-value {
+    color: #28a745 !important;
+}
+
+.project-change-to-cane .stat-item-failed .stat-value {
+    color: #dc3545 !important;
+}
+
+/* สไตล์ปุ่มเลือกโครงการ */
+.project-btn {
+    transition: all 0.3s;
+}
+
+.project-btn.active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* สไตล์ progress bar */
+.progress-bar {
+    transition: width 0.5s ease-in-out;
 }
 
 .target-value {
@@ -22,9 +67,4 @@
     font-size: 0.75rem;
     margin-top: 3px;
     opacity: 0.8;
-}
-
-/* Animation สำหรับ progress bar */
-.progress-bar {
-    transition: width 0.5s ease-in-out;
 }
