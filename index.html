@@ -1243,8 +1243,7 @@
                         </div>
                     </div>
                 </div>
-                
-               <!-- Project Stats - เหลือ 30% ของหน้า -->
+           <!-- Project Stats - เหลือ 30% ของหน้า -->
 <div class="col-lg-4">
     <div class="stats-grid" id="project-stats">
         <div class="stat-item">
@@ -1275,6 +1274,7 @@
             <div class="stat-value comma-number" id="passed-projects">0</div>
             <div class="stat-title">ผ่าน(แปลง)</div>
         </div>
+        <!-- เพิ่มพื้นที่ผ่าน -->
         <div class="stat-item stat-item-passed">
             <div class="stat-value comma-number" id="passed-area">0</div>
             <div class="stat-title">ผ่าน(ไร่)</div>
@@ -1283,6 +1283,7 @@
             <div class="stat-value comma-number" id="failed-projects">0</div>
             <div class="stat-title">ไม่ผ่าน(แปลง)</div>
         </div>
+        <!-- เพิ่มพื้นที่ไม่ผ่าน -->
         <div class="stat-item stat-item-failed">
             <div class="stat-value comma-number" id="failed-area">0</div>
             <div class="stat-title">ไม่ผ่าน(ไร่)</div>
@@ -2156,177 +2157,187 @@
             });
         }
         
-        // Update project statistics
-        function updateProjectStats() {
-            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
-            
-            if (data.length === 0) {
-                document.getElementById('total-projects').textContent = '0';
-                document.getElementById('total-area').textContent = '0';
-                document.getElementById('checked-projects').textContent = '0';
-                document.getElementById('checked-area').textContent = '0';
-                document.getElementById('not-checked-projects').textContent = '0';
-                document.getElementById('not-checked-area').textContent = '0';
-                document.getElementById('passed-projects').textContent = '0';
-                document.getElementById('failed-projects').textContent = '0';
-                return;
-            }
-            
-            // Calculate statistics
-            let totalArea = 0;
-            let checkedCount = 0;
-            let checkedArea = 0;
-            let notCheckedCount = 0;
-            let notCheckedArea = 0;
-            let passedCount = 0;
-            let failedCount = 0;
-            
-            data.forEach(item => {
-                // Calculate total area
-                const area = parseFloat(item['พื้นที่']) || 0;
-                totalArea += area;
-                
-                // Count checked projects (ผ่าน or ไม่ผ่าน)
-                const condition = item['เงื่อนไขโครงการ'] || '';
-                if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
-                    checkedCount++;
-                    checkedArea += area;
-                } else if (condition === 'รอตรวจแปลง' || condition === '') {
-                    notCheckedCount++;
-                    notCheckedArea += area;
-                }
-                
-                // Count conditions
-                if (condition === 'ผ่าน') {
-                    passedCount++;
-                } else if (condition === 'ไม่ผ่าน') {
-                    failedCount++;
-                }
-            });
-            
-            // Update DOM elements with formatted numbers
-            document.getElementById('total-projects').textContent = formatNumber(data.length);
-            document.getElementById('total-area').textContent = formatNumber(totalArea);
-            document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
-            document.getElementById('checked-area').textContent = formatNumber(checkedArea);
-            document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
-            document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
-            document.getElementById('passed-projects').textContent = formatNumber(passedCount);
-            document.getElementById('failed-projects').textContent = formatNumber(failedCount);
-        }
+      // Update project statistics
+function updateProjectStats() {
+    const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+    
+    if (data.length === 0) {
+        // Reset all values to 0
+        const statIds = [
+            'total-projects', 'total-area',
+            'checked-projects', 'checked-area',
+            'not-checked-projects', 'not-checked-area',
+            'passed-projects', 'passed-area',
+            'failed-projects', 'failed-area'
+        ];
         
-        // Update condition pie chart (ปรับขนาดใหญ่ขึ้น)
-        function updateConditionPieChart() {
-            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+        statIds.forEach(id => {
+            document.getElementById(id).textContent = '0';
+        });
+        return;
+    }
+    
+    // Calculate statistics
+    let totalArea = 0;
+    let checkedCount = 0;
+    let checkedArea = 0;
+    let notCheckedCount = 0;
+    let notCheckedArea = 0;
+    let passedCount = 0;
+    let passedArea = 0;
+    let failedCount = 0;
+    let failedArea = 0;
+    
+    data.forEach(item => {
+        // Calculate total area
+        const area = parseFloat(item['พื้นที่']) || 0;
+        totalArea += area;
+        
+        // Count checked projects (ผ่าน or ไม่ผ่าน)
+        const condition = item['เงื่อนไขโครงการ'] || '';
+        if (condition === 'ผ่าน' || condition === 'ไม่ผ่าน') {
+            checkedCount++;
+            checkedArea += area;
             
-            if (data.length === 0) {
-                // Reset pie chart if no data
-                if (conditionPieChart) {
-                    conditionPieChart.data.datasets[0].data = [0, 0, 0];
-                    conditionPieChart.update();
-                }
-                document.getElementById('passed-percentage').textContent = '0%';
-                document.getElementById('failed-percentage').textContent = '0%';
-                document.getElementById('pending-percentage').textContent = '0%';
-                return;
+            // แยกพื้นที่ตามผลการตรวจ
+            if (condition === 'ผ่าน') {
+                passedCount++;
+                passedArea += area;
+            } else if (condition === 'ไม่ผ่าน') {
+                failedCount++;
+                failedArea += area;
             }
-            
-            // Calculate condition counts
-            let passedCount = 0;
-            let failedCount = 0;
-            let pendingCount = 0;
-            
-            data.forEach(item => {
-                const condition = item['เงื่อนไขโครงการ'] || '';
-                if (condition === 'ผ่าน') {
-                    passedCount++;
-                } else if (condition === 'ไม่ผ่าน') {
-                    failedCount++;
-                } else {
-                    pendingCount++;
-                }
-            });
-            
-            // Calculate percentages
-            const total = data.length;
-            const passedPercentage = total > 0 ? Math.round((passedCount / total) * 100) : 0;
-            const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
-            const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
-            
-            // Update percentage displays - แสดงตัวเลขที่มีคอมม่า
-            document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
-            document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
-            document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
-            
-            // Create or update pie chart
-            const ctx = document.getElementById('conditionPieChart').getContext('2d');
-            
-            if (conditionPieChart) {
-                // Update existing chart
-                conditionPieChart.data.datasets[0].data = [passedCount, failedCount, pendingCount];
-                conditionPieChart.update();
-            } else {
-                // Create new chart with larger size
-                conditionPieChart = new Chart(ctx, {
-                    type: 'pie',
-                    data: {
-                        labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
-                        datasets: [{
-                            data: [passedCount, failedCount, pendingCount],
-                            backgroundColor: [
-                                '#4CAF50', // Green for passed
-                                '#F44336', // Red for failed
-                                '#FF9800'  // Orange for pending
-                            ],
-                            borderColor: '#fff',
-                            borderWidth: 3, // เพิ่มความหนา
-                            hoverOffset: 20 // เพิ่ม hover offset
-                        }]
+        } else if (condition === 'รอตรวจแปลง' || condition === '') {
+            notCheckedCount++;
+            notCheckedArea += area;
+        }
+    });
+    
+    // Update DOM elements with formatted numbers
+    document.getElementById('total-projects').textContent = formatNumber(data.length);
+    document.getElementById('total-area').textContent = formatNumber(totalArea);
+    document.getElementById('checked-projects').textContent = formatNumber(checkedCount);
+    document.getElementById('checked-area').textContent = formatNumber(checkedArea);
+    document.getElementById('not-checked-projects').textContent = formatNumber(notCheckedCount);
+    document.getElementById('not-checked-area').textContent = formatNumber(notCheckedArea);
+    document.getElementById('passed-projects').textContent = formatNumber(passedCount);
+    document.getElementById('passed-area').textContent = formatNumber(passedArea);
+    document.getElementById('failed-projects').textContent = formatNumber(failedCount);
+    document.getElementById('failed-area').textContent = formatNumber(failedArea);
+}
+        
+   // Update condition pie chart (ปรับขนาดใหญ่ขึ้น)
+function updateConditionPieChart() {
+    const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+    
+    if (data.length === 0) {
+        // Reset pie chart if no data
+        if (conditionPieChart) {
+            conditionPieChart.data.datasets[0].data = [0, 0, 0];
+            conditionPieChart.update();
+        }
+        document.getElementById('passed-percentage').textContent = '0 (0%)';
+        document.getElementById('failed-percentage').textContent = '0 (0%)';
+        document.getElementById('pending-percentage').textContent = '0 (0%)';
+        return;
+    }
+    
+    // Calculate condition counts
+    let passedCount = 0;
+    let failedCount = 0;
+    let pendingCount = 0;
+    
+    data.forEach(item => {
+        const condition = item['เงื่อนไขโครงการ'] || '';
+        if (condition === 'ผ่าน') {
+            passedCount++;
+        } else if (condition === 'ไม่ผ่าน') {
+            failedCount++;
+        } else {
+            pendingCount++;
+        }
+    });
+    
+    // Calculate percentages
+    const total = data.length;
+    const passedPercentage = total > 0 ? Math.round((passedCount / total) * 100) : 0;
+    const failedPercentage = total > 0 ? Math.round((failedCount / total) * 100) : 0;
+    const pendingPercentage = total > 0 ? Math.round((pendingCount / total) * 100) : 0;
+    
+    // Update percentage displays - แสดงตัวเลขที่มีคอมม่า
+    document.getElementById('passed-percentage').textContent = formatNumber(passedCount) + ' (' + passedPercentage + '%)';
+    document.getElementById('failed-percentage').textContent = formatNumber(failedCount) + ' (' + failedPercentage + '%)';
+    document.getElementById('pending-percentage').textContent = formatNumber(pendingCount) + ' (' + pendingPercentage + '%)';
+    
+    // Create or update pie chart
+    const ctx = document.getElementById('conditionPieChart').getContext('2d');
+    
+    if (conditionPieChart) {
+        // Update existing chart
+        conditionPieChart.data.datasets[0].data = [passedCount, failedCount, pendingCount];
+        conditionPieChart.update();
+    } else {
+        // Create new chart with larger size
+        conditionPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
+                datasets: [{
+                    data: [passedCount, failedCount, pendingCount],
+                    backgroundColor: [
+                        '#4CAF50', // Green for passed
+                        '#F44336', // Red for failed
+                        '#FF9800'  // Orange for pending
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 3, // เพิ่มความหนา
+                    hoverOffset: 20 // เพิ่ม hover offset
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            font: {
+                                family: "'Sarabun', sans-serif",
+                                size: 14 // เพิ่มขนาดฟอนต์
+                            }
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    padding: 20,
-                                    usePointStyle: true,
-                                    font: {
-                                        family: "'Sarabun', sans-serif",
-                                        size: 14 // เพิ่มขนาดฟอนต์
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function(context) {
-                                        const label = context.label || '';
-                                        const value = context.raw || 0;
-                                        const percentage = Math.round((value / total) * 100);
-                                        const formattedValue = formatNumber(value);
-                                        return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
-                                    }
-                                },
-                                titleFont: {
-                                    size: 14
-                                },
-                                bodyFont: {
-                                    size: 13
-                                }
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const percentage = Math.round((value / total) * 100);
+                                const formattedValue = formatNumber(value);
+                                return `${label}: ${formattedValue} โครงการ (${percentage}%)`;
                             }
                         },
-                        animation: {
-                            animateScale: true,
-                            animateRotate: true,
-                            duration: 1000
+                        titleFont: {
+                            size: 14
                         },
-                        cutout: '30%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
-                        radius: '100%' // เพิ่มขนาดให้ใหญ่ที่สุด
+                        bodyFont: {
+                            size: 13
+                        }
                     }
-                });
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1000
+                },
+                cutout: '30%', // ทำให้เป็นโดนัทชาร์ตเล็กน้อย
+                radius: '100%' // เพิ่มขนาดให้ใหญ่ที่สุด
             }
-        }
+        });
+    }
+}
         
         // Fetch data from Google Sheets (Public Method)
         async function fetchSheetData(sheetName) {
@@ -2672,26 +2683,31 @@
             updateConditionPieChart();
         }
         
-        // Reset all filters
-        function resetFilters() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('condition-filter').value = 'all';
-            document.getElementById('zone-filter').value = 'all';
-            document.getElementById('farmer-officer-filter').value = 'all';
-            
-            // เรียกใช้ updateFarmerOfficerFilter เพื่อรีเซ็ตตัวกรองนักเกษตร
-            updateFarmerOfficerFilter();
-            
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-filter') === 'all') {
-                    btn.classList.add('active');
-                }
-            });
-            
-            filterData();
-            showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
+       // Reset all filters
+function resetFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('condition-filter').value = 'all';
+    document.getElementById('zone-filter').value = 'all';
+    document.getElementById('farmer-officer-filter').value = 'all';
+    
+    // เรียกใช้ updateFarmerOfficerFilter เพื่อรีเซ็ตตัวกรองนักเกษตร
+    updateFarmerOfficerFilter();
+    
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-filter') === 'all') {
+            btn.classList.add('active');
         }
+    });
+    
+    // Reset stats to show all data
+    filteredData = [...allData[currentSheet]];
+    populateTable(filteredData);
+    updateProjectStats();
+    updateConditionPieChart();
+    
+    showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
+}
         
         // Show project details in modal
         function showProjectDetailsModal(itemId) {
