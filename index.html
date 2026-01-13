@@ -1177,6 +1177,7 @@
                             <h4 class="chart-title">
                                 <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลงโครงการ
                                 <span class="badge bg-success ms-2" id="current-project-type-badge">ปลูกอ้อยในนา</span>
+                            </h4>
                             <div class="pie-chart-wrapper">
                                 <canvas id="conditionPieChart"></canvas>
                             </div>
@@ -1513,6 +1514,96 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Project Full Details Modal (Planting Sugarcane) -->
+        <div class="modal fade" id="plantingProjectDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-file-alt me-2"></i>
+                            <span>รายละเอียดโครงการปลูกอ้อยในนา ปี 69/70</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-4">
+                            <h5 class="text-primary mb-3">
+                                <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
+                            </h5>
+                            
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-tractor me-2"></i>เงื่อนไขการเตรียมดิน</h6>
+                                <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องไถเตรียมดินด้วยวิธีระเบิดดินดาน 2 รอย หรือริปเปอร์พร้อมโรตารี่ Stripe Tiliage หรือ มินิคอมบาย ก่อนปลูกอ้อยเท่านั้น</p>
+                            </div>
+                            
+                            <div class="alert alert-warning">
+                                <h6><i class="fas fa-exclamation-triangle me-2"></i>กรณีไม่ส่งอ้อยเข้าหีบ</h6>
+                                <p class="mb-0">กรณีไม่ส่งอ้อยเข้าหีบ/อ้อยหนีขาย ให้บันทึกเป็นลูกหนี้ชาวไร่</p>
+                            </div>
+                            
+                            <h6 class="mt-4">สรุปโครงการ:</h6>
+                            <ul>
+                                <li>ระยะเวลาปลูก: 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
+                                <li>พื้นที่ปลูกอ้อยใหม่: 15,000 ไร่</li>
+                                <li>ช่วยค่าปลูก: 800 บาท/ไร่</li>
+                                <li>งบประมาณทั้งหมด: 12,000,000 บาท</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-blue" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i>ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Project Full Details Modal (Crop Change) -->
+        <div class="modal fade" id="cropChangeProjectDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-file-alt me-2"></i>
+                            <span>รายละเอียดโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-4">
+                            <h5 class="text-purple mb-3">
+                                <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
+                            </h5>
+                            
+                            <div class="alert alert-info">
+                                <h6><i class="fas fa-tractor me-2"></i>เงื่อนไขการเตรียมดิน</h6>
+                                <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องไถเตรียมดินด้วยวิธีระเบิดดินดาน 2 รอย หรือริปเปอร์พร้อมโรตารี่ Stripe Tiliage หรือ มินิคอมบาย ก่อนปลูกอ้อยเท่านั้น</p>
+                            </div>
+                            
+                            <div class="alert alert-warning">
+                                <h6><i class="fas fa-exclamation-triangle me-2"></i>ข้อจำกัดพื้นที่</h6>
+                                <p class="mb-0">แปลงอ้อยที่เข้าร่วมโครงการปลูกอ้อยในนา ปี 69/70 ไม่ได้รับสิทธิ์เข้าร่วมโครงการนี้</p>
+                            </div>
+                            
+                            <h6 class="mt-4">สรุปโครงการ:</h6>
+                            <ul>
+                                <li>ระยะเวลาปลูก: 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
+                                <li>พื้นที่ปลูกอ้อยใหม่: 30,000 ไร่</li>
+                                <li>ช่วยค่าปลูก: 700 บาท/ไร่</li>
+                                <li>งบประมาณทั้งหมด: 21,000,000 บาท</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-purple" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i>ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -1680,12 +1771,16 @@
                 loadAllSheetsData();
             });
             
-            // Project details button
+            // Project details button - แก้ไขให้เรียกใช้ modal ที่ถูกต้อง
             document.getElementById('project-details-btn').addEventListener('click', function() {
                 if (currentSheet === 'planting-sugarcane-field') {
-                    showPlantingProjectDetails();
+                    // แสดง modal ของโครงการปลูกอ้อยในนา
+                    const modal = new bootstrap.Modal(document.getElementById('plantingProjectDetailsModal'));
+                    modal.show();
                 } else {
-                    showCropChangeProjectDetails();
+                    // แสดง modal ของโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย
+                    const modal = new bootstrap.Modal(document.getElementById('cropChangeProjectDetailsModal'));
+                    modal.show();
                 }
             });
             
