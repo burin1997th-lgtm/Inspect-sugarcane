@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
@@ -24,6 +24,8 @@
             --kbs-dark: #333333;
             --project-purple: #7B1FA2;
             --project-blue: #1976D2;
+            --target-orange: #FF9800;
+            --progress-blue: #2196F3;
         }
         
         body {
@@ -201,6 +203,23 @@
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-orange {
+            background: linear-gradient(to right, var(--target-orange), #FFB74D);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-orange:hover {
+            background: linear-gradient(to right, #F57C00, var(--target-orange));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
         }
         
         .btn-outline-green {
@@ -567,6 +586,14 @@
             color: #dc3545 !important;
         }
         
+        .stat-item-target .stat-value {
+            color: var(--target-orange) !important;
+        }
+        
+        .stat-item-progress .stat-value {
+            color: var(--progress-blue) !important;
+        }
+        
         /* Modal Styles */
         .modal-header {
             background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
@@ -799,20 +826,6 @@
             font-size: 1.3rem;
         }
         
-        .project-detail-item {
-            margin-bottom: 12px;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .project-detail-item:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--project-blue);
-            font-size: 1.2rem;
-        }
-        
         /* Condition List */
         .condition-list {
             counter-reset: condition-counter;
@@ -841,129 +854,6 @@
             line-height: 24px;
             font-size: 0.9rem;
             font-weight: bold;
-        }
-        
-        /* Sub-condition List */
-        .sub-condition-list {
-            list-style-type: none;
-            padding-left: 25px;
-            margin-top: 8px;
-        }
-        
-        .sub-condition-list li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 6px;
-        }
-        
-        .sub-condition-list li:before {
-            content: "▸";
-            position: absolute;
-            left: 0;
-            color: var(--project-blue);
-        }
-        
-        /* Requirement Box */
-        .requirement-box {
-            background: #FFF3E0;
-            border-left: 4px solid #FF9800;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
-        }
-        
-        .requirement-title {
-            color: #E65100;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        /* Warning Box */
-        .warning-box {
-            background: #FFEBEE;
-            border-left: 4px solid #F44336;
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin: 15px 0;
-        }
-        
-        .warning-title {
-            color: #C62828;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        /* Project Timeline */
-        .timeline {
-            position: relative;
-            padding-left: 30px;
-            margin: 20px 0;
-        }
-        
-        .timeline:before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--project-blue);
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: -30px;
-            top: 5px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--project-blue);
-            border: 3px solid white;
-            box-shadow: 0 0 0 2px var(--project-blue);
-        }
-        
-        .timeline-content {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .timeline-date {
-            color: var(--project-blue);
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        /* Project Summary Cards */
-        .summary-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--project-blue);
-        }
-        
-        .summary-title {
-            color: var(--project-blue);
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        
-        /* Stat Item Not Checked */
-        .stat-item-not-checked {
-            border-top: 4px solid #FF9800 !important;
-        }
-        
-        .stat-item-not-checked .stat-value {
-            color: #FF9800;
         }
         
         /* Pie Chart Container */
@@ -1045,7 +935,7 @@
         /* Project Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -1054,49 +944,6 @@
         .comma-number {
             font-feature-settings: "tnum" 1;
             font-variant-numeric: tabular-nums;
-        }
-        
-        /* Condition List Small */
-        .condition-list-small {
-            counter-reset: condition-counter;
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .condition-list-small li {
-            counter-increment: condition-counter;
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-        
-        .condition-list-small li:before {
-            content: counter(condition-counter) ".";
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--project-blue);
-            font-weight: bold;
-        }
-        
-        .sub-condition-list-small {
-            list-style-type: none;
-            padding-left: 20px;
-            margin-top: 5px;
-        }
-        
-        .sub-condition-list-small li {
-            position: relative;
-            padding-left: 15px;
-            margin-bottom: 3px;
-            font-size: 0.95rem;
-        }
-        
-        .sub-condition-list-small li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--secondary-green);
         }
         
         /* ปุ่ม Export ที่อยู่ด้านล่าง Pie Chart */
@@ -1110,7 +957,7 @@
         /* เพิ่มขนาด Pie Chart - ขนาดใหญ่ขึ้น */
         .pie-chart-wrapper {
             position: relative;
-            height: 400px;
+            height: 350px;
             width: 100%;
             margin: 0 auto;
         }
@@ -1132,76 +979,109 @@
             min-width: 300px;
         }
         
-        /* Project Type Buttons */
-        .project-switch .btn-group {
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .project-switch .btn {
-            font-size: 0.85rem;
-            padding: 8px 12px;
-        }
-        
-        .project-name-badge .badge {
-            font-size: 0.75rem;
-            padding: 5px 10px;
-        }
-        
-        /* Progress Item */
-        .progress-item {
-            padding: 10px;
-        }
-        
-        .progress-details {
-            margin-top: 15px;
-        }
-        
-        /* แก้ไขให้ Pie Chart ใหญ่เต็มพื้นที่ */
-        .expanded-pie-chart-container {
-            background: white;
+        /* Target Section */
+        .target-section {
+            background: linear-gradient(135deg, var(--target-orange) 0%, #FFB74D 100%);
             border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 15px;
+            margin-bottom: 15px;
+            color: white;
         }
         
-        .expanded-pie-chart-wrapper {
-            position: relative;
-            height: 450px;
-            width: 100%;
-            margin: 0 auto;
+        .target-value-lg {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
         }
         
-        /* ขยายพื้นที่สถิติโครงการ */
-        .expanded-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
+        .target-label-lg {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 10px;
         }
         
+        .target-value-sm {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        
+        .target-label-sm {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        /* Progress Bar */
+        .progress-overview .progress {
+            border-radius: 6px;
+            overflow: hidden;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .progress-overview .progress-bar {
+            border-radius: 6px;
+        }
+        
+        .progress-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        
+        .progress-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+        
+        /* Zone Target Display */
+        .zone-target-display {
+            background: linear-gradient(135deg, var(--progress-blue) 0%, #64B5F6 100%);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        /* Responsive Grid */
         @media (max-width: 1200px) {
-            .expanded-stats-grid {
+            .stats-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
         
         @media (max-width: 768px) {
-            .expanded-stats-grid {
+            .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
         
         @media (max-width: 576px) {
-            .expanded-stats-grid {
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
         
-        @media (max-width: 992px) {
-            .stats-actions-container {
-                flex-direction: column;
-            }
+        /* Stat Item Not Checked */
+        .stat-item-not-checked {
+            border-top: 4px solid #FF9800 !important;
+        }
+        
+        .stat-item-not-checked .stat-value {
+            color: #FF9800;
+        }
+        
+        /* Stat Item Target */
+        .stat-item-target {
+            border-top: 4px solid var(--target-orange) !important;
+        }
+        
+        /* Stat Item Progress */
+        .stat-item-progress {
+            border-top: 4px solid var(--progress-blue) !important;
         }
     </style>
 </head>
@@ -1257,8 +1137,8 @@
                     
                     <div class="step">
                         <span class="step-number">2</span>
-                        <strong>ระบบติดตามความคืบหน้า</strong>
-                        <p class="mb-0 mt-1">ติดตามสถานะการตรวจแปลงและผลการตรวจสอบโครงการทั้งหมด</p>
+                        <strong>ระบบติดตามเป้าหมายตามเขต</strong>
+                        <p class="mb-0 mt-1">เพิ่มระบบแสดงเป้าหมายพื้นที่ในแต่ละเขต พร้อมคำนวณความคืบหน้าตามเขตที่เลือก</p>
                     </div>
                     
                     <div class="step">
@@ -1291,41 +1171,36 @@
             <!-- Project Stats with Pie Chart และปุ่ม Export -->
             <div class="project-stats-container">
                 <div class="row">
-                    <!-- Pie Chart Section - ขยายเต็มพื้นที่ -->
-                    <div class="col-lg-12">
-                        <div class="expanded-pie-chart-container">
+                    <!-- Pie Chart Section -->
+                    <div class="col-lg-8">
+                        <div class="pie-chart-container">
                             <h4 class="chart-title">
                                 <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลงโครงการ
                                 <span class="badge bg-success ms-2" id="current-project-type-badge">ปลูกอ้อยในนา</span>
                             </h4>
-                            <div class="expanded-pie-chart-wrapper">
+                            <div class="pie-chart-wrapper">
                                 <canvas id="conditionPieChart"></canvas>
                             </div>
                             <div class="chart-stats">
                                 <div class="chart-stat-item">
                                     <div class="chart-stat-value text-success comma-number" id="passed-count">0</div>
                                     <div class="chart-stat-label">ผ่าน</div>
-                                    <div class="stat-subtext" id="passed-percentage">0%</div>
+                                    <div class="stat-subtext text-success" id="passed-percentage-chart">0%</div>
                                 </div>
                                 <div class="chart-stat-item">
                                     <div class="chart-stat-value text-danger comma-number" id="failed-count">0</div>
                                     <div class="chart-stat-label">ไม่ผ่าน</div>
-                                    <div class="stat-subtext" id="failed-percentage">0%</div>
+                                    <div class="stat-subtext text-danger" id="failed-percentage-chart">0%</div>
                                 </div>
                                 <div class="chart-stat-item">
                                     <div class="chart-stat-value text-warning comma-number" id="pending-count">0</div>
                                     <div class="chart-stat-label">รอตรวจ</div>
-                                    <div class="stat-subtext" id="pending-percentage">0%</div>
+                                    <div class="stat-subtext text-warning" id="pending-percentage-chart">0%</div>
                                 </div>
                                 <div class="chart-stat-item">
                                     <div class="chart-stat-value text-primary comma-number" id="total-count">0</div>
                                     <div class="chart-stat-label">ทั้งหมด</div>
-                                    <div class="stat-subtext">โครงการ</div>
-                                </div>
-                                <div class="chart-stat-item">
-                                    <div class="chart-stat-value text-info comma-number" id="total-area-display">0</div>
-                                    <div class="chart-stat-label">พื้นที่รวม</div>
-                                    <div class="stat-subtext">ไร่</div>
+                                    <div class="stat-subtext text-primary">โครงการ</div>
                                 </div>
                             </div>
                             
@@ -1337,17 +1212,87 @@
                                 <button class="btn-green ms-2" id="project-details-btn">
                                     <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
                                 </button>
-                                <button class="btn-purple ms-2" id="refresh-data-btn">
+                                <button class="btn-orange ms-2" id="refresh-data-btn">
                                     <i class="fas fa-sync-alt me-1"></i>รีเฟรชข้อมูล
                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Target and Progress Section -->
+                    <div class="col-lg-4">
+                        <!-- Zone Target Display -->
+                        <div class="zone-target-display">
+                            <h6 class="mb-3"><i class="fas fa-bullseye me-2"></i>เป้าหมายเขตที่เลือก</h6>
+                            
+                            <div class="text-center mb-3">
+                                <div class="target-value-lg comma-number" id="zone-target-value">0</div>
+                                <div class="target-label-lg">ไร่</div>
+                                <div class="stat-subtext text-white" id="current-zone-name">ทุกเขต</div>
+                            </div>
+                            
+                            <div class="progress-overview mb-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>ความคืบหน้า</span>
+                                    <span id="zone-progress-percent">0%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                                         id="zone-progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="progress-value comma-number" id="zone-achieved-area">0</div>
+                                    <div class="progress-label">ดำเนินการแล้ว</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="progress-value comma-number" id="zone-remaining-area">0</div>
+                                    <div class="progress-label">เหลือดำเนินการ</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Overall Target Display -->
+                        <div class="target-section">
+                            <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>เป้าหมายทั้งหมด</h6>
+                            
+                            <div class="text-center mb-3">
+                                <div class="target-value-lg comma-number" id="overall-target-value">0</div>
+                                <div class="target-label-lg">ไร่</div>
+                                <div class="stat-subtext text-white">พื้นที่เป้าหมายทั้งหมด</div>
+                            </div>
+                            
+                            <div class="progress-overview mb-3">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>ความคืบหน้าทั้งหมด</span>
+                                    <span id="overall-progress-percent">0%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
+                                         id="overall-progress-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <div class="progress-value comma-number" id="overall-achieved-area">0</div>
+                                    <div class="progress-label">ดำเนินการแล้ว</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="progress-value comma-number" id="overall-remaining-area">0</div>
+                                    <div class="progress-label">เหลือดำเนินการ</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- สถิติโครงการแบบกริดใหม่ - ขยายเป็น 5 คอลัมน์ -->
-            <div class="expanded-stats-grid mb-4">
+            <!-- สถิติโครงการแบบกริดใหม่ - 6 คอลัมน์ -->
+            <div class="stats-grid mb-4">
+                <!-- ข้อมูลพื้นฐาน -->
                 <div class="stat-item">
                     <div class="stat-value text-success comma-number" id="total-projects">0</div>
                     <div class="stat-title">ทั้งหมด(แปลง)</div>
@@ -1359,6 +1304,8 @@
                     <div class="stat-value comma-number" id="total-area">0</div>
                     <div class="stat-title">พื้นที่รวม(ไร่)</div>
                 </div>
+                
+                <!-- ตรวจแปลง -->
                 <div class="stat-item stat-item-checked">
                     <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
                     <div class="stat-title">ตรวจแล้ว(แปลง)</div>
@@ -1368,8 +1315,10 @@
                 </div>
                 <div class="stat-item stat-item-checked">
                     <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-                    <div class="stat-title">ตรวจแล้ว (ไร่)</div>
+                    <div class="stat-title">ตรวจแล้ว(ไร่)</div>
                 </div>
+                
+                <!-- รอตรวจ -->
                 <div class="stat-item stat-item-not-checked">
                     <div class="stat-value comma-number" id="not-checked-projects">0</div>
                     <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
@@ -1381,6 +1330,8 @@
                     <div class="stat-value comma-number" id="not-checked-area">0</div>
                     <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
                 </div>
+                
+                <!-- ผ่าน -->
                 <div class="stat-item stat-item-passed">
                     <div class="stat-value comma-number" id="passed-projects">0</div>
                     <div class="stat-title">ผ่าน(แปลง)</div>
@@ -1392,6 +1343,8 @@
                     <div class="stat-value comma-number" id="passed-area">0</div>
                     <div class="stat-title">ผ่าน(ไร่)</div>
                 </div>
+                
+                <!-- ไม่ผ่าน -->
                 <div class="stat-item stat-item-failed">
                     <div class="stat-value comma-number" id="failed-projects">0</div>
                     <div class="stat-title">ไม่ผ่าน(แปลง)</div>
@@ -1402,6 +1355,24 @@
                 <div class="stat-item stat-item-failed">
                     <div class="stat-value comma-number" id="failed-area">0</div>
                     <div class="stat-title">ไม่ผ่าน(ไร่)</div>
+                </div>
+                
+                <!-- เป้าหมายเขต -->
+                <div class="stat-item stat-item-target">
+                    <div class="stat-value comma-number" id="zone-target-display">0</div>
+                    <div class="stat-title">เป้าหมายเขต(ไร่)</div>
+                    <div class="stat-subtext">
+                        <small>เขต: <span id="selected-zone-name">ทุกเขต</span></small>
+                    </div>
+                </div>
+                
+                <!-- ความคืบหน้าเขต -->
+                <div class="stat-item stat-item-progress">
+                    <div class="stat-value comma-number" id="zone-progress-display">0%</div>
+                    <div class="stat-title">ความคืบหน้าเขต</div>
+                    <div class="stat-subtext">
+                        <small><span id="zone-achieved-display">0</span>/<span id="zone-target-short">0</span> ไร่</small>
+                    </div>
                 </div>
             </div>
 
@@ -1543,325 +1514,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Project Full Details Modal (Planting Sugarcane) -->
-        <div class="modal fade" id="plantingProjectDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-file-alt me-2"></i>
-                            <span>รายละเอียดโครงการปลูกอ้อยในนา ปี 69/70</span>
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- โครงสร้างรายละเอียดโครงการปลูกอ้อยในนา -->
-                        <div class="project-details-container">
-                            <!-- ส่วนที่ 1: เงื่อนไขและวิธีการดำเนินการ -->
-                            <div class="mb-5">
-                                <h4 class="text-primary mb-4">
-                                    <i class="fas fa-clipboard-check me-2"></i>เงื่อนไขและวิธีการดำเนินการ
-                                </h4>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-tractor me-2"></i>เงื่อนไขการเตรียมดิน
-                                    </div>
-                                    <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องไถเตรียมดินด้วยวิธีระเบิดดินดาน 2 รอย หรือริปเปอร์พร้อมโรตารี่ Stripe Tiliage หรือ มินิคอมบาย ก่อนปลูกอ้อยเท่านั้น</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-user-check me-2"></i>การสมัครเข้าร่วมโครงการ
-                                    </div>
-                                    <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องสมัครในระบบ KAT</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-hand-holding-usd me-2"></i>วิธีการชำระเงินสนับสนุน
-                                    </div>
-                                    <p class="mb-0">กรณีใช้บริการรถไถบริษัทฯ หรือรถไถที่ทำสัญญาร่วมกับบริษัทฯ ให้นำโปรโมชั่นโครงการฯ ไปลดหนี้ค่าบริการจักรกล หรือ ค่าปุ๋ย ยา พันธุ์อ้อย เท่านั้น</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-file-contract me-2"></i>เอกสารที่ต้องจัดทำ
-                                    </div>
-                                    <p class="mb-0">จัดทำบันทึกข้อตกลงเข้าร่วมโครงการ เมื่ออ้อยงอก</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-tractor me-2"></i>กรณีใช้รถไถตนเอง
-                                    </div>
-                                    <p class="mb-0">กรณีที่ใช้รถไถตนเอง ให้นำโปรโมชั่นโครงการฯ ไปลดหนี้ค่าปุ๋ย ยา เท่านั้น</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-map-marked-alt me-2"></i>การตรวจสอบแปลง
-                                    </div>
-                                    <p class="mb-0">แผนกภูมิศาสตร์สารสนเทศ ตรวจสอบแปลงอ้อยก่อนปลูก</p>
-                                </div>
-                                
-                                <div class="warning-box mb-4">
-                                    <div class="warning-title">
-                                        <i class="fas fa-exclamation-triangle me-2"></i>กรณีไม่ส่งอ้อยเข้าหีบ
-                                    </div>
-                                    <p class="mb-0">กรณีไม่ส่งอ้อยเข้าหีบ/อ้อยหนีขาย ให้บันทึกเป็นลูกหนี้ชาวไร่</p>
-                                </div>
-                            </div>
-                            
-                            <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
-                            <div class="mb-4">
-                                <h5 class="text-primary mb-3">
-                                    <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
-                                </h5>
-                                
-                                <ol class="condition-list-small">
-                                    <li>
-                                        <strong class="small">โครงการปลูกอ้อยในนา</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
-                                            <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
-                                            <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 15,000 ไร่</li>
-                                            <li>ช่วยค่าปลูก 800 บาท/ไร่ จำนวน 12,000,000 บาท</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">เงื่อนไขการจ่าย</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ไม่จ่ายเป็นเงินสด</li>
-                                            <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
-                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">วิธีการปลูก</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
-                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-                                            <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
-                                            <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">ผลผลิต</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 195,000 ตัน/ปี</li>
-                                            <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 165,000 ตัน/ปี</li>
-                                            <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 135,000 ตัน/ปี</li>
-                                            <li>รวมผลผลิต 3 ปี: จำนวน 495,000 ตัน/ปี</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">งบประมาณ</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>งบประมาณต่อปี: จำนวน 62 บาท/ตัน</li>
-                                            <li>งบประมาณ 3 ปี: จำนวน 24 บาท/ตัน</li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                            </div>
-                            
-                            <!-- ส่วนที่ 3: สรุปข้อมูลสำคัญ -->
-                            <div>
-                                <h4 class="text-primary mb-4">
-                                    <i class="fas fa-chart-pie me-2"></i>สรุปข้อมูลสำคัญ
-                                </h4>
-                                
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">พื้นที่เป้าหมาย</div>
-                                            <div class="display-4 text-center text-primary mb-2 comma-number">15,000</div>
-                                            <p class="text-center mb-0">ไร่</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">งบประมาณทั้งหมด</div>
-                                            <div class="display-4 text-center text-primary mb-2 comma-number">12,000,000</div>
-                                            <p class="text-center mb-0">บาท</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">ผลผลิตปีที่ 1</div>
-                                            <div class="display-4 text-center text-primary mb-2 comma-number">195,000</div>
-                                            <p class="text-center mb-0">ตัน/ปี</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-blue" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>ปิด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Project Full Details Modal (Crop Change) -->
-        <div class="modal fade" id="cropChangeProjectDetailsModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            <i class="fas fa-file-alt me-2"></i>
-                            <span>รายละเอียดโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70</span>
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- โครงสร้างรายละเอียดโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย -->
-                        <div class="project-details-container">
-                            <!-- ส่วนที่ 1: เงื่อนไขและวิธีการดำเนินการ -->
-                            <div class="mb-5">
-                                <h4 class="text-purple mb-4">
-                                    <i class="fas fa-clipboard-check me-2"></i>เงื่อนไขและวิธีการดำเนินการ
-                                </h4>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-tractor me-2"></i>เงื่อนไขการเตรียมดิน
-                                    </div>
-                                    <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องไถเตรียมดินด้วยวิธีระเบิดดินดาน 2 รอย หรือริปเปอร์พร้อมโรตารี่ Stripe Tiliage หรือ มินิคอมบาย ก่อนปลูกอ้อยเท่านั้น ตรวจจากการทำกิจกรรมระบบ KAT หรือ รูปถ่ายขณะทำกิจกรรม หรือ รับสภาพหนี้บริการจักรกลเกษตร</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-user-check me-2"></i>การสมัครเข้าร่วมโครงการ
-                                    </div>
-                                    <p class="mb-0">ชาวไร่ที่เข้าร่วมโครงการต้องสมัครในระบบ KAT</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-hand-holding-usd me-2"></i>วิธีการชำระเงินสนับสนุน
-                                    </div>
-                                    <p class="mb-0">กรณีใช้บริการรถไถบริษัทฯ หรือรถไถที่ทำสัญญาร่วมกับบริษัทฯ หรือ รถไถตนเอง ให้นำโปรโมชั่นโครงการฯ ไปลดหนี้ค่าบริการจักรกล หรือ ค่าปุ๋ย ยา พันธุ์อ้อย เท่านั้น ไม่จ่ายเป็นเงินสด</p>
-                                </div>
-                                
-                                <div class="warning-box mb-4">
-                                    <div class="warning-title">
-                                        <i class="fas fa-exclamation-triangle me-2"></i>ข้อจำกัดพื้นที่
-                                    </div>
-                                    <p class="mb-0">แปลงอ้อยที่เข้าร่วมโครงการปลูกอ้อยในนา ปี 69/70 ไม่ได้รับสิทธิ์เข้าร่วมโครงการนี้</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-file-contract me-2"></i>เอกสารที่ต้องจัดทำ
-                                    </div>
-                                    <p class="mb-0">จัดทำบันทึกข้อตกลงเข้าร่วมโครงการ เมื่ออ้อยงอก พร้อมแนบ GPS หลักฐานการใช้บริการจักรกลเกษตร และ ใบสำคัญรับปุ๋ย ยา หรือ Invoice พันธุ์อ้อย หรือ บริการจักรกลเกษตร ที่ต้องการให้นำมาลดหนี้</p>
-                                </div>
-                                
-                                <div class="requirement-box mb-4">
-                                    <div class="requirement-title">
-                                        <i class="fas fa-calendar-alt me-2"></i>ระยะเวลาการลดหนี้
-                                    </div>
-                                    <p class="mb-0">ลดหนี้โครงการเมื่อชาวไร่นำอ้อยเข้าหีบ หรือขายพันธุ์อ้อยผ่านโรงงาน ปี 69/70 หรือกันพันธุ์อ้อยเพื่อปลูกในปี 70/71 (บันทึกหนี้ 1 ปี)</p>
-                                </div>
-                            </div>
-                            
-                            <!-- ส่วนที่ 2: รายละเอียดโครงการ -->
-                            <div class="mb-4">
-                                <h5 class="text-purple mb-3">
-                                    <i class="fas fa-project-diagram me-2"></i>รายละเอียดโครงการ
-                                </h5>
-                                
-                                <ol class="condition-list-small">
-                                    <li>
-                                        <strong class="small">โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>เพื่อเป็นกลยุทธ์ขยายพื้นที่</li>
-                                            <li>ระยะเวลาปลูก 1 ตุลาคม 2568 ถึง 28 กุมภาพันธ์ 2569</li>
-                                            <li>พื้นที่ปลูกอ้อยใหม่ (ปลายฝนขยาย) จำนวน 30,000 ไร่</li>
-                                            <li>ช่วยค่าปลูก 700 บาท/ไร่ จำนวน 21,000,000 บาท</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">เงื่อนไขการจ่าย</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ไม่จ่ายเป็นเงินสด</li>
-                                            <li>ลดหนี้ค่าปุ๋ย ยา บริการจักรกล พันธุ์อ้อย</li>
-                                            <li>พื้นที่เข้าร่วมโครงการปลูกอ้อยในนา ไม่ได้รับสิทธิ์</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">วิธีการปลูก</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ต้องระเบิดดินดาน / ST / มินิคอมบาย</li>
-                                            <li>พื้นที่ขยาย (เปลี่ยนพืชอื่นมาปลูกอ้อย)</li>
-                                            <li>GIS ตรวจสอบแปลงก่อนปลูก</li>
-                                            <li>พื้นที่ขยาย ต้องไม่อยู่ในระบบ KAT ปี 68/69</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">ผลผลิต</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>ปีที่ 1: 13 ตัน/ไร่ จำนวน 390,000 ตัน/ปี</li>
-                                            <li>ปีที่ 2: 11 ตัน/ไร่ จำนวน 330,000 ตัน/ปี</li>
-                                            <li>ปีที่ 3: 9 ตัน/ไร่ จำนวน 270,000 ตัน/ปี</li>
-                                            <li>รวมผลผลิต 3 ปี: จำนวน 990,000 ตัน/ปี</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <strong class="small">งบประมาณ</strong>
-                                        <ul class="sub-condition-list-small">
-                                            <li>งบประมาณต่อปี: จำนวน 54 บาท/ตัน</li>
-                                            <li>งบประมาณ 3 ปี: จำนวน 21 บาท/ตัน</li>
-                                        </ul>
-                                    </li>
-                                </ol>
-                            </div>
-                            
-                            <!-- ส่วนที่ 3: สรุปข้อมูลสำคัญ -->
-                            <div>
-                                <h4 class="text-purple mb-4">
-                                    <i class="fas fa-chart-pie me-2"></i>สรุปข้อมูลสำคัญ
-                                </h4>
-                                
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">พื้นที่เป้าหมาย</div>
-                                            <div class="display-4 text-center text-purple mb-2 comma-number">30,000</div>
-                                            <p class="text-center mb-0">ไร่</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">งบประมาณทั้งหมด</div>
-                                            <div class="display-4 text-center text-purple mb-2 comma-number">21,000,000</div>
-                                            <p class="text-center mb-0">บาท</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="summary-card">
-                                            <div class="summary-title">ผลผลิตปีที่ 1</div>
-                                            <div class="display-4 text-center text-purple mb-2 comma-number">390,000</div>
-                                            <p class="text-center mb-0">ตัน/ปี</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-purple" data-bs-dismiss="modal">
-                            <i class="fas fa-times me-1"></i>ปิด
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Footer -->
@@ -1881,7 +1533,7 @@
                     <p class="mb-1">ข้อมูลระบบ:</p>
                     <p class="small mb-0">แสดงข้อมูลจาก Google Sheets (Public Mode)</p>
                     <p class="small mb-0">อัปเดตอัตโนมัติทุก 5 นาที</p>
-                    <p class="small mb-0">รุ่น: 2.1.0 | KBS Sugar Internal (ปรับปรุงการแสดงสถิติโครงการ)</p>
+                    <p class="small mb-0">รุ่น: 2.2.0 | KBS Sugar Internal (เพิ่มระบบเป้าหมายตามเขต)</p>
                 </div>
             </div>
             <hr class="my-3" style="border-color: rgba(255,255,255,0.1);">
@@ -1902,6 +1554,52 @@
         const SHEETS = {
             'Dataโครงการ': 'Dataโครงการ',      // ข้อมูลโครงการทั้งหมด
             'Dataการตรวจ': 'Dataการตรวจ',       // ข้อมูลเงื่อนไขโครงการ
+        };
+        
+        // Zone targets data from your requirements
+        const ZONE_TARGETS = {
+            'planting-sugarcane-field': { // ปลูกอ้อยในนา
+                '1': 1000,
+                '2': 875,
+                '3': 1100,
+                '4': 875,
+                '5': 1200,
+                '6': 1200,
+                '7': 875,
+                '8': 1000,
+                '10': 1000,
+                '11': 875,
+                '12': 300,
+                '21': 875,
+                'C1': 875,
+                'C2': 875,
+                'C3': 1200,
+                'C4': 875
+            },
+            'crop-change-sugarcane': { // เปลี่ยนพืชอื่นมาปลูกอ้อย
+                '1': 2000,
+                '2': 2000,
+                '3': 2000,
+                '4': 1500,
+                '5': 2000,
+                '6': 2000,
+                '7': 2000,
+                '8': 2000,
+                '10': 2000,
+                '11': 2000,
+                '12': 500,
+                '21': 2000,
+                'C1': 2000,
+                'C2': 2000,
+                'C3': 2000,
+                'C4': 2000
+            }
+        };
+        
+        // Calculate overall targets
+        const OVERALL_TARGETS = {
+            'planting-sugarcane-field': Object.values(ZONE_TARGETS['planting-sugarcane-field']).reduce((a, b) => a + b, 0),
+            'crop-change-sugarcane': Object.values(ZONE_TARGETS['crop-change-sugarcane']).reduce((a, b) => a + b, 0)
         };
         
         // Important field names for display
@@ -2002,6 +1700,7 @@
             document.getElementById('zone-filter').addEventListener('change', function() {
                 updateFarmerOfficerFilter();
                 filterData();
+                updateZoneTargetStats(); // อัพเดทเป้าหมายเขต
             });
             
             // Farmer officer filter
@@ -2058,6 +1757,10 @@
                     
                     // Update pie chart
                     updateConditionPieChart();
+                    
+                    // Update target stats
+                    updateZoneTargetStats();
+                    updateOverallTargetStats();
                 });
             });
             
@@ -2094,13 +1797,98 @@
         
         // Show planting project full details
         function showPlantingProjectDetails() {
-            const modal = new bootstrap.Modal(document.getElementById('plantingProjectDetailsModal'));
-            modal.show();
+            const content = `
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>เป้าหมายโครงการปลูกอ้อยในนา</h5>
+                    <p class="mb-0">พื้นที่เป้าหมายทั้งหมด: <strong>${formatNumber(OVERALL_TARGETS['planting-sugarcane-field'])} ไร่</strong></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>เขต</th>
+                                <th class="text-end">เป้าหมาย (ไร่)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.entries(ZONE_TARGETS['planting-sugarcane-field']).map(([zone, target]) => `
+                                <tr>
+                                    <td>เขต ${zone}</td>
+                                    <td class="text-end">${formatNumber(target)} ไร่</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            showModal('รายละเอียดเป้าหมายโครงการปลูกอ้อยในนา', content);
         }
         
         // Show crop change project full details
         function showCropChangeProjectDetails() {
-            const modal = new bootstrap.Modal(document.getElementById('cropChangeProjectDetailsModal'));
+            const content = `
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>เป้าหมายโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย</h5>
+                    <p class="mb-0">พื้นที่เป้าหมายทั้งหมด: <strong>${formatNumber(OVERALL_TARGETS['crop-change-sugarcane'])} ไร่</strong></p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>เขต</th>
+                                <th class="text-end">เป้าหมาย (ไร่)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.entries(ZONE_TARGETS['crop-change-sugarcane']).map(([zone, target]) => `
+                                <tr>
+                                    <td>เขต ${zone}</td>
+                                    <td class="text-end">${formatNumber(target)} ไร่</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            showModal('รายละเอียดเป้าหมายโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย', content);
+        }
+        
+        // Show custom modal
+        function showModal(title, content) {
+            const modalHtml = `
+                <div class="modal fade" id="customModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                ${content}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn-blue" data-bs-dismiss="modal">
+                                    <i class="fas fa-times me-1"></i>ปิด
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('customModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('customModal'));
             modal.show();
         }
         
@@ -2140,6 +1928,10 @@
                 
                 // Update pie chart
                 updateConditionPieChart();
+                
+                // Update target stats
+                updateZoneTargetStats();
+                updateOverallTargetStats();
                 
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
@@ -2244,10 +2036,14 @@
             const zoneFilter = document.getElementById('zone-filter');
             zoneFilter.innerHTML = '<option value="all">ทุกเขต</option>';
             
+            // Add zone options with targets
             Array.from(uniqueZones).sort().forEach(zone => {
                 const option = document.createElement('option');
                 option.value = zone;
-                option.textContent = zone;
+                
+                // Get target for this zone
+                const target = ZONE_TARGETS[currentSheet][zone] || 0;
+                option.textContent = `เขต ${zone} (เป้าหมาย: ${formatNumber(target)} ไร่)`;
                 zoneFilter.appendChild(option);
             });
             
@@ -2286,6 +2082,126 @@
             });
         }
         
+        // Update zone target statistics
+        function updateZoneTargetStats() {
+            const zoneFilter = document.getElementById('zone-filter');
+            const selectedZone = zoneFilter.value;
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+            
+            // Calculate current area for selected zone
+            let currentArea = 0;
+            
+            if (selectedZone === 'all') {
+                // Sum area for all data
+                data.forEach(item => {
+                    const area = parseFloat(item['พื้นที่']) || 0;
+                    currentArea += area;
+                });
+            } else {
+                // Sum area for selected zone only
+                data.forEach(item => {
+                    const zone = item['เขต'] || '';
+                    if (zone === selectedZone) {
+                        const area = parseFloat(item['พื้นที่']) || 0;
+                        currentArea += area;
+                    }
+                });
+            }
+            
+            // Get target for selected zone
+            let targetArea = 0;
+            let zoneName = 'ทุกเขต';
+            
+            if (selectedZone === 'all') {
+                // Sum all zone targets
+                targetArea = OVERALL_TARGETS[currentSheet];
+                zoneName = 'ทุกเขต';
+            } else {
+                // Get target for specific zone
+                targetArea = ZONE_TARGETS[currentSheet][selectedZone] || 0;
+                zoneName = `เขต ${selectedZone}`;
+            }
+            
+            // Calculate progress
+            const progressPercent = targetArea > 0 ? 
+                                   Math.min(100, Math.round((currentArea / targetArea) * 100)) : 0;
+            const remainingArea = Math.max(0, targetArea - currentArea);
+            
+            // Update zone target display
+            document.getElementById('zone-target-value').textContent = formatNumber(targetArea);
+            document.getElementById('current-zone-name').textContent = zoneName;
+            document.getElementById('selected-zone-name').textContent = zoneName;
+            
+            // Update progress
+            document.getElementById('zone-progress-percent').textContent = progressPercent + '%';
+            document.getElementById('zone-progress-bar').style.width = progressPercent + '%';
+            
+            // Update achieved and remaining areas
+            document.getElementById('zone-achieved-area').textContent = formatNumber(currentArea);
+            document.getElementById('zone-remaining-area').textContent = formatNumber(remainingArea);
+            
+            // Update stats grid
+            document.getElementById('zone-target-display').textContent = formatNumber(targetArea);
+            document.getElementById('zone-progress-display').textContent = progressPercent + '%';
+            document.getElementById('zone-achieved-display').textContent = formatNumber(currentArea);
+            document.getElementById('zone-target-short').textContent = formatNumber(targetArea);
+            
+            // Color progress bar based on percentage
+            const progressBar = document.getElementById('zone-progress-bar');
+            if (progressPercent >= 100) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-success';
+            } else if (progressPercent >= 70) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-primary';
+            } else if (progressPercent >= 40) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-warning';
+            } else {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-danger';
+            }
+        }
+        
+        // Update overall target statistics
+        function updateOverallTargetStats() {
+            const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
+            
+            // Calculate total area
+            let totalArea = 0;
+            data.forEach(item => {
+                const area = parseFloat(item['พื้นที่']) || 0;
+                totalArea += area;
+            });
+            
+            // Get overall target
+            const overallTarget = OVERALL_TARGETS[currentSheet];
+            
+            // Calculate progress
+            const progressPercent = overallTarget > 0 ? 
+                                   Math.min(100, Math.round((totalArea / overallTarget) * 100)) : 0;
+            const remainingArea = Math.max(0, overallTarget - totalArea);
+            
+            // Update overall target display
+            document.getElementById('overall-target-value').textContent = formatNumber(overallTarget);
+            
+            // Update progress
+            document.getElementById('overall-progress-percent').textContent = progressPercent + '%';
+            document.getElementById('overall-progress-bar').style.width = progressPercent + '%';
+            
+            // Update achieved and remaining areas
+            document.getElementById('overall-achieved-area').textContent = formatNumber(totalArea);
+            document.getElementById('overall-remaining-area').textContent = formatNumber(remainingArea);
+            
+            // Color progress bar based on percentage
+            const progressBar = document.getElementById('overall-progress-bar');
+            if (progressPercent >= 100) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-success';
+            } else if (progressPercent >= 70) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-primary';
+            } else if (progressPercent >= 40) {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-warning';
+            } else {
+                progressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-danger';
+            }
+        }
+        
         // Update project statistics
         function updateProjectStats() {
             const data = filteredData.length > 0 ? filteredData : allData[currentSheet];
@@ -2298,8 +2214,7 @@
                     'not-checked-projects', 'not-checked-area',
                     'passed-projects', 'passed-area',
                     'failed-projects', 'failed-area',
-                    'total-count', 'total-area-display',
-                    'passed-count', 'failed-count', 'pending-count'
+                    'total-count', 'passed-count', 'failed-count', 'pending-count'
                 ];
                 
                 statIds.forEach(id => {
@@ -2313,9 +2228,9 @@
                 document.getElementById('not-checked-percentage').textContent = '0%';
                 document.getElementById('passed-percentage-stat').textContent = '0%';
                 document.getElementById('failed-percentage-stat').textContent = '0%';
-                document.getElementById('passed-percentage').textContent = '0%';
-                document.getElementById('failed-percentage').textContent = '0%';
-                document.getElementById('pending-percentage').textContent = '0%';
+                document.getElementById('passed-percentage-chart').textContent = '0%';
+                document.getElementById('failed-percentage-chart').textContent = '0%';
+                document.getElementById('pending-percentage-chart').textContent = '0%';
                 
                 return;
             }
@@ -2363,9 +2278,9 @@
             const passedPercent = checkedCount > 0 ? Math.round((passedCount / checkedCount) * 100) : 0;
             const failedPercent = checkedCount > 0 ? Math.round((failedCount / checkedCount) * 100) : 0;
             
-            const passedPercentage = totalCount > 0 ? Math.round((passedCount / totalCount) * 100) : 0;
-            const failedPercentage = totalCount > 0 ? Math.round((failedCount / totalCount) * 100) : 0;
-            const pendingPercentage = totalCount > 0 ? Math.round((notCheckedCount / totalCount) * 100) : 0;
+            const passedPercentageChart = totalCount > 0 ? Math.round((passedCount / totalCount) * 100) : 0;
+            const failedPercentageChart = totalCount > 0 ? Math.round((failedCount / totalCount) * 100) : 0;
+            const pendingPercentageChart = totalCount > 0 ? Math.round((notCheckedCount / totalCount) * 100) : 0;
             
             // Update DOM elements with formatted numbers
             document.getElementById('total-projects').textContent = formatNumber(totalCount);
@@ -2381,7 +2296,6 @@
             
             // Update counts for pie chart section
             document.getElementById('total-count').textContent = formatNumber(totalCount);
-            document.getElementById('total-area-display').textContent = formatNumber(totalArea);
             document.getElementById('passed-count').textContent = formatNumber(passedCount);
             document.getElementById('failed-count').textContent = formatNumber(failedCount);
             document.getElementById('pending-count').textContent = formatNumber(notCheckedCount);
@@ -2391,9 +2305,9 @@
             document.getElementById('not-checked-percentage').textContent = notCheckedPercent + '%';
             document.getElementById('passed-percentage-stat').textContent = passedPercent + '%';
             document.getElementById('failed-percentage-stat').textContent = failedPercent + '%';
-            document.getElementById('passed-percentage').textContent = passedPercentage + '%';
-            document.getElementById('failed-percentage').textContent = failedPercentage + '%';
-            document.getElementById('pending-percentage').textContent = pendingPercentage + '%';
+            document.getElementById('passed-percentage-chart').textContent = passedPercentageChart + '%';
+            document.getElementById('failed-percentage-chart').textContent = failedPercentageChart + '%';
+            document.getElementById('pending-percentage-chart').textContent = pendingPercentageChart + '%';
         }
         
         // Update condition pie chart
@@ -2637,6 +2551,7 @@
                 'เขต',
                 'รหัสนักเกษตร',
                 'ชื่อนักเกษตร',
+                'พื้นที่',
                 'วันที่ปลูก',
                 'เงื่อนไขโครงการ'
             ];
@@ -2677,6 +2592,19 @@
                     } else if (column === 'พื้นที่') {
                         const area = parseFloat(value) || 0;
                         cell.textContent = area > 0 ? `${formatNumber(area)} ไร่` : '-';
+                        
+                        // Add target comparison if zone is selected
+                        const zoneFilter = document.getElementById('zone-filter');
+                        const selectedZone = zoneFilter.value;
+                        if (selectedZone !== 'all') {
+                            const zone = item['เขต'] || '';
+                            if (zone === selectedZone) {
+                                const target = ZONE_TARGETS[currentSheet][selectedZone] || 0;
+                                if (target > 0) {
+                                    cell.title = `เป้าหมายเขต ${selectedZone}: ${formatNumber(target)} ไร่`;
+                                }
+                            }
+                        }
                     } else if (column === 'เปอร์เซ็นการงอก') {
                         const germinationMatch = value.toString().match(/(\d+(\.\d+)?)/);
                         if (germinationMatch) {
@@ -2832,6 +2760,10 @@
             
             // Update pie chart
             updateConditionPieChart();
+            
+            // Update target stats
+            updateZoneTargetStats();
+            updateOverallTargetStats();
         }
         
         // Reset all filters
@@ -2856,6 +2788,8 @@
             populateTable(filteredData);
             updateProjectStats();
             updateConditionPieChart();
+            updateZoneTargetStats();
+            updateOverallTargetStats();
             
             showToast('ล้างตัวกรองแล้ว', 'แสดงข้อมูลทั้งหมด', 'info');
         }
@@ -2889,7 +2823,15 @@
             const inspectionDate = item['วันที่ตรวจ'] || 'ไม่ระบุ';
             const inspector = item['ผู้ตรวจ'] || 'ไม่ระบุ';
             
+            // Get zone target for this project
+            const zoneTarget = ZONE_TARGETS[currentSheet][zone] || 0;
+            const targetInfo = zoneTarget > 0 ? 
+                `<div class="alert alert-warning">
+                    <i class="fas fa-bullseye me-2"></i>เป้าหมายเขต ${zone}: <strong>${formatNumber(zoneTarget)} ไร่</strong>
+                </div>` : '';
+            
             const content = `
+                ${targetInfo}
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-4">
@@ -3201,5 +3143,4 @@
         }
     </script>
 </body>
-</html>     
-   
+</html>
