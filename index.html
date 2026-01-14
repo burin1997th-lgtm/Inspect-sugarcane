@@ -2825,7 +2825,7 @@
             'Dataการตรวจ': 'Dataการตรวจ',
         };
         
-       // แก้ไขส่วนของ ZONE_TARGETS เพื่อให้มีเขตทั้งหมดครบถ้วน
+      // ZONE_TARGETS สำหรับแต่ละโครงการ
 const ZONE_TARGETS = {
     'planting-sugarcane-field': {
         '1': 1000,
@@ -3206,14 +3206,13 @@ const OVERALL_TARGETS = {
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
         }
         
-       // แก้ไข function updateFilterOptions() เพื่อให้แสดงเขตทั้งหมด
-function updateFilterOptions() {
+     function updateFilterOptions() {
     const data = allData[currentSheet];
     
     uniqueZones.clear();
     uniqueFarmerOfficers.clear();
-            
-            // เพิ่มเขตทั้งหมดลงในตัวเลือก กรอง
+    
+    // เพิ่มเขตทั้งหมดลงในตัวเลือกกรอง
     const allZones = [
         '1', '2', '3', '4', '5', '6', '7', '8', 
         '10', '11', '12', '21', 
@@ -4155,12 +4154,11 @@ function updateFilterOptions() {
             showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
         }
         
-       / แก้ไข function updateZoneSummary() เพื่อให้รวมเขตทั้งหมด
-function updateZoneSummary() {
+     function updateZoneSummary() {
     const plantingData = allData['planting-sugarcane-field'];
     const cropChangeData = allData['crop-change-sugarcane'];
-            
-           // กำหนดเขตทั้งหมดที่ต้องการแสดง
+    
+    // กำหนดเขตทั้งหมดที่ต้องการแสดง
     const allZones = [
         '1', '2', '3', '4', '5', '6', '7', '8', 
         '10', '11', '12', '21', 
@@ -4264,8 +4262,8 @@ function updateZoneSummary() {
             zoneData[zone].pending++;
         }
     });
-            
-           // เรียงลำดับเขตให้ถูกต้อง: 1-8, 10, 11, 12, 21, C1-C4
+    
+    // เรียงลำดับเขตให้ถูกต้อง: 1-8, 10, 11, 12, 21, C1-C4
     const zoneArray = Object.values(zoneData);
     zoneArray.sort((a, b) => {
         const zoneA = a.zone;
@@ -4302,8 +4300,7 @@ function updateZoneSummary() {
     updateZoneCharts(zoneArray);
 }
         
-       // แก้ไข function updateZoneSummaryTable() ให้แสดงเขตทั้งหมด
-function updateZoneSummaryTable(zoneArray) {
+      function updateZoneSummaryTable(zoneArray) {
     const tbody = document.getElementById('zone-summary-body');
     tbody.innerHTML = '';
     
@@ -4410,8 +4407,7 @@ function updateZoneSummaryTable(zoneArray) {
     `;
 }
         
-       // แก้ไข function updateZoneCharts() ให้แสดงข้อมูลเขตทั้งหมด
-function updateZoneCharts(zoneArray) {
+    function updateZoneCharts(zoneArray) {
     // กรองเฉพาะเขตที่ต้องการแสดง (1-8, 10, 11, 12, 21, C1-C4)
     const filteredZones = zoneArray.filter(zone => {
         const zoneNum = zone.zone;
@@ -7587,8 +7583,7 @@ function updateCropChangeZoneSummary() {
             updateProjectComparisonChart(plantingData, cropChangeData);
         }
         
-       // แก้ไข function updateProjectComparison() ให้แสดงเขตทั้งหมด
-function updateProjectComparisonTable(plantingData, cropChangeData) {
+       function updateProjectComparisonTable(plantingData, cropChangeData) {
     const tbody = document.getElementById('project-comparison-body');
     tbody.innerHTML = '';
     
