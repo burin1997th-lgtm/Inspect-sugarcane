@@ -3520,28 +3520,26 @@ const OFFICER_BY_ZONE = {
     
     const filteredOfficers = new Set();
     
-    // แก้ไขใน updateFarmerOfficerFilter()
-option.innerHTML = `
-    <div class="d-flex justify-content-between align-items-center">
-        <span>${officer}</span>
-        <span class="badge bg-secondary badge-sm">${getZoneByOfficer(officer)}</span>
-    </div>
-`;
-
-// สร้าง function ช่วยหาชื่อเขตจากรหัสนักเกษตร
-function getZoneByOfficer(officerCode) {
-    for (const [zone, officers] of Object.entries(OFFICER_BY_ZONE)) {
-        if (officers.includes(officerCode)) {
-            return `เขต ${zone}`;
-        }
-    }
-    return 'ไม่ระบุเขต';
-}
-    
     // เพิ่มรหัสนักเกษตรตามเขตจากข้อมูลที่กำหนด
     if (selectedZone !== 'all' && OFFICER_BY_ZONE[selectedZone]) {
+        // กรองเฉพาะรหัสนักเกษตรในเขตที่เลือกเท่านั้น
         OFFICER_BY_ZONE[selectedZone].forEach(officer => {
             filteredOfficers.add(officer);
+        });
+    } else if (selectedZone === 'all') {
+        // ถ้าเลือก "ทุกเขต" แสดงรหัสนักเกษตรทั้งหมดจากข้อมูลจริง
+        data.forEach(item => {
+            const farmerOfficer = item['รหัสนักเกษตร'] || '';
+            if (farmerOfficer && farmerOfficer.trim() !== '') {
+                filteredOfficers.add(farmerOfficer.trim());
+            }
+        });
+        
+        // เพิ่มรหัสนักเกษตรจากข้อมูลที่กำหนดทั้งหมด
+        Object.values(OFFICER_BY_ZONE).forEach(officers => {
+            officers.forEach(officer => {
+                filteredOfficers.add(officer);
+            });
         });
     }
     
@@ -3556,13 +3554,30 @@ function getZoneByOfficer(officerCode) {
         
         // หาชื่อนักเกษตรจากข้อมูล (ถ้ามี)
         let officerName = officer; // เริ่มต้นด้วยรหัส
+        let officerZone = '';
+        
+        // หาเขตที่เกี่ยวข้องกับรหัสนักเกษตรนี้
+        for (const [zone, officers] of Object.entries(OFFICER_BY_ZONE)) {
+            if (officers.includes(officer)) {
+                officerZone = ` (เขต ${zone})`;
+                break;
+            }
+        }
+        
+        // หาชื่อนักเกษตรจากข้อมูลจริง
         data.forEach(item => {
             if (item['รหัสนักเกษตร'] === officer && item['ชื่อนักเกษตร']) {
-                officerName = `${officer} - ${item['ชื่อนักเกษตร']}`;
+                officerName = `${officer} - ${item['ชื่อนักเกษตร']}${officerZone}`;
             }
         });
         
+        // ถ้าไม่เจอชื่อในข้อมูลจริง
+        if (officerName === officer) {
+            officerName = `${officer}${officerZone}`;
+        }
+        
         option.textContent = officerName;
+        option.title = `รหัสนักเกษตร: ${officer}${officerZone}`;
         farmerOfficerFilter.appendChild(option);
     });
 }
@@ -4149,112 +4164,113 @@ function getOfficerZoneInfo(officerCode, currentZone) {
             });
         }
         
-        function filterData() {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase();
-            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-            const conditionFilter = document.getElementById('condition-filter').value;
-            const zoneFilter = document.getElementById('zone-filter').value;
-            const farmerOfficerFilter = document.getElementById('farmer-officer-filter').value;
+       function filterData() {
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+    const conditionFilter = document.getElementById('condition-filter').value;
+    const zoneFilter = document.getElementById('zone-filter').value;
+    const farmerOfficerFilter = document.getElementById('farmer-officer-filter').value;
+    
+    let data = allData[currentSheet];
+    
+    if (searchTerm) {
+        data = data.filter(item => {
+            return Object.values(item).some(value => 
+                value && value.toString().toLowerCase().includes(searchTerm)
+            );
+        });
+    }
+    
+    if (conditionFilter !== 'all') {
+        data = data.filter(item => {
+            const condition = item['เงื่อนไขโครงการ'] || '';
+            const conditionLower = condition.toLowerCase().trim();
             
-            let data = allData[currentSheet];
-            
-            if (searchTerm) {
-                data = data.filter(item => {
-                    return Object.values(item).some(value => 
-                        value && value.toString().toLowerCase().includes(searchTerm)
-                    );
-                });
+            if (conditionFilter === 'ผ่าน') {
+                return conditionLower === 'ผ่าน';
+            } else if (conditionFilter === 'ไม่ผ่าน') {
+                return conditionLower === 'ไม่ผ่าน';
+            } else if (conditionFilter === 'รอตรวจแปลง') {
+                return conditionLower === 'รอตรวจแปลง';
+            } else if (conditionFilter === 'ตรวจแล้ว') {
+                return conditionLower === 'ผ่าน' || conditionLower === 'ไม่ผ่าน';
+            } else if (conditionFilter === 'ยังไม่ตรวจ') {
+                return conditionLower === 'รอตรวจแปลง' || conditionLower === '';
             }
-            
-            if (conditionFilter !== 'all') {
+            return true;
+        });
+    }
+    
+    if (zoneFilter !== 'all') {
+        data = data.filter(item => {
+            const zone = item['เขต'] || '';
+            return zone === zoneFilter;
+        });
+    }
+    
+    if (farmerOfficerFilter !== 'all') {
+        data = data.filter(item => {
+            const farmerOfficer = item['รหัสนักเกษตร'] || '';
+            const selectedOfficerCode = farmerOfficerFilter.split(' - ')[0]; // เอาเฉพาะรหัส
+            return farmerOfficer === selectedOfficerCode;
+        });
+    }
+    
+    if (activeFilter !== 'all') {
+        switch(activeFilter) {
+            case 'recent':
+                const oneMonthAgo = new Date();
+                oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
+                data = data.filter(item => {
+                    const plantingDate = item['วันที่ปลูก'] || '';
+                    if (plantingDate) {
+                        const date = parseThaiDate(plantingDate);
+                        return date && date > oneMonthAgo;
+                    }
+                    return false;
+                });
+                break;
+            case 'large':
+                data = data.filter(item => {
+                    const area = parseFloat(item['พื้นที่']) || 0;
+                    return area > 10;
+                });
+                break;
+            case 'checked':
                 data = data.filter(item => {
                     const condition = item['เงื่อนไขโครงการ'] || '';
-                    const conditionLower = condition.toLowerCase().trim();
-                    
-                    if (conditionFilter === 'ผ่าน') {
-                        return conditionLower === 'ผ่าน';
-                    } else if (conditionFilter === 'ไม่ผ่าน') {
-                        return conditionLower === 'ไม่ผ่าน';
-                    } else if (conditionFilter === 'รอตรวจแปลง') {
-                        return conditionLower === 'รอตรวจแปลง';
-                    } else if (conditionFilter === 'ตรวจแล้ว') {
-                        return conditionLower === 'ผ่าน' || conditionLower === 'ไม่ผ่าน';
-                    } else if (conditionFilter === 'ยังไม่ตรวจ') {
-                        return conditionLower === 'รอตรวจแปลง' || conditionLower === '';
-                    }
-                    return true;
+                    return condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
                 });
-            }
-            
-            if (zoneFilter !== 'all') {
+                break;
+            case 'not-checked':
                 data = data.filter(item => {
-                    const zone = item['เขต'] || '';
-                    return zone === zoneFilter;
+                    const condition = item['เงื่อนไขโครงการ'] || '';
+                    return condition === 'รอตรวจแปลง' || condition === '';
                 });
-            }
-            
-            if (farmerOfficerFilter !== 'all') {
+                break;
+            case 'passed':
                 data = data.filter(item => {
-                    const farmerOfficer = item['ชื่อนักเกษตร'] || '';
-                    return farmerOfficer === farmerOfficerFilter;
+                    const condition = item['เงื่อนไขโครงการ'] || '';
+                    return condition === 'ผ่าน';
                 });
-            }
-            
-            if (activeFilter !== 'all') {
-                switch(activeFilter) {
-                    case 'recent':
-                        const oneMonthAgo = new Date();
-                        oneMonthAgo.setDate(oneMonthAgo.getDate() - 30);
-                        data = data.filter(item => {
-                            const plantingDate = item['วันที่ปลูก'] || '';
-                            if (plantingDate) {
-                                const date = parseThaiDate(plantingDate);
-                                return date && date > oneMonthAgo;
-                            }
-                            return false;
-                        });
-                        break;
-                    case 'large':
-                        data = data.filter(item => {
-                            const area = parseFloat(item['พื้นที่']) || 0;
-                            return area > 10;
-                        });
-                        break;
-                    case 'checked':
-                        data = data.filter(item => {
-                            const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition === 'ผ่าน' || condition === 'ไม่ผ่าน';
-                        });
-                        break;
-                    case 'not-checked':
-                        data = data.filter(item => {
-                            const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition === 'รอตรวจแปลง' || condition === '';
-                        });
-                        break;
-                    case 'passed':
-                        data = data.filter(item => {
-                            const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition === 'ผ่าน';
-                        });
-                        break;
-                    case 'failed':
-                        data = data.filter(item => {
-                            const condition = item['เงื่อนไขโครงการ'] || '';
-                            return condition === 'ไม่ผ่าน';
-                        });
-                        break;
-                }
-            }
-            
-            filteredData = data;
-            
-            populateTable(data);
-            updateProjectStats();
-            updateConditionPieChart();
-            updateZoneTargetStats();
-            updateOverallTargetStats();
+                break;
+            case 'failed':
+                data = data.filter(item => {
+                    const condition = item['เงื่อนไขโครงการ'] || '';
+                    return condition === 'ไม่ผ่าน';
+                });
+                break;
         }
+    }
+    
+    filteredData = data;
+    
+    populateTable(data);
+    updateProjectStats();
+    updateConditionPieChart();
+    updateZoneTargetStats();
+    updateOverallTargetStats();
+}
         
         function resetFilters() {
             document.getElementById('search-input').value = '';
