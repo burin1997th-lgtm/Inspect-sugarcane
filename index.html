@@ -1289,7 +1289,34 @@
             margin-right: 8px;
             font-size: 1rem;
         }
-        
+        /* เพิ่มใน CSS */
+.officer-list-item {
+    transition: all 0.3s ease;
+}
+
+.officer-list-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+}
+
+.zone-officer-badge {
+    background: linear-gradient(135deg, var(--secondary-green), var(--project-blue));
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.zone-officer-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--secondary-green);
+}
         .project-separate-tab-btn.active {
             background: linear-gradient(to right, var(--secondary-green), var(--project-blue));
             color: var(--white);
@@ -2790,6 +2817,213 @@
             </div>
         </div>
     </div>
+    <!-- เพิ่มปุ่มในส่วนของ filter -->
+<button class="btn btn-sm btn-info ms-2" id="show-officers-btn" title="ดูข้อมูลนักเกษตรตามเขต">
+    <i class="fas fa-users me-1"></i>นักเกษตรตามเขต
+</button>
+
+<!-- เพิ่ม modal สำหรับแสดงข้อมูลนักเกษตร -->
+<div class="modal fade" id="zoneOfficersModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-users me-2"></i>ข้อมูลนักเกษตรตามเขต
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="zone-officers-content">
+                <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-blue" data-bs-dismiss="modal">
+                    <i class="fas fa-times me-1"></i>ปิด
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    // ใน function initializeApp() เพิ่ม:
+document.getElementById('show-officers-btn').addEventListener('click', function() {
+    updateZoneOfficersModal();
+    const modal = new bootstrap.Modal(document.getElementById('zoneOfficersModal'));
+    modal.show();
+});
+
+// สร้าง function สำหรับอัปเดต modal
+function updateZoneOfficersModal() {
+    let contentHTML = `
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-success text-white">
+                        <i class="fas fa-map-marker-alt me-2"></i>เขต C1
+                    </div>
+                    <div class="card-body">
+                        <h6>รหัสนักเกษตรในเขต C1:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C12
+                                <span class="badge bg-primary rounded-pill">รหัส 1</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C13
+                                <span class="badge bg-primary rounded-pill">รหัส 2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C14
+                                <span class="badge bg-primary rounded-pill">รหัส 3</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C15
+                                <span class="badge bg-primary rounded-pill">รหัส 4</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C16
+                                <span class="badge bg-primary rounded-pill">รหัส 5</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C17
+                                <span class="badge bg-primary rounded-pill">รหัส 6</span>
+                            </li>
+                        </ul>
+                        <div class="mt-2">
+                            <small class="text-muted">รวมนักเกษตรทั้งหมด: <strong>6 คน</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-warning text-white">
+                        <i class="fas fa-map-marker-alt me-2"></i>เขต C2
+                    </div>
+                    <div class="card-body">
+                        <h6>รหัสนักเกษตรในเขต C2:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C22
+                                <span class="badge bg-primary rounded-pill">รหัส 1</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C23
+                                <span class="badge bg-primary rounded-pill">รหัส 2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C24
+                                <span class="badge bg-primary rounded-pill">รหัส 3</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C26
+                                <span class="badge bg-primary rounded-pill">รหัส 4</span>
+                            </li>
+                        </ul>
+                        <div class="mt-2">
+                            <small class="text-muted">รวมนักเกษตรทั้งหมด: <strong>4 คน</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-danger text-white">
+                        <i class="fas fa-map-marker-alt me-2"></i>เขต C3
+                    </div>
+                    <div class="card-body">
+                        <h6>รหัสนักเกษตรในเขต C3:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C32
+                                <span class="badge bg-primary rounded-pill">รหัส 1</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C33
+                                <span class="badge bg-primary rounded-pill">รหัส 2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C34
+                                <span class="badge bg-primary rounded-pill">รหัส 3</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C35
+                                <span class="badge bg-primary rounded-pill">รหัส 4</span>
+                            </li>
+                        </ul>
+                        <div class="mt-2">
+                            <small class="text-muted">รวมนักเกษตรทั้งหมด: <strong>4 คน</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header bg-purple text-white">
+                        <i class="fas fa-map-marker-alt me-2"></i>เขต C4
+                    </div>
+                    <div class="card-body">
+                        <h6>รหัสนักเกษตรในเขต C4:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C42
+                                <span class="badge bg-primary rounded-pill">รหัส 1</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C43
+                                <span class="badge bg-primary rounded-pill">รหัส 2</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C45
+                                <span class="badge bg-primary rounded-pill">รหัส 3</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C48
+                                <span class="badge bg-primary rounded-pill">รหัส 4</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                C49
+                                <span class="badge bg-primary rounded-pill">รหัส 5</span>
+                            </li>
+                        </ul>
+                        <div class="mt-2">
+                            <small class="text-muted">รวมนักเกษตรทั้งหมด: <strong>5 คน</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <i class="fas fa-map-marker-alt me-2"></i>เขต 12
+                    </div>
+                    <div class="card-body">
+                        <h6>รหัสนักเกษตรในเขต 12:</h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                411
+                                <span class="badge bg-primary rounded-pill">รหัส 1</span>
+                            </li>
+                        </ul>
+                        <div class="mt-2">
+                            <small class="text-muted">รวมนักเกษตรทั้งหมด: <strong>1 คน</strong></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info mt-3">
+            <h6><i class="fas fa-info-circle me-2"></i>หมายเหตุ</h6>
+            <p class="mb-1">• รหัสนักเกษตรอาจมีมากกว่าหรือน้อยกว่าในข้อมูลจริง</p>
+            <p class="mb-1">• นักเกษตรแต่ละคนสามารถดูแลโครงการได้หลายโครงการ</p>
+            <p class="mb-0">• ข้อมูลนี้อิงจากข้อมูลพื้นฐานที่กำหนดไว้</p>
+        </div>
+    `;
+    
+    document.getElementById('zone-officers-content').innerHTML = contentHTML;
+}
 
     <div class="footer">
         <div class="container">
@@ -3218,16 +3452,42 @@ const OVERALL_TARGETS = {
         '10', '11', '12', '21', 
         'C1', 'C2', 'C3', 'C4'
     ];
-    
+    // เพิ่มข้อมูลนักเกษตรตามเขต
+const OFFICER_BY_ZONE = {
+    '1': ['003', '004', '009', '008'],
+    '2': ['203', '204', '205', '206', '207'],
+    '3': ['303', '304', '305'],
+    '4': ['402', '405', '406'],
+    '5': ['503', '505', '521', '522', '523'],
+    '6': ['603', '605', '604', '606'],
+    '7': ['702', '703', '704', '705'],
+    '8': ['802', '803', '804'],
+    '10': ['102', '103', '104'],
+    '11': ['112', '113', '114'],
+    '21': ['203', '204', '205', '206', '207'],
+    'C1': ['C12', 'C13', 'C14', 'C15', 'C16', 'C17'],
+    'C2': ['C22', 'C23', 'C24', 'C26'],
+    'C3': ['C32', 'C33', 'C34', 'C35'],
+    'C4': ['C42', 'C43', 'C45', 'C48', 'C49'],
+    '12': ['411']
+};
     allZones.forEach(zone => {
         uniqueZones.add(zone);
     });
     
+    // เพิ่มรหัสนักเกษตรจากข้อมูลที่มีอยู่
     data.forEach(item => {
-        const farmerOfficer = item['ชื่อนักเกษตร'] || '';
+        const farmerOfficer = item['รหัสนักเกษตร'] || '';
         if (farmerOfficer && farmerOfficer.trim() !== '') {
             uniqueFarmerOfficers.add(farmerOfficer.trim());
         }
+    });
+    
+    // เพิ่มรหัสนักเกษตรตามเขตจากข้อมูลที่กำหนด
+    Object.values(OFFICER_BY_ZONE).forEach(officers => {
+        officers.forEach(officer => {
+            uniqueFarmerOfficers.add(officer);
+        });
     });
     
     const zoneFilter = document.getElementById('zone-filter');
@@ -3243,7 +3503,10 @@ const OVERALL_TARGETS = {
         const option = document.createElement('option');
         option.value = zone;
         const target = ZONE_TARGETS[currentSheet][zone] || 0;
+        // แสดงข้อมูลนักเกษตรใน tooltip หรือ label
+        const officers = OFFICER_BY_ZONE[zone] || [];
         option.textContent = `เขต ${zone} (เป้าหมาย: ${formatNumber(target)} ไร่)`;
+        option.title = `นักเกษตรในเขต ${zone}: ${officers.length > 0 ? officers.join(', ') : 'ไม่มีข้อมูล'}`;
         zoneFilter.appendChild(option);
     });
     
@@ -3251,33 +3514,140 @@ const OVERALL_TARGETS = {
 }
         
         function updateFarmerOfficerFilter() {
-            const data = allData[currentSheet];
-            const zoneFilter = document.getElementById('zone-filter');
-            const selectedZone = zoneFilter.value;
-            
-            const filteredOfficers = new Set();
-            
-            data.forEach(item => {
-                const zone = item['เขต'] || '';
-                const farmerOfficer = item['ชื่อนักเกษตร'] || '';
-                
-                if (farmerOfficer && farmerOfficer.trim() !== '') {
-                    if (selectedZone === 'all' || zone === selectedZone) {
-                        filteredOfficers.add(farmerOfficer.trim());
-                    }
-                }
-            });
-            
-            const farmerOfficerFilter = document.getElementById('farmer-officer-filter');
-            farmerOfficerFilter.innerHTML = '<option value="all">นักเกษตรทั้งหมด</option>';
-            
-            Array.from(filteredOfficers).sort().forEach(officer => {
-                const option = document.createElement('option');
-                option.value = officer;
-                option.textContent = officer;
-                farmerOfficerFilter.appendChild(option);
-            });
+    const data = allData[currentSheet];
+    const zoneFilter = document.getElementById('zone-filter');
+    const selectedZone = zoneFilter.value;
+    
+    const filteredOfficers = new Set();
+    
+    // แก้ไขใน updateFarmerOfficerFilter()
+option.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center">
+        <span>${officer}</span>
+        <span class="badge bg-secondary badge-sm">${getZoneByOfficer(officer)}</span>
+    </div>
+`;
+
+// สร้าง function ช่วยหาชื่อเขตจากรหัสนักเกษตร
+function getZoneByOfficer(officerCode) {
+    for (const [zone, officers] of Object.entries(OFFICER_BY_ZONE)) {
+        if (officers.includes(officerCode)) {
+            return `เขต ${zone}`;
         }
+    }
+    return 'ไม่ระบุเขต';
+}
+    
+    // เพิ่มรหัสนักเกษตรตามเขตจากข้อมูลที่กำหนด
+    if (selectedZone !== 'all' && OFFICER_BY_ZONE[selectedZone]) {
+        OFFICER_BY_ZONE[selectedZone].forEach(officer => {
+            filteredOfficers.add(officer);
+        });
+    }
+    
+    const farmerOfficerFilter = document.getElementById('farmer-officer-filter');
+    farmerOfficerFilter.innerHTML = '<option value="all">นักเกษตรทั้งหมด</option>';
+    
+    // แสดงรหัสนักเกษตรพร้อมชื่อถ้ามี
+    const officerList = Array.from(filteredOfficers).sort();
+    officerList.forEach(officer => {
+        const option = document.createElement('option');
+        option.value = officer;
+        
+        // หาชื่อนักเกษตรจากข้อมูล (ถ้ามี)
+        let officerName = officer; // เริ่มต้นด้วยรหัส
+        data.forEach(item => {
+            if (item['รหัสนักเกษตร'] === officer && item['ชื่อนักเกษตร']) {
+                officerName = `${officer} - ${item['ชื่อนักเกษตร']}`;
+            }
+        });
+        
+        option.textContent = officerName;
+        farmerOfficerFilter.appendChild(option);
+    });
+}
+        // ใน populateTable() หรือฟังก์ชันที่แสดงตาราง
+if (column === 'รหัสนักเกษตร') {
+    const officerCode = value;
+    const zone = item['เขต'] || '';
+    const officerZoneInfo = getOfficerZoneInfo(officerCode, zone);
+    
+    cell.innerHTML = `
+        <div class="d-flex align-items-center">
+            <span class="me-2">${officerCode}</span>
+            ${officerZoneInfo ? `<span class="badge bg-info badge-sm">${officerZoneInfo}</span>` : ''}
+        </div>
+    `;
+}
+
+// สร้าง function ช่วย
+function getOfficerZoneInfo(officerCode, currentZone) {
+    // ถ้า officerCode ตรงกับข้อมูลใน OFFICER_BY_ZONE
+    for (const [zone, officers] of Object.entries(OFFICER_BY_ZONE)) {
+        if (officers.includes(officerCode)) {
+            if (currentZone && currentZone === zone) {
+                return `ถูกต้อง (เขต ${zone})`;
+            } else if (currentZone) {
+                return `ควรเป็นเขต ${zone}`;
+            }
+            return `เขต ${zone}`;
+        }
+    }
+    return null;
+}
+        function showZoneOfficersInfo() {
+    // สร้าง modal หรือ card สำหรับแสดงข้อมูลนักเกษตรตามเขต
+    let infoHTML = `
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white">
+                <i class="fas fa-users me-2"></i>ข้อมูลนักเกษตรตามเขต
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="comparison-item">
+                            <div class="comparison-title">เขต C1</div>
+                            <div class="small">รหัสนักเกษตร: C12, C13, C14, C15, C16, C17</div>
+                            <div class="mt-1">จำนวน: 6 คน</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="comparison-item">
+                            <div class="comparison-title">เขต C2</div>
+                            <div class="small">รหัสนักเกษตร: C22, C23, C24, C26</div>
+                            <div class="mt-1">จำนวน: 4 คน</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="comparison-item">
+                            <div class="comparison-title">เขต C3</div>
+                            <div class="small">รหัสนักเกษตร: C32, C33, C34, C35</div>
+                            <div class="mt-1">จำนวน: 4 คน</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="comparison-item">
+                            <div class="comparison-title">เขต C4</div>
+                            <div class="small">รหัสนักเกษตร: C42, C43, C45, C48, C49</div>
+                            <div class="mt-1">จำนวน: 5 คน</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <div class="comparison-item">
+                            <div class="comparison-title">เขต 12</div>
+                            <div class="small">รหัสนักเกษตร: 411</div>
+                            <div class="mt-1">จำนวน: 1 คน</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return infoHTML;
+}
         
         function updateZoneTargetStats() {
             const zoneFilter = document.getElementById('zone-filter');
@@ -4672,7 +5042,40 @@ const OVERALL_TARGETS = {
         }
     });
 }
-
+function updateOfficerSummaryWithZoneInfo() {
+    const plantingData = allData['planting-sugarcane-field'];
+    const cropChangeData = allData['crop-change-sugarcane'];
+    
+    // ... existing code ...
+    
+    // เพิ่มข้อมูลนักเกษตรตามเขตในผลลัพธ์
+    let summaryHTML = `
+        <div class="alert alert-info mt-4">
+            <h6><i class="fas fa-users me-2"></i>ข้อมูลนักเกษตรตามเขต (พื้นฐาน)</h6>
+            <div class="row mt-2">
+                <div class="col-md-3">
+                    <small><strong>เขต C1:</strong> C12, C13, C14, C15, C16, C17 (6 คน)</small>
+                </div>
+                <div class="col-md-3">
+                    <small><strong>เขต C2:</strong> C22, C23, C24, C26 (4 คน)</small>
+                </div>
+                <div class="col-md-3">
+                    <small><strong>เขต C3:</strong> C32, C33, C34, C35 (4 คน)</small>
+                </div>
+                <div class="col-md-3">
+                    <small><strong>เขต C4:</strong> C42, C43, C45, C48, C49 (5 คน)</small>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <small><strong>เขต 12:</strong> 411 (1 คน)</small>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    return summaryHTML;
+}
         
         function updatePlantingSummary() {
             const plantingData = allData['planting-sugarcane-field'];
