@@ -1407,6 +1407,9 @@
                     <button class="summary-tab-btn" data-summary-type="performance-summary">
                         <i class="fas fa-chart-line me-2"></i>สรุปประสิทธิภาพ
                     </button>
+                    <button class="summary-tab-btn" data-summary-type="project-comparison">
+                        <i class="fas fa-balance-scale me-2"></i>เปรียบเทียบโครงการ
+                    </button>
                 </div>
 
                 <!-- Zone Summary Section -->
@@ -1824,6 +1827,77 @@
                     </div>
                 </div>
 
+                <!-- Project Comparison Section -->
+                <div id="project-comparison-content" class="summary-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-balance-scale me-2"></i>เปรียบเทียบโครงการทั้งสอง
+                        </div>
+                        <div class="card-body">
+                            <!-- Comparison Stats -->
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-success comma-number" id="planting-total-projects">0</div>
+                                        <div class="summary-stat-label">โครงการปลูกอ้อยในนา</div>
+                                        <div class="stat-subtext" id="planting-total-area">พื้นที่: 0 ไร่</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-purple comma-number" id="crop-change-total-projects">0</div>
+                                        <div class="summary-stat-label">โครงการเปลี่ยนพืชอื่น</div>
+                                        <div class="stat-subtext" id="crop-change-total-area">พื้นที่: 0 ไร่</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comparison Chart -->
+                            <div class="chart-container mb-4">
+                                <h5 class="chart-title mb-4">
+                                    <i class="fas fa-chart-bar me-2"></i>เปรียบเทียบโครงการทั้งสองตามเขต
+                                </h5>
+                                <div class="chart-wrapper" style="height: 500px;">
+                                    <canvas id="projectComparisonChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Zone Comparison Table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-2"></i>เปรียบเทียบข้อมูลตามเขต
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="summary-table-container">
+                                        <table class="summary-table" id="project-comparison-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>เขต</th>
+                                                    <th class="text-center" colspan="2">ปลูกอ้อยในนา</th>
+                                                    <th class="text-center" colspan="2">เปลี่ยนพืชอื่น</th>
+                                                    <th class="text-center" colspan="2">รวมทั้งหมด</th>
+                                                </tr>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="text-end">โครงการ</th>
+                                                    <th class="text-end">พื้นที่(ไร่)</th>
+                                                    <th class="text-end">โครงการ</th>
+                                                    <th class="text-end">พื้นที่(ไร่)</th>
+                                                    <th class="text-end">โครงการ</th>
+                                                    <th class="text-end">พื้นที่(ไร่)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="project-comparison-body">
+                                                <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Export Buttons for Summary -->
                 <div class="summary-export-buttons mt-4">
                     <button class="btn-blue" id="export-zone-summary">
@@ -1837,6 +1911,9 @@
                     </button>
                     <button class="btn-green" id="export-performance-summary">
                         <i class="fas fa-download me-2"></i>ส่งออกสรุปประสิทธิภาพ
+                    </button>
+                    <button class="btn-kbs" id="export-project-comparison">
+                        <i class="fas fa-download me-2"></i>ส่งออกเปรียบเทียบโครงการ
                     </button>
                 </div>
             </div>
@@ -2414,6 +2491,7 @@
         let performanceTrendChart = null;
         let achievementComparisonChart = null;
         let topZonesChart = null;
+        let projectComparisonChart = null;
         
         // Helper function to format numbers with commas
         function formatNumber(num) {
@@ -2572,6 +2650,7 @@
             document.getElementById('export-officer-summary').addEventListener('click', exportOfficerSummary);
             document.getElementById('export-condition-summary').addEventListener('click', exportConditionSummary);
             document.getElementById('export-performance-summary').addEventListener('click', exportPerformanceSummary);
+            document.getElementById('export-project-comparison').addEventListener('click', exportProjectComparison);
             
             // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -2610,6 +2689,7 @@
             updateOfficerSummary();
             updateConditionSummary();
             updatePerformanceSummary();
+            updateProjectComparison();
             
             // Show first tab by default
             showSummaryTab('zone-summary');
@@ -2779,7 +2859,7 @@
             zoneFilter.innerHTML = '<option value="all">ทุกเขต</option>';
             
             // Add zone options with targets
-            Array.from(uniqueZones).sort().forEach(zone => {
+            Array.from(uniqueZones).sort((a, b) => a.localeCompare(b, undefined, {numeric: true})).forEach(zone => {
                 const option = document.createElement('option');
                 option.value = zone;
                 
@@ -3791,17 +3871,20 @@
         
         // Update zone summary
         function updateZoneSummary() {
-            const data = allData['planting-sugarcane-field'];
+            // รวมข้อมูลจากทั้ง 2 โครงการ
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 document.getElementById('zone-summary-count').textContent = '0 เขต';
                 return;
             }
             
-            // Group data by zone
+            // Group data by zone from both projects
             const zoneData = {};
             
-            data.forEach(item => {
+            // รวมข้อมูลจากโครงการปลูกอ้อยในนา
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const area = parseFloat(item['พื้นที่']) || 0;
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
@@ -3809,9 +3892,16 @@
                 if (!zoneData[zone]) {
                     zoneData[zone] = {
                         zone: zone,
-                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -3820,6 +3910,47 @@
                 
                 zoneData[zone].projects++;
                 zoneData[zone].area += area;
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            // รวมข้อมูลจากโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     zoneData[zone].passed++;
@@ -3832,7 +3963,7 @@
             
             // Convert to array and sort
             const zoneArray = Object.values(zoneData);
-            zoneArray.sort((a, b) => b.area - b.area);
+            zoneArray.sort((a, b) => a.zone.localeCompare(b.zone, undefined, {numeric: true}));
             
             // Update count
             document.getElementById('zone-summary-count').textContent = zoneArray.length + ' เขต';
@@ -3840,7 +3971,7 @@
             // Update stats
             const totalZones = zoneArray.length;
             const totalZoneArea = zoneArray.reduce((sum, zone) => sum + zone.area, 0);
-            const totalZoneTarget = zoneArray.reduce((sum, zone) => sum + zone.target, 0);
+            const totalZoneTarget = zoneArray.reduce((sum, zone) => sum + zone.total_target, 0);
             const zoneProgressAverage = totalZoneTarget > 0 ? 
                 Math.round((totalZoneArea / totalZoneTarget) * 100) : 0;
             
@@ -3864,19 +3995,31 @@
             let totalTarget = 0;
             let totalArea = 0;
             let totalProjects = 0;
+            let totalPlantingProjects = 0;
+            let totalCropChangeProjects = 0;
             let totalPassed = 0;
             let totalFailed = 0;
             let totalPending = 0;
             
             zoneArray.forEach(zone => {
-                const progressPercent = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
-                const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
+                const progressPercent = zone.total_target > 0 ? 
+                    Math.round((zone.area / zone.total_target) * 100) : 0;
+                const passRate = zone.projects > 0 ? 
+                    Math.round((zone.passed / zone.projects) * 100) : 0;
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td><strong>เขต ${zone.zone}</strong></td>
-                    <td class="text-end">${formatNumber(zone.target)}</td>
-                    <td class="text-end">${formatNumber(zone.area)}</td>
+                    <td class="text-end">
+                        <div class="small">ปลูกในนา: ${formatNumber(zone.planting_target)} ไร่</div>
+                        <div class="small">เปลี่ยนพืช: ${formatNumber(zone.crop_change_target)} ไร่</div>
+                        <div class="fw-bold mt-1">รวม: ${formatNumber(zone.total_target)} ไร่</div>
+                    </td>
+                    <td class="text-end">
+                        <div class="small">ปลูกในนา: ${formatNumber(zone.planting_area)} ไร่</div>
+                        <div class="small">เปลี่ยนพืช: ${formatNumber(zone.crop_change_area)} ไร่</div>
+                        <div class="fw-bold mt-1">รวม: ${formatNumber(zone.area)} ไร่</div>
+                    </td>
                     <td class="text-end">
                         <div class="d-flex align-items-center justify-content-end">
                             <span class="me-2">${progressPercent}%</span>
@@ -3886,7 +4029,11 @@
                             </div>
                         </div>
                     </td>
-                    <td class="text-end">${formatNumber(zone.projects)}</td>
+                    <td class="text-end">
+                        <div class="small">ปลูกในนา: ${formatNumber(zone.planting_projects)}</div>
+                        <div class="small">เปลี่ยนพืช: ${formatNumber(zone.crop_change_projects)}</div>
+                        <div class="fw-bold mt-1">รวม: ${formatNumber(zone.projects)}</div>
+                    </td>
                     <td class="text-end text-success">${formatNumber(zone.passed)}</td>
                     <td class="text-end text-danger">${formatNumber(zone.failed)}</td>
                     <td class="text-end text-warning">${formatNumber(zone.pending)}</td>
@@ -3899,9 +4046,11 @@
                 tbody.appendChild(row);
                 
                 // Update totals
-                totalTarget += zone.target;
+                totalTarget += zone.total_target;
                 totalArea += zone.area;
                 totalProjects += zone.projects;
+                totalPlantingProjects += zone.planting_projects;
+                totalCropChangeProjects += zone.crop_change_projects;
                 totalPassed += zone.passed;
                 totalFailed += zone.failed;
                 totalPending += zone.pending;
@@ -3913,8 +4062,16 @@
             
             document.getElementById('zone-summary-total').innerHTML = `
                 <td><strong>รวมทั้งหมด</strong></td>
-                <td class="text-end"><strong>${formatNumber(totalTarget)}</strong></td>
-                <td class="text-end"><strong>${formatNumber(totalArea)}</strong></td>
+                <td class="text-end">
+                    <div class="small">ปลูกในนา: ${formatNumber(totalTarget / 2)} ไร่*</div>
+                    <div class="small">เปลี่ยนพืช: ${formatNumber(totalTarget / 2)} ไร่*</div>
+                    <div class="fw-bold mt-1">รวม: ${formatNumber(totalTarget)} ไร่</div>
+                </td>
+                <td class="text-end">
+                    <div class="small">ปลูกในนา: ${formatNumber(totalArea / 2)} ไร่*</div>
+                    <div class="small">เปลี่ยนพืช: ${formatNumber(totalArea / 2)} ไร่*</div>
+                    <div class="fw-bold mt-1">รวม: ${formatNumber(totalArea)} ไร่</div>
+                </td>
                 <td class="text-end">
                     <div class="d-flex align-items-center justify-content-end">
                         <span class="me-2"><strong>${totalProgress}%</strong></span>
@@ -3924,7 +4081,11 @@
                         </div>
                     </div>
                 </td>
-                <td class="text-end"><strong>${formatNumber(totalProjects)}</strong></td>
+                <td class="text-end">
+                    <div class="small">ปลูกในนา: ${formatNumber(totalPlantingProjects)}</div>
+                    <div class="small">เปลี่ยนพืช: ${formatNumber(totalCropChangeProjects)}</div>
+                    <div class="fw-bold mt-1">รวม: ${formatNumber(totalProjects)}</div>
+                </td>
                 <td class="text-end"><strong class="text-success">${formatNumber(totalPassed)}</strong></td>
                 <td class="text-end"><strong class="text-danger">${formatNumber(totalFailed)}</strong></td>
                 <td class="text-end"><strong class="text-warning">${formatNumber(totalPending)}</strong></td>
@@ -3940,10 +4101,12 @@
         function updateZoneCharts(zoneArray) {
             // Prepare data for charts
             const zoneLabels = zoneArray.map(z => `เขต ${z.zone}`);
-            const zoneAreas = zoneArray.map(z => z.area);
-            const zoneTargets = zoneArray.map(z => z.target);
+            const zoneTotalAreas = zoneArray.map(z => z.area);
+            const zonePlantingAreas = zoneArray.map(z => z.planting_area);
+            const zoneCropChangeAreas = zoneArray.map(z => z.crop_change_area);
+            const zoneTotalTargets = zoneArray.map(z => z.total_target);
             const zoneProgress = zoneArray.map(z => 
-                z.target > 0 ? Math.round((z.area / z.target) * 100) : 0
+                z.total_target > 0 ? Math.round((z.area / z.total_target) * 100) : 0
             );
             
             // Zone Area Chart (Bar Chart)
@@ -3959,15 +4122,22 @@
                     labels: zoneLabels,
                     datasets: [
                         {
-                            label: 'พื้นที่ดำเนินการ (ไร่)',
-                            data: zoneAreas,
+                            label: 'ปลูกอ้อยในนา (ไร่)',
+                            data: zonePlantingAreas,
                             backgroundColor: '#4CAF50',
                             borderColor: '#2E7D32',
                             borderWidth: 1
                         },
                         {
-                            label: 'เป้าหมาย (ไร่)',
-                            data: zoneTargets,
+                            label: 'เปลี่ยนพืชอื่น (ไร่)',
+                            data: zoneCropChangeAreas,
+                            backgroundColor: '#9C27B0',
+                            borderColor: '#7B1FA2',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เป้าหมายทั้งหมด (ไร่)',
+                            data: zoneTotalTargets,
                             backgroundColor: '#FF9800',
                             borderColor: '#F57C00',
                             borderWidth: 1,
@@ -3994,7 +4164,17 @@
                                 label: function(context) {
                                     const label = context.dataset.label || '';
                                     const value = context.raw || 0;
-                                    return `${label}: ${formatNumber(value)} ไร่`;
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = zoneArray[zoneIndex];
+                                    let additionalInfo = '';
+                                    
+                                    if (context.datasetIndex === 0) {
+                                        additionalInfo = ` (${zone.planting_projects} โครงการ)`;
+                                    } else if (context.datasetIndex === 1) {
+                                        additionalInfo = ` (${zone.crop_change_projects} โครงการ)`;
+                                    }
+                                    
+                                    return `${label}: ${formatNumber(value)} ไร่${additionalInfo}`;
                                 }
                             }
                         }
@@ -4042,11 +4222,12 @@
                 data: {
                     labels: zoneLabels,
                     datasets: [{
-                        data: zoneAreas,
+                        data: zoneTotalAreas,
                         backgroundColor: [
                             '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336',
                             '#00BCD4', '#FFC107', '#795548', '#607D8B', '#3F51B5',
-                            '#009688', '#E91E63', '#8BC34A', '#FF5722', '#673AB7'
+                            '#009688', '#E91E63', '#8BC34A', '#FF5722', '#673AB7',
+                            '#FF5252', '#E040FB', '#536DFE', '#448AFF', '#40C4FF'
                         ],
                         borderColor: '#fff',
                         borderWidth: 2
@@ -4072,9 +4253,16 @@
                                 label: function(context) {
                                     const label = context.label || '';
                                     const value = context.raw || 0;
-                                    const total = zoneAreas.reduce((a, b) => a + b, 0);
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = zoneArray[zoneIndex];
+                                    const total = zoneTotalAreas.reduce((a, b) => a + b, 0);
                                     const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
-                                    return `${label}: ${formatNumber(value)} ไร่ (${percentage}%)`;
+                                    return [
+                                        `${label}`,
+                                        `ปลูกอ้อยในนา: ${formatNumber(zone.planting_area)} ไร่`,
+                                        `เปลี่ยนพืชอื่น: ${formatNumber(zone.crop_change_area)} ไร่`,
+                                        `รวมทั้งหมด: ${formatNumber(value)} ไร่ (${percentage}%)`
+                                    ];
                                 }
                             }
                         }
@@ -4128,9 +4316,12 @@
                                     const label = context.dataset.label || '';
                                     const value = context.raw || 0;
                                     const zoneIndex = context.dataIndex;
-                                    const zoneArea = zoneAreas[zoneIndex];
-                                    const zoneTarget = zoneTargets[zoneIndex];
-                                    return `${label}: ${value}% (${formatNumber(zoneArea)}/${formatNumber(zoneTarget)} ไร่)`;
+                                    const zone = zoneArray[zoneIndex];
+                                    return [
+                                        `${label}: ${value}%`,
+                                        `ดำเนินการ: ${formatNumber(zone.area)} ไร่`,
+                                        `เป้าหมาย: ${formatNumber(zone.total_target)} ไร่`
+                                    ];
                                 }
                             }
                         }
@@ -4170,17 +4361,20 @@
         
         // Update officer summary
         function updateOfficerSummary() {
-            const data = allData['planting-sugarcane-field'];
+            // รวมข้อมูลจากทั้ง 2 โครงการ
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 document.getElementById('officer-summary-count').textContent = '0 คน';
                 return;
             }
             
-            // Group data by officer
+            // Group data by officer from both projects
             const officerData = {};
             
-            data.forEach(item => {
+            // รวมข้อมูลจากโครงการปลูกอ้อยในนา
+            plantingData.forEach(item => {
                 const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
                 const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
                 const zone = item['เขต'] || 'ไม่ระบุ';
@@ -4196,6 +4390,10 @@
                         zones: new Set(),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -4205,6 +4403,50 @@
                 officerData[key].zones.add(zone);
                 officerData[key].projects++;
                 officerData[key].area += area;
+                officerData[key].planting_projects++;
+                officerData[key].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    officerData[key].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    officerData[key].failed++;
+                } else {
+                    officerData[key].pending++;
+                }
+            });
+            
+            // รวมข้อมูลจากโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย
+            cropChangeData.forEach(item => {
+                const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
+                const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                const key = `${officerCode}|${officerName}`;
+                
+                if (!officerData[key]) {
+                    officerData[key] = {
+                        code: officerCode,
+                        name: officerName,
+                        zones: new Set(),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                officerData[key].zones.add(zone);
+                officerData[key].projects++;
+                officerData[key].area += area;
+                officerData[key].crop_change_projects++;
+                officerData[key].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     officerData[key].passed++;
@@ -4259,8 +4501,16 @@
                     <td><strong>${officer.code}</strong></td>
                     <td>${officer.name}</td>
                     <td>${officer.zones}</td>
-                    <td class="text-end">${formatNumber(officer.projects)}</td>
-                    <td class="text-end">${formatNumber(officer.area)}</td>
+                    <td class="text-end">
+                        <div class="small">ปลูกในนา: ${formatNumber(officer.planting_projects)}</div>
+                        <div class="small">เปลี่ยนพืช: ${formatNumber(officer.crop_change_projects)}</div>
+                        <div class="fw-bold mt-1">รวม: ${formatNumber(officer.projects)}</div>
+                    </td>
+                    <td class="text-end">
+                        <div class="small">ปลูกในนา: ${formatNumber(officer.planting_area)} ไร่</div>
+                        <div class="small">เปลี่ยนพืช: ${formatNumber(officer.crop_change_area)} ไร่</div>
+                        <div class="fw-bold mt-1">รวม: ${formatNumber(officer.area)} ไร่</div>
+                    </td>
                     <td class="text-end text-success">${formatNumber(officer.passed)}</td>
                     <td class="text-end text-danger">${formatNumber(officer.failed)}</td>
                     <td class="text-end text-warning">${formatNumber(officer.pending)}</td>
@@ -4526,13 +4776,15 @@
         
         // Update condition summary
         function updateConditionSummary() {
-            const data = allData['planting-sugarcane-field'];
+            // รวมข้อมูลจากทั้ง 2 โครงการ
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 return;
             }
             
-            // Group data by zone and condition
+            // Group data by zone and condition from both projects
             const zoneConditionData = {};
             let totalProjects = 0;
             let totalPassed = 0;
@@ -4540,21 +4792,37 @@
             let totalPending = 0;
             
             // Initialize zone data
-            Array.from(uniqueZones).sort().forEach(zone => {
+            const allZones = new Set();
+            plantingData.forEach(item => allZones.add(item['เขต'] || 'ไม่ระบุ'));
+            cropChangeData.forEach(item => allZones.add(item['เขต'] || 'ไม่ระบุ'));
+            
+            Array.from(allZones).sort().forEach(zone => {
                 zoneConditionData[zone] = {
+                    planting_passed: 0,
+                    planting_failed: 0,
+                    planting_pending: 0,
+                    crop_change_passed: 0,
+                    crop_change_failed: 0,
+                    crop_change_pending: 0,
                     passed: 0,
                     failed: 0,
                     pending: 0
                 };
             });
             
-            // Count conditions by zone
-            data.forEach(item => {
+            // Count conditions by zone for planting projects
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
                 
                 if (!zoneConditionData[zone]) {
                     zoneConditionData[zone] = {
+                        planting_passed: 0,
+                        planting_failed: 0,
+                        planting_pending: 0,
+                        crop_change_passed: 0,
+                        crop_change_failed: 0,
+                        crop_change_pending: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -4564,12 +4832,51 @@
                 totalProjects++;
                 
                 if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].planting_passed++;
                     zoneConditionData[zone].passed++;
                     totalPassed++;
                 } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].planting_failed++;
                     zoneConditionData[zone].failed++;
                     totalFailed++;
                 } else {
+                    zoneConditionData[zone].planting_pending++;
+                    zoneConditionData[zone].pending++;
+                    totalPending++;
+                }
+            });
+            
+            // Count conditions by zone for crop change projects
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneConditionData[zone]) {
+                    zoneConditionData[zone] = {
+                        planting_passed: 0,
+                        planting_failed: 0,
+                        planting_pending: 0,
+                        crop_change_passed: 0,
+                        crop_change_failed: 0,
+                        crop_change_pending: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                totalProjects++;
+                
+                if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].crop_change_passed++;
+                    zoneConditionData[zone].passed++;
+                    totalPassed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].crop_change_failed++;
+                    zoneConditionData[zone].failed++;
+                    totalFailed++;
+                } else {
+                    zoneConditionData[zone].crop_change_pending++;
                     zoneConditionData[zone].pending++;
                     totalPending++;
                 }
@@ -4601,10 +4908,16 @@
         
         // Update condition by zone chart
         function updateConditionByZoneChart(zoneConditionData) {
-            const zones = Object.keys(zoneConditionData).sort();
-            const passedData = zones.map(zone => zoneConditionData[zone].passed);
-            const failedData = zones.map(zone => zoneConditionData[zone].failed);
-            const pendingData = zones.map(zone => zoneConditionData[zone].pending);
+            const zones = Object.keys(zoneConditionData).sort((a, b) => 
+                a.localeCompare(b, undefined, {numeric: true})
+            );
+            
+            const plantingPassedData = zones.map(zone => zoneConditionData[zone].planting_passed);
+            const plantingFailedData = zones.map(zone => zoneConditionData[zone].planting_failed);
+            const plantingPendingData = zones.map(zone => zoneConditionData[zone].planting_pending);
+            const cropChangePassedData = zones.map(zone => zoneConditionData[zone].crop_change_passed);
+            const cropChangeFailedData = zones.map(zone => zoneConditionData[zone].crop_change_failed);
+            const cropChangePendingData = zones.map(zone => zoneConditionData[zone].crop_change_pending);
             
             const zoneLabels = zones.map(z => `เขต ${z}`);
             
@@ -4620,24 +4933,45 @@
                     labels: zoneLabels,
                     datasets: [
                         {
-                            label: 'ผ่านเงื่อนไข',
-                            data: passedData,
+                            label: 'ปลูกในนา-ผ่าน',
+                            data: plantingPassedData,
                             backgroundColor: '#4CAF50',
                             borderColor: '#2E7D32',
                             borderWidth: 1
                         },
                         {
-                            label: 'ไม่ผ่านเงื่อนไข',
-                            data: failedData,
+                            label: 'ปลูกในนา-ไม่ผ่าน',
+                            data: plantingFailedData,
                             backgroundColor: '#F44336',
                             borderColor: '#C62828',
                             borderWidth: 1
                         },
                         {
-                            label: 'รอตรวจ',
-                            data: pendingData,
+                            label: 'ปลูกในนา-รอตรวจ',
+                            data: plantingPendingData,
                             backgroundColor: '#FF9800',
                             borderColor: '#F57C00',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เปลี่ยนพืช-ผ่าน',
+                            data: cropChangePassedData,
+                            backgroundColor: '#9C27B0',
+                            borderColor: '#7B1FA2',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เปลี่ยนพืช-ไม่ผ่าน',
+                            data: cropChangeFailedData,
+                            backgroundColor: '#E91E63',
+                            borderColor: '#C2185B',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เปลี่ยนพืช-รอตรวจ',
+                            data: cropChangePendingData,
+                            backgroundColor: '#FF5722',
+                            borderColor: '#D84315',
                             borderWidth: 1
                         }
                     ]
@@ -4660,7 +4994,17 @@
                                 label: function(context) {
                                     const label = context.dataset.label || '';
                                     const value = context.raw || 0;
-                                    return `${label}: ${formatNumber(value)} โครงการ`;
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = zones[zoneIndex];
+                                    
+                                    let additionalInfo = '';
+                                    if (context.datasetIndex <= 2) {
+                                        additionalInfo = ' (โครงการปลูกอ้อยในนา)';
+                                    } else {
+                                        additionalInfo = ' (โครงการเปลี่ยนพืชอื่น)';
+                                    }
+                                    
+                                    return `${label}: ${formatNumber(value)} โครงการ${additionalInfo}`;
                                 }
                             }
                         }
@@ -4818,19 +5162,38 @@
             // Calculate pass rates for each zone
             const zoneRanking = zones.map(zone => {
                 const zoneData = zoneConditionData[zone];
-                const total = zoneData.passed + zoneData.failed + zoneData.pending;
-                const passRate = total > 0 ? Math.round((zoneData.passed / total) * 100) : 0;
+                const plantingTotal = zoneData.planting_passed + zoneData.planting_failed + zoneData.planting_pending;
+                const cropChangeTotal = zoneData.crop_change_passed + zoneData.crop_change_failed + zoneData.crop_change_pending;
+                const total = plantingTotal + cropChangeTotal;
+                
+                const plantingPassRate = plantingTotal > 0 ? 
+                    Math.round((zoneData.planting_passed / plantingTotal) * 100) : 0;
+                const cropChangePassRate = cropChangeTotal > 0 ? 
+                    Math.round((zoneData.crop_change_passed / cropChangeTotal) * 100) : 0;
+                const totalPassRate = total > 0 ? 
+                    Math.round((zoneData.passed / total) * 100) : 0;
+                    
                 return {
                     zone: zone,
+                    planting_passed: zoneData.planting_passed,
+                    planting_failed: zoneData.planting_failed,
+                    planting_pending: zoneData.planting_pending,
+                    planting_total: plantingTotal,
+                    crop_change_passed: zoneData.crop_change_passed,
+                    crop_change_failed: zoneData.crop_change_failed,
+                    crop_change_pending: zoneData.crop_change_pending,
+                    crop_change_total: cropChangeTotal,
                     passed: zoneData.passed,
                     failed: zoneData.failed,
                     pending: zoneData.pending,
                     total: total,
-                    passRate: passRate
+                    planting_passRate: plantingPassRate,
+                    crop_change_passRate: cropChangePassRate,
+                    passRate: totalPassRate
                 };
             });
             
-            // Sort by pass rate (descending)
+            // Sort by total pass rate (descending)
             zoneRanking.sort((a, b) => b.passRate - a.passRate);
             
             // Display top 6 zones
@@ -4851,20 +5214,28 @@
                             <span class="badge ${rankClass}">${zone.passRate}%</span>
                         </div>
                         <div class="comparison-bar">
+                            <div class="comparison-label">โครงการทั้งหมด:</div>
+                            <div class="comparison-value text-primary">${formatNumber(zone.total)}</div>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">ปลูกในนา:</div>
+                            <div class="comparison-value">${formatNumber(zone.planting_total)} โครงการ</div>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">เปลี่ยนพืช:</div>
+                            <div class="comparison-value">${formatNumber(zone.crop_change_total)} โครงการ</div>
+                        </div>
+                        <div class="comparison-bar">
                             <div class="comparison-label">ผ่านเงื่อนไข:</div>
                             <div class="comparison-value text-success">${formatNumber(zone.passed)}</div>
                         </div>
                         <div class="comparison-bar">
-                            <div class="comparison-label">ไม่ผ่าน:</div>
-                            <div class="comparison-value text-danger">${formatNumber(zone.failed)}</div>
-                        </div>
-                        <div class="comparison-bar">
-                            <div class="comparison-label">รอตรวจ:</div>
-                            <div class="comparison-value text-warning">${formatNumber(zone.pending)}</div>
-                        </div>
-                        <div class="comparison-bar">
-                            <div class="comparison-label">รวมทั้งหมด:</div>
-                            <div class="comparison-value text-primary">${formatNumber(zone.total)}</div>
+                            <div class="comparison-label">อัตราการผ่าน:</div>
+                            <div class="comparison-value">
+                                <span class="badge ${zone.passRate >= 80 ? 'bg-success' : zone.passRate >= 60 ? 'bg-warning' : 'bg-danger'}">
+                                    ${zone.passRate}%
+                                </span>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -4875,16 +5246,18 @@
         
         // Update performance summary
         function updatePerformanceSummary() {
-            const data = allData['planting-sugarcane-field'];
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 return;
             }
             
             // Group data by zone
             const zoneData = {};
             
-            data.forEach(item => {
+            // Process both datasets
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const area = parseFloat(item['พื้นที่']) || 0;
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
@@ -4892,9 +5265,16 @@
                 if (!zoneData[zone]) {
                     zoneData[zone] = {
                         zone: zone,
-                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -4903,6 +5283,46 @@
                 
                 zoneData[zone].projects++;
                 zoneData[zone].area += area;
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     zoneData[zone].passed++;
@@ -4918,12 +5338,12 @@
             
             // Calculate performance metrics
             const totalArea = zoneArray.reduce((sum, zone) => sum + zone.area, 0);
-            const totalTarget = zoneArray.reduce((sum, zone) => sum + zone.target, 0);
+            const totalTarget = zoneArray.reduce((sum, zone) => sum + zone.total_target, 0);
             const overallProgress = totalTarget > 0 ? Math.round((totalArea / totalTarget) * 100) : 0;
             
             // Count zones that achieved target
             const zonesAchievedTarget = zoneArray.filter(zone => 
-                zone.target > 0 && zone.area >= zone.target
+                zone.total_target > 0 && zone.area >= zone.total_target
             ).length;
             const zoneAchievementRate = zoneArray.length > 0 ? 
                 Math.round((zonesAchievedTarget / zoneArray.length) * 100) : 0;
@@ -4954,15 +5374,15 @@
         function updatePerformanceCharts(zoneArray) {
             // Sort zones by progress
             zoneArray.sort((a, b) => {
-                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
-                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                const progressA = a.total_target > 0 ? (a.area / a.total_target) * 100 : 0;
+                const progressB = b.total_target > 0 ? (b.area / b.total_target) * 100 : 0;
                 return progressB - progressA;
             });
             
             // Prepare data for charts
             const zoneLabels = zoneArray.map(z => `เขต ${z.zone}`);
             const zoneProgress = zoneArray.map(z => 
-                z.target > 0 ? Math.round((z.area / z.target) * 100) : 0
+                z.total_target > 0 ? Math.round((z.area / z.total_target) * 100) : 0
             );
             const zonePassRates = zoneArray.map(z => 
                 z.projects > 0 ? Math.round((z.passed / z.projects) * 100) : 0
@@ -5071,7 +5491,7 @@
                     datasets: [
                         {
                             label: 'เป้าหมาย (ไร่)',
-                            data: zoneArray.slice(0, 10).map(z => z.target),
+                            data: zoneArray.slice(0, 10).map(z => z.total_target),
                             backgroundColor: '#FF9800',
                             borderColor: '#F57C00',
                             borderWidth: 1
@@ -5219,13 +5639,13 @@
             
             // Sort zones by progress
             zoneArray.sort((a, b) => {
-                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
-                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                const progressA = a.total_target > 0 ? (a.area / a.total_target) * 100 : 0;
+                const progressB = b.total_target > 0 ? (b.area / b.total_target) * 100 : 0;
                 return progressB - progressA;
             });
             
             zoneArray.forEach((zone, index) => {
-                const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                const progress = zone.total_target > 0 ? Math.round((zone.area / zone.total_target) * 100) : 0;
                 const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
                 const performanceLevel = getPerformanceLevel(passRate);
                 const performanceLabel = getPerformanceLabel(passRate);
@@ -5246,7 +5666,7 @@
                 row.innerHTML = `
                     <td>${index + 1}</td>
                     <td><strong>เขต ${zone.zone}</strong></td>
-                    <td class="text-end">${formatNumber(zone.target)}</td>
+                    <td class="text-end">${formatNumber(zone.total_target)}</td>
                     <td class="text-end">${formatNumber(zone.area)}</td>
                     <td class="text-end">
                         <div class="d-flex align-items-center justify-content-end">
@@ -5275,6 +5695,221 @@
             });
         }
         
+        // Update project comparison
+        function updateProjectComparison() {
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
+            
+            // Update project stats
+            const plantingProjects = plantingData.length;
+            const cropChangeProjects = cropChangeData.length;
+            const plantingArea = plantingData.reduce((sum, item) => sum + (parseFloat(item['พื้นที่']) || 0), 0);
+            const cropChangeArea = cropChangeData.reduce((sum, item) => sum + (parseFloat(item['พื้นที่']) || 0), 0);
+            
+            document.getElementById('planting-total-projects').textContent = formatNumber(plantingProjects);
+            document.getElementById('planting-total-area').textContent = `พื้นที่: ${formatNumber(plantingArea)} ไร่`;
+            document.getElementById('crop-change-total-projects').textContent = formatNumber(cropChangeProjects);
+            document.getElementById('crop-change-total-area').textContent = `พื้นที่: ${formatNumber(cropChangeArea)} ไร่`;
+            
+            // Update comparison table
+            updateProjectComparisonTable(plantingData, cropChangeData);
+            
+            // Update comparison chart
+            updateProjectComparisonChart(plantingData, cropChangeData);
+        }
+        
+        // Update project comparison table
+        function updateProjectComparisonTable(plantingData, cropChangeData) {
+            const tbody = document.getElementById('project-comparison-body');
+            tbody.innerHTML = '';
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            // Process planting data
+            plantingData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0
+                    };
+                }
+                
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+            });
+            
+            // Process crop change data
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0
+                    };
+                }
+                
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
+            });
+            
+            // Convert to array and sort
+            const zoneArray = Object.values(zoneData);
+            zoneArray.sort((a, b) => a.zone.localeCompare(b.zone, undefined, {numeric: true}));
+            
+            // Add rows
+            zoneArray.forEach(zone => {
+                const totalProjects = zone.planting_projects + zone.crop_change_projects;
+                const totalArea = zone.planting_area + zone.crop_change_area;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>เขต ${zone.zone}</strong></td>
+                    <td class="text-end">${formatNumber(zone.planting_projects)}</td>
+                    <td class="text-end">${formatNumber(zone.planting_area)}</td>
+                    <td class="text-end">${formatNumber(zone.crop_change_projects)}</td>
+                    <td class="text-end">${formatNumber(zone.crop_change_area)}</td>
+                    <td class="text-end"><strong>${formatNumber(totalProjects)}</strong></td>
+                    <td class="text-end"><strong>${formatNumber(totalArea)}</strong></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Update project comparison chart
+        function updateProjectComparisonChart(plantingData, cropChangeData) {
+            // Group data by zone for chart
+            const zoneData = {};
+            
+            // Process both datasets
+            plantingData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        crop_change_projects: 0
+                    };
+                }
+                zoneData[zone].planting_projects++;
+            });
+            
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        crop_change_projects: 0
+                    };
+                }
+                zoneData[zone].crop_change_projects++;
+            });
+            
+            // Prepare data for chart
+            const zones = Object.keys(zoneData).sort((a, b) => 
+                a.localeCompare(b, undefined, {numeric: true})
+            );
+            
+            const plantingProjects = zones.map(zone => zoneData[zone].planting_projects);
+            const cropChangeProjects = zones.map(zone => zoneData[zone].crop_change_projects);
+            const zoneLabels = zones.map(z => `เขต ${z}`);
+            
+            const comparisonCtx = document.getElementById('projectComparisonChart').getContext('2d');
+            
+            if (projectComparisonChart) {
+                projectComparisonChart.destroy();
+            }
+            
+            projectComparisonChart = new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [
+                        {
+                            label: 'ปลูกอ้อยในนา',
+                            data: plantingProjects,
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#2E7D32',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เปลี่ยนพืชอื่น',
+                            data: cropChangeProjects,
+                            backgroundColor: '#9C27B0',
+                            borderColor: '#7B1FA2',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = zones[zoneIndex];
+                                    return `${label}: ${formatNumber(value)} โครงการ (เขต ${zone})`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'จำนวนโครงการ',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'เขต',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
         // Helper functions for performance levels
         function getPerformanceLevel(passRate) {
             if (passRate >= 80) return 'achievement-excellent';
@@ -5294,9 +5929,10 @@
         
         // Export zone summary
         function exportZoneSummary() {
-            const data = allData['planting-sugarcane-field'];
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
                 return;
             }
@@ -5304,7 +5940,8 @@
             // Group data by zone
             const zoneData = {};
             
-            data.forEach(item => {
+            // Process both datasets
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const area = parseFloat(item['พื้นที่']) || 0;
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
@@ -5312,9 +5949,16 @@
                 if (!zoneData[zone]) {
                     zoneData[zone] = {
                         zone: zone,
-                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -5323,6 +5967,46 @@
                 
                 zoneData[zone].projects++;
                 zoneData[zone].area += area;
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     zoneData[zone].passed++;
@@ -5334,19 +6018,29 @@
             });
             
             const zoneArray = Object.values(zoneData);
+            zoneArray.sort((a, b) => a.zone.localeCompare(b.zone, undefined, {numeric: true}));
             
             // Convert to CSV
-            const headers = ['เขต', 'เป้าหมาย(ไร่)', 'พื้นที่ดำเนินการ(ไร่)', 'ความคืบหน้า(%)', 'จำนวนโครงการ', 'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
+            const headers = ['เขต', 'เป้าหมายปลูกในนา(ไร่)', 'เป้าหมายเปลี่ยนพืช(ไร่)', 'เป้าหมายรวม(ไร่)', 
+                           'พื้นที่ปลูกในนา(ไร่)', 'พื้นที่เปลี่ยนพืช(ไร่)', 'พื้นที่รวม(ไร่)', 
+                           'ความคืบหน้า(%)', 'โครงการปลูกในนา', 'โครงการเปลี่ยนพืช', 'โครงการทั้งหมด',
+                           'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
             const csvRows = [
                 headers.join(','),
                 ...zoneArray.map(zone => {
-                    const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                    const progress = zone.total_target > 0 ? Math.round((zone.area / zone.total_target) * 100) : 0;
                     const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
                     return [
                         `เขต ${zone.zone}`,
-                        formatNumber(zone.target),
+                        formatNumber(zone.planting_target),
+                        formatNumber(zone.crop_change_target),
+                        formatNumber(zone.total_target),
+                        formatNumber(zone.planting_area),
+                        formatNumber(zone.crop_change_area),
                         formatNumber(zone.area),
                         progress,
+                        formatNumber(zone.planting_projects),
+                        formatNumber(zone.crop_change_projects),
                         formatNumber(zone.projects),
                         formatNumber(zone.passed),
                         formatNumber(zone.failed),
@@ -5370,9 +6064,10 @@
         
         // Export officer summary
         function exportOfficerSummary() {
-            const data = allData['planting-sugarcane-field'];
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
                 return;
             }
@@ -5380,7 +6075,8 @@
             // Group data by officer
             const officerData = {};
             
-            data.forEach(item => {
+            // Process both datasets
+            plantingData.forEach(item => {
                 const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
                 const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
                 const zone = item['เขต'] || 'ไม่ระบุ';
@@ -5396,6 +6092,10 @@
                         zones: new Set(),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -5405,6 +6105,49 @@
                 officerData[key].zones.add(zone);
                 officerData[key].projects++;
                 officerData[key].area += area;
+                officerData[key].planting_projects++;
+                officerData[key].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    officerData[key].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    officerData[key].failed++;
+                } else {
+                    officerData[key].pending++;
+                }
+            });
+            
+            cropChangeData.forEach(item => {
+                const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
+                const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                const key = `${officerCode}|${officerName}`;
+                
+                if (!officerData[key]) {
+                    officerData[key] = {
+                        code: officerCode,
+                        name: officerName,
+                        zones: new Set(),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                officerData[key].zones.add(zone);
+                officerData[key].projects++;
+                officerData[key].area += area;
+                officerData[key].crop_change_projects++;
+                officerData[key].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     officerData[key].passed++;
@@ -5422,14 +6165,21 @@
             });
             
             // Convert to CSV
-            const headers = ['รหัสนักเกษตร', 'ชื่อนักเกษตร', 'เขตที่ดูแล', 'จำนวนโครงการ', 'พื้นที่รวม(ไร่)', 'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
+            const headers = ['รหัสนักเกษตร', 'ชื่อนักเกษตร', 'เขตที่ดูแล', 
+                           'โครงการปลูกในนา', 'โครงการเปลี่ยนพืช', 'โครงการทั้งหมด',
+                           'พื้นที่ปลูกในนา(ไร่)', 'พื้นที่เปลี่ยนพืช(ไร่)', 'พื้นที่รวม(ไร่)',
+                           'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
             const csvRows = [
                 headers.join(','),
                 ...officerArray.map(officer => [
                     officer.code,
                     officer.name,
                     officer.zones,
+                    formatNumber(officer.planting_projects),
+                    formatNumber(officer.crop_change_projects),
                     formatNumber(officer.projects),
+                    formatNumber(officer.planting_area),
+                    formatNumber(officer.crop_change_area),
                     formatNumber(officer.area),
                     formatNumber(officer.passed),
                     formatNumber(officer.failed),
@@ -5452,9 +6202,10 @@
         
         // Export condition summary
         function exportConditionSummary() {
-            const data = allData['planting-sugarcane-field'];
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
                 return;
             }
@@ -5463,21 +6214,37 @@
             const zoneConditionData = {};
             
             // Initialize zone data
-            Array.from(uniqueZones).sort().forEach(zone => {
+            const allZones = new Set();
+            plantingData.forEach(item => allZones.add(item['เขต'] || 'ไม่ระบุ'));
+            cropChangeData.forEach(item => allZones.add(item['เขต'] || 'ไม่ระบุ'));
+            
+            Array.from(allZones).sort().forEach(zone => {
                 zoneConditionData[zone] = {
+                    planting_passed: 0,
+                    planting_failed: 0,
+                    planting_pending: 0,
+                    crop_change_passed: 0,
+                    crop_change_failed: 0,
+                    crop_change_pending: 0,
                     passed: 0,
                     failed: 0,
                     pending: 0
                 };
             });
             
-            // Count conditions by zone
-            data.forEach(item => {
+            // Count conditions by zone for both projects
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
                 
                 if (!zoneConditionData[zone]) {
                     zoneConditionData[zone] = {
+                        planting_passed: 0,
+                        planting_failed: 0,
+                        planting_pending: 0,
+                        crop_change_passed: 0,
+                        crop_change_failed: 0,
+                        crop_change_pending: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -5485,10 +6252,43 @@
                 }
                 
                 if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].planting_passed++;
                     zoneConditionData[zone].passed++;
                 } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].planting_failed++;
                     zoneConditionData[zone].failed++;
                 } else {
+                    zoneConditionData[zone].planting_pending++;
+                    zoneConditionData[zone].pending++;
+                }
+            });
+            
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneConditionData[zone]) {
+                    zoneConditionData[zone] = {
+                        planting_passed: 0,
+                        planting_failed: 0,
+                        planting_pending: 0,
+                        crop_change_passed: 0,
+                        crop_change_failed: 0,
+                        crop_change_pending: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].crop_change_passed++;
+                    zoneConditionData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].crop_change_failed++;
+                    zoneConditionData[zone].failed++;
+                } else {
+                    zoneConditionData[zone].crop_change_pending++;
                     zoneConditionData[zone].pending++;
                 }
             });
@@ -5496,15 +6296,25 @@
             const zones = Object.keys(zoneConditionData).sort();
             
             // Convert to CSV
-            const headers = ['เขต', 'ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ', 'รวมทั้งหมด', 'อัตราการผ่าน(%)'];
+            const headers = ['เขต', 'ปลูกในนา-ผ่าน', 'ปลูกในนา-ไม่ผ่าน', 'ปลูกในนา-รอตรวจ',
+                           'เปลี่ยนพืช-ผ่าน', 'เปลี่ยนพืช-ไม่ผ่าน', 'เปลี่ยนพืช-รอตรวจ',
+                           'รวมผ่าน', 'รวมไม่ผ่าน', 'รวมรอตรวจ', 'รวมทั้งหมด', 'อัตราการผ่าน(%)'];
             const csvRows = [
                 headers.join(','),
                 ...zones.map(zone => {
                     const zoneData = zoneConditionData[zone];
-                    const total = zoneData.passed + zoneData.failed + zoneData.pending;
+                    const plantingTotal = zoneData.planting_passed + zoneData.planting_failed + zoneData.planting_pending;
+                    const cropChangeTotal = zoneData.crop_change_passed + zoneData.crop_change_failed + zoneData.crop_change_pending;
+                    const total = plantingTotal + cropChangeTotal;
                     const passRate = total > 0 ? Math.round((zoneData.passed / total) * 100) : 0;
                     return [
                         `เขต ${zone}`,
+                        formatNumber(zoneData.planting_passed),
+                        formatNumber(zoneData.planting_failed),
+                        formatNumber(zoneData.planting_pending),
+                        formatNumber(zoneData.crop_change_passed),
+                        formatNumber(zoneData.crop_change_failed),
+                        formatNumber(zoneData.crop_change_pending),
                         formatNumber(zoneData.passed),
                         formatNumber(zoneData.failed),
                         formatNumber(zoneData.pending),
@@ -5528,9 +6338,10 @@
         
         // Export performance summary
         function exportPerformanceSummary() {
-            const data = allData['planting-sugarcane-field'];
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
             
-            if (data.length === 0) {
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
                 showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
                 return;
             }
@@ -5538,7 +6349,8 @@
             // Group data by zone
             const zoneData = {};
             
-            data.forEach(item => {
+            // Process both datasets
+            plantingData.forEach(item => {
                 const zone = item['เขต'] || 'ไม่ระบุ';
                 const area = parseFloat(item['พื้นที่']) || 0;
                 const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
@@ -5546,9 +6358,16 @@
                 if (!zoneData[zone]) {
                     zoneData[zone] = {
                         zone: zone,
-                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
                         projects: 0,
                         area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
                         passed: 0,
                         failed: 0,
                         pending: 0
@@ -5557,6 +6376,46 @@
                 
                 zoneData[zone].projects++;
                 zoneData[zone].area += area;
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        crop_change_target: ZONE_TARGETS['crop-change-sugarcane'][zone] || 0,
+                        total_target: (ZONE_TARGETS['planting-sugarcane-field'][zone] || 0) + 
+                                     (ZONE_TARGETS['crop-change-sugarcane'][zone] || 0),
+                        projects: 0,
+                        area: 0,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
                 
                 if (condition === 'ผ่าน') {
                     zoneData[zone].passed++;
@@ -5571,17 +6430,19 @@
             
             // Sort by progress
             zoneArray.sort((a, b) => {
-                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
-                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                const progressA = a.total_target > 0 ? (a.area / a.total_target) * 100 : 0;
+                const progressB = b.total_target > 0 ? (b.area / b.total_target) * 100 : 0;
                 return progressB - progressA;
             });
             
             // Convert to CSV
-            const headers = ['อันดับ', 'เขต', 'เป้าหมาย(ไร่)', 'ดำเนินการ(ไร่)', 'ความคืบหน้า(%)', 'จำนวนโครงการ', 'ผ่านเงื่อนไข', 'อัตราการผ่าน(%)', 'ระดับผลงาน', 'หมายเหตุ'];
+            const headers = ['อันดับ', 'เขต', 'เป้าหมาย(ไร่)', 'ดำเนินการ(ไร่)', 'ความคืบหน้า(%)', 
+                           'โครงการทั้งหมด', 'โครงการปลูกในนา', 'โครงการเปลี่ยนพืช',
+                           'ผ่านเงื่อนไข', 'อัตราการผ่าน(%)', 'ระดับผลงาน', 'หมายเหตุ'];
             const csvRows = [
                 headers.join(','),
                 ...zoneArray.map((zone, index) => {
-                    const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                    const progress = zone.total_target > 0 ? Math.round((zone.area / zone.total_target) * 100) : 0;
                     const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
                     const performanceLabel = getPerformanceLabel(passRate);
                     
@@ -5600,10 +6461,12 @@
                     return [
                         index + 1,
                         `เขต ${zone.zone}`,
-                        formatNumber(zone.target),
+                        formatNumber(zone.total_target),
                         formatNumber(zone.area),
                         progress,
                         formatNumber(zone.projects),
+                        formatNumber(zone.planting_projects),
+                        formatNumber(zone.crop_change_projects),
                         formatNumber(zone.passed),
                         passRate,
                         performanceLabel,
@@ -5618,6 +6481,106 @@
             const link = document.createElement('a');
             link.href = url;
             link.download = `kbs_performance_summary_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
+        }
+        
+        // Export project comparison
+        function exportProjectComparison() {
+            const plantingData = allData['planting-sugarcane-field'];
+            const cropChangeData = allData['crop-change-sugarcane'];
+            
+            if (plantingData.length === 0 && cropChangeData.length === 0) {
+                showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
+                return;
+            }
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            // Process planting data
+            plantingData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0
+                    };
+                }
+                
+                zoneData[zone].planting_projects++;
+                zoneData[zone].planting_area += area;
+            });
+            
+            // Process crop change data
+            cropChangeData.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        planting_projects: 0,
+                        planting_area: 0,
+                        crop_change_projects: 0,
+                        crop_change_area: 0
+                    };
+                }
+                
+                zoneData[zone].crop_change_projects++;
+                zoneData[zone].crop_change_area += area;
+            });
+            
+            const zoneArray = Object.values(zoneData);
+            zoneArray.sort((a, b) => a.zone.localeCompare(b.zone, undefined, {numeric: true}));
+            
+            // Calculate totals
+            const plantingProjects = plantingData.length;
+            const cropChangeProjects = cropChangeData.length;
+            const totalProjects = plantingProjects + cropChangeProjects;
+            const plantingArea = plantingData.reduce((sum, item) => sum + (parseFloat(item['พื้นที่']) || 0), 0);
+            const cropChangeArea = cropChangeData.reduce((sum, item) => sum + (parseFloat(item['พื้นที่']) || 0), 0);
+            const totalArea = plantingArea + cropChangeArea;
+            
+            // Convert to CSV
+            const headers = ['เขต', 'โครงการปลูกในนา', 'พื้นที่ปลูกในนา(ไร่)', 
+                           'โครงการเปลี่ยนพืช', 'พื้นที่เปลี่ยนพืช(ไร่)',
+                           'โครงการทั้งหมด', 'พื้นที่ทั้งหมด(ไร่)'];
+            const csvRows = [
+                headers.join(','),
+                ...zoneArray.map(zone => {
+                    const totalProjectsZone = zone.planting_projects + zone.crop_change_projects;
+                    const totalAreaZone = zone.planting_area + zone.crop_change_area;
+                    return [
+                        `เขต ${zone.zone}`,
+                        formatNumber(zone.planting_projects),
+                        formatNumber(zone.planting_area),
+                        formatNumber(zone.crop_change_projects),
+                        formatNumber(zone.crop_change_area),
+                        formatNumber(totalProjectsZone),
+                        formatNumber(totalAreaZone)
+                    ].join(',');
+                }),
+                [],
+                ['สรุปรวม', 'โครงการปลูกในนา', 'พื้นที่ปลูกในนา(ไร่)', 'โครงการเปลี่ยนพืช', 'พื้นที่เปลี่ยนพืช(ไร่)', 'โครงการทั้งหมด', 'พื้นที่ทั้งหมด(ไร่)'],
+                ['', formatNumber(plantingProjects), formatNumber(plantingArea), 
+                 formatNumber(cropChangeProjects), formatNumber(cropChangeArea),
+                 formatNumber(totalProjects), formatNumber(totalArea)]
+            ];
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kbs_project_comparison_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
             
