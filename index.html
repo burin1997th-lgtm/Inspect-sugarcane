@@ -277,6 +277,33 @@
             box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
         }
         
+        /* Summary Tab Styles */
+        .summary-tab-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .summary-tab-btn i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        .summary-tab-btn.active {
+            background: linear-gradient(to right, var(--secondary-green), var(--project-purple));
+            color: var(--white);
+            box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2);
+        }
+        
         /* Search and Filter */
         .search-box {
             position: relative;
@@ -634,7 +661,7 @@
                 font-size: 1.5rem;
             }
             
-            .tab-btn {
+            .tab-btn, .summary-tab-btn {
                 min-width: 100%;
                 margin-bottom: 5px;
             }
@@ -1083,6 +1110,193 @@
         .stat-item-progress {
             border-top: 4px solid var(--progress-blue) !important;
         }
+        
+        /* Summary Content Styles */
+        .summary-content {
+            display: block;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            background: white;
+            margin-bottom: 20px;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        
+        .chart-title {
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--light-green);
+            padding-bottom: 10px;
+        }
+        
+        /* Table Styles for Summary */
+        .table-summary th {
+            background: linear-gradient(to right, var(--primary-green), var(--secondary-green));
+            color: white;
+            font-weight: 500;
+        }
+        
+        .table-summary tbody tr:hover {
+            background-color: rgba(200, 230, 201, 0.2);
+        }
+        
+        /* Progress Bar in Summary Cards */
+        .stat-card .progress {
+            height: 6px;
+            border-radius: 3px;
+            background: #f0f0f0;
+        }
+        
+        .stat-card .progress-bar {
+            border-radius: 3px;
+        }
+        
+        /* Summary Section Styles */
+        .summary-stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            border-top: 4px solid var(--primary-green);
+            transition: all 0.3s ease;
+        }
+        
+        .summary-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .summary-stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .summary-stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        /* Summary Comparison Styles */
+        .comparison-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--secondary-green);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comparison-title {
+            font-weight: 600;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+        
+        .comparison-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .comparison-label {
+            min-width: 120px;
+            font-weight: 500;
+        }
+        
+        .comparison-value {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        
+        /* Summary Export Buttons */
+        .summary-export-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        /* Summary Table Styles */
+        .summary-table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            background: white;
+            margin-bottom: 20px;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .summary-table thead {
+            background: var(--light-green);
+        }
+        
+        .summary-table th {
+            color: var(--primary-green);
+            font-weight: 600;
+            padding: 16px 15px;
+            border-bottom: 2px solid var(--secondary-green);
+            text-align: left;
+            white-space: nowrap;
+        }
+        
+        .summary-table td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-table tbody tr:hover {
+            background-color: rgba(200, 230, 201, 0.2);
+        }
+        
+        /* Summary Achievement Badges */
+        .achievement-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .achievement-excellent {
+            background-color: #E8F5E9;
+            color: #1B5E20;
+            border: 1px solid #A5D6A7;
+        }
+        
+        .achievement-good {
+            background-color: #E3F2FD;
+            color: #1565C0;
+            border: 1px solid #90CAF9;
+        }
+        
+        .achievement-fair {
+            background-color: #FFF3E0;
+            color: #E65100;
+            border: 1px solid #FFCC80;
+        }
+        
+        .achievement-poor {
+            background-color: #FFEBEE;
+            color: #B71C1C;
+            border: 1px solid #EF9A9A;
+        }
     </style>
 </head>
 <body>
@@ -1143,6 +1357,12 @@
                     
                     <div class="step">
                         <span class="step-number">3</span>
+                        <strong>หน้าสรุปรายงานและกราฟ</strong>
+                        <p class="mb-0 mt-1">เพิ่มหน้าสรุปรายงานพร้อมกราฟแท่งแสดงข้อมูลรายเขตและรายนักเกษตร</p>
+                    </div>
+                    
+                    <div class="step">
+                        <span class="step-number">4</span>
                         <strong>เริ่มใช้งานระบบ</strong>
                         <p class="mb-0 mt-1">คลิกปุ่มด้านล่างเพื่อเริ่มใช้งานระบบดูข้อมูลโครงการและติดตามความคืบหน้า</p>
                     </div>
@@ -1166,327 +1386,783 @@
                 <button class="tab-btn" data-sheet="crop-change-sugarcane">
                     <i class="fas fa-exchange-alt"></i>เปลี่ยนพืชอื่นมาปลูกอ้อย ปี 69/70
                 </button>
+                <button class="tab-btn" data-sheet="summary-report">
+                    <i class="fas fa-chart-bar"></i>สรุปรายงาน
+                </button>
             </div>
 
-            <!-- Project Stats with Pie Chart และปุ่ม Export -->
-            <div class="project-stats-container">
-                <div class="row">
-                    <!-- Pie Chart Section -->
-                    <div class="col-lg-8">
-                        <div class="pie-chart-container">
-                            <h4 class="chart-title">
-                                <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลงโครงการ
-                                <span class="badge bg-success ms-2" id="current-project-type-badge">ปลูกอ้อยในนา</span>
-                            </h4>
-                            <div class="pie-chart-wrapper">
-                                <canvas id="conditionPieChart"></canvas>
-                            </div>
-                            <div class="chart-stats">
-                                <div class="chart-stat-item">
-                                    <div class="chart-stat-value text-success comma-number" id="passed-count">0</div>
-                                    <div class="chart-stat-label">ผ่าน</div>
-                                    <div class="stat-subtext text-success" id="passed-percentage-chart">0%</div>
-                                </div>
-                                <div class="chart-stat-item">
-                                    <div class="chart-stat-value text-danger comma-number" id="failed-count">0</div>
-                                    <div class="chart-stat-label">ไม่ผ่าน</div>
-                                    <div class="stat-subtext text-danger" id="failed-percentage-chart">0%</div>
-                                </div>
-                                <div class="chart-stat-item">
-                                    <div class="chart-stat-value text-warning comma-number" id="pending-count">0</div>
-                                    <div class="chart-stat-label">รอตรวจ</div>
-                                    <div class="stat-subtext text-warning" id="pending-percentage-chart">0%</div>
-                                </div>
-                                <div class="chart-stat-item">
-                                    <div class="chart-stat-value text-primary comma-number" id="total-count">0</div>
-                                    <div class="chart-stat-label">ทั้งหมด</div>
-                                    <div class="stat-subtext text-primary">สมัครโครงการ</div>
-                                </div>
-                            </div>
-                            
-                            <!-- ปุ่ม Export ใต้ Pie Chart -->
-                            <div class="pie-chart-actions">
-                                <button class="btn-blue" id="export-btn">
-                                    <i class="fas fa-download me-1"></i>ส่งออกข้อมูลทั้งหมด
-                                </button>
-                                <button class="btn-green ms-2" id="project-details-btn">
-                                    <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
-                                </button>
-                                <button class="btn-orange ms-2" id="refresh-data-btn">
-                                    <i class="fas fa-sync-alt me-1"></i>รีเฟรชข้อมูล
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Target and Progress Section -->
-                    <div class="col-lg-4">
-                        <!-- Zone Target Display -->
-                        <div class="zone-target-display">
-                            <h6 class="mb-3"><i class="fas fa-bullseye me-2"></i>เป้าหมายเขตที่เลือก</h6>
-                            
-                            <div class="text-center mb-3">
-                                <div class="target-value-lg comma-number" id="zone-target-value">0</div>
-                                <div class="target-label-lg">ไร่</div>
-                                <div class="stat-subtext text-white" id="current-zone-name">ทุกเขต</div>
-                            </div>
-                            
-                            <div class="progress-overview mb-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>ความคืบหน้า</span>
-                                    <span id="zone-progress-percent">0%</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
-                                         id="zone-progress-bar" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="progress-value comma-number" id="zone-achieved-area">0</div>
-                                    <div class="progress-label">ดำเนินการแล้ว</div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="progress-value comma-number" id="zone-remaining-area">0</div>
-                                    <div class="progress-label">เหลือดำเนินการ</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Overall Target Display -->
-                        <div class="target-section">
-                            <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>เป้าหมายทั้งหมด</h6>
-                            
-                            <div class="text-center mb-3">
-                                <div class="target-value-lg comma-number" id="overall-target-value">0</div>
-                                <div class="target-label-lg">ไร่</div>
-                                <div class="stat-subtext text-white">พื้นที่เป้าหมายทั้งหมด</div>
-                            </div>
-                            
-                            <div class="progress-overview mb-3">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>ความคืบหน้าทั้งหมด</span>
-                                    <span id="overall-progress-percent">0%</span>
-                                </div>
-                                <div class="progress">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
-                                         id="overall-progress-bar" style="width: 0%"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="progress-value comma-number" id="overall-achieved-area">0</div>
-                                    <div class="progress-label">ดำเนินการแล้ว</div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="progress-value comma-number" id="overall-remaining-area">0</div>
-                                    <div class="progress-label">เหลือดำเนินการ</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Summary Report Section -->
+            <div id="summary-report-section" style="display: none;">
+                <!-- Summary Tabs สำหรับเลือกประเภทสรุป -->
+                <div class="tab-container mb-4">
+                    <button class="summary-tab-btn active" data-summary-type="zone-summary">
+                        <i class="fas fa-map me-2"></i>สรุปรายเขต
+                    </button>
+                    <button class="summary-tab-btn" data-summary-type="officer-summary">
+                        <i class="fas fa-user-tie me-2"></i>สรุปรายนักเกษตร
+                    </button>
+                    <button class="summary-tab-btn" data-summary-type="condition-summary">
+                        <i class="fas fa-clipboard-check me-2"></i>สรุปตามเงื่อนไข
+                    </button>
+                    <button class="summary-tab-btn" data-summary-type="performance-summary">
+                        <i class="fas fa-chart-line me-2"></i>สรุปประสิทธิภาพ
+                    </button>
                 </div>
-            </div>
 
-            <!-- สถิติโครงการแบบกริดใหม่ - 6 คอลัมน์ -->
-            <div class="stats-grid mb-4">
-                <!-- ข้อมูลพื้นฐาน -->
-                <div class="stat-item">
-                    <div class="stat-value text-success comma-number" id="total-projects">0</div>
-                    <div class="stat-title">ทั้งหมด(แปลง)</div>
-                    <div class="stat-subtext text-muted">
-                        <small>โครงการ: <span id="current-project-type">-</span></small>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value comma-number" id="total-area">0</div>
-                    <div class="stat-title">พื้นที่รวม(ไร่)</div>
-                </div>
-                
-                <!-- ตรวจแปลง -->
-                <div class="stat-item stat-item-checked">
-                    <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
-                    <div class="stat-title">ตรวจแล้ว(แปลง)</div>
-                    <div class="stat-subtext">
-                        <small><span id="checked-percentage">0%</span> ของทั้งหมด</small>
-                    </div>
-                </div>
-                <div class="stat-item stat-item-checked">
-                    <div class="stat-value text-primary comma-number" id="checked-area">0</div>
-                    <div class="stat-title">ตรวจแล้ว(ไร่)</div>
-                </div>
-                
-                <!-- รอตรวจ -->
-                <div class="stat-item stat-item-not-checked">
-                    <div class="stat-value comma-number" id="not-checked-projects">0</div>
-                    <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
-                    <div class="stat-subtext">
-                        <small><span id="not-checked-percentage">0%</span> ของทั้งหมด</small>
-                    </div>
-                </div>
-                <div class="stat-item stat-item-not-checked">
-                    <div class="stat-value comma-number" id="not-checked-area">0</div>
-                    <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
-                </div>
-                
-                <!-- ผ่าน -->
-                <div class="stat-item stat-item-passed">
-                    <div class="stat-value comma-number" id="passed-projects">0</div>
-                    <div class="stat-title">ผ่าน(แปลง)</div>
-                    <div class="stat-subtext">
-                        <small><span id="passed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
-                    </div>
-                </div>
-                <div class="stat-item stat-item-passed">
-                    <div class="stat-value comma-number" id="passed-area">0</div>
-                    <div class="stat-title">ผ่าน(ไร่)</div>
-                </div>
-                
-                <!-- ไม่ผ่าน -->
-                <div class="stat-item stat-item-failed">
-                    <div class="stat-value comma-number" id="failed-projects">0</div>
-                    <div class="stat-title">ไม่ผ่าน(แปลง)</div>
-                    <div class="stat-subtext">
-                        <small><span id="failed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
-                    </div>
-                </div>
-                <div class="stat-item stat-item-failed">
-                    <div class="stat-value comma-number" id="failed-area">0</div>
-                    <div class="stat-title">ไม่ผ่าน(ไร่)</div>
-                </div>
-                
-                <!-- เป้าหมายเขต -->
-                <div class="stat-item stat-item-target">
-                    <div class="stat-value comma-number" id="zone-target-display">0</div>
-                    <div class="stat-title">เป้าหมายเขต(ไร่)</div>
-                    <div class="stat-subtext">
-                        <small>เขต: <span id="selected-zone-name">ทุกเขต</span></small>
-                    </div>
-                </div>
-                
-                <!-- ความคืบหน้าเขต -->
-                <div class="stat-item stat-item-progress">
-                    <div class="stat-value comma-number" id="zone-progress-display">0%</div>
-                    <div class="stat-title">ความคืบหน้าเขต</div>
-                    <div class="stat-subtext">
-                        <small><span id="zone-achieved-display">0</span>/<span id="zone-target-short">0</span> ไร่</small>
-                    </div>
-                </div>
-            </div>
+                <!-- Zone Summary Section -->
+                <div id="zone-summary-content" class="summary-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-2"></i>สรุปข้อมูลโครงการตามเขต
+                            <span class="badge bg-white text-success ms-2 comma-number" id="zone-summary-count">0 เขต</span>
+                        </div>
+                        <div class="card-body">
+                            <!-- Zone Summary Stats -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-primary comma-number" id="total-zones">0</div>
+                                        <div class="summary-stat-label">จำนวนเขตทั้งหมด</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-success comma-number" id="total-zone-area">0</div>
+                                        <div class="summary-stat-label">พื้นที่ทั้งหมด (ไร่)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-warning comma-number" id="total-zone-target">0</div>
+                                        <div class="summary-stat-label">เป้าหมายทั้งหมด (ไร่)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-info comma-number" id="zone-progress-average">0%</div>
+                                        <div class="summary-stat-label">ความคืบหน้าเฉลี่ย</div>
+                                    </div>
+                                </div>
+                            </div>
 
-            <!-- Search and Filter Section -->
-            <div class="filter-section">
-                <h5 class="filter-section-title">
-                    <i class="fas fa-filter me-2"></i>ค้นหาและกรองข้อมูล
-                </h5>
-                
-                <!-- Search Box -->
-                <div class="row g-3 mb-4">
-                    <div class="col-md-8">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" class="form-control" placeholder="ค้นหาชื่อเกษตรกร, เลขแปลง, ที่อยู่แปลง, รหัสนักเกษตร...">
+                            <!-- Zone Summary Charts -->
+                            <div class="row mb-4">
+                                <div class="col-lg-8">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-column me-2"></i>เปรียบเทียบพื้นที่โครงการตามเขต
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="zoneAreaChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-pie me-2"></i>สัดส่วนพื้นที่ตามเขต
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="zoneDistributionChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Zone Progress Chart -->
+                            <div class="chart-container mb-4">
+                                <h5 class="chart-title mb-4">
+                                    <i class="fas fa-chart-bar me-2"></i>ความคืบหน้าเป้าหมายตามเขต
+                                </h5>
+                                <div class="chart-wrapper" style="height: 500px;">
+                                    <canvas id="zoneProgressChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Zone Details Table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-2"></i>รายละเอียดข้อมูลตามเขต
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="summary-table-container">
+                                        <table class="summary-table" id="zone-summary-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>เขต</th>
+                                                    <th class="text-end">เป้าหมาย (ไร่)</th>
+                                                    <th class="text-end">พื้นที่ดำเนินการ (ไร่)</th>
+                                                    <th class="text-end">ความคืบหน้า</th>
+                                                    <th class="text-end">จำนวนโครงการ</th>
+                                                    <th class="text-end">ผ่านเงื่อนไข</th>
+                                                    <th class="text-end">ไม่ผ่าน</th>
+                                                    <th class="text-end">รอตรวจ</th>
+                                                    <th class="text-end">อัตราการผ่าน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="zone-summary-body">
+                                                <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+                                            </tbody>
+                                            <tfoot class="table-secondary">
+                                                <tr id="zone-summary-total">
+                                                    <!-- ยอดรวมจะถูกเพิ่มโดย JavaScript -->
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <select id="condition-filter" class="form-select">
-                            <option value="all">ผลการตรวจแปลง</option>
-                            <option value="ผ่าน">ผ่าน</option>
-                            <option value="ไม่ผ่าน">ไม่ผ่าน</option>
-                            <option value="รอตรวจแปลง">รอตรวจแปลง</option>
-                            <option value="ตรวจแล้ว">ตรวจแล้วทั้งหมด</option>
-                            <option value="ยังไม่ตรวจ">ยังไม่ตรวจแปลง</option>
-                        </select>
                     </div>
                 </div>
-                
-                <!-- Advanced Filters -->
-                <div class="advanced-filter">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">เขต</label>
-                            <select id="zone-filter" class="form-select">
-                                <option value="all">ทุกเขต</option>
-                                <!-- ตัวเลือกเขตจะถูกเพิ่มโดย JavaScript -->
-                            </select>
+
+                <!-- Officer Summary Section -->
+                <div id="officer-summary-content" class="summary-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-2"></i>สรุปข้อมูลโครงการตามนักเกษตร
+                            <span class="badge bg-white text-success ms-2 comma-number" id="officer-summary-count">0 คน</span>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label small fw-bold text-muted">ชื่อนักเกษตร</label>
-                            <select id="farmer-officer-filter" class="form-select">
-                                <option value="all">นักเกษตรทั้งหมด</option>
-                                <!-- ตัวเลือกนักเกษตรจะถูกเพิ่มโดย JavaScript -->
-                            </select>
+                        <div class="card-body">
+                            <!-- Officer Summary Stats -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-primary comma-number" id="total-officers">0</div>
+                                        <div class="summary-stat-label">นักเกษตรทั้งหมด</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-success comma-number" id="total-officer-area">0</div>
+                                        <div class="summary-stat-label">พื้นที่ดูแลทั้งหมด (ไร่)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-info comma-number" id="avg-projects-per-officer">0</div>
+                                        <div class="summary-stat-label">โครงการเฉลี่ยต่อคน</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-warning comma-number" id="avg-area-per-officer">0</div>
+                                        <div class="summary-stat-label">พื้นที่เฉลี่ยต่อคน (ไร่)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Officer Summary Charts -->
+                            <div class="row mb-4">
+                                <div class="col-lg-8">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-column me-2"></i>เปรียบเทียบพื้นที่โครงการตามนักเกษตร (TOP 15)
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="officerAreaChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-pie me-2"></i>สัดส่วนพื้นที่ตามนักเกษตร
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="officerDistributionChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Officer Performance Chart -->
+                            <div class="chart-container mb-4">
+                                <h5 class="chart-title mb-4">
+                                    <i class="fas fa-chart-line me-2"></i>ประสิทธิภาพนักเกษตร (TOP 10)
+                                </h5>
+                                <div class="chart-wrapper" style="height: 500px;">
+                                    <canvas id="officerPerformanceChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Officer Details Table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-2"></i>รายละเอียดข้อมูลตามนักเกษตร
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="summary-table-container">
+                                        <table class="summary-table" id="officer-summary-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>รหัสนักเกษตร</th>
+                                                    <th>ชื่อนักเกษตร</th>
+                                                    <th>เขตที่ดูแล</th>
+                                                    <th class="text-end">จำนวนโครงการ</th>
+                                                    <th class="text-end">พื้นที่รวม (ไร่)</th>
+                                                    <th class="text-end">ผ่านเงื่อนไข</th>
+                                                    <th class="text-end">ไม่ผ่าน</th>
+                                                    <th class="text-end">รอตรวจ</th>
+                                                    <th class="text-end">อัตราการผ่าน</th>
+                                                    <th>ระดับผลงาน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="officer-summary-body">
+                                                <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Filter Buttons -->
-                <div class="filter-buttons mt-3">
-                    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
-                    <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
-                    <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
-                    <button class="filter-btn" data-filter="checked">ตรวจแล้ว</button>
-                    <button class="filter-btn" data-filter="not-checked">ยังไม่ตรวจ</button>
-                    <button class="filter-btn" data-filter="passed">ผ่านเงื่อนไข</button>
-                    <button class="filter-btn" data-filter="failed">ไม่ผ่านเงื่อนไข</button>
-                    <button class="btn-blue" id="reset-filters">
-                        <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
+
+                <!-- Condition Summary Section -->
+                <div id="condition-summary-content" class="summary-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar me-2"></i>สรุปตามเงื่อนไขการตรวจแปลง
+                        </div>
+                        <div class="card-body">
+                            <!-- Condition Stats -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-primary comma-number" id="total-projects-summary">0</div>
+                                        <div class="summary-stat-label">โครงการทั้งหมด</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-primary" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-success comma-number" id="passed-projects-summary">0</div>
+                                        <div class="summary-stat-label">ผ่านเงื่อนไข</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-success" id="passed-progress"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-danger comma-number" id="failed-projects-summary">0</div>
+                                        <div class="summary-stat-label">ไม่ผ่านเงื่อนไข</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-danger" id="failed-progress"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-warning comma-number" id="pending-projects-summary">0</div>
+                                        <div class="summary-stat-label">รอตรวจแปลง</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-warning" id="pending-progress"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Condition Charts -->
+                            <div class="row mb-4">
+                                <div class="col-lg-12">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-column me-2"></i>สรุปผลการตรวจแปลงตามเขต
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 500px;">
+                                            <canvas id="conditionByZoneChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Condition Comparison -->
+                            <div class="row mb-4">
+                                <div class="col-lg-6">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-pie me-2"></i>สัดส่วนผลการตรวจแปลง
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 350px;">
+                                            <canvas id="conditionPieSummaryChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-bar me-2"></i>เปรียบเทียบผลการตรวจแปลง
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 350px;">
+                                            <canvas id="conditionBarSummaryChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Zone Condition Ranking -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-trophy me-2"></i>อันดับเขตตามผลการตรวจแปลง
+                                </div>
+                                <div class="card-body">
+                                    <div class="row" id="zone-ranking-container">
+                                        <!-- อันดับเขตจะถูกเพิ่มโดย JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Summary Section -->
+                <div id="performance-summary-content" class="summary-content" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line me-2"></i>สรุปประสิทธิภาพและความคืบหน้า
+                        </div>
+                        <div class="card-body">
+                            <!-- Performance Stats -->
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-success comma-number" id="overall-progress-summary">0%</div>
+                                        <div class="summary-stat-label">ความคืบหน้าทั้งหมด</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-success" id="overall-progress-bar-summary"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-primary comma-number" id="zone-achievement-rate">0%</div>
+                                        <div class="summary-stat-label">อัตราบรรลุเป้าหมายเขต</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-primary" id="zone-achievement-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="summary-stat-card">
+                                        <div class="summary-stat-value text-warning comma-number" id="inspection-completion-rate">0%</div>
+                                        <div class="summary-stat-label">อัตราการตรวจแปลงเสร็จสิ้น</div>
+                                        <div class="progress mt-2">
+                                            <div class="progress-bar bg-warning" id="inspection-completion-bar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance Trends Chart -->
+                            <div class="chart-container mb-4">
+                                <h5 class="chart-title mb-4">
+                                    <i class="fas fa-chart-line me-2"></i>แนวโน้มความคืบหน้าตามเขต
+                                </h5>
+                                <div class="chart-wrapper" style="height: 500px;">
+                                    <canvas id="performanceTrendChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Achievement Comparison -->
+                            <div class="row mb-4">
+                                <div class="col-lg-6">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-bar me-2"></i>เปรียบเทียบผลสำเร็จตามเขต
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="achievementComparisonChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="chart-container">
+                                        <h5 class="chart-title mb-4">
+                                            <i class="fas fa-chart-bar me-2"></i>เขตที่มีผลงานโดดเด่น
+                                        </h5>
+                                        <div class="chart-wrapper" style="height: 400px;">
+                                            <canvas id="topZonesChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Performance Summary Table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-table me-2"></i>สรุปผลงานตามเขต
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="summary-table-container">
+                                        <table class="summary-table" id="performance-summary-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>อันดับ</th>
+                                                    <th>เขต</th>
+                                                    <th class="text-end">เป้าหมาย (ไร่)</th>
+                                                    <th class="text-end">ดำเนินการ (ไร่)</th>
+                                                    <th class="text-end">ความคืบหน้า</th>
+                                                    <th class="text-end">โครงการ</th>
+                                                    <th class="text-end">ผ่านเงื่อนไข</th>
+                                                    <th class="text-end">อัตราการผ่าน</th>
+                                                    <th>ระดับผลงาน</th>
+                                                    <th>หมายเหตุ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="performance-summary-body">
+                                                <!-- ข้อมูลจะถูกเพิ่มโดย JavaScript -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Buttons for Summary -->
+                <div class="summary-export-buttons mt-4">
+                    <button class="btn-blue" id="export-zone-summary">
+                        <i class="fas fa-download me-2"></i>ส่งออกสรุปรายเขต
+                    </button>
+                    <button class="btn-purple" id="export-officer-summary">
+                        <i class="fas fa-download me-2"></i>ส่งออกสรุปรายนักเกษตร
+                    </button>
+                    <button class="btn-orange" id="export-condition-summary">
+                        <i class="fas fa-download me-2"></i>ส่งออกสรุปตามเงื่อนไข
+                    </button>
+                    <button class="btn-green" id="export-performance-summary">
+                        <i class="fas fa-download me-2"></i>ส่งออกสรุปประสิทธิภาพ
                     </button>
                 </div>
             </div>
 
-            <!-- Data Display -->
-            <div class="card" id="data-display-card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="fas fa-database"></i>
-                        <span id="table-title">ข้อมูลโครงการทั้งหมด</span>
-                        <span class="badge bg-white text-success ms-2 comma-number" id="record-count">0 รายการ</span>
+            <!-- Main Project Interface (สำหรับข้อมูลโครงการ) -->
+            <div id="project-interface">
+                <!-- Project Stats with Pie Chart และปุ่ม Export -->
+                <div class="project-stats-container">
+                    <div class="row">
+                        <!-- Pie Chart Section -->
+                        <div class="col-lg-8">
+                            <div class="pie-chart-container">
+                                <h4 class="chart-title">
+                                    <i class="fas fa-chart-pie me-2"></i>ผลการตรวจแปลงโครงการ
+                                    <span class="badge bg-success ms-2" id="current-project-type-badge">ปลูกอ้อยในนา</span>
+                                </h4>
+                                <div class="pie-chart-wrapper">
+                                    <canvas id="conditionPieChart"></canvas>
+                                </div>
+                                <div class="chart-stats">
+                                    <div class="chart-stat-item">
+                                        <div class="chart-stat-value text-success comma-number" id="passed-count">0</div>
+                                        <div class="chart-stat-label">ผ่าน</div>
+                                        <div class="stat-subtext text-success" id="passed-percentage-chart">0%</div>
+                                    </div>
+                                    <div class="chart-stat-item">
+                                        <div class="chart-stat-value text-danger comma-number" id="failed-count">0</div>
+                                        <div class="chart-stat-label">ไม่ผ่าน</div>
+                                        <div class="stat-subtext text-danger" id="failed-percentage-chart">0%</div>
+                                    </div>
+                                    <div class="chart-stat-item">
+                                        <div class="chart-stat-value text-warning comma-number" id="pending-count">0</div>
+                                        <div class="chart-stat-label">รอตรวจ</div>
+                                        <div class="stat-subtext text-warning" id="pending-percentage-chart">0%</div>
+                                    </div>
+                                    <div class="chart-stat-item">
+                                        <div class="chart-stat-value text-primary comma-number" id="total-count">0</div>
+                                        <div class="chart-stat-label">ทั้งหมด</div>
+                                        <div class="stat-subtext text-primary">สมัครโครงการ</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- ปุ่ม Export ใต้ Pie Chart -->
+                                <div class="pie-chart-actions">
+                                    <button class="btn-blue" id="export-btn">
+                                        <i class="fas fa-download me-1"></i>ส่งออกข้อมูลทั้งหมด
+                                    </button>
+                                    <button class="btn-green ms-2" id="project-details-btn">
+                                        <i class="fas fa-info-circle me-1"></i>รายละเอียดโครงการ
+                                    </button>
+                                    <button class="btn-orange ms-2" id="refresh-data-btn">
+                                        <i class="fas fa-sync-alt me-1"></i>รีเฟรชข้อมูล
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Target and Progress Section -->
+                        <div class="col-lg-4">
+                            <!-- Zone Target Display -->
+                            <div class="zone-target-display">
+                                <h6 class="mb-3"><i class="fas fa-bullseye me-2"></i>เป้าหมายเขตที่เลือก</h6>
+                                
+                                <div class="text-center mb-3">
+                                    <div class="target-value-lg comma-number" id="zone-target-value">0</div>
+                                    <div class="target-label-lg">ไร่</div>
+                                    <div class="stat-subtext text-white" id="current-zone-name">ทุกเขต</div>
+                                </div>
+                                
+                                <div class="progress-overview mb-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>ความคืบหน้า</span>
+                                        <span id="zone-progress-percent">0%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" 
+                                             id="zone-progress-bar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <div class="progress-value comma-number" id="zone-achieved-area">0</div>
+                                        <div class="progress-label">ดำเนินการแล้ว</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="progress-value comma-number" id="zone-remaining-area">0</div>
+                                        <div class="progress-label">เหลือดำเนินการ</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Overall Target Display -->
+                            <div class="target-section">
+                                <h6 class="mb-3"><i class="fas fa-chart-line me-2"></i>เป้าหมายทั้งหมด</h6>
+                                
+                                <div class="text-center mb-3">
+                                    <div class="target-value-lg comma-number" id="overall-target-value">0</div>
+                                    <div class="target-label-lg">ไร่</div>
+                                    <div class="stat-subtext text-white">พื้นที่เป้าหมายทั้งหมด</div>
+                                </div>
+                                
+                                <div class="progress-overview mb-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>ความคืบหน้าทั้งหมด</span>
+                                        <span id="overall-progress-percent">0%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" 
+                                             id="overall-progress-bar" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row text-center">
+                                    <div class="col-6">
+                                        <div class="progress-value comma-number" id="overall-achieved-area">0</div>
+                                        <div class="progress-label">ดำเนินการแล้ว</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="progress-value comma-number" id="overall-remaining-area">0</div>
+                                        <div class="progress-label">เหลือดำเนินการ</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <button class="btn btn-sm btn-blue me-2" id="export-data-btn">
-                            <i class="fas fa-file-export me-1"></i>ส่งออกข้อมูล
+                </div>
+
+                <!-- สถิติโครงการแบบกริดใหม่ - 6 คอลัมน์ -->
+                <div class="stats-grid mb-4">
+                    <!-- ข้อมูลพื้นฐาน -->
+                    <div class="stat-item">
+                        <div class="stat-value text-success comma-number" id="total-projects">0</div>
+                        <div class="stat-title">ทั้งหมด(แปลง)</div>
+                        <div class="stat-subtext text-muted">
+                            <small>โครงการ: <span id="current-project-type">-</span></small>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value comma-number" id="total-area">0</div>
+                        <div class="stat-title">พื้นที่รวม(ไร่)</div>
+                    </div>
+                    
+                    <!-- ตรวจแปลง -->
+                    <div class="stat-item stat-item-checked">
+                        <div class="stat-value text-primary comma-number" id="checked-projects">0</div>
+                        <div class="stat-title">ตรวจแล้ว(แปลง)</div>
+                        <div class="stat-subtext">
+                            <small><span id="checked-percentage">0%</span> ของทั้งหมด</small>
+                        </div>
+                    </div>
+                    <div class="stat-item stat-item-checked">
+                        <div class="stat-value text-primary comma-number" id="checked-area">0</div>
+                        <div class="stat-title">ตรวจแล้ว(ไร่)</div>
+                    </div>
+                    
+                    <!-- รอตรวจ -->
+                    <div class="stat-item stat-item-not-checked">
+                        <div class="stat-value comma-number" id="not-checked-projects">0</div>
+                        <div class="stat-title">ยังไม่ตรวจ(แปลง)</div>
+                        <div class="stat-subtext">
+                            <small><span id="not-checked-percentage">0%</span> ของทั้งหมด</small>
+                        </div>
+                    </div>
+                    <div class="stat-item stat-item-not-checked">
+                        <div class="stat-value comma-number" id="not-checked-area">0</div>
+                        <div class="stat-title">ยังไม่ตรวจ(ไร่)</div>
+                    </div>
+                    
+                    <!-- ผ่าน -->
+                    <div class="stat-item stat-item-passed">
+                        <div class="stat-value comma-number" id="passed-projects">0</div>
+                        <div class="stat-title">ผ่าน(แปลง)</div>
+                        <div class="stat-subtext">
+                            <small><span id="passed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
+                        </div>
+                    </div>
+                    <div class="stat-item stat-item-passed">
+                        <div class="stat-value comma-number" id="passed-area">0</div>
+                        <div class="stat-title">ผ่าน(ไร่)</div>
+                    </div>
+                    
+                    <!-- ไม่ผ่าน -->
+                    <div class="stat-item stat-item-failed">
+                        <div class="stat-value comma-number" id="failed-projects">0</div>
+                        <div class="stat-title">ไม่ผ่าน(แปลง)</div>
+                        <div class="stat-subtext">
+                            <small><span id="failed-percentage-stat">0%</span> ของที่ตรวจแล้ว</small>
+                        </div>
+                    </div>
+                    <div class="stat-item stat-item-failed">
+                        <div class="stat-value comma-number" id="failed-area">0</div>
+                        <div class="stat-title">ไม่ผ่าน(ไร่)</div>
+                    </div>
+                    
+                    <!-- เป้าหมายเขต -->
+                    <div class="stat-item stat-item-target">
+                        <div class="stat-value comma-number" id="zone-target-display">0</div>
+                        <div class="stat-title">เป้าหมายเขต(ไร่)</div>
+                        <div class="stat-subtext">
+                            <small>เขต: <span id="selected-zone-name">ทุกเขต</span></small>
+                        </div>
+                    </div>
+                    
+                    <!-- ความคืบหน้าเขต -->
+                    <div class="stat-item stat-item-progress">
+                        <div class="stat-value comma-number" id="zone-progress-display">0%</div>
+                        <div class="stat-title">ความคืบหน้าเขต</div>
+                        <div class="stat-subtext">
+                            <small><span id="zone-achieved-display">0</span>/<span id="zone-target-short">0</span> ไร่</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search and Filter Section -->
+                <div class="filter-section">
+                    <h5 class="filter-section-title">
+                        <i class="fas fa-filter me-2"></i>ค้นหาและกรองข้อมูล
+                    </h5>
+                    
+                    <!-- Search Box -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-8">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="search-input" class="form-control" placeholder="ค้นหาชื่อเกษตรกร, เลขแปลง, ที่อยู่แปลง, รหัสนักเกษตร...">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <select id="condition-filter" class="form-select">
+                                <option value="all">ผลการตรวจแปลง</option>
+                                <option value="ผ่าน">ผ่าน</option>
+                                <option value="ไม่ผ่าน">ไม่ผ่าน</option>
+                                <option value="รอตรวจแปลง">รอตรวจแปลง</option>
+                                <option value="ตรวจแล้ว">ตรวจแล้วทั้งหมด</option>
+                                <option value="ยังไม่ตรวจ">ยังไม่ตรวจแปลง</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Advanced Filters -->
+                    <div class="advanced-filter">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">เขต</label>
+                                <select id="zone-filter" class="form-select">
+                                    <option value="all">ทุกเขต</option>
+                                    <!-- ตัวเลือกเขตจะถูกเพิ่มโดย JavaScript -->
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold text-muted">ชื่อนักเกษตร</label>
+                                <select id="farmer-officer-filter" class="form-select">
+                                    <option value="all">นักเกษตรทั้งหมด</option>
+                                    <!-- ตัวเลือกนักเกษตรจะถูกเพิ่มโดย JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Buttons -->
+                    <div class="filter-buttons mt-3">
+                        <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                        <button class="filter-btn" data-filter="recent">โครงการล่าสุด</button>
+                        <button class="filter-btn" data-filter="large">พื้นที่ใหญ่กว่า 10 ไร่</button>
+                        <button class="filter-btn" data-filter="checked">ตรวจแล้ว</button>
+                        <button class="filter-btn" data-filter="not-checked">ยังไม่ตรวจ</button>
+                        <button class="filter-btn" data-filter="passed">ผ่านเงื่อนไข</button>
+                        <button class="filter-btn" data-filter="failed">ไม่ผ่านเงื่อนไข</button>
+                        <button class="btn-blue" id="reset-filters">
+                            <i class="fas fa-filter me-1"></i>ล้างตัวกรอง
                         </button>
                     </div>
                 </div>
-                <div class="card-body p-0">
-                    <!-- Loading Spinner -->
-                    <div class="loading-spinner" id="loading-spinner">
-                        <div class="spinner-border spinner-green" role="status">
-                            <span class="visually-hidden">กำลังโหลด...</span>
+
+                <!-- Data Display -->
+                <div class="card" id="data-display-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-database"></i>
+                            <span id="table-title">ข้อมูลโครงการทั้งหมด</span>
+                            <span class="badge bg-white text-success ms-2 comma-number" id="record-count">0 รายการ</span>
                         </div>
-                        <p class="mt-3">กำลังโหลดข้อมูลจาก Google Sheets...</p>
-                        <p class="text-muted small">กรุณารอสักครู่ ขณะนี้ระบบกำลังดึงข้อมูลล่าสุด</p>
-                    </div>
-                    
-                    <!-- Table View -->
-                    <div id="table-view">
-                        <div class="table-container">
-                            <table class="data-table" id="data-table">
-                                <thead>
-                                    <tr id="table-headers">
-                                        <!-- Headers will be populated by JavaScript -->
-                                    </tr>
-                                </thead>
-                                <tbody id="table-body">
-                                    <!-- Data will be populated by JavaScript -->
-                                </tbody>
-                            </table>
+                        <div>
+                            <button class="btn btn-sm btn-blue me-2" id="export-data-btn">
+                                <i class="fas fa-file-export me-1"></i>ส่งออกข้อมูล
+                            </button>
                         </div>
                     </div>
-                    
-                    <!-- Empty State -->
-                    <div id="empty-state" class="empty-state" style="display: none;">
-                        <div class="empty-state-icon">
-                            <i class="fas fa-inbox"></i>
+                    <div class="card-body p-0">
+                        <!-- Loading Spinner -->
+                        <div class="loading-spinner" id="loading-spinner">
+                            <div class="spinner-border spinner-green" role="status">
+                                <span class="visually-hidden">กำลังโหลด...</span>
+                            </div>
+                            <p class="mt-3">กำลังโหลดข้อมูลจาก Google Sheets...</p>
+                            <p class="text-muted small">กรุณารอสักครู่ ขณะนี้ระบบกำลังดึงข้อมูลล่าสุด</p>
                         </div>
-                        <h4 class="mb-2">ไม่พบข้อมูลโครงการ</h4>
-                        <p class="text-muted mb-3">ลองเปลี่ยนคำค้นหาหรือตัวกรองดู</p>
-                        <button class="btn-blue" id="reset-filters-btn">
-                            <i class="fas fa-filter me-1"></i>ล้างตัวกรองทั้งหมด
-                        </button>
+                        
+                        <!-- Table View -->
+                        <div id="table-view">
+                            <div class="table-container">
+                                <table class="data-table" id="data-table">
+                                    <thead>
+                                        <tr id="table-headers">
+                                            <!-- Headers will be populated by JavaScript -->
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-body">
+                                        <!-- Data will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="empty-state" style="display: none;">
+                            <div class="empty-state-icon">
+                                <i class="fas fa-inbox"></i>
+                            </div>
+                            <h4 class="mb-2">ไม่พบข้อมูลโครงการ</h4>
+                            <p class="text-muted mb-3">ลองเปลี่ยนคำค้นหาหรือตัวกรองดู</p>
+                            <button class="btn-blue" id="reset-filters-btn">
+                                <i class="fas fa-filter me-1"></i>ล้างตัวกรองทั้งหมด
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1623,7 +2299,7 @@
                     <p class="mb-1">ข้อมูลระบบ:</p>
                     <p class="small mb-0">แสดงข้อมูลจาก Google Sheets (Public Mode)</p>
                     <p class="small mb-0">อัปเดตอัตโนมัติทุก 5 นาที</p>
-                    <p class="small mb-0">รุ่น: 2.2.0 | KBS Sugar Internal (เพิ่มระบบเป้าหมายตามเขต)</p>
+                    <p class="small mb-0">รุ่น: 3.0.0 | KBS Sugar Internal (เพิ่มหน้าสรุปและกราฟรายงาน)</p>
                 </div>
             </div>
             <hr class="my-3" style="border-color: rgba(255,255,255,0.1);">
@@ -1725,6 +2401,20 @@
         let uniqueFarmerOfficers = new Set();
         let conditionPieChart = null;
         
+        // Variables for summary charts
+        let zoneAreaChart = null;
+        let zoneDistributionChart = null;
+        let zoneProgressChart = null;
+        let officerAreaChart = null;
+        let officerDistributionChart = null;
+        let officerPerformanceChart = null;
+        let conditionByZoneChart = null;
+        let conditionPieSummaryChart = null;
+        let conditionBarSummaryChart = null;
+        let performanceTrendChart = null;
+        let achievementComparisonChart = null;
+        let topZonesChart = null;
+        
         // Helper function to format numbers with commas
         function formatNumber(num) {
             if (num === null || num === undefined || isNaN(num)) return '0';
@@ -1771,14 +2461,12 @@
                 loadAllSheetsData();
             });
             
-            // Project details button - แก้ไขให้เรียกใช้ modal ที่ถูกต้อง
+            // Project details button
             document.getElementById('project-details-btn').addEventListener('click', function() {
                 if (currentSheet === 'planting-sugarcane-field') {
-                    // แสดง modal ของโครงการปลูกอ้อยในนา
                     const modal = new bootstrap.Modal(document.getElementById('plantingProjectDetailsModal'));
                     modal.show();
                 } else {
-                    // แสดง modal ของโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย
                     const modal = new bootstrap.Modal(document.getElementById('cropChangeProjectDetailsModal'));
                     modal.show();
                 }
@@ -1794,7 +2482,7 @@
             document.getElementById('zone-filter').addEventListener('change', function() {
                 updateFarmerOfficerFilter();
                 filterData();
-                updateZoneTargetStats(); // อัพเดทเป้าหมายเขต
+                updateZoneTargetStats();
             });
             
             // Farmer officer filter
@@ -1810,53 +2498,80 @@
                     // Switch sheet
                     currentSheet = this.getAttribute('data-sheet');
                     
-                    // Update table title
-                    const titleMap = {
-                        'planting-sugarcane-field': 'โครงการปลูกอ้อยในนา ปี69/70',
-                        'crop-change-sugarcane': 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70',
-                    };
-                    document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
-                    
-                    // Update project type badge
-                    const projectTypeBadge = document.getElementById('current-project-type-badge');
-                    const projectTypeText = document.getElementById('current-project-type');
-                    if (currentSheet === 'planting-sugarcane-field') {
-                        projectTypeBadge.textContent = 'ปลูกอ้อยในนา';
-                        projectTypeBadge.className = 'badge bg-success ms-2';
-                        projectTypeText.textContent = 'ปลูกอ้อยในนา';
+                    if (currentSheet === 'summary-report') {
+                        // Show summary report section
+                        document.getElementById('project-interface').style.display = 'none';
+                        document.getElementById('summary-report-section').style.display = 'block';
+                        
+                        // Initialize summary reports
+                        initializeSummaryReports();
                     } else {
-                        projectTypeBadge.textContent = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
-                        projectTypeBadge.className = 'badge bg-purple ms-2';
-                        projectTypeText.textContent = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
+                        // Show project interface
+                        document.getElementById('summary-report-section').style.display = 'none';
+                        document.getElementById('project-interface').style.display = 'block';
+                        
+                        // Update table title
+                        const titleMap = {
+                            'planting-sugarcane-field': 'โครงการปลูกอ้อยในนา ปี69/70',
+                            'crop-change-sugarcane': 'โครงการเปลี่ยนพืชอื่นมาปลูกอ้อย ปี69/70',
+                        };
+                        document.getElementById('table-title').textContent = titleMap[currentSheet] || currentSheet;
+                        
+                        // Update project type badge
+                        const projectTypeBadge = document.getElementById('current-project-type-badge');
+                        const projectTypeText = document.getElementById('current-project-type');
+                        if (currentSheet === 'planting-sugarcane-field') {
+                            projectTypeBadge.textContent = 'ปลูกอ้อยในนา';
+                            projectTypeBadge.className = 'badge bg-success ms-2';
+                            projectTypeText.textContent = 'ปลูกอ้อยในนา';
+                        } else {
+                            projectTypeBadge.textContent = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
+                            projectTypeBadge.className = 'badge bg-purple ms-2';
+                            projectTypeText.textContent = 'เปลี่ยนพืชอื่นมาปลูกอ้อย';
+                        }
+                        
+                        // Update card header color
+                        const dataDisplayCard = document.getElementById('data-display-card');
+                        if (currentSheet === 'planting-sugarcane-field') {
+                            dataDisplayCard.classList.add('planting-project');
+                            dataDisplayCard.classList.remove('crop-change-project');
+                        } else {
+                            dataDisplayCard.classList.add('crop-change-project');
+                            dataDisplayCard.classList.remove('planting-project');
+                        }
+                        
+                        // Display data for current sheet
+                        displayData();
+                        
+                        // Update project stats
+                        updateProjectStats();
+                        
+                        // Update filter options
+                        updateFilterOptions();
+                        
+                        // Update pie chart
+                        updateConditionPieChart();
+                        
+                        // Update target stats
+                        updateZoneTargetStats();
+                        updateOverallTargetStats();
                     }
-                    
-                    // Update card header color
-                    const dataDisplayCard = document.getElementById('data-display-card');
-                    if (currentSheet === 'planting-sugarcane-field') {
-                        dataDisplayCard.classList.add('planting-project');
-                        dataDisplayCard.classList.remove('crop-change-project');
-                    } else {
-                        dataDisplayCard.classList.add('crop-change-project');
-                        dataDisplayCard.classList.remove('planting-project');
-                    }
-                    
-                    // Display data for current sheet
-                    displayData();
-                    
-                    // Update project stats
-                    updateProjectStats();
-                    
-                    // Update filter options
-                    updateFilterOptions();
-                    
-                    // Update pie chart
-                    updateConditionPieChart();
-                    
-                    // Update target stats
-                    updateZoneTargetStats();
-                    updateOverallTargetStats();
                 });
             });
+            
+            // Summary tab switching
+            document.querySelectorAll('.summary-tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const summaryType = this.getAttribute('data-summary-type');
+                    showSummaryTab(summaryType);
+                });
+            });
+            
+            // Summary export buttons
+            document.getElementById('export-zone-summary').addEventListener('click', exportZoneSummary);
+            document.getElementById('export-officer-summary').addEventListener('click', exportOfficerSummary);
+            document.getElementById('export-condition-summary').addEventListener('click', exportConditionSummary);
+            document.getElementById('export-performance-summary').addEventListener('click', exportPerformanceSummary);
             
             // Filter buttons
             document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1889,101 +2604,30 @@
             showToast('ตั้งค่าระบบสำเร็จแล้ว!', 'กำลังโหลดข้อมูลจาก Google Sheets...', 'success');
         }
         
-        // Show planting project full details
-        function showPlantingProjectDetails() {
-            const content = `
-                <div class="alert alert-info">
-                    <h5><i class="fas fa-info-circle me-2"></i>เป้าหมายโครงการปลูกอ้อยในนา</h5>
-                    <p class="mb-0">พื้นที่เป้าหมายทั้งหมด: <strong>${formatNumber(OVERALL_TARGETS['planting-sugarcane-field'])} ไร่</strong></p>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>เขต</th>
-                                <th class="text-end">เป้าหมาย (ไร่)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${Object.entries(ZONE_TARGETS['planting-sugarcane-field']).map(([zone, target]) => `
-                                <tr>
-                                    <td>เขต ${zone}</td>
-                                    <td class="text-end">${formatNumber(target)} ไร่</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
+        // Initialize summary reports
+        function initializeSummaryReports() {
+            updateZoneSummary();
+            updateOfficerSummary();
+            updateConditionSummary();
+            updatePerformanceSummary();
             
-            showModal('รายละเอียดเป้าหมายโครงการปลูกอ้อยในนา', content);
+            // Show first tab by default
+            showSummaryTab('zone-summary');
         }
         
-        // Show crop change project full details
-        function showCropChangeProjectDetails() {
-            const content = `
-                <div class="alert alert-info">
-                    <h5><i class="fas fa-info-circle me-2"></i>เป้าหมายโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย</h5>
-                    <p class="mb-0">พื้นที่เป้าหมายทั้งหมด: <strong>${formatNumber(OVERALL_TARGETS['crop-change-sugarcane'])} ไร่</strong></p>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>เขต</th>
-                                <th class="text-end">เป้าหมาย (ไร่)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${Object.entries(ZONE_TARGETS['crop-change-sugarcane']).map(([zone, target]) => `
-                                <tr>
-                                    <td>เขต ${zone}</td>
-                                    <td class="text-end">${formatNumber(target)} ไร่</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                </div>
-            `;
+        // Function to show summary tab
+        function showSummaryTab(summaryType) {
+            // Update active tab
+            document.querySelectorAll('.summary-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.summary-tab-btn[data-summary-type="${summaryType}"]`).classList.add('active');
             
-            showModal('รายละเอียดเป้าหมายโครงการเปลี่ยนพืชอื่นมาปลูกอ้อย', content);
-        }
-        
-        // Show custom modal
-        function showModal(title, content) {
-            const modalHtml = `
-                <div class="modal fade" id="customModal" tabindex="-1">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">${title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                ${content}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-blue" data-bs-dismiss="modal">
-                                    <i class="fas fa-times me-1"></i>ปิด
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Hide all summary contents
+            document.querySelectorAll('.summary-content').forEach(content => {
+                content.style.display = 'none';
+            });
             
-            // Remove existing modal if any
-            const existingModal = document.getElementById('customModal');
-            if (existingModal) {
-                existingModal.remove();
-            }
-            
-            // Add modal to body
-            document.body.insertAdjacentHTML('beforeend', modalHtml);
-            
-            // Show modal
-            const modal = new bootstrap.Modal(document.getElementById('customModal'));
-            modal.show();
+            // Show selected summary content
+            document.getElementById(`${summaryType}-content`).style.display = 'block';
         }
         
         // Load data from all Google Sheets
@@ -1997,7 +2641,6 @@
                     const data = await fetchSheetData(sheetTab);
                     allData[sheetName] = data;
                     
-                    // Log sample of data for debugging
                     if (data.length > 0) {
                         console.log(`โหลด ${sheetName} สำเร็จ: ${data.length} รายการ`);
                     }
@@ -2026,6 +2669,11 @@
                 // Update target stats
                 updateZoneTargetStats();
                 updateOverallTargetStats();
+                
+                // Update summary reports if in summary view
+                if (currentSheet === 'summary-report') {
+                    initializeSummaryReports();
+                }
                 
                 showLoading(false);
                 showToast('โหลดข้อมูลสำเร็จ', `อัปเดตข้อมูลล่าสุด ${thaiTime}`, 'success');
@@ -3133,6 +3781,1843 @@
             
             let filename = currentSheet === 'planting-sugarcane-field' ? 'kbs_ปลูกอ้อยในนา' : 'kbs_เปลี่ยนพืชอื่นมาปลูกอ้อย';
             link.download = `${filename}_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
+        }
+        
+        // Summary Reports Functions
+        
+        // Update zone summary
+        function updateZoneSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                document.getElementById('zone-summary-count').textContent = '0 เขต';
+                return;
+            }
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            // Convert to array and sort
+            const zoneArray = Object.values(zoneData);
+            zoneArray.sort((a, b) => b.area - b.area);
+            
+            // Update count
+            document.getElementById('zone-summary-count').textContent = zoneArray.length + ' เขต';
+            
+            // Update stats
+            const totalZones = zoneArray.length;
+            const totalZoneArea = zoneArray.reduce((sum, zone) => sum + zone.area, 0);
+            const totalZoneTarget = zoneArray.reduce((sum, zone) => sum + zone.target, 0);
+            const zoneProgressAverage = totalZoneTarget > 0 ? 
+                Math.round((totalZoneArea / totalZoneTarget) * 100) : 0;
+            
+            document.getElementById('total-zones').textContent = formatNumber(totalZones);
+            document.getElementById('total-zone-area').textContent = formatNumber(totalZoneArea);
+            document.getElementById('total-zone-target').textContent = formatNumber(totalZoneTarget);
+            document.getElementById('zone-progress-average').textContent = zoneProgressAverage + '%';
+            
+            // Update table
+            updateZoneSummaryTable(zoneArray);
+            
+            // Update charts
+            updateZoneCharts(zoneArray);
+        }
+        
+        // Update zone summary table
+        function updateZoneSummaryTable(zoneArray) {
+            const tbody = document.getElementById('zone-summary-body');
+            tbody.innerHTML = '';
+            
+            let totalTarget = 0;
+            let totalArea = 0;
+            let totalProjects = 0;
+            let totalPassed = 0;
+            let totalFailed = 0;
+            let totalPending = 0;
+            
+            zoneArray.forEach(zone => {
+                const progressPercent = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>เขต ${zone.zone}</strong></td>
+                    <td class="text-end">${formatNumber(zone.target)}</td>
+                    <td class="text-end">${formatNumber(zone.area)}</td>
+                    <td class="text-end">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <span class="me-2">${progressPercent}%</span>
+                            <div class="progress" style="width: 100px; height: 6px;">
+                                <div class="progress-bar ${progressPercent >= 100 ? 'bg-success' : progressPercent >= 70 ? 'bg-primary' : progressPercent >= 40 ? 'bg-warning' : 'bg-danger'}" 
+                                     style="width: ${progressPercent}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-end">${formatNumber(zone.projects)}</td>
+                    <td class="text-end text-success">${formatNumber(zone.passed)}</td>
+                    <td class="text-end text-danger">${formatNumber(zone.failed)}</td>
+                    <td class="text-end text-warning">${formatNumber(zone.pending)}</td>
+                    <td class="text-end">
+                        <span class="badge ${passRate >= 80 ? 'bg-success' : passRate >= 60 ? 'bg-warning' : 'bg-danger'}">
+                            ${passRate}%
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+                
+                // Update totals
+                totalTarget += zone.target;
+                totalArea += zone.area;
+                totalProjects += zone.projects;
+                totalPassed += zone.passed;
+                totalFailed += zone.failed;
+                totalPending += zone.pending;
+            });
+            
+            // Update total row
+            const totalProgress = totalTarget > 0 ? Math.round((totalArea / totalTarget) * 100) : 0;
+            const totalPassRate = totalProjects > 0 ? Math.round((totalPassed / totalProjects) * 100) : 0;
+            
+            document.getElementById('zone-summary-total').innerHTML = `
+                <td><strong>รวมทั้งหมด</strong></td>
+                <td class="text-end"><strong>${formatNumber(totalTarget)}</strong></td>
+                <td class="text-end"><strong>${formatNumber(totalArea)}</strong></td>
+                <td class="text-end">
+                    <div class="d-flex align-items-center justify-content-end">
+                        <span class="me-2"><strong>${totalProgress}%</strong></span>
+                        <div class="progress" style="width: 100px; height: 6px;">
+                            <div class="progress-bar ${totalProgress >= 100 ? 'bg-success' : totalProgress >= 70 ? 'bg-primary' : totalProgress >= 40 ? 'bg-warning' : 'bg-danger'}" 
+                                 style="width: ${totalProgress}%"></div>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-end"><strong>${formatNumber(totalProjects)}</strong></td>
+                <td class="text-end"><strong class="text-success">${formatNumber(totalPassed)}</strong></td>
+                <td class="text-end"><strong class="text-danger">${formatNumber(totalFailed)}</strong></td>
+                <td class="text-end"><strong class="text-warning">${formatNumber(totalPending)}</strong></td>
+                <td class="text-end">
+                    <strong><span class="badge ${totalPassRate >= 80 ? 'bg-success' : totalPassRate >= 60 ? 'bg-warning' : 'bg-danger'}">
+                        ${totalPassRate}%
+                    </span></strong>
+                </td>
+            `;
+        }
+        
+        // Update zone charts
+        function updateZoneCharts(zoneArray) {
+            // Prepare data for charts
+            const zoneLabels = zoneArray.map(z => `เขต ${z.zone}`);
+            const zoneAreas = zoneArray.map(z => z.area);
+            const zoneTargets = zoneArray.map(z => z.target);
+            const zoneProgress = zoneArray.map(z => 
+                z.target > 0 ? Math.round((z.area / z.target) * 100) : 0
+            );
+            
+            // Zone Area Chart (Bar Chart)
+            const zoneAreaCtx = document.getElementById('zoneAreaChart').getContext('2d');
+            
+            if (zoneAreaChart) {
+                zoneAreaChart.destroy();
+            }
+            
+            zoneAreaChart = new Chart(zoneAreaCtx, {
+                type: 'bar',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [
+                        {
+                            label: 'พื้นที่ดำเนินการ (ไร่)',
+                            data: zoneAreas,
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#2E7D32',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'เป้าหมาย (ไร่)',
+                            data: zoneTargets,
+                            backgroundColor: '#FF9800',
+                            borderColor: '#F57C00',
+                            borderWidth: 1,
+                            type: 'line',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${formatNumber(value)} ไร่`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'พื้นที่ (ไร่)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'เขต',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Zone Distribution Chart (Pie Chart)
+            const zoneDistributionCtx = document.getElementById('zoneDistributionChart').getContext('2d');
+            
+            if (zoneDistributionChart) {
+                zoneDistributionChart.destroy();
+            }
+            
+            zoneDistributionChart = new Chart(zoneDistributionCtx, {
+                type: 'pie',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [{
+                        data: zoneAreas,
+                        backgroundColor: [
+                            '#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336',
+                            '#00BCD4', '#FFC107', '#795548', '#607D8B', '#3F51B5',
+                            '#009688', '#E91E63', '#8BC34A', '#FF5722', '#673AB7'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = zoneAreas.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${formatNumber(value)} ไร่ (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Zone Progress Chart (Bar Chart)
+            const zoneProgressCtx = document.getElementById('zoneProgressChart').getContext('2d');
+            
+            if (zoneProgressChart) {
+                zoneProgressChart.destroy();
+            }
+            
+            zoneProgressChart = new Chart(zoneProgressCtx, {
+                type: 'bar',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [{
+                        label: 'ความคืบหน้าเป้าหมาย (%)',
+                        data: zoneProgress,
+                        backgroundColor: zoneProgress.map(p => 
+                            p >= 100 ? '#4CAF50' : 
+                            p >= 70 ? '#2196F3' : 
+                            p >= 40 ? '#FF9800' : '#F44336'
+                        ),
+                        borderColor: zoneProgress.map(p => 
+                            p >= 100 ? '#2E7D32' : 
+                            p >= 70 ? '#1565C0' : 
+                            p >= 40 ? '#F57C00' : '#C62828'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    const zoneIndex = context.dataIndex;
+                                    const zoneArea = zoneAreas[zoneIndex];
+                                    const zoneTarget = zoneTargets[zoneIndex];
+                                    return `${label}: ${value}% (${formatNumber(zoneArea)}/${formatNumber(zoneTarget)} ไร่)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'ความคืบหน้า (%)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'เขต',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update officer summary
+        function updateOfficerSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                document.getElementById('officer-summary-count').textContent = '0 คน';
+                return;
+            }
+            
+            // Group data by officer
+            const officerData = {};
+            
+            data.forEach(item => {
+                const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
+                const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                const key = `${officerCode}|${officerName}`;
+                
+                if (!officerData[key]) {
+                    officerData[key] = {
+                        code: officerCode,
+                        name: officerName,
+                        zones: new Set(),
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                officerData[key].zones.add(zone);
+                officerData[key].projects++;
+                officerData[key].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    officerData[key].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    officerData[key].failed++;
+                } else {
+                    officerData[key].pending++;
+                }
+            });
+            
+            // Convert to array and sort
+            const officerArray = Object.values(officerData);
+            officerArray.forEach(o => {
+                o.zones = Array.from(o.zones).join(', ');
+                o.passRate = o.projects > 0 ? Math.round((o.passed / o.projects) * 100) : 0;
+                o.performanceLevel = getPerformanceLevel(o.passRate);
+            });
+            
+            officerArray.sort((a, b) => b.area - b.area);
+            
+            // Update count
+            document.getElementById('officer-summary-count').textContent = officerArray.length + ' คน';
+            
+            // Update stats
+            const totalOfficers = officerArray.length;
+            const totalOfficerArea = officerArray.reduce((sum, officer) => sum + officer.area, 0);
+            const avgProjectsPerOfficer = totalOfficers > 0 ? 
+                Math.round(officerArray.reduce((sum, officer) => sum + officer.projects, 0) / totalOfficers) : 0;
+            const avgAreaPerOfficer = totalOfficers > 0 ? 
+                Math.round(totalOfficerArea / totalOfficers) : 0;
+            
+            document.getElementById('total-officers').textContent = formatNumber(totalOfficers);
+            document.getElementById('total-officer-area').textContent = formatNumber(totalOfficerArea);
+            document.getElementById('avg-projects-per-officer').textContent = formatNumber(avgProjectsPerOfficer);
+            document.getElementById('avg-area-per-officer').textContent = formatNumber(avgAreaPerOfficer);
+            
+            // Update table
+            updateOfficerSummaryTable(officerArray);
+            
+            // Update charts
+            updateOfficerCharts(officerArray);
+        }
+        
+        // Update officer summary table
+        function updateOfficerSummaryTable(officerArray) {
+            const tbody = document.getElementById('officer-summary-body');
+            tbody.innerHTML = '';
+            
+            officerArray.forEach(officer => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${officer.code}</strong></td>
+                    <td>${officer.name}</td>
+                    <td>${officer.zones}</td>
+                    <td class="text-end">${formatNumber(officer.projects)}</td>
+                    <td class="text-end">${formatNumber(officer.area)}</td>
+                    <td class="text-end text-success">${formatNumber(officer.passed)}</td>
+                    <td class="text-end text-danger">${formatNumber(officer.failed)}</td>
+                    <td class="text-end text-warning">${formatNumber(officer.pending)}</td>
+                    <td class="text-end">
+                        <span class="badge ${officer.passRate >= 80 ? 'bg-success' : officer.passRate >= 60 ? 'bg-warning' : 'bg-danger'}">
+                            ${officer.passRate}%
+                        </span>
+                    </td>
+                    <td>
+                        <span class="achievement-badge ${officer.performanceLevel}">
+                            ${getPerformanceLabel(officer.passRate)}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Update officer charts
+        function updateOfficerCharts(officerArray) {
+            // Limit to top 15 officers for better visualization
+            const topOfficers = officerArray.slice(0, 15);
+            
+            // Prepare data for charts
+            const officerLabels = topOfficers.map(o => `${o.name} (${o.code})`);
+            const officerAreas = topOfficers.map(o => o.area);
+            const officerProjects = topOfficers.map(o => o.projects);
+            const officerPassRates = topOfficers.map(o => o.passRate);
+            
+            // Officer Area Chart (Bar Chart)
+            const officerAreaCtx = document.getElementById('officerAreaChart').getContext('2d');
+            
+            if (officerAreaChart) {
+                officerAreaChart.destroy();
+            }
+            
+            officerAreaChart = new Chart(officerAreaCtx, {
+                type: 'bar',
+                data: {
+                    labels: officerLabels,
+                    datasets: [
+                        {
+                            label: 'พื้นที่ดูแล (ไร่)',
+                            data: officerAreas,
+                            backgroundColor: '#2196F3',
+                            borderColor: '#1976D2',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'จำนวนโครงการ',
+                            data: officerProjects,
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#2E7D32',
+                            borderWidth: 1,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    if (context.datasetIndex === 0) {
+                                        return `${label}: ${formatNumber(value)} ไร่`;
+                                    } else {
+                                        return `${label}: ${formatNumber(value)} โครงการ`;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'พื้นที่ (ไร่)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'จำนวนโครงการ',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            grid: {
+                                drawOnChartArea: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Officer Distribution Chart (Pie Chart)
+            const officerDistributionCtx = document.getElementById('officerDistributionChart').getContext('2d');
+            
+            if (officerDistributionChart) {
+                officerDistributionChart.destroy();
+            }
+            
+            officerDistributionChart = new Chart(officerDistributionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: officerLabels,
+                    datasets: [{
+                        data: officerAreas,
+                        backgroundColor: [
+                            '#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#F44336',
+                            '#00BCD4', '#FFC107', '#795548', '#607D8B', '#3F51B5',
+                            '#009688', '#E91E63', '#8BC34A', '#FF5722', '#673AB7'
+                        ],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 10
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = officerAreas.reduce((a, b) => a + b, 0);
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${formatNumber(value)} ไร่ (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Officer Performance Chart (Bar Chart)
+            const officerPerformanceCtx = document.getElementById('officerPerformanceChart').getContext('2d');
+            
+            if (officerPerformanceChart) {
+                officerPerformanceChart.destroy();
+            }
+            
+            officerPerformanceChart = new Chart(officerPerformanceCtx, {
+                type: 'bar',
+                data: {
+                    labels: officerLabels.slice(0, 10), // Top 10 only
+                    datasets: [{
+                        label: 'อัตราการผ่านเงื่อนไข (%)',
+                        data: officerPassRates.slice(0, 10),
+                        backgroundColor: officerPassRates.slice(0, 10).map(rate => 
+                            rate >= 80 ? '#4CAF50' : 
+                            rate >= 60 ? '#2196F3' : 
+                            rate >= 40 ? '#FF9800' : '#F44336'
+                        ),
+                        borderColor: officerPassRates.slice(0, 10).map(rate => 
+                            rate >= 80 ? '#2E7D32' : 
+                            rate >= 60 ? '#1565C0' : 
+                            rate >= 40 ? '#F57C00' : '#C62828'
+                        ),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    const officerIndex = context.dataIndex;
+                                    const officerName = officerLabels[officerIndex];
+                                    return `${officerName}: ${value}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'อัตราการผ่าน (%)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update condition summary
+        function updateConditionSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                return;
+            }
+            
+            // Group data by zone and condition
+            const zoneConditionData = {};
+            let totalProjects = 0;
+            let totalPassed = 0;
+            let totalFailed = 0;
+            let totalPending = 0;
+            
+            // Initialize zone data
+            Array.from(uniqueZones).sort().forEach(zone => {
+                zoneConditionData[zone] = {
+                    passed: 0,
+                    failed: 0,
+                    pending: 0
+                };
+            });
+            
+            // Count conditions by zone
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneConditionData[zone]) {
+                    zoneConditionData[zone] = {
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                totalProjects++;
+                
+                if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].passed++;
+                    totalPassed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].failed++;
+                    totalFailed++;
+                } else {
+                    zoneConditionData[zone].pending++;
+                    totalPending++;
+                }
+            });
+            
+            // Update summary cards
+            document.getElementById('total-projects-summary').textContent = formatNumber(totalProjects);
+            document.getElementById('passed-projects-summary').textContent = formatNumber(totalPassed);
+            document.getElementById('failed-projects-summary').textContent = formatNumber(totalFailed);
+            document.getElementById('pending-projects-summary').textContent = formatNumber(totalPending);
+            
+            const passedPercentage = totalProjects > 0 ? Math.round((totalPassed / totalProjects) * 100) : 0;
+            const failedPercentage = totalProjects > 0 ? Math.round((totalFailed / totalProjects) * 100) : 0;
+            const pendingPercentage = totalProjects > 0 ? Math.round((totalPending / totalProjects) * 100) : 0;
+            
+            document.getElementById('passed-progress').style.width = passedPercentage + '%';
+            document.getElementById('failed-progress').style.width = failedPercentage + '%';
+            document.getElementById('pending-progress').style.width = pendingPercentage + '%';
+            
+            // Update condition by zone chart
+            updateConditionByZoneChart(zoneConditionData);
+            
+            // Update condition summary charts
+            updateConditionSummaryCharts(totalPassed, totalFailed, totalPending);
+            
+            // Update zone ranking
+            updateZoneRanking(zoneConditionData);
+        }
+        
+        // Update condition by zone chart
+        function updateConditionByZoneChart(zoneConditionData) {
+            const zones = Object.keys(zoneConditionData).sort();
+            const passedData = zones.map(zone => zoneConditionData[zone].passed);
+            const failedData = zones.map(zone => zoneConditionData[zone].failed);
+            const pendingData = zones.map(zone => zoneConditionData[zone].pending);
+            
+            const zoneLabels = zones.map(z => `เขต ${z}`);
+            
+            const conditionCtx = document.getElementById('conditionByZoneChart').getContext('2d');
+            
+            if (conditionByZoneChart) {
+                conditionByZoneChart.destroy();
+            }
+            
+            conditionByZoneChart = new Chart(conditionCtx, {
+                type: 'bar',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [
+                        {
+                            label: 'ผ่านเงื่อนไข',
+                            data: passedData,
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#2E7D32',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'ไม่ผ่านเงื่อนไข',
+                            data: failedData,
+                            backgroundColor: '#F44336',
+                            borderColor: '#C62828',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'รอตรวจ',
+                            data: pendingData,
+                            backgroundColor: '#FF9800',
+                            borderColor: '#F57C00',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${formatNumber(value)} โครงการ`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'จำนวนโครงการ',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        },
+                        x: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'เขต',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update condition summary charts
+        function updateConditionSummaryCharts(passed, failed, pending) {
+            // Condition Pie Summary Chart
+            const conditionPieSummaryCtx = document.getElementById('conditionPieSummaryChart').getContext('2d');
+            
+            if (conditionPieSummaryChart) {
+                conditionPieSummaryChart.destroy();
+            }
+            
+            conditionPieSummaryChart = new Chart(conditionPieSummaryCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
+                    datasets: [{
+                        data: [passed, failed, pending],
+                        backgroundColor: ['#4CAF50', '#F44336', '#FF9800'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                padding: 15,
+                                usePointStyle: true,
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = passed + failed + pending;
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${formatNumber(value)} โครงการ (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Condition Bar Summary Chart
+            const conditionBarSummaryCtx = document.getElementById('conditionBarSummaryChart').getContext('2d');
+            
+            if (conditionBarSummaryChart) {
+                conditionBarSummaryChart.destroy();
+            }
+            
+            conditionBarSummaryChart = new Chart(conditionBarSummaryCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ'],
+                    datasets: [{
+                        label: 'จำนวนโครงการ',
+                        data: [passed, failed, pending],
+                        backgroundColor: ['#4CAF50', '#F44336', '#FF9800'],
+                        borderColor: ['#2E7D32', '#C62828', '#F57C00'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = passed + failed + pending;
+                                    const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+                                    return `${label}: ${formatNumber(value)} โครงการ (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'จำนวนโครงการ',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update zone ranking
+        function updateZoneRanking(zoneConditionData) {
+            const zones = Object.keys(zoneConditionData).sort();
+            const rankingContainer = document.getElementById('zone-ranking-container');
+            rankingContainer.innerHTML = '';
+            
+            // Calculate pass rates for each zone
+            const zoneRanking = zones.map(zone => {
+                const zoneData = zoneConditionData[zone];
+                const total = zoneData.passed + zoneData.failed + zoneData.pending;
+                const passRate = total > 0 ? Math.round((zoneData.passed / total) * 100) : 0;
+                return {
+                    zone: zone,
+                    passed: zoneData.passed,
+                    failed: zoneData.failed,
+                    pending: zoneData.pending,
+                    total: total,
+                    passRate: passRate
+                };
+            });
+            
+            // Sort by pass rate (descending)
+            zoneRanking.sort((a, b) => b.passRate - a.passRate);
+            
+            // Display top 6 zones
+            const topZones = zoneRanking.slice(0, 6);
+            
+            topZones.forEach((zone, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4';
+                
+                const rankClass = index === 0 ? 'bg-warning' : 
+                                 index === 1 ? 'bg-secondary' : 
+                                 index === 2 ? 'bg-info' : 'bg-light';
+                
+                col.innerHTML = `
+                    <div class="comparison-item">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="comparison-title">อันดับที่ ${index + 1}: เขต ${zone.zone}</div>
+                            <span class="badge ${rankClass}">${zone.passRate}%</span>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">ผ่านเงื่อนไข:</div>
+                            <div class="comparison-value text-success">${formatNumber(zone.passed)}</div>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">ไม่ผ่าน:</div>
+                            <div class="comparison-value text-danger">${formatNumber(zone.failed)}</div>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">รอตรวจ:</div>
+                            <div class="comparison-value text-warning">${formatNumber(zone.pending)}</div>
+                        </div>
+                        <div class="comparison-bar">
+                            <div class="comparison-label">รวมทั้งหมด:</div>
+                            <div class="comparison-value text-primary">${formatNumber(zone.total)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                rankingContainer.appendChild(col);
+            });
+        }
+        
+        // Update performance summary
+        function updatePerformanceSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                return;
+            }
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            // Convert to array
+            const zoneArray = Object.values(zoneData);
+            
+            // Calculate performance metrics
+            const totalArea = zoneArray.reduce((sum, zone) => sum + zone.area, 0);
+            const totalTarget = zoneArray.reduce((sum, zone) => sum + zone.target, 0);
+            const overallProgress = totalTarget > 0 ? Math.round((totalArea / totalTarget) * 100) : 0;
+            
+            // Count zones that achieved target
+            const zonesAchievedTarget = zoneArray.filter(zone => 
+                zone.target > 0 && zone.area >= zone.target
+            ).length;
+            const zoneAchievementRate = zoneArray.length > 0 ? 
+                Math.round((zonesAchievedTarget / zoneArray.length) * 100) : 0;
+            
+            // Calculate inspection completion rate
+            const totalProjects = zoneArray.reduce((sum, zone) => sum + zone.projects, 0);
+            const totalInspected = zoneArray.reduce((sum, zone) => sum + zone.passed + zone.failed, 0);
+            const inspectionCompletionRate = totalProjects > 0 ? 
+                Math.round((totalInspected / totalProjects) * 100) : 0;
+            
+            // Update performance stats
+            document.getElementById('overall-progress-summary').textContent = overallProgress + '%';
+            document.getElementById('zone-achievement-rate').textContent = zoneAchievementRate + '%';
+            document.getElementById('inspection-completion-rate').textContent = inspectionCompletionRate + '%';
+            
+            document.getElementById('overall-progress-bar-summary').style.width = overallProgress + '%';
+            document.getElementById('zone-achievement-bar').style.width = zoneAchievementRate + '%';
+            document.getElementById('inspection-completion-bar').style.width = inspectionCompletionRate + '%';
+            
+            // Update performance charts
+            updatePerformanceCharts(zoneArray);
+            
+            // Update performance summary table
+            updatePerformanceSummaryTable(zoneArray);
+        }
+        
+        // Update performance charts
+        function updatePerformanceCharts(zoneArray) {
+            // Sort zones by progress
+            zoneArray.sort((a, b) => {
+                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
+                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                return progressB - progressA;
+            });
+            
+            // Prepare data for charts
+            const zoneLabels = zoneArray.map(z => `เขต ${z.zone}`);
+            const zoneProgress = zoneArray.map(z => 
+                z.target > 0 ? Math.round((z.area / z.target) * 100) : 0
+            );
+            const zonePassRates = zoneArray.map(z => 
+                z.projects > 0 ? Math.round((z.passed / z.projects) * 100) : 0
+            );
+            
+            // Performance Trend Chart (Line Chart)
+            const performanceTrendCtx = document.getElementById('performanceTrendChart').getContext('2d');
+            
+            if (performanceTrendChart) {
+                performanceTrendChart.destroy();
+            }
+            
+            performanceTrendChart = new Chart(performanceTrendCtx, {
+                type: 'line',
+                data: {
+                    labels: zoneLabels,
+                    datasets: [
+                        {
+                            label: 'ความคืบหน้าเป้าหมาย (%)',
+                            data: zoneProgress,
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'อัตราการผ่านเงื่อนไข (%)',
+                            data: zonePassRates,
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = zoneArray[zoneIndex];
+                                    return `${label}: ${value}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'เปอร์เซ็นต์ (%)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'เขต',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Achievement Comparison Chart (Bar Chart)
+            const achievementComparisonCtx = document.getElementById('achievementComparisonChart').getContext('2d');
+            
+            if (achievementComparisonChart) {
+                achievementComparisonChart.destroy();
+            }
+            
+            achievementComparisonChart = new Chart(achievementComparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: zoneLabels.slice(0, 10), // Top 10 zones
+                    datasets: [
+                        {
+                            label: 'เป้าหมาย (ไร่)',
+                            data: zoneArray.slice(0, 10).map(z => z.target),
+                            backgroundColor: '#FF9800',
+                            borderColor: '#F57C00',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'ดำเนินการ (ไร่)',
+                            data: zoneArray.slice(0, 10).map(z => z.area),
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#2E7D32',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.dataset.label || '';
+                                    const value = context.raw || 0;
+                                    return `${label}: ${formatNumber(value)} ไร่`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'พื้นที่ (ไร่)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Top Zones Chart (Bar Chart)
+            const topZonesCtx = document.getElementById('topZonesChart').getContext('2d');
+            
+            if (topZonesChart) {
+                topZonesChart.destroy();
+            }
+            
+            // Get top 5 zones by pass rate
+            const topZonesByPassRate = [...zoneArray]
+                .filter(z => z.projects > 0)
+                .sort((a, b) => {
+                    const passRateA = Math.round((a.passed / a.projects) * 100);
+                    const passRateB = Math.round((b.passed / b.projects) * 100);
+                    return passRateB - passRateA;
+                })
+                .slice(0, 5);
+            
+            topZonesChart = new Chart(topZonesCtx, {
+                type: 'bar',
+                data: {
+                    labels: topZonesByPassRate.map(z => `เขต ${z.zone}`),
+                    datasets: [{
+                        label: 'อัตราการผ่านเงื่อนไข (%)',
+                        data: topZonesByPassRate.map(z => 
+                            Math.round((z.passed / z.projects) * 100)
+                        ),
+                        backgroundColor: topZonesByPassRate.map(z => {
+                            const passRate = Math.round((z.passed / z.projects) * 100);
+                            return passRate >= 80 ? '#4CAF50' : 
+                                   passRate >= 60 ? '#2196F3' : 
+                                   passRate >= 40 ? '#FF9800' : '#F44336';
+                        }),
+                        borderColor: topZonesByPassRate.map(z => {
+                            const passRate = Math.round((z.passed / z.projects) * 100);
+                            return passRate >= 80 ? '#2E7D32' : 
+                                   passRate >= 60 ? '#1565C0' : 
+                                   passRate >= 40 ? '#F57C00' : '#C62828';
+                        }),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const zoneIndex = context.dataIndex;
+                                    const zone = topZonesByPassRate[zoneIndex];
+                                    return `${label}: ${value}% (${formatNumber(zone.passed)}/${formatNumber(zone.projects)} โครงการ)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'อัตราการผ่าน (%)',
+                                font: {
+                                    family: "'Sarabun', sans-serif",
+                                    size: 14
+                                }
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update performance summary table
+        function updatePerformanceSummaryTable(zoneArray) {
+            const tbody = document.getElementById('performance-summary-body');
+            tbody.innerHTML = '';
+            
+            // Sort zones by progress
+            zoneArray.sort((a, b) => {
+                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
+                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                return progressB - progressA;
+            });
+            
+            zoneArray.forEach((zone, index) => {
+                const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
+                const performanceLevel = getPerformanceLevel(passRate);
+                const performanceLabel = getPerformanceLabel(passRate);
+                
+                // Determine note based on progress
+                let note = '';
+                if (progress >= 100) {
+                    note = '<span class="text-success">บรรลุเป้าหมายแล้ว</span>';
+                } else if (progress >= 70) {
+                    note = '<span class="text-primary">ใกล้บรรลุเป้าหมาย</span>';
+                } else if (progress >= 40) {
+                    note = '<span class="text-warning">กำลังดำเนินการ</span>';
+                } else {
+                    note = '<span class="text-danger">ต้องเร่งดำเนินการ</span>';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td><strong>เขต ${zone.zone}</strong></td>
+                    <td class="text-end">${formatNumber(zone.target)}</td>
+                    <td class="text-end">${formatNumber(zone.area)}</td>
+                    <td class="text-end">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <span class="me-2">${progress}%</span>
+                            <div class="progress" style="width: 100px; height: 6px;">
+                                <div class="progress-bar ${progress >= 100 ? 'bg-success' : progress >= 70 ? 'bg-primary' : progress >= 40 ? 'bg-warning' : 'bg-danger'}" 
+                                     style="width: ${progress}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-end">${formatNumber(zone.projects)}</td>
+                    <td class="text-end">${formatNumber(zone.passed)}</td>
+                    <td class="text-end">
+                        <span class="badge ${passRate >= 80 ? 'bg-success' : passRate >= 60 ? 'bg-warning' : 'bg-danger'}">
+                            ${passRate}%
+                        </span>
+                    </td>
+                    <td>
+                        <span class="achievement-badge ${performanceLevel}">
+                            ${performanceLabel}
+                        </span>
+                    </td>
+                    <td>${note}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Helper functions for performance levels
+        function getPerformanceLevel(passRate) {
+            if (passRate >= 80) return 'achievement-excellent';
+            if (passRate >= 60) return 'achievement-good';
+            if (passRate >= 40) return 'achievement-fair';
+            return 'achievement-poor';
+        }
+        
+        function getPerformanceLabel(passRate) {
+            if (passRate >= 80) return 'ดีเยี่ยม';
+            if (passRate >= 60) return 'ดี';
+            if (passRate >= 40) return 'ปานกลาง';
+            return 'ต้องปรับปรุง';
+        }
+        
+        // Export functions for summary reports
+        
+        // Export zone summary
+        function exportZoneSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
+                return;
+            }
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            const zoneArray = Object.values(zoneData);
+            
+            // Convert to CSV
+            const headers = ['เขต', 'เป้าหมาย(ไร่)', 'พื้นที่ดำเนินการ(ไร่)', 'ความคืบหน้า(%)', 'จำนวนโครงการ', 'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
+            const csvRows = [
+                headers.join(','),
+                ...zoneArray.map(zone => {
+                    const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                    const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
+                    return [
+                        `เขต ${zone.zone}`,
+                        formatNumber(zone.target),
+                        formatNumber(zone.area),
+                        progress,
+                        formatNumber(zone.projects),
+                        formatNumber(zone.passed),
+                        formatNumber(zone.failed),
+                        formatNumber(zone.pending),
+                        passRate
+                    ].join(',');
+                })
+            ];
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kbs_zone_summary_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
+        }
+        
+        // Export officer summary
+        function exportOfficerSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
+                return;
+            }
+            
+            // Group data by officer
+            const officerData = {};
+            
+            data.forEach(item => {
+                const officerCode = item['รหัสนักเกษตร'] || 'ไม่ระบุ';
+                const officerName = item['ชื่อนักเกษตร'] || 'ไม่ระบุ';
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                const key = `${officerCode}|${officerName}`;
+                
+                if (!officerData[key]) {
+                    officerData[key] = {
+                        code: officerCode,
+                        name: officerName,
+                        zones: new Set(),
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                officerData[key].zones.add(zone);
+                officerData[key].projects++;
+                officerData[key].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    officerData[key].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    officerData[key].failed++;
+                } else {
+                    officerData[key].pending++;
+                }
+            });
+            
+            const officerArray = Object.values(officerData);
+            officerArray.forEach(o => {
+                o.zones = Array.from(o.zones).join(', ');
+                o.passRate = o.projects > 0 ? Math.round((o.passed / o.projects) * 100) : 0;
+            });
+            
+            // Convert to CSV
+            const headers = ['รหัสนักเกษตร', 'ชื่อนักเกษตร', 'เขตที่ดูแล', 'จำนวนโครงการ', 'พื้นที่รวม(ไร่)', 'ผ่านเงื่อนไข', 'ไม่ผ่าน', 'รอตรวจ', 'อัตราการผ่าน(%)'];
+            const csvRows = [
+                headers.join(','),
+                ...officerArray.map(officer => [
+                    officer.code,
+                    officer.name,
+                    officer.zones,
+                    formatNumber(officer.projects),
+                    formatNumber(officer.area),
+                    formatNumber(officer.passed),
+                    formatNumber(officer.failed),
+                    formatNumber(officer.pending),
+                    officer.passRate
+                ].join(','))
+            ];
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kbs_officer_summary_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
+        }
+        
+        // Export condition summary
+        function exportConditionSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
+                return;
+            }
+            
+            // Group data by zone and condition
+            const zoneConditionData = {};
+            
+            // Initialize zone data
+            Array.from(uniqueZones).sort().forEach(zone => {
+                zoneConditionData[zone] = {
+                    passed: 0,
+                    failed: 0,
+                    pending: 0
+                };
+            });
+            
+            // Count conditions by zone
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneConditionData[zone]) {
+                    zoneConditionData[zone] = {
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                if (condition === 'ผ่าน') {
+                    zoneConditionData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneConditionData[zone].failed++;
+                } else {
+                    zoneConditionData[zone].pending++;
+                }
+            });
+            
+            const zones = Object.keys(zoneConditionData).sort();
+            
+            // Convert to CSV
+            const headers = ['เขต', 'ผ่านเงื่อนไข', 'ไม่ผ่านเงื่อนไข', 'รอตรวจ', 'รวมทั้งหมด', 'อัตราการผ่าน(%)'];
+            const csvRows = [
+                headers.join(','),
+                ...zones.map(zone => {
+                    const zoneData = zoneConditionData[zone];
+                    const total = zoneData.passed + zoneData.failed + zoneData.pending;
+                    const passRate = total > 0 ? Math.round((zoneData.passed / total) * 100) : 0;
+                    return [
+                        `เขต ${zone}`,
+                        formatNumber(zoneData.passed),
+                        formatNumber(zoneData.failed),
+                        formatNumber(zoneData.pending),
+                        formatNumber(total),
+                        passRate
+                    ].join(',');
+                })
+            ];
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kbs_condition_summary_${new Date().toISOString().slice(0,10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('ส่งออกข้อมูลสำเร็จ', `ดาวน์โหลดไฟล์: ${link.download}`, 'success');
+        }
+        
+        // Export performance summary
+        function exportPerformanceSummary() {
+            const data = allData['planting-sugarcane-field'];
+            
+            if (data.length === 0) {
+                showToast('ไม่มีข้อมูล', 'ไม่สามารถส่งออกข้อมูลได้', 'warning');
+                return;
+            }
+            
+            // Group data by zone
+            const zoneData = {};
+            
+            data.forEach(item => {
+                const zone = item['เขต'] || 'ไม่ระบุ';
+                const area = parseFloat(item['พื้นที่']) || 0;
+                const condition = item['เงื่อนไขโครงการ'] || 'รอตรวจแปลง';
+                
+                if (!zoneData[zone]) {
+                    zoneData[zone] = {
+                        zone: zone,
+                        target: ZONE_TARGETS['planting-sugarcane-field'][zone] || 0,
+                        projects: 0,
+                        area: 0,
+                        passed: 0,
+                        failed: 0,
+                        pending: 0
+                    };
+                }
+                
+                zoneData[zone].projects++;
+                zoneData[zone].area += area;
+                
+                if (condition === 'ผ่าน') {
+                    zoneData[zone].passed++;
+                } else if (condition === 'ไม่ผ่าน') {
+                    zoneData[zone].failed++;
+                } else {
+                    zoneData[zone].pending++;
+                }
+            });
+            
+            const zoneArray = Object.values(zoneData);
+            
+            // Sort by progress
+            zoneArray.sort((a, b) => {
+                const progressA = a.target > 0 ? (a.area / a.target) * 100 : 0;
+                const progressB = b.target > 0 ? (b.area / b.target) * 100 : 0;
+                return progressB - progressA;
+            });
+            
+            // Convert to CSV
+            const headers = ['อันดับ', 'เขต', 'เป้าหมาย(ไร่)', 'ดำเนินการ(ไร่)', 'ความคืบหน้า(%)', 'จำนวนโครงการ', 'ผ่านเงื่อนไข', 'อัตราการผ่าน(%)', 'ระดับผลงาน', 'หมายเหตุ'];
+            const csvRows = [
+                headers.join(','),
+                ...zoneArray.map((zone, index) => {
+                    const progress = zone.target > 0 ? Math.round((zone.area / zone.target) * 100) : 0;
+                    const passRate = zone.projects > 0 ? Math.round((zone.passed / zone.projects) * 100) : 0;
+                    const performanceLabel = getPerformanceLabel(passRate);
+                    
+                    // Determine note based on progress
+                    let note = '';
+                    if (progress >= 100) {
+                        note = 'บรรลุเป้าหมายแล้ว';
+                    } else if (progress >= 70) {
+                        note = 'ใกล้บรรลุเป้าหมาย';
+                    } else if (progress >= 40) {
+                        note = 'กำลังดำเนินการ';
+                    } else {
+                        note = 'ต้องเร่งดำเนินการ';
+                    }
+                    
+                    return [
+                        index + 1,
+                        `เขต ${zone.zone}`,
+                        formatNumber(zone.target),
+                        formatNumber(zone.area),
+                        progress,
+                        formatNumber(zone.projects),
+                        formatNumber(zone.passed),
+                        passRate,
+                        performanceLabel,
+                        note
+                    ].join(',');
+                })
+            ];
+            
+            const csvString = csvRows.join('\n');
+            const blob = new Blob(['\uFEFF' + csvString], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `kbs_performance_summary_${new Date().toISOString().slice(0,10)}.csv`;
             link.click();
             URL.revokeObjectURL(url);
             
