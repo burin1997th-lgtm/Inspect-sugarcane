@@ -26,6 +26,7 @@
             --project-blue: #1976D2;
             --target-orange: #FF9800;
             --progress-blue: #2196F3;
+            --c-zone-blue: #0288D1;
         }
         
         body {
@@ -997,6 +998,26 @@
         .stat-item-progress {
             border-top: 4px solid var(--progress-blue) !important;
         }
+        
+        .c-zone-badge {
+            background-color: #E3F2FD;
+            color: #0277BD;
+            border: 1px solid #81D4FA;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .normal-zone-badge {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -1753,6 +1774,10 @@
             allProjects.forEach(project => {
                 const projectCode = project['เลขแปลงintech'] || '';
                 if (projectCode) {
+                    // ทำความสะอาดข้อมูลเขตก่อนบันทึก
+                    if (project['เขต']) {
+                        project['เขต'] = cleanZoneData(project['เขต']);
+                    }
                     projectMap.set(projectCode, project);
                 }
             });
@@ -1783,6 +1808,11 @@
                 if (!project['เงื่อนไขโครงการ'] || project['เงื่อนไขโครงการ'].trim() === '') {
                     project['เงื่อนไขโครงการ'] = 'รอตรวจแปลง';
                 }
+                
+                // ทำความสะอาดข้อมูลเขตอีกครั้งเพื่อความมั่นใจ
+                if (project['เขต']) {
+                    project['เขต'] = cleanZoneData(project['เขต']);
+                }
             });
             
             allData['planting-sugarcane-field'] = mergedProjects.filter(item => {
@@ -1798,8 +1828,85 @@
                        projectStatus.toLowerCase().includes('crop change');
             });
             
+            // ตรวจสอบข้อมูลเขต C
+            const cZoneProjectsPlanting = allData['planting-sugarcane-field'].filter(p => {
+                const zone = p['เขต'] || '';
+                return zone.startsWith('C');
+            });
+            
+            const cZoneProjectsCropChange = allData['crop-change-sugarcane'].filter(p => {
+                const zone = p['เขต'] || '';
+                return zone.startsWith('C');
+            });
+            
             console.log(`ปลูกอ้อยในนา: ${allData['planting-sugarcane-field'].length} รายการ`);
             console.log(`เปลี่ยนพืชอื่นมาปลูกอ้อย: ${allData['crop-change-sugarcane'].length} รายการ`);
+            console.log(`โครงการในเขต C (ปลูกอ้อยในนา): ${cZoneProjectsPlanting.length} รายการ`);
+            console.log(`โครงการในเขต C (เปลี่ยนพืช): ${cZoneProjectsCropChange.length} รายการ`);
+            
+            // เก็บสถิติเขตทั้งหมด
+            const allZones = new Set();
+            mergedProjects.forEach(item => {
+                const zone = item['เขต'] || '';
+                if (zone && zone.trim() !== '') {
+                    allZones.add(zone);
+                }
+            });
+            console.log('เขตทั้งหมดที่พบ:', Array.from(allZones).sort());
+        }
+        
+        function cleanZoneData(zoneValue) {
+            if (!zoneValue) return '';
+            
+            let cleaned = zoneValue.toString().trim();
+            
+            // ตรวจสอบและแปลงรูปแบบต่างๆของเขต C
+            if (cleaned.match(/C\s*[1234]/i) || cleaned.match(/C[1234]/i)) {
+                // รูปแบบ: C1, C2, C3, C4 หรือ C 1, C 2
+                const match = cleaned.match(/C\s*([1234])/i);
+                if (match) {
+                    return `C${match[1]}`;
+                }
+                // หรือถ้าเป็น C1 อยู่แล้ว
+                const directMatch = cleaned.match(/C[1234]/i);
+                if (directMatch) {
+                    return directMatch[0].toUpperCase();
+                }
+            }
+            
+            // ตรวจสอบถ้ามี "C" อยู่ในข้อมูล
+            if (cleaned.includes('C') || cleaned.includes('c')) {
+                // แยกตัวเลขจากข้อความ
+                const numberMatch = cleaned.match(/(\d+)/);
+                if (numberMatch && ['1', '2', '3', '4'].includes(numberMatch[1])) {
+                    return `C${numberMatch[1]}`;
+                }
+            }
+            
+            // แปลงจาก "เขต 1" เป็น "1"
+            if (cleaned.includes('เขต')) {
+                const zoneNum = cleaned.replace(/เขต\s*/g, '').trim();
+                // ตรวจสอบว่าเป็นเขต C หรือไม่
+                if (zoneNum.includes('C') || zoneNum.includes('c')) {
+                    const cMatch = zoneNum.match(/C\s*([1234])/i) || zoneNum.match(/C([1234])/i);
+                    if (cMatch) {
+                        return `C${cMatch[1] || cMatch[0].charAt(1)}`;
+                    }
+                }
+                return zoneNum;
+            }
+            
+            // ลบช่องว่างและอักษรพิเศษ
+            cleaned = cleaned.replace(/\s+/g, '');
+            
+            // ตรวจสอบว่าเป็นเขตตัวเลขหรือ C
+            if (cleaned.match(/^[1-9][0-9]*$/)) {
+                return cleaned; // เขตตัวเลข
+            } else if (cleaned.match(/^C[1234]$/i)) {
+                return cleaned.toUpperCase(); // เขต C
+            }
+            
+            return cleaned;
         }
         
         function updateFilterOptions() {
@@ -1823,13 +1930,58 @@
             const zoneFilter = document.getElementById('zone-filter');
             zoneFilter.innerHTML = '<option value="all">ทุกเขต</option>';
             
-            Array.from(uniqueZones).sort((a, b) => a.localeCompare(b, undefined, {numeric: true})).forEach(zone => {
+            // เรียงลำดับเขต: ตัวเลขก่อน แล้วตามด้วย C1, C2, C3, C4
+            const sortedZones = Array.from(uniqueZones).sort((a, b) => {
+                // แยกเป็นตัวเลขและตัวอักษร
+                const aIsNumber = /^\d+$/.test(a);
+                const bIsNumber = /^\d+$/.test(b);
+                const aIsCZone = a.startsWith('C');
+                const bIsCZone = b.startsWith('C');
+                
+                if (aIsNumber && bIsNumber) {
+                    return parseInt(a) - parseInt(b);
+                } else if (aIsNumber && bIsCZone) {
+                    return -1; // ตัวเลขมาก่อน
+                } else if (aIsCZone && bIsNumber) {
+                    return 1; // C zone มาทีหลัง
+                } else if (aIsCZone && bIsCZone) {
+                    return a.localeCompare(b, undefined, {numeric: true});
+                } else {
+                    return a.localeCompare(b, undefined, {numeric: true});
+                }
+            });
+            
+            sortedZones.forEach(zone => {
                 const option = document.createElement('option');
                 option.value = zone;
-                const target = ZONE_TARGETS[currentSheet][zone] || 0;
-                option.textContent = `เขต ${zone} (เป้าหมาย: ${formatNumber(target)} ไร่)`;
+                
+                // กำหนดเป้าหมายพื้นที่ตามประเภทโครงการและเขต
+                let target = 0;
+                if (currentSheet === 'planting-sugarcane-field') {
+                    target = ZONE_TARGETS['planting-sugarcane-field'][zone] || 0;
+                } else {
+                    target = ZONE_TARGETS['crop-change-sugarcane'][zone] || 0;
+                }
+                
+                const zoneDisplay = zone.startsWith('C') ? `เขต ${zone}` : `เขต ${zone}`;
+                option.textContent = target > 0 ? 
+                    `${zoneDisplay} (เป้าหมาย: ${formatNumber(target)} ไร่)` : 
+                    zoneDisplay;
+                option.title = `เขต ${zone} - เป้าหมาย: ${formatNumber(target)} ไร่`;
+                
+                // เพิ่ม class สำหรับ C zone
+                if (zone.startsWith('C')) {
+                    option.classList.add('text-primary', 'fw-bold');
+                }
+                
                 zoneFilter.appendChild(option);
             });
+            
+            // แสดงสถิติเขต C
+            const cZones = sortedZones.filter(z => z.startsWith('C'));
+            if (cZones.length > 0) {
+                console.log(`พบเขต C ในตัวกรอง: ${cZones.join(', ')}`);
+            }
             
             updateFarmerOfficerFilter();
         }
@@ -1893,7 +2045,7 @@
                 zoneName = 'ทุกเขต';
             } else {
                 targetArea = ZONE_TARGETS[currentSheet][selectedZone] || 0;
-                zoneName = `เขต ${selectedZone}`;
+                zoneName = selectedZone.startsWith('C') ? `เขต ${selectedZone}` : `เขต ${selectedZone}`;
             }
             
             const progressPercent = targetArea > 0 ? 
@@ -2203,6 +2355,11 @@
                             item[fieldName] = '';
                         }
                     });
+                    
+                    // ทำความสะอาดข้อมูลเขตในตอนอ่าน
+                    if (item['เขต']) {
+                        item['เขต'] = cleanZoneData(item['เขต']);
+                    }
                 }
                 
                 const hasData = Object.values(item).some(value => 
@@ -2307,7 +2464,17 @@
                     const cell = document.createElement('td');
                     const value = item[column] || '';
                     
-                    if (column === 'เงื่อนไขโครงการ') {
+                    if (column === 'เขต') {
+                        // แสดงเขต C อย่างชัดเจน
+                        const zoneValue = value.toString();
+                        if (zoneValue.startsWith('C')) {
+                            cell.innerHTML = `<span class="c-zone-badge">เขต ${zoneValue}</span>`;
+                            cell.title = `เขต ${zoneValue} (C Zone)`;
+                        } else {
+                            cell.innerHTML = `<span class="normal-zone-badge">เขต ${zoneValue || '-'}</span>`;
+                            cell.title = zoneValue || '-';
+                        }
+                    } else if (column === 'เงื่อนไขโครงการ') {
                         const conditionClass = getConditionClass(value);
                         cell.innerHTML = `<span class="condition-badge ${conditionClass}">${value}</span>`;
                     } else if (column === 'พื้นที่') {
@@ -2522,9 +2689,10 @@
             const inspector = item['ผู้ตรวจ'] || 'ไม่ระบุ';
             
             const zoneTarget = ZONE_TARGETS[currentSheet][zone] || 0;
+            const zoneDisplay = zone.startsWith('C') ? `เขต ${zone} (C Zone)` : `เขต ${zone}`;
             const targetInfo = zoneTarget > 0 ? 
-                `<div class="alert alert-warning">
-                    <i class="fas fa-bullseye me-2"></i>เป้าหมายเขต ${zone}: <strong>${formatNumber(zoneTarget)} ไร่</strong>
+                `<div class="alert ${zone.startsWith('C') ? 'alert-primary' : 'alert-warning'}">
+                    <i class="fas fa-bullseye me-2"></i>เป้าหมาย${zoneDisplay}: <strong>${formatNumber(zoneTarget)} ไร่</strong>
                 </div>` : '';
             
             const content = `
@@ -2566,7 +2734,11 @@
                                 <table class="table table-sm">
                                     <tr>
                                         <td class="text-muted" style="width: 40%">เขต:</td>
-                                        <td>${zone}</td>
+                                        <td>
+                                            ${zone.startsWith('C') ? 
+                                                `<span class="c-zone-badge">เขต ${zone}</span>` : 
+                                                `<span class="normal-zone-badge">เขต ${zone}</span>`}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="text-muted">สถานะโครงการ:</td>
